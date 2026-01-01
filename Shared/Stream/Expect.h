@@ -20,10 +20,9 @@
 //
 
 #pragma once
-#include "Environment/Lexer/Lexer.h"
 #include "Shared/AgnosticException.h"
 
-namespace Typed::Shared
+namespace Typed::Shared::Stream
 {
     template <typename Value>
     void Expect(
