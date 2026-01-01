@@ -47,7 +47,7 @@ namespace Typed::Core::Parser
             Block
         };
 
-        Rule Rule;
+        Rule Kind;
         Celery::Array::Vector<AST*> Children;
         Celery::Str::External Value;
     };
