@@ -20,6 +20,7 @@
 //
 
 #pragma once
+#include "Shared/TokenStream.h"
 #include "Shared/Trace.h"
 
 namespace Typed::Environment::Lexer
@@ -36,4 +37,6 @@ namespace Typed::Environment::Lexer
         Type type;
         Celery::Str::External value;
     };
+
+    using TokenStream = Shared::TokenStream<Token>;
 }
