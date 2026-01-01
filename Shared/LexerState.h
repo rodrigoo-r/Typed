@@ -22,6 +22,8 @@
 #pragma once
 #include <Celery/Trait/Default.h>
 
+#include "Trace.h"
+
 namespace Typed::Shared
 {
     struct LexerState :
