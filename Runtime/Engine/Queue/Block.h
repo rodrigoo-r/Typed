@@ -25,9 +25,11 @@
 
 namespace Typed::Runtime::Queue
 {
-    struct Block
+    struct BlockBase
     {
         Core::Parser::AST *ast;
         Engine::Scope scope;
     };
+
+    using Block = Celery::Array::Vector<BlockBase>;
 }
