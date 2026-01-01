@@ -23,10 +23,11 @@
 
 #include <Celery/Io/Io.h>
 
-#include "Environment/Util/FlushToken.h"
-#include "Environment/Util/IsIdentifier.h"
-#include "Environment/Util/IsWhitespace.h"
-#include "Except.h"
+#include "Map.h"
+#include "Shared/FlushToken.h"
+#include "Shared/IsIdentifier.h"
+#include "Shared/IsWhitespace.h"
+#include "Shared/LexerExceptcion.h"
 #include "Shared/LexerState.h"
 
 using namespace Typed::Environment;
@@ -55,10 +56,11 @@ Lexer::TokenStream Lexer::Tokenize(
                 throw Exception(state);
             }
 
-            Util::FlushToken(
+            Shared::FlushToken(
                 source,
                 stream,
-                state
+                state,
+                Map
             );
 
             state.Line++;
@@ -73,20 +75,22 @@ Lexer::TokenStream Lexer::Tokenize(
             if (state.StringLiteral)
             {
                 // End of string literal
-                Util::FlushToken(
+                Shared::FlushToken(
                     source,
                     stream,
-                    state
+                    state,
+                    Map
                 );
 
                 state.StringLiteral = false;
             } else
             {
                 // Start of string literal
-                Util::FlushToken(
+                Shared::FlushToken(
                     source,
                     stream,
-                    state
+                    state,
+                    Map
                 );
 
                 state.StringLiteral = true;
@@ -113,12 +117,13 @@ Lexer::TokenStream Lexer::Tokenize(
 #       endif
 
         // Ignore whitespace
-        if (Util::IsWhitespace(c))
+        if (Shared::IsWhitespace(c))
         {
-            Util::FlushToken(
+            Shared::FlushToken(
                 source,
                 stream,
-                state
+                state,
+                Map
             );
 
             state.Column++;
@@ -126,32 +131,34 @@ Lexer::TokenStream Lexer::Tokenize(
         }
 
         // Detect identifiers
-        if (state.Len == 0 && Util::IsIdentifier(c))
+        if (state.Len == 0 && Shared::IsIdentifier(c))
         {
             state.Identifier = true;
         }
         else if (c == '=')
         {
             // Flush previous token
-            Util::FlushToken(
+            Shared::FlushToken(
                 source,
                 stream,
-                state
+                state,
+                Map
             );
 
             // Add equal token
             state.Start = i;
             state.Len = 1;
-            Util::FlushToken(
+            Shared::FlushToken(
                 source,
                 stream,
-                state
+                state,
+                Map
             );
 
             continue;
         }
         else if (
-            (state.Identifier && !Util::IsIdentifier(c)) ||
+            (state.Identifier && !Shared::IsIdentifier(c)) ||
             !state.Identifier
         )
         {
@@ -163,10 +170,11 @@ Lexer::TokenStream Lexer::Tokenize(
     }
 
     // Flush any pending token
-    Util::FlushToken(
+    Shared::FlushToken(
         source,
         stream,
-        state
+        state,
+        Map
     );
 
     return stream;
