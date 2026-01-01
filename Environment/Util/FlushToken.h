@@ -22,9 +22,12 @@
 #pragma once
 
 #include <celery/string/string.h>
+
+#include "Environment/Lexer/Except.h"
 #include "Environment/Lexer/State.h"
 
 #include "Environment/Lexer/Lexer.h"
+#include "Environment/Lexer/Map.h"
 #include "Environment/Lexer/Token.h"
 
 namespace Typed::Environment::Util
@@ -32,7 +35,6 @@ namespace Typed::Environment::Util
     inline void FlushToken(
         const Celery::Str::String &source,
         Lexer::TokenStream &stream,
-        const Lexer::Token::Type type,
         Lexer::State &state
     )
     {
@@ -45,8 +47,26 @@ namespace Typed::Environment::Util
         auto source_ptr = source.Ptr() + state.Start;
 
         Lexer::Token token;
-        token.type = type;
         token.value = Celery::Str::External(source_ptr, state.Len);
+
+        if (state.StringLiteral)
+        {
+            token.type = Lexer::Token::Type::StringLiteral;
+        } else
+        {
+            // Find using the token map
+            const auto it = Lexer::Map.find(token.value);
+            if (it != Lexer::Map.end())
+            {
+                token.type = it->second;
+            } else if (state.Identifier)
+            {
+                token.type = Lexer::Token::Type::Identifier;
+            } else
+            {
+                throw Lexer::Exception(state);
+            }
+        }
 
         stream.PushBack(token);
 
