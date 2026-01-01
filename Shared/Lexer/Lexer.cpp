@@ -94,7 +94,14 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
         }
 
         // Handle string literals
-        if (c == '`')
+        if (
+            c ==
+                (
+                    T == LexerType::Environment ?
+                        '"' :
+                        '`'
+                )
+        )
         {
             if (state.StringLiteral)
             {
