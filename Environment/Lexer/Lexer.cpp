@@ -21,6 +21,8 @@
 
 #include "Lexer.h"
 
+#include <Celery/Io/Io.h>
+
 #include "Environment/Util/FlushToken.h"
 #include "Environment/Util/IsIdentifier.h"
 #include "Environment/Util/IsWhitespace.h"
@@ -38,52 +40,35 @@ Lexer::TokenStream Lexer::Tokenize(
 
     for (auto i = 0; i < source.Len(); i++)
     {
-        const auto &ch = source[i];
+        const auto c = source[i];
+
         if (state.Len == 0)
         {
-            // Start new token
             state.Start = i;
-            state.StringLiteral = false;
-            state.Identifier = false;
         }
 
-#       ifdef _WIN32
-        // Ignore carriage returns
-        if (ch == '\r')
+        // Handle newlines
+        if (c == '\n')
         {
-            continue;
-        }
-#       endif
+            if (state.StringLiteral)
+            {
+                throw Exception(state);
+            }
 
-        if (ch == '\n')
-        {
-            // Flush any pending token
             Util::FlushToken(
                 source,
                 stream,
                 state
             );
 
-            // New line
             state.Line++;
             state.Column = 1;
+
             continue;
         }
 
-        // Skip whitespace outside string literals
-        if (!state.StringLiteral && Util::IsWhitespace(ch))
-        {
-            continue;
-        }
-
-        // Detect identifiers
-        if (state.Len == 0 && Util::IsIdentifier(ch))
-        {
-            state.Identifier = true;
-        }
-
-        // Detect string literals
-        if (ch == '"')
+        // Handle string literals
+        if (c == '"')
         {
             if (state.StringLiteral)
             {
@@ -95,15 +80,40 @@ Lexer::TokenStream Lexer::Tokenize(
                 );
 
                 state.StringLiteral = false;
-                continue;
+            } else
+            {
+                // Start of string literal
+                Util::FlushToken(
+                    source,
+                    stream,
+                    state
+                );
+
+                state.StringLiteral = true;
             }
 
-            state.StringLiteral = true;
+
             continue;
         }
 
-        // Break on punctuation
-        if (ch == '=')
+        // Ignore characters inside string literals
+        if (state.StringLiteral)
+        {
+            state.Len++;
+            state.Column++;
+            continue;
+        }
+
+#       ifdef _WIN32
+        // Ignore carriage returns
+        if (c == '\r')
+        {
+            continue;
+        }
+#       endif
+
+        // Ignore whitespace
+        if (Util::IsWhitespace(c))
         {
             Util::FlushToken(
                 source,
@@ -111,6 +121,26 @@ Lexer::TokenStream Lexer::Tokenize(
                 state
             );
 
+            state.Column++;
+            continue;
+        }
+
+        // Detect identifiers
+        if (state.Len == 0 && Util::IsIdentifier(c))
+        {
+            state.Identifier = true;
+        }
+        else if (c == '=')
+        {
+            // Flush previous token
+            Util::FlushToken(
+                source,
+                stream,
+                state
+            );
+
+            // Add equal token
+            state.Start = i;
             state.Len = 1;
             Util::FlushToken(
                 source,
@@ -120,9 +150,10 @@ Lexer::TokenStream Lexer::Tokenize(
 
             continue;
         }
-
-        // Validate identifier characters
-        if (state.Identifier && !Util::IsIdentifier(ch))
+        else if (
+            (state.Identifier && !Util::IsIdentifier(c)) ||
+            !state.Identifier
+        )
         {
             throw Exception(state);
         }
