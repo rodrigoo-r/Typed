@@ -21,7 +21,7 @@
 
 #include "Env.h"
 
-#include "Shared/Expect.h"
+#include "Shared/Stream/Expect.h"
 
 using namespace Typed::Environment;
 
@@ -32,22 +32,22 @@ Env Typed::Environment::ParseEnv(Lexer::TokenStream &stream)
     // Iterate through the token stream and populate the env map
     while (stream.HasNext())
     {
-        Shared::Expect(
+        Shared::Stream::Expect(
             stream,
             Lexer::Token::Type::Identifier
         );
 
-        auto key = stream.Curr();
-        Shared::Expect(
+        auto &key = stream.Curr();
+        Shared::Stream::Expect(
             stream,
             Lexer::Token::Type::Equal
         );
-        Shared::Expect(
+        Shared::Stream::Expect(
             stream,
             Lexer::Token::Type::StringLiteral
         );
 
-        auto value = stream.Curr();
+        auto &value = stream.Curr();
 
         // Insert into the env map
         env.emplace(
