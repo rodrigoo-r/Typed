@@ -21,13 +21,15 @@
 
 #pragma once
 
-namespace Typed::Shared
+namespace Typed::Shared::Character
 {
-    inline bool IsWhitespace(
-        const char ch
-    )
+    inline bool IsIdentifier(const char c)
     {
-        return ch == ' ' ||
-               ch == '\t';
+        return
+            (c >= 'a' && c <= 'z') ||
+            (c >= 'A' && c <= 'Z') ||
+            (c >= '0' && c <= '9') ||
+            c == '_'
+        ;
     }
 }
