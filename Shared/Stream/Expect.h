@@ -1,5 +1,5 @@
 /*
-        ==== The Zelix Programming Language ====
+==== The Zelix Programming Language ====
 ---------------------------------------------------------
   - This file is part of the Zelix Programming Language
     codebase. Zelix is a fast, statically-typed and
@@ -20,7 +20,7 @@
 //
 
 #pragma once
-#include "Shared/AgnosticException.h"
+#include "../Except/Agnostic.h"
 
 namespace Typed::Shared::Stream
 {
@@ -32,13 +32,13 @@ namespace Typed::Shared::Stream
     {
         if (!stream.HasNext())
         {
-            throw LexerException<Value>{stream};
+            throw AgnosticException<Value>{stream};
         }
 
         auto &token = stream.Next();
         if (token.type != expected_type)
         {
-            throw LexerException<Value>{stream};
+            throw AgnosticException<Value>{stream};
         }
     }
 }
