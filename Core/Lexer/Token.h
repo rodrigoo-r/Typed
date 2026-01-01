@@ -23,11 +23,11 @@
 #include <Celery/String/External.h>
 
 
-#include "Shared/Trace.h"
+#include "Shared/Trace/Trace.h"
 
 namespace Typed::Core::Lexer
 {
-    struct Token : Global::Trace
+    struct Token : Global::Trace::Trace
     {
         enum class Type
         {

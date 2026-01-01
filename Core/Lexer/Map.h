@@ -20,7 +20,7 @@
 //
 
 #pragma once
-#include "../../Shared/Lexer/TokenMap.h"
+#include "Shared/Lexer/TokenMap.h"
 #include "Token.h"
 
 namespace Typed::Core::Lexer
