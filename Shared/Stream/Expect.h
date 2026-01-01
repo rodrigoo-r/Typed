@@ -20,6 +20,9 @@
 //
 
 #pragma once
+#include <Celery/Io/Io.h>
+
+
 #include "../Except/Agnostic.h"
 
 namespace Typed::Shared::Stream
@@ -36,7 +39,7 @@ namespace Typed::Shared::Stream
         }
 
         auto &token = stream.Next();
-        if (token.type != expected_type)
+        if (token.Kind != expected_type)
         {
             throw AgnosticException<Value>{stream};
         }
