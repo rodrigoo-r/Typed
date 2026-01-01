@@ -35,10 +35,12 @@ namespace Typed::Shared::Lexer
     };
 
     template <LexerType T>
-    using ConditionalStream = std::conditional_t<
-        T == LexerType::Environment,
-        Environment::Lexer::Token,
-        Core::Lexer::Token
+    using ConditionalStream = Stream::TokenStream<
+        std::conditional_t<
+            T == LexerType::Environment,
+            Environment::Lexer::Token,
+            Core::Lexer::Token
+        >
     >;
 
     template <LexerType T>
