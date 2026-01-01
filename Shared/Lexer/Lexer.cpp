@@ -23,21 +23,38 @@
 
 #include <Celery/Io/Io.h>
 
-#include "Map.h"
-#include "Shared/AgnosticException.h"
-#include "Shared/FlushToken.h"
-#include "Shared/IsIdentifier.h"
-#include "Shared/IsWhitespace.h"
-#include "Shared/LexerState.h"
+#include "Core/Lexer/Map.h"
+#include "Environment/Lexer/Map.h"
+#include "FlushToken.h"
+#include "Shared/Character/IsIdentifier.h"
+#include "Shared/Character/IsWhitespace.h"
+#include "Shared/Except/Agnostic.h"
+#include "State.h"
 
-using namespace Typed::Environment;
+using namespace Typed::Shared;
 
-Lexer::TokenStream Lexer::Tokenize(
+template <Lexer::LexerType T>
+Lexer::ConditionalStream<T> Lexer::Tokenize(
     Celery::Str::String &source
 )
 {
-    TokenStream stream;
-    Shared::LexerState state;
+    using Token = std::conditional_t<
+        T == LexerType::Environment,
+        Environment::Lexer::Token,
+        Core::Lexer::Token
+    >;
+
+    constexpr TokenMap<Token> Map;
+    if constexpr (T == LexerType::Environment)
+    {
+        Map = Environment::Lexer::Map;
+    } else
+    {
+        Map = Core::Lexer::Map;
+    }
+
+    ConditionalStream<T> stream;
+    State state;
 
     for (auto i = 0; i < source.Len(); i++)
     {
@@ -51,17 +68,24 @@ Lexer::TokenStream Lexer::Tokenize(
         // Handle newlines
         if (c == '\n')
         {
-            if (state.StringLiteral)
+            if constexpr (T == LexerType::Environment)
             {
-                throw Exception(state);
+                if (state.StringLiteral)
+                {
+                    throw AgnosticException<Token>(state);
+                }
+            } else
+            {
+                if (!state.StringLiteral)
+                {
+                    FlushToken(
+                        source,
+                        stream,
+                        state,
+                        Map
+                    );
+                }
             }
-
-            Shared::FlushToken(
-                source,
-                stream,
-                state,
-                Map
-            );
 
             state.Line++;
             state.Column = 1;
@@ -70,12 +94,12 @@ Lexer::TokenStream Lexer::Tokenize(
         }
 
         // Handle string literals
-        if (c == '"')
+        if (c == '`')
         {
             if (state.StringLiteral)
             {
                 // End of string literal
-                Shared::FlushToken(
+                Lexer::FlushToken(
                     source,
                     stream,
                     state,
@@ -86,7 +110,7 @@ Lexer::TokenStream Lexer::Tokenize(
             } else
             {
                 // Start of string literal
-                Shared::FlushToken(
+                FlushToken(
                     source,
                     stream,
                     state,
@@ -117,9 +141,9 @@ Lexer::TokenStream Lexer::Tokenize(
 #       endif
 
         // Ignore whitespace
-        if (Shared::IsWhitespace(c))
+        if (Character::IsWhitespace(c))
         {
-            Shared::FlushToken(
+            FlushToken(
                 source,
                 stream,
                 state,
@@ -131,14 +155,21 @@ Lexer::TokenStream Lexer::Tokenize(
         }
 
         // Detect identifiers
-        if (state.Len == 0 && Shared::IsIdentifier(c))
+        if (state.Len == 0 && Character::IsIdentifier(c))
         {
             state.Identifier = true;
         }
-        else if (c == '=')
+        else if (
+            c ==
+                (
+                    T == LexerType::Environment ?
+                        '=' :
+                        '@'
+                )
+        )
         {
             // Flush previous token
-            Shared::FlushToken(
+            FlushToken(
                 source,
                 stream,
                 state,
@@ -148,7 +179,7 @@ Lexer::TokenStream Lexer::Tokenize(
             // Add equal token
             state.Start = i;
             state.Len = 1;
-            Shared::FlushToken(
+            FlushToken(
                 source,
                 stream,
                 state,
@@ -158,11 +189,11 @@ Lexer::TokenStream Lexer::Tokenize(
             continue;
         }
         else if (
-            (state.Identifier && !Shared::IsIdentifier(c)) ||
+            (state.Identifier && !Character::IsIdentifier(c)) ||
             !state.Identifier
         )
         {
-            throw Exception(state);
+            throw AgnosticException<Token>(state);
         }
 
         state.Len++;
@@ -170,7 +201,7 @@ Lexer::TokenStream Lexer::Tokenize(
     }
 
     // Flush any pending token
-    Shared::FlushToken(
+    FlushToken(
         source,
         stream,
         state,
@@ -179,3 +210,13 @@ Lexer::TokenStream Lexer::Tokenize(
 
     return stream;
 }
+
+template
+Lexer::ConditionalStream<Lexer::LexerType::Environment> Lexer::Tokenize<Lexer::LexerType::Environment>(
+    Celery::Str::String &
+);
+
+template
+Lexer::ConditionalStream<Lexer::LexerType::Core> Lexer::Tokenize<Lexer::LexerType::Core>(
+    Celery::Str::String &
+);

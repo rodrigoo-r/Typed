@@ -22,9 +22,9 @@
 #pragma once
 #include <Celery/String/String.h>
 
+#include "../Stream/TokenStream.h"
 #include "Core/Lexer/Token.h"
 #include "Environment/Lexer/Token.h"
-#include "Shared/TokenStream.h"
 
 namespace Typed::Shared::Lexer
 {
