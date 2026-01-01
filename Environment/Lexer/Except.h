@@ -20,7 +20,7 @@
 //
 
 #pragma once
-#include <celery/except/base.h>
+#include <Celery/Except/Base.h>
 
 #include "Shared/Trace.h"
 #include "State.h"
