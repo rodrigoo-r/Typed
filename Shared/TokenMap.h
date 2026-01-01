@@ -25,49 +25,13 @@
 #include <Celery/Misc/Hash.h>
 #include <Celery/Misc/StringEqual.h>
 
-#include "Token.h"
-
-namespace Typed::Core::Lexer
+namespace Typed::Shared
 {
+    template <typename Value>
     using TokenMap = ankerl::unordered_dense::map<
         Celery::Str::External,
-        Token::Type,
+        Value,
         Celery::Misc::Hash,
         Celery::Misc::StringEquality
     >;
-
-    inline TokenMap Map = {
-        {
-            "Procedure",
-            Token::Type::Procedure
-        },
-        {
-            "End",
-            Token::Type::End
-        },
-        {
-            "Embed",
-            Token::Type::Embed
-        },
-        {
-            "Text",
-            Token::Type::Text
-        },
-        {
-            "Foreach",
-            Token::Type::Foreach
-        },
-        {
-            "In",
-            Token::Type::In
-        },
-        {
-            "Pull",
-            Token::Type::Pull
-        },
-        {
-            "From",
-            Token::Type::From
-        }
-    };
 }
