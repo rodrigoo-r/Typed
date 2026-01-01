@@ -34,8 +34,8 @@ namespace Typed::Environment::Lexer
             StringLiteral
         };
 
-        Type type;
-        Celery::Str::External value;
+        Type Kind;
+        Celery::Str::External Value;
     };
 
     using TokenStream = Shared::Stream::TokenStream<Token>;
