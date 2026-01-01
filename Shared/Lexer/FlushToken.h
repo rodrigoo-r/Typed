@@ -23,10 +23,10 @@
 
 #include <Celery/String/String.h>
 
-#include "Shared/Stream/TokenStream.h"
 #include "Shared/Except/Agnostic.h"
-#include "Shared/TokenMap.h"
+#include "Shared/Stream/TokenStream.h"
 #include "State.h"
+#include "TokenMap.h"
 
 namespace Typed::Shared::Lexer
 {
