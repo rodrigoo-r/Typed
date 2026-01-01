@@ -22,8 +22,8 @@
 #pragma once
 #include <Celery/Except/Base.h>
 
+#include "../Lexer/State.h"
 #include "Shared/TokenStream.h"
-#include "Shared/LexerState.h"
 #include "Shared/Trace.h"
 
 namespace Typed::Shared
