@@ -57,6 +57,10 @@ namespace Typed::Core::Lexer
         {
             "From",
             Token::Type::From
+        },
+        {
+            "@",
+            Token::Type::At
         }
     };
 }
