@@ -40,6 +40,12 @@ void Parser::Rule::Procedure(
     );
     root->Children.PushBack(proc);
 
+    auto block = Util::AllocateFrom(
+        stream,
+        AST::Rule::Block
+    );
+    proc->Children.PushBack(block);
+
     // Parse the block
-    Block(root, stream);
+    Block(block, stream);
 }
