@@ -20,21 +20,14 @@
 //
 
 #pragma once
-#include <Celery/Misc/Hash.h>
-#include <Celery/Misc/StringEqual.h>
 #include <Celery/String/External.h>
-#include <ankerl/unordered_dense.h>
 
 #include "Shared/Lexer/Lexer.h"
+#include "Shared/Map/Map.h"
 
 namespace Typed::Environment
 {
-    using Env = ankerl::unordered_dense::map<
-        Celery::Str::External,
-        Celery::Str::External,
-        Celery::Misc::Hash,
-        Celery::Misc::StringEquality
-    >;
+    using Env = Shared::Map::Map<Celery::Str::External>;
 
     Env ParseEnv(Lexer::TokenStream &);
 }
