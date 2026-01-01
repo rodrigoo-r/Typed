@@ -51,8 +51,8 @@ Env Typed::Environment::ParseEnv(Lexer::TokenStream &stream)
 
         // Insert into the env map
         env.emplace(
-            key.value,
-            value.value
+            key.Value,
+            value.Value
         );
     }
 
