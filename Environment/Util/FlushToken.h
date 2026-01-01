@@ -35,7 +35,7 @@ namespace Typed::Environment::Util
     inline void FlushToken(
         const Celery::Str::String &source,
         Lexer::TokenStream &stream,
-        Lexer::LexerState &state
+        Shared::LexerState &state
     )
     {
         // No token to flush

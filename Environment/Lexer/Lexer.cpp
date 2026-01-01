@@ -36,7 +36,7 @@ Lexer::TokenStream Lexer::Tokenize(
 )
 {
     TokenStream stream;
-    LexerState state;
+    Shared::LexerState state;
 
     for (auto i = 0; i < source.Len(); i++)
     {

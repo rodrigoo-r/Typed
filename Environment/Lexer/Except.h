@@ -32,7 +32,7 @@ namespace Typed::Environment::Lexer
         public Celery::Except::Exception
     {
     public:
-        Exception(const LexerState &st) :
+        Exception(const Shared::LexerState &st) :
             Trace(st.Line, st.Column),
             Celery::Except::Exception("")
         {}
