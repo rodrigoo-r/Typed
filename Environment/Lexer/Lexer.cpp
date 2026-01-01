@@ -23,11 +23,11 @@
 
 #include <Celery/Io/Io.h>
 
+#include "Shared/State.h"
 #include "Environment/Util/FlushToken.h"
 #include "Environment/Util/IsIdentifier.h"
 #include "Environment/Util/IsWhitespace.h"
 #include "Except.h"
-#include "State.h"
 
 using namespace Typed::Environment;
 

@@ -22,8 +22,8 @@
 #pragma once
 #include <Celery/Except/Base.h>
 
+#include "Shared/State.h"
 #include "Shared/Trace.h"
-#include "State.h"
 
 namespace Typed::Environment::Lexer
 {

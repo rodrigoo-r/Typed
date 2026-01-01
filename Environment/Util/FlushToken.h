@@ -23,8 +23,8 @@
 
 #include <Celery/String/String.h>
 
+#include "Shared/State.h"
 #include "Environment/Lexer/Except.h"
-#include "Environment/Lexer/State.h"
 
 #include "Environment/Lexer/Lexer.h"
 #include "Environment/Lexer/Map.h"
