@@ -20,12 +20,12 @@
 //
 
 #pragma once
-#include "Shared/TokenStream.h"
-#include "Shared/Trace.h"
+#include "../../Shared/Stream/TokenStream.h"
+#include "../../Shared/Trace/Trace.h"
 
 namespace Typed::Environment::Lexer
 {
-    struct Token : Global::Trace
+    struct Token : Global::Trace::Trace
     {
         enum class Type
         {
@@ -38,5 +38,5 @@ namespace Typed::Environment::Lexer
         Celery::Str::External value;
     };
 
-    using TokenStream = Shared::TokenStream<Token>;
+    using TokenStream = Shared::Stream::TokenStream<Token>;
 }
