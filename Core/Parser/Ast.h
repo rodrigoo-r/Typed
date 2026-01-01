@@ -42,6 +42,7 @@ namespace Typed::Core::Parser
             Foreach,
             In,
             Pull,
+            Push,
             From,
             Block
         };
