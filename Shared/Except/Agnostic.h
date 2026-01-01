@@ -22,24 +22,24 @@
 #pragma once
 #include <Celery/Except/Base.h>
 
+#include "Shared/TokenStream.h"
 #include "Shared/LexerState.h"
 #include "Shared/Trace.h"
-#include "TokenStream.h"
 
 namespace Typed::Shared
 {
     template <typename Value>
-    class LexerException :
+    class AgnosticException :
         public Global::Trace,
         public Celery::Except::Exception
     {
     public:
-        LexerException(const LexerState &st) :
+        AgnosticException(const LexerState &st) :
             Trace(st.Line, st.Column),
             Celery::Except::Exception("")
         {}
 
-        LexerException(TokenStream<Value> &stream) :
+        AgnosticException(TokenStream<Value> &stream) :
             Trace(
                 1,
                 1
