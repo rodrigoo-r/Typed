@@ -34,7 +34,7 @@ void Parser::Rule::Foreach(
     Queue::Block &queue
 )
 {
-    Shared::Stream::Expect(stream, Lexer::Token::Type::StringLiteral);
+    Shared::Stream::Expect(stream, Lexer::Token::Type::Identifier);
 
     auto foreach = Util::AllocateFrom(
         stream,
