@@ -26,7 +26,7 @@
 #include <Celery/String/External.h>
 #include <ankerl/unordered_dense.h>
 
-namespace Typed::Shared
+namespace Typed::Shared::Stream
 {
     template <typename Value>
     using TokenStream = Celery::Array::Stream<Value>;
