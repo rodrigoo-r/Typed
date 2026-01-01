@@ -207,6 +207,12 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
         state.Column++;
     }
 
+    // Must not be inside a string literal at the end of the source
+    if (state.StringLiteral)
+    {
+        throw AgnosticException<Token>(state);
+    }
+
     // Flush any pending token
     FlushToken(
         source,
