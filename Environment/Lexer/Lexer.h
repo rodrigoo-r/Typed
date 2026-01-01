@@ -20,8 +20,8 @@
 //
 
 #pragma once
-#include <celery/array/stream.h>
-#include <celery/string/string.h>
+#include <Celery/Array/Stream.h>
+#include <Celery/String/String.h>
 
 #include "Token.h"
 
