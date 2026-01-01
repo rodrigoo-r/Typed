@@ -30,7 +30,7 @@
 
 namespace Typed::Environment::Lexer
 {
-    inline Shared::TokenMap<Token::Type> Map = {
+    inline Shared::TokenMap<Token> Map = {
         {
             "=",
             Token::Type::Equal
