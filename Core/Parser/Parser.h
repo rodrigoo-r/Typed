@@ -20,32 +20,10 @@
 //
 
 #pragma once
-#include <Celery/Memory/Monotonic.h>
-
-#include "Core/Parser/Ast.h"
+#include "Ast.h"
 #include "Core/Lexer/Token.h"
 
-namespace Typed::Core::Parser::Util
+namespace Typed::Core::Parser
 {
-    using AstAllocator =
-        Celery::Pmr::MonotonicAllocator<AST>;
-
-    inline AST *AllocateFrom(
-        Lexer::TokenStream &stream,
-        const AST::Rule rule
-    )
-    {
-        auto &curr = stream.Pos() == 0 ?
-            stream.Peek() :
-            stream.Curr();
-
-        return AstAllocator::Allocate(
-            Global::Trace::Trace{
-                curr.Line,
-                curr.Column
-            },
-            rule,
-            curr.Value
-        );
-    }
+    AST *Parse(Lexer::TokenStream &);
 }

@@ -19,33 +19,36 @@
 // Created by rodrigo on 1/1/26.
 //
 
-#pragma once
-#include <Celery/Memory/Monotonic.h>
+#include "Parser.h"
 
-#include "Core/Parser/Ast.h"
-#include "Core/Lexer/Token.h"
+#include "Rule/Procedure/Procedure.h"
+#include "Shared/Except/Agnostic.h"
+#include "Util/AllocateFrom.h"
 
-namespace Typed::Core::Parser::Util
+using namespace Typed::Core;
+
+Parser::AST* Parser::Parse(Lexer::TokenStream &stream)
 {
-    using AstAllocator =
-        Celery::Pmr::MonotonicAllocator<AST>;
+    auto root = Util::AllocateFrom(stream, AST::Rule::Root);
 
-    inline AST *AllocateFrom(
-        Lexer::TokenStream &stream,
-        const AST::Rule rule
-    )
+    while (stream.HasNext())
     {
-        auto &curr = stream.Pos() == 0 ?
-            stream.Peek() :
-            stream.Curr();
+        auto &curr = stream.Next();
 
-        return AstAllocator::Allocate(
-            Global::Trace::Trace{
-                curr.Line,
-                curr.Column
-            },
-            rule,
-            curr.Value
-        );
+        switch (curr.Kind)
+        {
+            case Lexer::Token::Type::Procedure:
+            {
+                Rule::Procedure(root, stream);
+                break;
+            }
+
+            default:
+            {
+                throw Shared::AgnosticException(stream);
+            }
+        }
     }
+
+    return root;
 }
