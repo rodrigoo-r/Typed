@@ -20,3 +20,15 @@
 //
 
 #include "Read.h"
+
+Celery::Str::String Typed::Environment::Read()
+{
+    auto path = getenv("ZELIX_TYPED_ENV_PATH");
+    if (path == nullptr)
+    {
+        throw Celery::Except::CouldNotRead();
+    }
+
+    auto file = Celery::File::Read(path);
+    return file;
+}

@@ -26,15 +26,5 @@
 
 namespace Typed::Environment
 {
-    inline Celery::Str::String Read()
-    {
-        auto path = getenv("ZELIX_TYPED_ENV_PATH");
-        if (path == nullptr)
-        {
-            throw Celery::Except::CouldNotRead();
-        }
-
-        auto file = Celery::File::Read(path);
-        return file;
-    }
+    Celery::Str::String Read();
 }
