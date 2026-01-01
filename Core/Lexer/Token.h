@@ -40,7 +40,8 @@ namespace Typed::Core::Lexer
             Foreach,
             In,
             Pull,
-            From
+            From,
+            At
         };
 
         Type type;
