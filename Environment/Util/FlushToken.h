@@ -21,13 +21,13 @@
 
 #pragma once
 
-#include "State.h"
 #include <celery/string/string.h>
+#include "../Lexer/State.h"
 
-#include "Lexer.h"
-#include "Token.h"
+#include "../Lexer/Lexer.h"
+#include "../Lexer/Token.h"
 
-namespace Typed::Environment::Lexer
+namespace Typed::Environment::Lexer::Util
 {
     inline void FlushToken(
         const Celery::Str::String &source,
