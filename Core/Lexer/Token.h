@@ -47,4 +47,6 @@ namespace Typed::Core::Lexer
         Type type;
         Celery::Str::External value;
     };
+
+    using TokenStream = Shared::Stream::TokenStream<Token>;
 }
