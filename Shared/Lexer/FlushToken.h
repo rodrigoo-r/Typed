@@ -23,12 +23,12 @@
 
 #include <Celery/String/String.h>
 
-#include "AgnosticException.h"
+#include "Shared/Except/Agnostic.h"
+#include "Shared/TokenMap.h"
+#include "Shared/TokenStream.h"
 #include "Shared/LexerState.h"
-#include "TokenMap.h"
-#include "TokenStream.h"
 
-namespace Typed::Shared
+namespace Typed::Shared::Lexer
 {
     template <typename Value>
     void FlushToken(
@@ -64,7 +64,7 @@ namespace Typed::Shared
                 token.type = Value::Type::Identifier;
             } else
             {
-                throw LexerException<Value>(state);
+                throw AgnosticException<Value>(state);
             }
         }
 
