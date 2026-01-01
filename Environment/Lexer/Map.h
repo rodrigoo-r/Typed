@@ -36,7 +36,7 @@ namespace Typed::Environment::Lexer
         Celery::Misc::StringEquality
     >;
 
-    TokenMap Map = {
+    inline TokenMap Map = {
         {
             "=",
             Token::Type::Equal
