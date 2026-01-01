@@ -24,20 +24,22 @@
 
 #include "Shared/LexerState.h"
 #include "Shared/Trace.h"
+#include "TokenStream.h"
 
-namespace Typed::Environment::Lexer
+namespace Typed::Shared
 {
-    class Exception :
+    template <typename Value>
+    class LexerException :
         public Global::Trace,
         public Celery::Except::Exception
     {
     public:
-        Exception(const Shared::LexerState &st) :
+        LexerException(const LexerState &st) :
             Trace(st.Line, st.Column),
             Celery::Except::Exception("")
         {}
 
-        Exception(TokenStream &stream) :
+        LexerException(TokenStream<Value> &stream) :
             Trace(
                 1,
                 1
