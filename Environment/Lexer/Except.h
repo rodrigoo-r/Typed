@@ -36,5 +36,20 @@ namespace Typed::Environment::Lexer
             Trace(st.Line, st.Column),
             Celery::Except::Exception("")
         {}
+
+        Exception(TokenStream &stream) :
+            Trace(
+                1,
+                1
+            ),
+            Celery::Except::Exception("")
+        {
+            if (stream.Pos() > 0)
+            {
+                const auto &token = stream.Curr();
+                this->Line = token.Line;
+                this->Column = token.Column;
+            }
+        }
     };
 }
