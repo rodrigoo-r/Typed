@@ -22,7 +22,7 @@
 #pragma once
 #include <Celery/Trait/Default.h>
 
-namespace Typed::Environment::Lexer
+namespace Typed::Shared
 {
     struct LexerState :
         Global::Trace
