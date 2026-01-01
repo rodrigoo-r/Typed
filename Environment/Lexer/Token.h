@@ -20,10 +20,11 @@
 //
 
 #pragma once
+#include "Shared/Trace.h"
 
 namespace Typed::Environment::Lexer
 {
-    struct Token
+    struct Token : Global::Trace
     {
         enum class Type
         {
@@ -31,5 +32,8 @@ namespace Typed::Environment::Lexer
             Equal,
             StringLiteral
         };
+
+        Type type;
+        Celery::Str::External value;
     };
 }
