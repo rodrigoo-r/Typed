@@ -23,8 +23,8 @@
 
 #include <Celery/String/String.h>
 
-#include "Shared/State.h"
 #include "Environment/Lexer/Except.h"
+#include "Shared/LexerState.h"
 
 #include "Environment/Lexer/Lexer.h"
 #include "Environment/Lexer/Map.h"
@@ -35,7 +35,7 @@ namespace Typed::Environment::Util
     inline void FlushToken(
         const Celery::Str::String &source,
         Lexer::TokenStream &stream,
-        Lexer::State &state
+        Lexer::LexerState &state
     )
     {
         // No token to flush

@@ -22,7 +22,7 @@
 #pragma once
 #include <Celery/Except/Base.h>
 
-#include "Shared/State.h"
+#include "Shared/LexerState.h"
 #include "Shared/Trace.h"
 
 namespace Typed::Environment::Lexer
@@ -32,7 +32,7 @@ namespace Typed::Environment::Lexer
         public Celery::Except::Exception
     {
     public:
-        Exception(const State &st) :
+        Exception(const LexerState &st) :
             Trace(st.Line, st.Column),
             Celery::Except::Exception("")
         {}

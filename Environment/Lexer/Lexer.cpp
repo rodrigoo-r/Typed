@@ -23,11 +23,11 @@
 
 #include <Celery/Io/Io.h>
 
-#include "Shared/State.h"
 #include "Environment/Util/FlushToken.h"
 #include "Environment/Util/IsIdentifier.h"
 #include "Environment/Util/IsWhitespace.h"
 #include "Except.h"
+#include "Shared/LexerState.h"
 
 using namespace Typed::Environment;
 
@@ -36,7 +36,7 @@ Lexer::TokenStream Lexer::Tokenize(
 )
 {
     TokenStream stream;
-    State state;
+    LexerState state;
 
     for (auto i = 0; i < source.Len(); i++)
     {
