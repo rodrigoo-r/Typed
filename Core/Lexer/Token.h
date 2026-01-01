@@ -42,7 +42,8 @@ namespace Typed::Core::Lexer
             In,
             Pull,
             From,
-            At
+            At,
+            Push
         };
 
         Type type;
