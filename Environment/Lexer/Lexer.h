@@ -23,11 +23,14 @@
 #include <Celery/Array/Stream.h>
 #include <Celery/String/String.h>
 
+#include "Shared/LexerExceptcion.h"
+#include "Shared/TokenStream.h"
 #include "Token.h"
 
 namespace Typed::Environment::Lexer
 {
-    using TokenStream = Celery::Array::Stream<Token>;
+    using TokenStream = Shared::TokenStream<Token>;
+    using Exception = Shared::LexerException<Token>;
 
     TokenStream Tokenize(Celery::Str::String &);
 }
