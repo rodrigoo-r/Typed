@@ -34,7 +34,7 @@ void Parser::Rule::Pull(
     Lexer::TokenStream &stream
 )
 {
-    Shared::Stream::Expect(stream, Lexer::Token::Type::StringLiteral);
+    Shared::Stream::Expect(stream, Lexer::Token::Type::Identifier);
 
     auto pull = Util::AllocateFrom(
         stream,
