@@ -25,7 +25,7 @@
 #include <Celery/Misc/Hash.h>
 #include <Celery/Misc/StringEqual.h>
 
-namespace Typed::Shared
+namespace Typed::Shared::Lexer
 {
     template <typename Value>
     using TokenMap = ankerl::unordered_dense::map<
