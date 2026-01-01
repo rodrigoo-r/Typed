@@ -47,7 +47,8 @@ void Parser::Rule::Block(
 
     while (!queue.Empty())
     {
-        auto &curr = queue.Back();
+        auto curr = queue.Back();
+        queue.PopBack();
         auto done = false;
 
         while (!done && stream.HasNext())
@@ -83,7 +84,6 @@ void Parser::Rule::Block(
                 case Lexer::Token::Type::End:
                 {
                     done = true;
-                    queue.PopBack();
                     break;
                 }
 
