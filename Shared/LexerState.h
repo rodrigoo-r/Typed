@@ -24,7 +24,7 @@
 
 namespace Typed::Environment::Lexer
 {
-    struct State :
+    struct LexerState :
         Global::Trace
     {
         Celery::Trait::VeryLarge Start = 0;
