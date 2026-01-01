@@ -6,3 +6,11 @@ target_include_directories(
         PRIVATE
         .
 )
+
+if (APPLE)
+    target_include_directories(
+            ${PROJECT_NAME}
+            PRIVATE
+            /opt/homebrew/opt/xxhash/include
+    )
+endif ()
