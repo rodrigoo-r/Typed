@@ -35,18 +35,17 @@ namespace Typed::Core::Parser::Util
         const AST::Rule rule
     )
     {
-        auto &curr = stream.Peek();
-        if (stream.Pos() > 0)
-        {
-            curr = stream.Curr();
-        }
+        auto &curr = stream.Pos() == 0 ?
+            stream.Peek() :
+            stream.Curr();
 
         return AstAllocator::Allocate(
             Global::Trace::Trace{
                 curr.Line,
                 curr.Column
             },
-            rule
+            rule,
+            curr.value
         );
     }
 }
