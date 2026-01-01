@@ -23,6 +23,7 @@
 
 #include "Environment/Util/FlushToken.h"
 #include "Environment/Util/IsIdentifier.h"
+#include "Environment/Util/IsWhitespace.h"
 #include "Except.h"
 #include "State.h"
 
@@ -44,6 +45,35 @@ Lexer::TokenStream Lexer::Tokenize(
             state.Start = i;
             state.StringLiteral = false;
             state.Identifier = false;
+        }
+
+#       ifdef _WIN32
+        // Ignore carriage returns
+        if (ch == '\r')
+        {
+            continue;
+        }
+#       endif
+
+        if (ch == '\n')
+        {
+            // Flush any pending token
+            Util::FlushToken(
+                source,
+                stream,
+                state
+            );
+
+            // New line
+            state.Line++;
+            state.Column = 1;
+            continue;
+        }
+
+        // Skip whitespace outside string literals
+        if (!state.StringLiteral && Util::IsWhitespace(ch))
+        {
+            continue;
         }
 
         // Detect identifiers
@@ -98,6 +128,7 @@ Lexer::TokenStream Lexer::Tokenize(
         }
 
         state.Len++;
+        state.Column++;
     }
 
     return stream;
