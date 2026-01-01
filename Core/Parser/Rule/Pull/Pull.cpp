@@ -49,12 +49,7 @@ void Parser::Rule::Pull(
     pull->Children.PushBack(iden);
 
     Shared::Stream::Expect(stream, Lexer::Token::Type::From);
-    Shared::Stream::Expect(stream, Lexer::Token::Type::Identifier);
-    auto source = Util::AllocateFrom(
-        stream,
-        AST::Rule::Identifier
-    );
-    pull->Children.PushBack(source);
+    Shared::Stream::Expect(stream, Lexer::Token::Type::Embed);
 
     // Parse an embed text statement
     Embed(pull, stream);
