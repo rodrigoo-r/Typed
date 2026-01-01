@@ -30,7 +30,7 @@ namespace Typed::Shared
     template <typename Value>
     using TokenMap = ankerl::unordered_dense::map<
         Celery::Str::External,
-        Value,
+        typename Value::Type,
         Celery::Misc::Hash,
         Celery::Misc::StringEquality
     >;
