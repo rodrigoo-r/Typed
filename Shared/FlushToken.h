@@ -28,14 +28,10 @@
 #include "TokenMap.h"
 #include "TokenStream.h"
 
-#include "Environment/Lexer/Lexer.h"
-#include "Environment/Lexer/Map.h"
-#include "Environment/Lexer/Token.h"
-
 namespace Typed::Shared
 {
     template <typename Value>
-    inline void FlushToken(
+    void FlushToken(
         const Celery::Str::String &source,
         TokenStream<Value> &stream,
         LexerState &state,
