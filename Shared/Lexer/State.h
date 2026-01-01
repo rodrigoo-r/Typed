@@ -22,7 +22,7 @@
 #pragma once
 #include <Celery/Trait/Default.h>
 
-#include "../Trace.h"
+#include "Shared/Trace.h"
 
 namespace Typed::Shared::Lexer
 {

@@ -23,18 +23,18 @@
 
 #include <Celery/String/String.h>
 
+#include "Shared/Stream/TokenStream.h"
 #include "Shared/Except/Agnostic.h"
 #include "Shared/TokenMap.h"
-#include "Shared/TokenStream.h"
-#include "Shared/LexerState.h"
+#include "State.h"
 
 namespace Typed::Shared::Lexer
 {
     template <typename Value>
     void FlushToken(
         const Celery::Str::String &source,
-        TokenStream<Value> &stream,
-        LexerState &state,
+        Stream::TokenStream<Value> &stream,
+        State &state,
         TokenMap<Value> &map
     )
     {
