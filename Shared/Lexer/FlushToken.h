@@ -47,21 +47,21 @@ namespace Typed::Shared::Lexer
         auto source_ptr = source.Ptr() + state.Start;
 
         Value token;
-        token.value = Celery::Str::External(source_ptr, state.Len);
+        token.Value = Celery::Str::External(source_ptr, state.Len);
 
         if (state.StringLiteral)
         {
-            token.type = Value::Type::StringLiteral;
+            token.Kind = Value::Type::StringLiteral;
         } else
         {
             // Find using the token map
-            const auto it = map.find(token.value);
+            const auto it = map.find(token.Value);
             if (it != map.end())
             {
-                token.type = it->second;
+                token.Kind = it->second;
             } else if (state.Identifier)
             {
-                token.type = Value::Type::Identifier;
+                token.Kind = Value::Type::Identifier;
             } else
             {
                 throw AgnosticException<Value>(state);
