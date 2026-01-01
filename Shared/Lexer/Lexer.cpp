@@ -44,7 +44,7 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
         Core::Lexer::Token
     >;
 
-    constexpr TokenMap<Token> Map;
+    TokenMap<Token> Map;
     if constexpr (T == LexerType::Environment)
     {
         Map = Environment::Lexer::Map;
