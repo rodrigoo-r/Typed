@@ -20,25 +20,26 @@
 //
 
 #pragma once
-#include "Environment/Lexer/Except.h"
+#include "Shared/LexerExceptcion.h"
 #include "Environment/Lexer/Lexer.h"
 
-namespace Typed::Environment::Util
+namespace Typed::Shared
 {
-    inline void Expect(
-        Lexer::TokenStream &stream,
-        Lexer::Token::Type expected_type
+    template <typename Value>
+    void Expect(
+        TokenStream<Value> &stream,
+        typename Value::Type expected_type
     )
     {
         if (!stream.HasNext())
         {
-            throw Lexer::Exception{stream};
+            throw LexerException<Value>{stream};
         }
 
         auto &token = stream.Next();
         if (token.type != expected_type)
         {
-            throw Lexer::Exception{stream};
+            throw LexerException<Value>{stream};
         }
     }
 }
