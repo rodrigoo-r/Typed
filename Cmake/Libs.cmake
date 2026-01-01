@@ -15,7 +15,7 @@ FetchContent_Declare(
         GIT_TAG        master
 )
 
-if(APPLE AND NOT IOS)
+if(NOT(APPLE AND NOT IOS))
     FetchContent_Declare(
             xxhash
             GIT_REPOSITORY https://github.com/Cyan4973/xxHash
