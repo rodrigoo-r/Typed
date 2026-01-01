@@ -21,7 +21,7 @@
 
 #pragma once
 
-namespace Typed::Environment::Lexer::Util
+namespace Typed::Environment::Util
 {
     inline bool IsIdentifier(const char c)
     {
