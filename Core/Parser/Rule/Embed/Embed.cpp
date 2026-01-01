@@ -65,4 +65,6 @@ void Parser::Rule::Embed(
         );
         embed->Children.PushBack(push);
     }
+
+    Shared::Stream::Expect(stream, Lexer::Token::Type::End);
 }
