@@ -22,10 +22,10 @@
 #pragma once
 
 #include <celery/string/string.h>
-#include "../Lexer/State.h"
+#include "Environment/Lexer/State.h"
 
-#include "../Lexer/Lexer.h"
-#include "../Lexer/Token.h"
+#include "Environment/Lexer/Lexer.h"
+#include "Environment/Lexer/Token.h"
 
 namespace Typed::Environment::Lexer::Util
 {
