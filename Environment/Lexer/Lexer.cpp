@@ -131,5 +131,12 @@ Lexer::TokenStream Lexer::Tokenize(
         state.Column++;
     }
 
+    // Flush any pending token
+    Util::FlushToken(
+        source,
+        stream,
+        state
+    );
+
     return stream;
 }
