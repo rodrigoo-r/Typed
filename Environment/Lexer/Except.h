@@ -31,6 +31,7 @@ namespace Typed::Environment::Lexer
         public Global::Trace,
         public Celery::Except::Exception
     {
+    public:
         Exception(const State &st) :
             Trace(st.Line, st.Column),
             Celery::Except::Exception("")
