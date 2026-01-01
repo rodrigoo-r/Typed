@@ -50,7 +50,7 @@ void Parser::Rule::Embed(
 
     // Peek to see if we have pushes
     auto &peek = Util::SafePeek(stream);
-    while (peek.type == Lexer::Token::Type::Push)
+    while (peek.Kind == Lexer::Token::Type::Push)
     {
         // Consume the push token
         stream.Next();
