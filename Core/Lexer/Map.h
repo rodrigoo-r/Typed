@@ -20,12 +20,12 @@
 //
 
 #pragma once
-#include "Shared/TokenMap.h"
+#include "../../Shared/Lexer/TokenMap.h"
 #include "Token.h"
 
 namespace Typed::Core::Lexer
 {
-    inline Shared::TokenMap<Token> Map = {
+    inline Shared::Lexer::TokenMap<Token> Map = {
         {
             "Procedure",
             Token::Type::Procedure
