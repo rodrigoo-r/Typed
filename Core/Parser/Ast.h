@@ -21,6 +21,7 @@
 
 #pragma once
 #include <Celery/Array/Vector.h>
+#include <Celery/String/External.h>
 
 #include "Shared/Trace/Trace.h"
 
@@ -45,7 +46,8 @@ namespace Typed::Core::Parser
             Block
         };
 
-        Rule rule;
-        Celery::Array::Vector<AST*> children;
+        Rule Rule;
+        Celery::Array::Vector<AST*> Children;
+        Celery::Str::External Value;
     };
 }
