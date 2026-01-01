@@ -22,7 +22,7 @@
 #pragma once
 #include <Celery/Trait/Default.h>
 
-namespace Typed::Global
+namespace Typed::Global::Trace
 {
     struct Trace
     {
