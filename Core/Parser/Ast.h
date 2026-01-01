@@ -22,9 +22,12 @@
 #pragma once
 #include <Celery/Array/Vector.h>
 
+#include "Shared/Trace/Trace.h"
+
 namespace Typed::Core::Parser
 {
-    struct AST
+    struct AST :
+        Global::Trace::Trace
     {
         enum class Rule
         {
