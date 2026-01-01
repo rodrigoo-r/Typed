@@ -22,13 +22,12 @@
 #pragma once
 #include <Celery/Io/Io.h>
 
-
 #include "Runtime/Engine/Scope/Writer.h"
 
 namespace Typed::Runtime::Engine::Writer
 {
     class Stdout :
-        public Scope::Writer
+        public Typed::Scope::Writer
     {
         void Write(Celery::Str::External &str) override
         {
