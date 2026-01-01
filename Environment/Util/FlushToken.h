@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include <celery/string/string.h>
+#include <Celery/String/String.h>
 
 #include "Environment/Lexer/Except.h"
 #include "Environment/Lexer/State.h"
