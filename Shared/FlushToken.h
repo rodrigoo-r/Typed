@@ -23,19 +23,23 @@
 
 #include <Celery/String/String.h>
 
-#include "Environment/Lexer/Except.h"
+#include "LexerExceptcion.h"
 #include "Shared/LexerState.h"
+#include "TokenMap.h"
+#include "TokenStream.h"
 
 #include "Environment/Lexer/Lexer.h"
 #include "Environment/Lexer/Map.h"
 #include "Environment/Lexer/Token.h"
 
-namespace Typed::Environment::Util
+namespace Typed::Shared
 {
+    template <typename Value>
     inline void FlushToken(
         const Celery::Str::String &source,
-        Lexer::TokenStream &stream,
-        Shared::LexerState &state
+        TokenStream<Value> &stream,
+        LexerState &state,
+        TokenMap<Value> &map
     )
     {
         // No token to flush
@@ -46,25 +50,25 @@ namespace Typed::Environment::Util
 
         auto source_ptr = source.Ptr() + state.Start;
 
-        Lexer::Token token;
+        Value token;
         token.value = Celery::Str::External(source_ptr, state.Len);
 
         if (state.StringLiteral)
         {
-            token.type = Lexer::Token::Type::StringLiteral;
+            token.type = Value::Type::StringLiteral;
         } else
         {
             // Find using the token map
-            const auto it = Lexer::Map.find(token.value);
-            if (it != Lexer::Map.end())
+            const auto it = map.find(token.value);
+            if (it != map.end())
             {
                 token.type = it->second;
             } else if (state.Identifier)
             {
-                token.type = Lexer::Token::Type::Identifier;
+                token.type = Value::Type::Identifier;
             } else
             {
-                throw Lexer::Exception(state);
+                throw LexerException<Value>(state);
             }
         }
 
