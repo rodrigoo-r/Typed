@@ -27,13 +27,13 @@
 #include "Environment/Lexer/Lexer.h"
 #include "Environment/Lexer/Token.h"
 
-namespace Typed::Environment::Lexer::Util
+namespace Typed::Environment::Util
 {
     inline void FlushToken(
         const Celery::Str::String &source,
-        TokenStream &stream,
-        const Token::Type type,
-        State &state
+        Lexer::TokenStream &stream,
+        const Lexer::Token::Type type,
+        Lexer::State &state
     )
     {
         // No token to flush
@@ -44,7 +44,7 @@ namespace Typed::Environment::Lexer::Util
 
         auto source_ptr = source.Ptr() + state.Start;
 
-        Token token;
+        Lexer::Token token;
         token.type = type;
         token.value = Celery::Str::External(source_ptr, state.Len);
 
