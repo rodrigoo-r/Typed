@@ -25,7 +25,7 @@
 #include <Celery/String/External.h>
 #include <ankerl/unordered_dense.h>
 
-#include "Lexer/Lexer.h"
+#include "Shared/Lexer/Lexer.h"
 
 namespace Typed::Environment
 {
