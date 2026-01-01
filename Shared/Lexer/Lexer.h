@@ -20,17 +20,27 @@
 //
 
 #pragma once
-#include <Celery/Array/Stream.h>
 #include <Celery/String/String.h>
 
-#include "Shared/AgnosticException.h"
+#include "Core/Lexer/Token.h"
+#include "Environment/Lexer/Token.h"
 #include "Shared/TokenStream.h"
-#include "Token.h"
 
-namespace Typed::Environment::Lexer
+namespace Typed::Shared::Lexer
 {
-    using TokenStream = Shared::TokenStream<Token>;
-    using Exception = Shared::LexerException<Token>;
+    enum class LexerType
+    {
+        Environment,
+        Core
+    };
 
-    TokenStream Tokenize(Celery::Str::String &);
+    template <LexerType T>
+    using ConditionalStream = std::conditional_t<
+        T == LexerType::Environment,
+        Environment::Lexer::Token,
+        Core::Lexer::Token
+    >;
+
+    template <LexerType T>
+    ConditionalStream<T> Tokenize(Celery::Str::String &);
 }
