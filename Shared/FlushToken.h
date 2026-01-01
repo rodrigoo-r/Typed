@@ -35,7 +35,7 @@ namespace Typed::Shared
         const Celery::Str::String &source,
         TokenStream<Value> &stream,
         LexerState &state,
-        TokenMap<typename Value::Type> &map
+        TokenMap<Value> &map
     )
     {
         // No token to flush
