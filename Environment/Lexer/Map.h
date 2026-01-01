@@ -25,18 +25,12 @@
 #include <Celery/Misc/Hash.h>
 #include <Celery/Misc/StringEqual.h>
 
+#include "Shared/TokenMap.h"
 #include "Token.h"
 
 namespace Typed::Environment::Lexer
 {
-    using TokenMap = ankerl::unordered_dense::map<
-        Celery::Str::External,
-        Token::Type,
-        Celery::Misc::Hash,
-        Celery::Misc::StringEquality
-    >;
-
-    inline TokenMap Map = {
+    inline Shared::TokenMap<Token::Type> Map = {
         {
             "=",
             Token::Type::Equal
