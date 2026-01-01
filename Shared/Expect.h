@@ -20,8 +20,8 @@
 //
 
 #pragma once
-#include "Shared/LexerExceptcion.h"
 #include "Environment/Lexer/Lexer.h"
+#include "Shared/AgnosticException.h"
 
 namespace Typed::Shared
 {

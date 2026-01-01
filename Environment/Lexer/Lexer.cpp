@@ -24,10 +24,10 @@
 #include <Celery/Io/Io.h>
 
 #include "Map.h"
+#include "Shared/AgnosticException.h"
 #include "Shared/FlushToken.h"
 #include "Shared/IsIdentifier.h"
 #include "Shared/IsWhitespace.h"
-#include "Shared/LexerExceptcion.h"
 #include "Shared/LexerState.h"
 
 using namespace Typed::Environment;

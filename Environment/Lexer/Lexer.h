@@ -23,7 +23,7 @@
 #include <Celery/Array/Stream.h>
 #include <Celery/String/String.h>
 
-#include "Shared/LexerExceptcion.h"
+#include "Shared/AgnosticException.h"
 #include "Shared/TokenStream.h"
 #include "Token.h"
 

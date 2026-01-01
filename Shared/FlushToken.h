@@ -23,7 +23,7 @@
 
 #include <Celery/String/String.h>
 
-#include "LexerExceptcion.h"
+#include "AgnosticException.h"
 #include "Shared/LexerState.h"
 #include "TokenMap.h"
 #include "TokenStream.h"
