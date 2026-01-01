@@ -20,6 +20,7 @@
 //
 
 #include "Procedure.h"
+#include "Core/Parser/Rule/Block/Block.h"
 
 #include "Core/Parser/Util/AllocateFrom.h"
 #include "Shared/Stream/Expect.h"
@@ -37,7 +38,8 @@ void Parser::Rule::Procedure(
         stream,
         AST::Rule::Procedure
     );
-    root->children.PushBack(proc);
+    root->Children.PushBack(proc);
 
-
+    // Parse the block
+    Block(root, stream);
 }
