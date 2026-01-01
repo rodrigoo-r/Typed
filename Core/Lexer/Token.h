@@ -24,6 +24,7 @@
 
 
 #include "Shared/Trace/Trace.h"
+#include "Shared/Stream/TokenStream.h"
 
 namespace Typed::Core::Lexer
 {
