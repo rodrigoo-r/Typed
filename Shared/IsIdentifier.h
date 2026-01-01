@@ -21,7 +21,7 @@
 
 #pragma once
 
-namespace Typed::Environment::Util
+namespace Typed::Shared
 {
     inline bool IsIdentifier(const char c)
     {
