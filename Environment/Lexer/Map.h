@@ -20,14 +20,13 @@
 //
 
 #pragma once
-#include <ankerl/unordered_dense.h>
 
-#include "Shared/TokenMap.h"
+#include "Shared/Lexer/TokenMap.h"
 #include "Token.h"
 
 namespace Typed::Environment::Lexer
 {
-    inline Shared::TokenMap<Token> Map = {
+    inline Shared::Lexer::TokenMap<Token> Map = {
         {
             "=",
             Token::Type::Equal
