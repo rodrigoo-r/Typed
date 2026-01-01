@@ -22,12 +22,12 @@
 #pragma once
 #include <Celery/Trait/Default.h>
 
-#include "Shared/Trace.h"
+#include "Shared/Trace/Trace.h"
 
 namespace Typed::Shared::Lexer
 {
     struct State :
-        Global::Trace
+        Global::Trace::Trace
     {
         Celery::Trait::VeryLarge Start = 0;
         Celery::Trait::VeryLarge Len = 0;
