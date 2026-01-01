@@ -21,9 +21,9 @@
 
 #pragma once
 #include <ankerl/unordered_dense.h>
-#include <celery/string/external.h>
-#include <celery/misc/hash.h>
-#include <celery/misc/string_equal.h>
+#include <Celery/String/External.h>
+#include <Celery/Misc/Hash.h>
+#include <Celery/Misc/StringEqual.h>
 
 #include "Token.h"
 
