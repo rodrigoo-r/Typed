@@ -19,10 +19,12 @@
 // Created by rodrigo on 1/1/26.
 //
 
-#include <iostream>
+#include "Environment/Read.h"
+
+using namespace Typed;
 
 int main()
 {
-    std::cout << "Zelix Programming Language - Compilation Module" << std::endl;
+    auto env = Environment::Read();
     return 0;
 }
