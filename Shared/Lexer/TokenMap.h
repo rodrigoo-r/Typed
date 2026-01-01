@@ -25,13 +25,10 @@
 #include <Celery/Misc/Hash.h>
 #include <Celery/Misc/StringEqual.h>
 
+#include "Shared/Map/Map.h"
+
 namespace Typed::Shared::Lexer
 {
     template <typename Value>
-    using TokenMap = ankerl::unordered_dense::map<
-        Celery::Str::External,
-        typename Value::Type,
-        Celery::Misc::Hash,
-        Celery::Misc::StringEquality
-    >;
+    using TokenMap = Map::Map<typename Value::Type>;
 }
