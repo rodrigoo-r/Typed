@@ -202,24 +202,27 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
             !state.Identifier
         )
         {
-            throw AgnosticException<Token>(state);
-        } else
-        {
-            if (
-                !handle_punctuation<T>(
-                    handler,
-                    Map,
-                    source,
-                    stream,
-                    state,
-                    i,
-                    c,
-                    std::make_index_sequence<PunctSize>{}
-                )
-            )
+            // Handle punctuation
+            if constexpr (PunctSize > 0)
             {
-                throw AgnosticException<Token>(state);
+                if (
+                    handle_punctuation<T>(
+                        handler,
+                        Map,
+                        source,
+                        stream,
+                        state,
+                        i,
+                        c,
+                        std::make_index_sequence<PunctSize>{}
+                    )
+                )
+                {
+                    continue;
+                }
             }
+
+            throw AgnosticException<Token>(state);
         }
 
         state.Len++;
