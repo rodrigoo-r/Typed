@@ -29,6 +29,7 @@ namespace Typed::Runtime::Engine::Writer
     class Stdout :
         public Typed::Scope::Writer
     {
+    public:
         void Write(Celery::Str::External &str) override
         {
             Celery::Io::Print(str);
