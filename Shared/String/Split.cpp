@@ -23,55 +23,60 @@
 
 using namespace Typed::Shared;
 
-Celery::Array::Vector<Celery::Str::String> String::Split(
-    Celery::Str::String& handle,
+Celery::Array::Vector<Celery::Str::External> String::Split(
+    Celery::Str::External &handle,
     const Celery::Str::External& delimiter
 )
 {
-    Celery::Array::Vector<Celery::Str::String> result;
+    Celery::Array::Vector<Celery::Str::External> result;
 
     if (handle.Empty())
         return result;
 
-    if (delimiter.Empty())
-    {
-        // Degenerate case: whole string as one token
+    if (delimiter.Empty()) {
+        // whole string as one token
         result.EmplaceBack(handle);
         return result;
     }
 
-    const char* src = handle.CStr();
-    const auto len = handle.Len();
-    const auto delim_len = delimiter.Size();
+    Celery::Trait::VeryLarge start = 0;
+    auto len = handle.Size();
+    auto dlen = delimiter.Size();
 
-    Celery::Str::String current;
+    // Optional rough pre-alloc
+    result.EnsureGrowth(len / (dlen + 1) + 1);
 
-    size_t i = 0;
-    while (i < len)
+    Celery::Trait::VeryLarge i = 0;
+    while (i + dlen <= len)
     {
-        // Delimiter match?
         if (
-            i + delim_len <= len &&
             std::memcmp(
-                src + i,
-                delimiter.Ptr(),
-                delim_len
+                handle.Ptr() + i,
+                delimiter.Ptr(), dlen
             ) == 0
         )
         {
-            result.EmplaceBack(std::move(current));
-            current.Reset(); // reuse buffer
-            i += delim_len;
+            result.EmplaceBack(
+                handle.Ptr() + start,
+                i - start
+            );
+            i += dlen;
+            start = i;
         }
         else
         {
-            current.EmplaceBack(src[i]);
             ++i;
         }
     }
 
-    // Push last segment (even if empty)
-    result.EmplaceBack(std::move(current));
+    // Tail
+    if (start <= len)
+    {
+        result.EmplaceBack(
+            handle.Ptr() + start,
+            len - start
+        );
+    }
 
     return result;
 }

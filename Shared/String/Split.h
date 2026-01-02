@@ -25,8 +25,8 @@
 
 namespace Typed::Shared::String
 {
-    Celery::Array::Vector<Celery::Str::String> Split(
-        Celery::Str::String &handle,
+    Celery::Array::Vector<Celery::Str::External> Split(
+        Celery::Str::External &handle,
         const Celery::Str::External &delimiter
     );
 }
