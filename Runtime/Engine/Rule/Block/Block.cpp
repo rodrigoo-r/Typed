@@ -27,6 +27,7 @@
 #include "Core/Parser/Util/AllocateFrom.h"
 #include "Runtime/Engine/Rule/Embed/Embed.h"
 #include "Runtime/Engine/Rule/Foreach/Foreach.h"
+#include "Runtime/Engine/Rule/Pull/Pull.h"
 #include "Runtime/Engine/Writer/Stdout.h"
 
 using namespace Typed::Runtime::Engine;
@@ -72,6 +73,15 @@ void Rule::Block(Core::Parser::AST *block, Environment::Env &env)
                         child,
                         scope,
                         queue
+                    );
+                    break;
+                }
+
+                case Core::Parser::AST::Rule::Pull:
+                {
+                    Pull(
+                        child,
+                        scope
                     );
                     break;
                 }
