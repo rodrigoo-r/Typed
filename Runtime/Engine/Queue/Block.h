@@ -33,9 +33,12 @@ namespace Typed::Runtime::Queue
         using SharedString =
             Celery::Ptr::Shared<Celery::Str::String>;
 
+        using OwnedDataList =
+            Celery::Array::Vector<SharedString>;
+
         Core::Parser::AST *Ast;
         Engine::Scope Scope;
-        Celery::Array::Vector<SharedString> OwnedData;
+        OwnedDataList OwnedData;
     };
 
     using Block = Celery::Array::Vector<BlockBase>;
