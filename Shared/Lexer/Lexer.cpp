@@ -36,11 +36,13 @@ using namespace Typed::Shared;
 
 template <
     Lexer::LexerType T,
-    typename Handler,
     Celery::Trait::VeryLarge... Is
 >
 bool handle_punctuation(
-    const Handler& h,
+    const Lexer::AgnosticHandler<
+        Lexer::ConditionalToken<T>,
+        sizeof...(Is)
+    >& h,
     Lexer::TokenMap<Lexer::ConditionalToken<T>> &Map,
     Celery::Str::String &source,
     Lexer::ConditionalStream<T> &stream,
@@ -101,7 +103,7 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
     ConditionalStream<T> stream;
     State state;
 
-    for (auto i = 0; i < source.Len(); i++)
+    for (Celery::Trait::VeryLarge i = 0; i < source.Size(); i++)
     {
         const auto c = source[i];
 
@@ -204,7 +206,7 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
         } else
         {
             if (
-                !handle_punctuation(
+                !handle_punctuation<T>(
                     handler,
                     Map,
                     source,
