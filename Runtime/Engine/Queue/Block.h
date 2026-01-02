@@ -30,15 +30,8 @@ namespace Typed::Runtime::Queue
 {
     struct BlockBase
     {
-        using SharedString =
-            Celery::Ptr::Shared<Celery::Str::String>;
-
-        using OwnedDataList =
-            Celery::List::LinkedList<SharedString>;
-
         Core::Parser::AST *Ast;
         Engine::Scope Scope;
-        OwnedDataList OwnedData;
     };
 
     using Block = Celery::Array::Vector<BlockBase>;
