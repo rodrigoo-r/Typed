@@ -30,11 +30,12 @@ namespace Typed::Runtime::Engine::Writer
         public Typed::Scope::Writer
     {
     public:
-        Celery::Str::String Handle;
+        Queue::BlockBase::SharedString Handle =
+            Celery::Ptr::MakeShared<Celery::Str::String>();
 
         void Write(Celery::Str::External &str) override
         {
-            Handle.Write(str.Ptr(), str.Size());
+            Handle->Write(str.Ptr(), str.Size());
         }
     };
 }
