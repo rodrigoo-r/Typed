@@ -20,9 +20,10 @@
 //
 
 #pragma once
+#include "Environment/Env.h"
 #include "Runtime/Symbol/Unit.h"
 
 namespace Typed::Runtime::Engine
 {
-    void Run(Symbol::Unit &);
+    void Run(Symbol::Unit &, Environment::Env &);
 }

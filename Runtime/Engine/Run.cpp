@@ -25,7 +25,7 @@
 
 using namespace Typed::Runtime;
 
-void Engine::Run(Symbol::Unit &unit)
+void Engine::Run(Symbol::Unit &unit, Environment::Env &env)
 {
     Celery::Str::External main_str = "Main";
     auto main_proc_it = unit.Procedures.find(main_str);
@@ -36,5 +36,5 @@ void Engine::Run(Symbol::Unit &unit)
         throw Celery::Except::Exception(main_str.Ptr());
     }
 
-    Rule::Procedure(main_proc_it->second);
+    Rule::Procedure(main_proc_it->second, env);
 }
