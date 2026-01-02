@@ -84,6 +84,9 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
                         state,
                         Map
                     );
+                } else
+                {
+                    state.Len++;
                 }
             }
 
