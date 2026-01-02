@@ -56,6 +56,6 @@ void Rule::Foreach(
         new_scope.Writer = scope.Writer;
 
         new_scope.Symbols[var] = el;
-        queue.EmplaceBack(body, scope);
+        queue.EmplaceBack(body, std::move(new_scope));
     }
 }
