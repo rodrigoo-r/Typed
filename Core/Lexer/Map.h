@@ -59,10 +59,6 @@ namespace Typed::Core::Lexer
             Token::Type::From
         },
         {
-            "@",
-            Token::Type::At
-        },
-        {
             "Push",
             Token::Type::Push
         }
