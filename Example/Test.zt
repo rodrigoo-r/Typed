@@ -1,0 +1,57 @@
+Procedure Main
+    Embed Text
+        `
+            /*
+                Generated header should be put here
+                At build time
+            */
+
+            #include "Util/Cli/AddSubcommand.h"
+        `
+    End
+
+    Foreach Subcommand In Subcommands
+        Embed Text
+            `
+                #include "Cli/Commands/@Subcommand@.h"
+            `
+
+            Push Subcommand
+        End
+    End
+
+    Embed Text
+        `
+            #define ZELIX_ADD_ALL_CLI_COMMANDS \
+        `
+    End
+
+    Foreach Subcommand In Subcommands
+        Pull LowerSubcommand From
+            Embed Text
+                `Lower@Subcommand@`
+                Push Subcommand
+            End
+
+        Pull SubcommandDesc From
+            Embed Text
+                `@Subcommand@Desc`
+                Push Subcommand
+            End
+
+        Embed Text
+            `
+                Zelix::Util::CLI::AddSubcommand( \
+                    app, \
+                    "@LowerSubcommand@", \
+                    "@SubcommandDesc@", \
+                    Zelix::CLI::@Subcommand@ \
+                ); \
+            `
+
+            Push LowerSubcommand
+            Push SubcommandDesc
+            Push Subcommand
+        End
+    End
+End
