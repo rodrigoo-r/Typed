@@ -70,12 +70,8 @@ void Rule::Pull(
     embed_scope.Writer = &str_writer;
     Embed(from, embed_scope);
 
-    // Move the string to the block
-    auto shared = Celery::Ptr::MakeShared<Celery::Str::String>(
-        std::move(str_writer.Handle)
-    );
-    list.PushBack(shared);
+    list.PushBack(str_writer.Handle);
 
     // Append the variable
-    scope.Symbols[name] = shared->External();
+    scope.Symbols[name] = list.Back()->External();
 }
