@@ -27,7 +27,7 @@
 namespace Typed::Runtime::Engine::Writer
 {
     class String :
-        public Scope::Writer
+        public Typed::Scope::Writer
     {
     public:
         Celery::Str::String Handle;
