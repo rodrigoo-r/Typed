@@ -23,14 +23,14 @@
 
 #include <Celery/Io/Io.h>
 
+#include "Runtime/Engine/Rule/Block/Block.h"
 #include "Shared/String/Split.h"
 
 using namespace Typed::Runtime::Engine;
 
 void Rule::Foreach(
     Core::Parser::AST *foreach,
-    Scope &scope,
-    Queue::Block &queue
+    Scope &scope
 )
 {
     auto &children = foreach->Children;
@@ -56,6 +56,6 @@ void Rule::Foreach(
         new_scope.Writer = scope.Writer;
 
         new_scope.Symbols[var] = el;
-        queue.EmplaceBack(body, std::move(new_scope));
+        Block(body, new_scope);
     }
 }

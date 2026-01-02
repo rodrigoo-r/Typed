@@ -28,7 +28,6 @@ namespace Typed::Runtime::Engine::Rule
 {
     void Foreach(
         Core::Parser::AST *,
-        Scope &,
-        Queue::Block &
+        Scope &
     );
 }
