@@ -90,5 +90,8 @@ void Rule::Embed(
             lookup.External(),
             val
         );
+
+        auto str_ext = result.External();
+        scope.Writer->Write(str_ext);
     }
 }
