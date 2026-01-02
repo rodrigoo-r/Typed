@@ -21,7 +21,6 @@
 
 #pragma once
 #include "Core/Parser/Ast.h"
-#include "Runtime/Engine/Queue/Block.h"
 #include "Runtime/Engine/Scope/Scope.h"
 
 namespace Typed::Runtime::Engine::Rule
