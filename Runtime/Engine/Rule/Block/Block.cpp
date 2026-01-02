@@ -52,7 +52,7 @@ void Rule::Block(Core::Parser::AST *block, Environment::Env &env)
 
     while (!queue.Empty())
     {
-        auto [current, scope, owned] = queue.Back();
+        auto [current, scope] = queue.Back();
         queue.PopBack();
 
         auto &children = current->Children;
@@ -81,7 +81,6 @@ void Rule::Block(Core::Parser::AST *block, Environment::Env &env)
                 {
                     Pull(
                         child,
-                        owned,
                         scope
                     );
                     break;
