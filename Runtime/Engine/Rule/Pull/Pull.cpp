@@ -32,7 +32,6 @@ using namespace Typed::Runtime::Engine;
 
 void Rule::Pull(
     Core::Parser::AST *pull,
-    Queue::BlockBase::OwnedDataList &list,
     Scope &scope
 )
 {
@@ -70,8 +69,12 @@ void Rule::Pull(
     embed_scope.Writer = &str_writer;
     Embed(from, embed_scope);
 
-    list.PushBack(str_writer.Handle);
+    auto val_it = scope.Symbols.find(str_writer.Handle.External());
+    if (val_it == scope.Symbols.end())
+    {
+        throw Celery::Except::Exception("Cannot find embed data");
+    }
 
     // Append the variable
-    scope.Symbols[name] = list.Back()->External();
+    scope.Symbols[name] = val_it->second;
 }

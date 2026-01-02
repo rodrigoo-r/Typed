@@ -28,7 +28,6 @@ namespace Typed::Runtime::Engine::Rule
 {
     void Pull(
         Core::Parser::AST *,
-        Queue::BlockBase::OwnedDataList &,
         Scope &
     );
 }
