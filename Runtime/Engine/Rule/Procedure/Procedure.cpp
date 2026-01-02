@@ -24,6 +24,8 @@
 #include <Celery/Io/Io.h>
 
 #include "Runtime/Engine/Rule/Block/Block.h"
+#include "Runtime/Engine/Rule/Block/Launcher.h"
+#include "Runtime/Engine/Writer/Stdout.h"
 
 using namespace Typed::Runtime::Engine;
 
@@ -37,7 +39,7 @@ void Rule::Procedure(Core::Parser::AST *proc, Environment::Env &env)
         {
             case Core::Parser::AST::Rule::Block:
             {
-                Block(child, env);
+                BlockLauncher(child, env);
                 break;
             }
 
