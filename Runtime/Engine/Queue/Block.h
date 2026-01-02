@@ -34,7 +34,7 @@ namespace Typed::Runtime::Queue
             Celery::Ptr::Shared<Celery::Str::String>;
 
         using OwnedDataList =
-            Celery::Array::Vector<SharedString>;
+            Celery::List::LinkedList<SharedString>;
 
         Core::Parser::AST *Ast;
         Engine::Scope Scope;
