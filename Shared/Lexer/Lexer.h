@@ -23,6 +23,7 @@
 #include <Celery/String/String.h>
 
 #include "../Stream/TokenStream.h"
+#include "AgnosticHandler.h"
 #include "Core/Lexer/Token.h"
 #include "Environment/Lexer/Token.h"
 
@@ -44,5 +45,21 @@ namespace Typed::Shared::Lexer
     >;
 
     template <LexerType T>
-    ConditionalStream<T> Tokenize(Celery::Str::String &);
+    using ConditionalToken = std::conditional_t<
+        T == LexerType::Environment,
+        Environment::Lexer::Token,
+        Core::Lexer::Token
+    >;
+
+    template <
+        LexerType T,
+        Celery::Trait::VeryLarge PunctSize
+    >
+    ConditionalStream<T> Tokenize(
+        Celery::Str::String &,
+        AgnosticHandler<
+            ConditionalToken<T>,
+            PunctSize
+        > &
+    );
 }
