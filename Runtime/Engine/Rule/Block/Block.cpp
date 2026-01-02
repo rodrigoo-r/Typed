@@ -32,65 +32,45 @@
 
 using namespace Typed::Runtime::Engine;
 
-void Rule::Block(Core::Parser::AST *block, Environment::Env &env)
+void Rule::Block(
+    Core::Parser::AST *block,
+    Scope &scope
+)
 {
-    Queue::Block queue;
+    auto &children = block->Children;
 
-    // Create the default scope
+    for (auto &child : children)
     {
-        Writer::Stdout default_writer;
-        Scope scope;
-        scope.Writer = &default_writer;
-
-        for (auto &[key, val] : env)
+        switch (child->Kind)
         {
-            scope.Symbols.emplace(key, val);
+        case Core::Parser::AST::Rule::Embed:
+        {
+            Embed(child, scope);
+            break;
         }
 
-        queue.EmplaceBack(block, scope);
-    }
-
-    while (!queue.Empty())
-    {
-        auto [current, scope] = queue.Back();
-        queue.PopBack();
-
-        auto &children = current->Children;
-
-        for (auto &child : children)
+        case Core::Parser::AST::Rule::Foreach:
         {
-            switch (child->Kind)
-            {
-                case Core::Parser::AST::Rule::Embed:
-                {
-                    Embed(child, scope);
-                    break;
-                }
+            Foreach(
+                child,
+                scope
+            );
+            break;
+        }
 
-                case Core::Parser::AST::Rule::Foreach:
-                {
-                    Foreach(
-                        child,
-                        scope,
-                        queue
-                    );
-                    break;
-                }
+        case Core::Parser::AST::Rule::Pull:
+        {
+            Pull(
+                child,
+                scope
+            );
+            break;
+        }
 
-                case Core::Parser::AST::Rule::Pull:
-                {
-                    Pull(
-                        child,
-                        scope
-                    );
-                    break;
-                }
-
-                default:
-                {
-                    break;
-                }
-            }
+        default:
+        {
+            break;
+        }
         }
     }
 }
