@@ -20,6 +20,9 @@
 //
 
 #pragma once
+#include <Celery/Ptr/Shared.h>
+
+
 #include "Core/Parser/Ast.h"
 #include "Runtime/Engine/Scope/Scope.h"
 
@@ -27,8 +30,12 @@ namespace Typed::Runtime::Queue
 {
     struct BlockBase
     {
-        Core::Parser::AST *ast;
-        Engine::Scope scope;
+        using SharedString =
+            Celery::Ptr::Shared<Celery::Str::String>;
+
+        Core::Parser::AST *Ast;
+        Engine::Scope Scope;
+        Celery::Array::Vector<SharedString> OwnedData;
     };
 
     using Block = Celery::Array::Vector<BlockBase>;
