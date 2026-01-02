@@ -29,7 +29,7 @@
 
 using namespace Typed::Runtime::Engine;
 
-void Rule::Block(Core::Parser::AST *block)
+void Rule::Block(Core::Parser::AST *block, Environment::Env &env)
 {
     Queue::Block queue;
     Writer::Stdout default_writer;

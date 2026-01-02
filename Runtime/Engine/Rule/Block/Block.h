@@ -21,8 +21,9 @@
 
 #pragma once
 #include "Core/Parser/Ast.h"
+#include "Environment/Env.h"
 
 namespace Typed::Runtime::Engine::Rule
 {
-    void Block(Core::Parser::AST *);
+    void Block(Core::Parser::AST *, Environment::Env &);
 }
