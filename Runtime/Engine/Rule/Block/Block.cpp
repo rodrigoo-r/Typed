@@ -24,6 +24,7 @@
 
 #include <Celery/Io/Io.h>
 
+#include "Core/Parser/Util/AllocateFrom.h"
 #include "Runtime/Engine/Rule/Embed/Embed.h"
 #include "Runtime/Engine/Writer/Stdout.h"
 
@@ -32,13 +33,20 @@ using namespace Typed::Runtime::Engine;
 void Rule::Block(Core::Parser::AST *block, Environment::Env &env)
 {
     Queue::Block queue;
-    Writer::Stdout default_writer;
-    queue.EmplaceBack(
-        block,
-        Scope{
-            .Writer = &default_writer
+
+    // Create the default scope
+    {
+        Writer::Stdout default_writer;
+        Scope scope;
+        scope.Writer = &default_writer;
+
+        for (auto &[key, val] : env)
+        {
+            scope.Symbols.emplace(key, val);
         }
-    );
+
+        queue.EmplaceBack(block, scope);
+    }
 
     while (!queue.Empty())
     {
@@ -54,12 +62,6 @@ void Rule::Block(Core::Parser::AST *block, Environment::Env &env)
                 case Core::Parser::AST::Rule::Embed:
                 {
                     Embed(child, scope);
-                    break;
-                }
-
-                case Core::Parser::AST::Rule::Block:
-                {
-                    queue.EmplaceBack(child, scope);
                     break;
                 }
 
