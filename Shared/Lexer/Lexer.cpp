@@ -41,7 +41,7 @@ template <
 >
 bool handle_punctuation(
     const Handler& h,
-    Lexer::TokenMap<ConditionalToken<T>> &Map,
+    Lexer::TokenMap<Lexer::ConditionalToken<T>> &Map,
     Celery::Str::String &source,
     Lexer::ConditionalStream<T> &stream,
     Lexer::State &state,
