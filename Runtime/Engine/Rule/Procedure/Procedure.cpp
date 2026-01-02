@@ -27,7 +27,7 @@
 
 using namespace Typed::Runtime::Engine;
 
-void Rule::Procedure(Core::Parser::AST *proc)
+void Rule::Procedure(Core::Parser::AST *proc, Environment::Env &env)
 {
     auto &children = proc->Children;
 
@@ -37,7 +37,7 @@ void Rule::Procedure(Core::Parser::AST *proc)
         {
             case Core::Parser::AST::Rule::Block:
             {
-                Block(child);
+                Block(child, env);
                 break;
             }
 
