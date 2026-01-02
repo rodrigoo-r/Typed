@@ -21,8 +21,10 @@
 
 #include <Celery/Io/Io.h>
 
+#include "Core/Lexer/Handler.h"
 #include "Core/Parser/Parser.h"
 #include "Environment/Env.h"
+#include "Environment/Lexer/Handler.h"
 #include "Environment/Read.h"
 #include "Runtime/Engine/Run.h"
 #include "Runtime/Unit/Get.h"
@@ -42,14 +44,14 @@ int main(const int argc, const char **argv)
     auto env_file = Environment::Read();
     auto env_tokens = Typed::Shared::Lexer::Tokenize<
         Shared::Lexer::LexerType::Environment
-    >(env_file);
+    >(env_file, Environment::Lexer::Handler);
     auto env = Environment::ParseEnv(env_tokens);
 
     // Parse the source file
     auto source = Celery::File::Read(argv[1]);
     auto tokens = Typed::Shared::Lexer::Tokenize<
         Shared::Lexer::LexerType::Core
-    >(source);
+    >(source, Core::Lexer::Handler);
     const auto ast = Core::Parser::Parse(tokens);
     auto unit = Runtime::Unit::Get(ast);
 
