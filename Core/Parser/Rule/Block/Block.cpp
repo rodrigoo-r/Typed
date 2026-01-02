@@ -47,12 +47,9 @@ void Parser::Rule::Block(
 
     while (!queue.Empty())
     {
-        auto curr = queue.Back();
-        queue.PopBack();
-        auto done = false;
-
-        while (!done && stream.HasNext())
+        while (stream.HasNext())
         {
+            auto curr = queue.Back();
             auto &next = stream.Next();
 
             switch (next.Kind)
@@ -83,7 +80,13 @@ void Parser::Rule::Block(
 
                 case Lexer::Token::Type::End:
                 {
-                    done = true;
+                    if (queue.Empty())
+                    {
+                        throw Shared::AgnosticException(stream);
+                    }
+
+                    queue.PopBack();
+                    if (queue.Empty()) return;
                     break;
                 }
 
@@ -93,8 +96,5 @@ void Parser::Rule::Block(
                 }
             }
         }
-
-        if (done) continue;
-        throw Shared::AgnosticException(stream);
     }
 }
