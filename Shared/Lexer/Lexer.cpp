@@ -23,6 +23,7 @@
 
 #include <Celery/Io/Io.h>
 
+#include "AgnosticHandler.h"
 #include "Core/Lexer/Map.h"
 #include "Environment/Lexer/Map.h"
 #include "FlushToken.h"
@@ -33,25 +34,69 @@
 
 using namespace Typed::Shared;
 
-template <Lexer::LexerType T>
-Lexer::ConditionalStream<T> Lexer::Tokenize(
-    Celery::Str::String &source
+template <
+    Lexer::LexerType T,
+    typename Handler,
+    Celery::Trait::VeryLarge... Is
+>
+bool handle_punctuation(
+    const Handler& h,
+    Lexer::TokenMap<ConditionalToken<T>> &Map,
+    Celery::Str::String &source,
+    Lexer::ConditionalStream<T> &stream,
+    Lexer::State &state,
+    Celery::Trait::VeryLarge &i,
+    char c,
+    std::index_sequence<Is...>
 )
 {
-    using Token = std::conditional_t<
-        T == LexerType::Environment,
-        Environment::Lexer::Token,
-        Core::Lexer::Token
-    >;
+    bool matched = false;
 
-    TokenMap<Token> Map;
-    if constexpr (T == LexerType::Environment)
-    {
-        Map = Environment::Lexer::Map;
-    } else
-    {
-        Map = Core::Lexer::Map;
-    }
+    ((
+        [&]
+        {
+            if (!matched && c == h.Punctuation[Is])
+            {
+                // Flush previous token
+                Lexer::FlushToken(
+                    source,
+                    stream,
+                    state,
+                    Map
+                );
+
+                // Add equal token
+                state.Start = i;
+                state.Len = 1;
+                FlushToken(
+                    source,
+                    stream,
+                    state,
+                    Map
+                );
+
+                matched = true;
+            }
+        }()
+    ), ...);
+
+    return matched;
+}
+
+template <
+    Lexer::LexerType T,
+    Celery::Trait::VeryLarge PunctSize
+>
+Lexer::ConditionalStream<T> Lexer::Tokenize(
+    Celery::Str::String &source,
+    AgnosticHandler<
+        ConditionalToken<T>,
+        PunctSize
+    > &handler
+)
+{
+    using Token = ConditionalToken<T>;
+    auto &Map = handler.Map;
 
     ConditionalStream<T> stream;
     State state;
@@ -68,26 +113,14 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
         // Handle newlines
         if (c == '\n')
         {
-            if constexpr (T == LexerType::Environment)
+            if (handler.NewlineHandler(state))
             {
-                if (state.StringLiteral)
-                {
-                    throw AgnosticException<Token>(state);
-                }
-            } else
-            {
-                if (!state.StringLiteral)
-                {
-                    FlushToken(
-                        source,
-                        stream,
-                        state,
-                        Map
-                    );
-                } else
-                {
-                    state.Len++;
-                }
+                FlushToken(
+                    source,
+                    stream,
+                    state,
+                    Map
+                );
             }
 
             state.Line++;
@@ -97,14 +130,7 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
         }
 
         // Handle string literals
-        if (
-            c ==
-                (
-                    T == LexerType::Environment ?
-                        '"' :
-                        '`'
-                )
-        )
+        if (c == handler.StringLiteral)
         {
             if (state.StringLiteral)
             {
@@ -170,40 +196,28 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
             state.Identifier = true;
         }
         else if (
-            c ==
-                (
-                    T == LexerType::Environment ?
-                        '=' :
-                        '@'
-                )
-        )
-        {
-            // Flush previous token
-            FlushToken(
-                source,
-                stream,
-                state,
-                Map
-            );
-
-            // Add equal token
-            state.Start = i;
-            state.Len = 1;
-            FlushToken(
-                source,
-                stream,
-                state,
-                Map
-            );
-
-            continue;
-        }
-        else if (
             (state.Identifier && !Character::IsIdentifier(c)) ||
             !state.Identifier
         )
         {
             throw AgnosticException<Token>(state);
+        } else
+        {
+            if (
+                !handle_punctuation(
+                    handler,
+                    Map,
+                    source,
+                    stream,
+                    state,
+                    i,
+                    c,
+                    std::make_index_sequence<PunctSize>{}
+                )
+            )
+            {
+                throw AgnosticException<Token>(state);
+            }
         }
 
         state.Len++;
@@ -228,11 +242,27 @@ Lexer::ConditionalStream<T> Lexer::Tokenize(
 }
 
 template
-Lexer::ConditionalStream<Lexer::LexerType::Environment> Lexer::Tokenize<Lexer::LexerType::Environment>(
-    Celery::Str::String &
+Lexer::ConditionalStream<Lexer::LexerType::Environment>
+Lexer::Tokenize<
+    Lexer::LexerType::Environment,
+    1
+>(
+    Celery::Str::String &,
+    AgnosticHandler<
+        Environment::Lexer::Token,
+        1
+    > &
 );
 
 template
-Lexer::ConditionalStream<Lexer::LexerType::Core> Lexer::Tokenize<Lexer::LexerType::Core>(
-    Celery::Str::String &
+Lexer::ConditionalStream<Lexer::LexerType::Core>
+Lexer::Tokenize<
+    Lexer::LexerType::Core,
+    0
+>(
+    Celery::Str::String &,
+    AgnosticHandler<
+        Core::Lexer::Token,
+        0
+    > &
 );
