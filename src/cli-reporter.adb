@@ -1,5 +1,7 @@
 with Ada.Exceptions; use Ada.Exceptions;
 with Ada.Text_IO; use Ada.Text_IO;
+with Terminal; use Terminal;
+with Ansi; use Ansi;
 
 package body Cli.Reporter is
 
@@ -7,7 +9,7 @@ package body Cli.Reporter is
       Identity : constant String := Exception_Name    (Ex);
       Msg      : constant String := Exception_Message (Ex);
    begin
-      Put_Line ("error: " & Identity);
+      Write_Colored (Bright_Red & Bold, "error: " & Identity);
       Put_Line (""); -- Empty line for spacing
       Put_Line (Msg);
    end Report;
