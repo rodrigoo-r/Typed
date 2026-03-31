@@ -1,5 +1,7 @@
 .idea
 .vscode
-bin
 example/out
-cmake-build-debug
+/obj/
+/bin/
+/alire/
+/config/
