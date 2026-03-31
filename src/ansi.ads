@@ -1,7 +1,7 @@
 package Ansi is
-   type Ansi_Color is new String;
-   type Ansi_Style is new String;
-   type Ansi_Escape is new String;
+   subtype Ansi_Color  is String;
+   subtype Ansi_Style  is String;
+   subtype Ansi_Escape is String;
 
    -- ANSI escape codes for terminal formatting
    Escape       : constant Ansi_Escape := ASCII.ESC & "[";
