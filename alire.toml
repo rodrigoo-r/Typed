@@ -1,0 +1,9 @@
+name = "typed"
+description = ""
+version = "0.1.0-dev"
+
+authors = ["Rodrigo r"]
+maintainers = ["Rodrigo r <rodrigo@zelixlang.dev>"]
+licenses = "Apache-2.0"
+website = ""
+tags = []
