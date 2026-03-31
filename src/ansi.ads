@@ -25,7 +25,8 @@ package Ansi is
    Bright_Magenta: constant Ansi_Color := Ansi_Color (Bright_Tone & "5m");
    Bright_Cyan   : constant Ansi_Color := Ansi_Color (Bright_Tone & "6m");
    Bright_White  : constant Ansi_Color := Ansi_Color (Bright_Tone & "7m");
-   
+   Bright_Black  : constant Ansi_Color := Ansi_Color (Bright_Tone & "0m");
+
    -- Text styles
    Bold      : constant Ansi_Style := Ansi_Style (Escape & "1m");
    Underline : constant Ansi_Style := Ansi_Style (Escape & "4m");
