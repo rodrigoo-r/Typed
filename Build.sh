@@ -21,9 +21,4 @@
 #    Public License along with Zelix. If not, see
 #    <https://www.gnu.org/licenses/>.
 
-if [ ! -d "cmake-build-debug" ]; then
-    mkdir cmake-build-debug
-    cmake -B cmake-build-debug -S . -G "Ninja"
-fi
-
-cmake --build cmake-build-debug --target Fluent -j 14
+alr build --release

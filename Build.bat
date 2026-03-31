@@ -22,9 +22,4 @@ rem      - You should have received a copy of the GNU General
 rem        Public License along with Zelix. If not, see
 rem        <https://www.gnu.org/licenses/>.
 
-if not exist "cmake-build-debug" (
-    mkdir cmake-build-debug
-    cmake -B cmake-build-debug -S . -G "Ninja"
-)
-
-cmake --build cmake-build-debug --target Fluent -j 14
+alr build --release
