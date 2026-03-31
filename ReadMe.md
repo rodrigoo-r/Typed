@@ -33,13 +33,8 @@ manipulate and generate text during the compilation process.
 ### 📦 Installation
 
 Before you begin, please make sure you have the following prerequisites installed:
-- A C and C++ compiler (GCC or Clang are recommended).
-- CMake (version 3.16 or higher), can be uninstalled after Zelix is installed.
+- [Alire](https://alire.ada.dev/) (the Ada package manager)
 - A Git client (for cloning the repository)
-- **LLVM (version 16 or higher).**
-
-> **Note**: C++ Compilers can be uninstalled after Zelix is installed if they are no longer a dependency.
-> However, C compilers and libc must remain available, since the Zelix compilers relies on `cc`.
 
 Installation is simple. There are three main ways to install Zelix:
 
