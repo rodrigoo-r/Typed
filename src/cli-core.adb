@@ -13,7 +13,7 @@ package body Cli.Core is
    begin
       -- Make sure we have at least one argument
       if Argument_Count < 1 then
-         raise No_Arguments;
+         raise No_Arguments with "no arguments provided";
       end if;
 
       return Argument (1);
