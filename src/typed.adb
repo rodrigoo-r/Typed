@@ -2,6 +2,7 @@ with Cli.Core;
 with Cli.Reporter;
 with Ada.Text_IO;
 with Ada.Strings.Unbounded;
+with Lang.Map;
 
 procedure Typed is
    use Ada.Text_IO;
@@ -9,6 +10,8 @@ procedure Typed is
 
    Path : Unbounded_String;
 begin
+   Lang.Map.Initialize;
+   
    Path := To_Unbounded_String (Cli.Core.Process);
    Put_Line ("Path: " & To_String (Path));
 
