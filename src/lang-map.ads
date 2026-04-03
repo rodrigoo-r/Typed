@@ -1,8 +1,10 @@
 with Ada.Containers.Hashed_Maps;
+with Support.String;
 
 package Lang.Map is
 
    procedure Initialize;
+   function Get_Kind (Text : Support.String.View) return Token_Kind;
 
 private
 
