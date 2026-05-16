@@ -35,7 +35,12 @@ set(
 # Loop through the priority files and include them
 foreach (PRIORITY ${PRIORITY_FILES_ORDER})
     set(PRIORITY_PATH "${BUILD_FILES_PRIORITY_PATH}/${PRIORITY}")
-    if (EXISTS ${PRIORITY_PATH})
+    if (NOT EXISTS ${PRIORITY_PATH})
+        message(
+                WARNING
+                "The priority directory ${PRIORITY_PATH} does not exist. Skipping."
+        )
+    else ()
         # Make sure the path is a directory
         if (NOT IS_DIRECTORY ${PRIORITY_PATH})
             message(
