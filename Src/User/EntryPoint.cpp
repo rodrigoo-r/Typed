@@ -17,6 +17,8 @@
 // Created by Rodrigo on 5/15/26.
 //
 
+#include "CLI/CLIEntry.h"
+
 int main()
 {
     return 0;
