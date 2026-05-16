@@ -66,7 +66,8 @@ foreach (Subcommand IN LISTS Cli_Subcommands_Files)
             APPEND
             Cli_Subcommand_Process
             "    if (*${Subcommand_Name}) { \\\n"
-            "       Typed::Terminal::Subcommand::${Subcommand_Name_Capitalized}(); \\\n"
+            "       Typed::Terminal::Subcommand::"
+            "${Subcommand_Name_Capitalized}(${Subcommand_Name}_Contents); \\\n"
             "       return 0; \\\n"
             "    } \\\n"
     )
