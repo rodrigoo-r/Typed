@@ -23,6 +23,5 @@ using namespace Typed;
 
 int main(const int argc, char **argv)
 {
-    CLI::Run(argc, argv);
-    return 0;
+    return Terminal::Run(argc, argv);
 }
