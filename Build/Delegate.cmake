@@ -13,8 +13,8 @@
 
 # Defines the path for the Build directory, which
 # contains the CMake files for the project.
-set(BUILD_ABS_PATH "${CMAKE_SOURCE_DIR}/Build")
-set(BUILD_FILES_PRIORITY_PATH "${BUILD_ABS_PATH}/Priority")
+set(Build_Abs_Path "${CMAKE_SOURCE_DIR}/Build")
+set(Build_Files_Priority_Path "${Build_Abs_Path}/Priority")
 
 # Now, we include the CMake files by priority
 # In the order:
@@ -24,7 +24,7 @@ set(BUILD_FILES_PRIORITY_PATH "${BUILD_ABS_PATH}/Priority")
 # - Low
 # - Lowest
 set(
-    PRIORITY_FILES_ORDER
+    Priority_Files_Order
     "Highest"
     "High"
     "Normal"
@@ -33,26 +33,26 @@ set(
 )
 
 # Loop through the priority files and include them
-foreach (PRIORITY ${PRIORITY_FILES_ORDER})
-    set(PRIORITY_PATH "${BUILD_FILES_PRIORITY_PATH}/${PRIORITY}")
-    if (NOT EXISTS ${PRIORITY_PATH})
+foreach (Priority ${Priority_Files_Order})
+    set(Priority_Path "${Build_Files_Priority_Path}/${Priority}")
+    if (NOT EXISTS ${Priority_Path})
         message(
                 WARNING
-                "The priority directory ${PRIORITY_PATH} does not exist. Skipping."
+                "The priority directory ${Priority_Path} does not exist. Skipping."
         )
     else ()
         # Make sure the path is a directory
-        if (NOT IS_DIRECTORY ${PRIORITY_PATH})
+        if (NOT IS_DIRECTORY ${Priority_Path})
             message(
                     FATAL_ERROR
-                    "The path ${PRIORITY_PATH} is not a directory."
+                    "The path ${Priority_Path} is not a directory."
             )
         endif ()
 
         # Loop through the CMake files in the priority directory and include them
-        file(GLOB PRIORITY_FILES "${PRIORITY_PATH}/*.cmake")
-        foreach (PRIORITY_FILE ${PRIORITY_FILES})
-            include(${PRIORITY_FILE})
+        file(GLOB Priority_Files "${Priority_Path}/*.cmake")
+        foreach (Priority_File ${Priority_Files})
+            include(${Priority_File})
         endforeach ()
     endif ()
 endforeach ()
