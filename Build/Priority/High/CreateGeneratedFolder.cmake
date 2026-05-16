@@ -14,7 +14,8 @@
 # Add a generated folder inside the build directory,
 # which can be used to store generated files during the
 # build process
-set(Generated_Dir "${CMAKE_BINARY_DIR}/Generated/Include/Generated")
+set(Generated_Dir_Root "${CMAKE_BINARY_DIR}/Generated")
+set(Generated_Dir "${Generated_Dir_Root}/Include/Generated")
 
 if (NOT EXISTS "${Generated_Dir}")
     file(MAKE_DIRECTORY "${Generated_Dir}")
