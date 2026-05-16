@@ -12,4 +12,4 @@
 #-----------------------------------------------------#
 
 # Set a global variable to point to the BlackMagic dir
-set(BLACKMAGIC_DIR "${CMAKE_SOURCE_DIR}/BlackMagic")
+set(Black_Magic_Dir "${CMAKE_SOURCE_DIR}/BlackMagic")
