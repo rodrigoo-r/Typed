@@ -17,5 +17,5 @@ target_link_libraries(
         PRIVATE
         Celery::Celery
         CLI11::CLI11
-        #unordered_dense::unordered_dense
+        unordered_dense::unordered_dense
 )
