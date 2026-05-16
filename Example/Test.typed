@@ -1,0 +1,75 @@
+# Test Script
+# This is a comment
+
+Use Regex; # Import the Regex library
+Use IO; # Import the IO library for printing
+# Available libraries:
+# - Regex
+# - IO
+# - Math
+# - String
+# - List
+# - Dictionary
+# - FileSystem
+
+Procedure Main
+With Arguments
+    # No arguments for this procedure
+    # Example:
+    # Arg1 as String,
+    # Arg2 as Integer
+Begin
+    # Declare a variable
+    Declare
+        My_Regex as Regex
+    With
+        Call
+            Regex
+        With
+            "[a-zA-Z0-9]+"
+    ; # Create a regex to match alphanumeric strings
+
+    Declare
+        My_Replaced_String as String
+    With
+        Call_Method
+            Replace_One
+        From
+            My_Regex
+        With
+            "Hello, World!",
+            "Hi"
+        ; # Replace "Hello" with "Hi"
+
+    Call
+        Print
+    With
+        # Formats:
+        # $S - String
+        # $I - Integer
+        # $F - Float
+        "$S", # Format goes first, then arguments
+        My_Replaced_String
+    ; # Print the result
+
+    # Arithmetic example
+    Declare
+        # Arithmetic_Integer is just an Integer
+        # that tells the interpreter it should allow
+        # arithmetic operations in the declaration
+        Result as Arithmetic_Integer
+    With
+        5 + 10 / 24; # Perform some arithmetic
+
+    Add
+        15
+    To
+        Result; # Add 15 to the result
+
+    Call
+        Print
+    With
+        "$I",
+        Result
+    ; # Print the final result
+End_Procedure
