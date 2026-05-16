@@ -19,7 +19,7 @@
 
 #pragma once
 
-namespace Typed::CLI
+namespace Typed::Terminal
 {
-    void Run(int argc, char** argv);
+    int Run(int argc, char** argv);
 }
