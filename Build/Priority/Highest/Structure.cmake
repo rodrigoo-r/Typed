@@ -16,5 +16,6 @@ set(SRC_ABS_PATH "${CMAKE_SOURCE_DIR}/Src")
 
 # Add all the source files to the project
 file(GLOB_RECURSE SRC_FILES "${SRC_ABS_PATH}/*.cpp")
+file(GLOB_RECURSE HEADER_FILES "${SRC_ABS_PATH}/*.h")
 
-add_executable(${PROJECT_NAME} ${SRC_FILES})
+add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
