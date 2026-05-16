@@ -20,6 +20,10 @@ Get_Generated_File_Template(Cli_Subcommands_Contents)
 string(APPEND Cli_Subcommands_Contents "#define TYPED_CLI_SUBCOMMANDS \\\n")
 set(Cli_Subcommand_Process "#define TYPED_CLI_SUBCOMMANDS_PROCESS \\\n")
 
+# Add a dummy condition so we don't have to track whether we're adding
+# the first condition or not when adding the subcommand processing logic
+string(APPEND Cli_Subcommand_Process "if (false) \\\n")
+
 # Read the flags
 file(
         GLOB
@@ -65,7 +69,7 @@ foreach (Subcommand IN LISTS Cli_Subcommands_Files)
     string(
             APPEND
             Cli_Subcommand_Process
-            "    if (*${Subcommand_Name}) { \\\n"
+            "    else if (*${Subcommand_Name}) { \\\n"
             "       Typed::Terminal::Subcommand::"
             "${Subcommand_Name_Capitalized}(${Subcommand_Name}_Contents); \\\n"
             "       return 0; \\\n"
@@ -75,7 +79,12 @@ endforeach ()
 
 # Write an empty newline at the end of the macro definition
 string(APPEND Cli_Subcommands_Contents "\n")
-string(APPEND Cli_Subcommand_Process "\n")
+
+# Make sure to close the if condition we opened at the beginning of the subcommand processing macro
+string(APPEND Cli_Subcommand_Process "else { \\\n")
+string(APPEND Cli_Subcommand_Process "    std::cerr << app.help() << std::endl; \\\n")
+string(APPEND Cli_Subcommand_Process "    return 1; \\\n")
+string(APPEND Cli_Subcommand_Process "}")
 
 string(APPEND Cli_Subcommands_Contents "${Cli_Subcommand_Process}")
 
