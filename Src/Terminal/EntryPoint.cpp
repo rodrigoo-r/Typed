@@ -24,6 +24,7 @@
 #include "Config/Core.h"
 #include "Generated/CliFlags.h"
 #include "Generated/CliSubcommands.h"
+#include "Subcommand/Run/Handler.h"
 
 int Typed::Terminal::Run(const int argc, char **argv)
 {
