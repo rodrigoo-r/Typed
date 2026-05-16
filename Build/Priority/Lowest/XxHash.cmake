@@ -11,7 +11,6 @@
 #                                                     #
 #-----------------------------------------------------#
 
-
 if (APPLE AND UNIX)
     target_link_directories(
             ${PROJECT_NAME}
