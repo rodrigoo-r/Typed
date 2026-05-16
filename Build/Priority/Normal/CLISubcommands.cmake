@@ -22,7 +22,7 @@ set(Cli_Subcommand_Process "#define TYPED_CLI_SUBCOMMANDS_PROCESS \\\n")
 
 # Add a dummy condition so we don't have to track whether we're adding
 # the first condition or not when adding the subcommand processing logic
-string(APPEND Cli_Subcommand_Process "if (false) \\\n")
+string(APPEND Cli_Subcommand_Process "if (false){} \\\n")
 
 # Read the flags
 file(
