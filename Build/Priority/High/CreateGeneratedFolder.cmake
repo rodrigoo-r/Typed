@@ -14,12 +14,12 @@
 # Add a generated folder inside the build directory,
 # which can be used to store generated files during the
 # build process
-set(GENERATED_DIR "${CMAKE_BINARY_DIR}/Generated")
+set(Generated_Dir "${CMAKE_BINARY_DIR}/Generated")
 
-if (NOT EXISTS "${GENERATED_DIR}")
-    file(MAKE_DIRECTORY "${GENERATED_DIR}")
+if (NOT EXISTS "${Generated_Dir}")
+    file(MAKE_DIRECTORY "${Generated_Dir}")
 else ()
-    if (NOT IS_DIRECTORY "${GENERATED_DIR}")
+    if (NOT IS_DIRECTORY "${Generated_Dir}")
         message(
                 WARNING
                 "A file with the same name as the generated directory already exists: ${GENERATED_DIR}"
@@ -27,7 +27,7 @@ else ()
                 "If you want to keep this file, please rename it or move it to another location."
         )
 
-        file(REMOVE "${GENERATED_DIR}")
-        file(MAKE_DIRECTORY "${GENERATED_DIR}")
+        file(REMOVE "${Generated_Dir}")
+        file(MAKE_DIRECTORY "${Generated_Dir}")
     endif ()
 endif()
