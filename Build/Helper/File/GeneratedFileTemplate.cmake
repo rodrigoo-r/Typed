@@ -17,7 +17,7 @@ file(
         Generated_Template_Content
 )
 
-function(GetGeneratedFileTemplate Out_Var)
+function(Get_Generated_File_Template Out_Var)
     set(
             ${Out_Var}
             "${Generated_Template_Content}"
