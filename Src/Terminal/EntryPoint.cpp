@@ -21,10 +21,23 @@
 
 #include <CLI/CLI.hpp>
 
+#include "Config/Core.h"
+#include "Generated/CliFlags.h"
+#include "Generated/CliSubcommands.h"
+
 int Typed::Terminal::Run(const int argc, char **argv)
 {
-    CLI::App app{TYPED_PROJECT_NAME};
+    CLI::App app{};
+
+    // Add flags and subcommands
+    TYPED_CLI_FLAGS;
+    TYPED_CLI_SUBCOMMANDS;
+
+    // Parse CLI input
     CLI11_PARSE(app, argc, argv);
-    
+
+    // Runs the subcommand selected by the user
+    TYPED_CLI_SUBCOMMANDS_PROCESS;
+
     return 0;
 }
