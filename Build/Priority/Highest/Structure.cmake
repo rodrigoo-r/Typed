@@ -11,4 +11,10 @@
 #                                                     #
 #-----------------------------------------------------#
 
-add_executable(${PROJECT_NAME} main.cpp)
+# Define the abs path for the source directory
+set(SRC_ABS_PATH "${CMAKE_SOURCE_DIR}/Src")
+
+# Add all the source files to the project
+file(GLOB_RECURSE SRC_FILES "${SRC_ABS_PATH}/*.cpp")
+
+add_executable(${PROJECT_NAME} ${SRC_FILES})
