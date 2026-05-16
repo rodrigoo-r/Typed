@@ -19,6 +19,7 @@
 
 #include "EntryPoint.h"
 
+#include <iostream>
 #include <CLI/CLI.hpp>
 
 #include "Config/Core.h"
@@ -39,6 +40,4 @@ int Typed::Terminal::Run(const int argc, char **argv)
 
     // Runs the subcommand selected by the user
     TYPED_CLI_SUBCOMMANDS_PROCESS;
-
-    return 0;
 }
