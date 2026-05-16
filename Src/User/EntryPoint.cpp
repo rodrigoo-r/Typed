@@ -17,7 +17,7 @@
 // Created by Rodrigo on 5/15/26.
 //
 
-#include "CLI/CLIEntry.h"
+#include "CLI/EntryPoint.h"
 
 using namespace Typed;
 
