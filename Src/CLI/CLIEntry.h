@@ -17,12 +17,9 @@
 // Created by Rodrigo on 5/15/26.
 //
 
-#include "CLI/CLIEntry.h"
+#pragma once
 
-using namespace Typed;
-
-int main(const int argc, char **argv)
+namespace Typed::CLI
 {
-    CLI::Run(argc, argv);
-    return 0;
+    void Run(int argc, char** argv);
 }
