@@ -52,14 +52,10 @@ Begin
         My_Replaced_String
     ; # Print the result
 
-    # Arithmetic example
     Declare
-        # Arithmetic_Integer is just an Integer
-        # that tells the interpreter it should allow
-        # arithmetic operations in the declaration
-        Result as Arithmetic_Integer
+        Result as Integer
     With
-        5 + 10 / 24; # Perform some arithmetic
+        5;
 
     Add
         15
