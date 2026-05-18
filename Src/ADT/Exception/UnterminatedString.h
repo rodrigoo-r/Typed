@@ -24,12 +24,12 @@
 
 namespace Typed::ADT::Exception
 {
-    class UnknwonToken :
+    class UnterminatedString :
         public Celery::Except::Exception,
         public Core::Traceable
     {
     public:
-        UnknwonToken(
+        UnterminatedString(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
