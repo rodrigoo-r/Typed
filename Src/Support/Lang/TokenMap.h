@@ -48,6 +48,7 @@ namespace Typed::Support::Lang
         {"*", ADT::Lang::TokenType::Mul},
         {"/", ADT::Lang::TokenType::Div},
         {"True", ADT::Lang::TokenType::TrueLiteral},
+        {";", ADT::Lang::TokenType::Semicolon},
         {"False", ADT::Lang::TokenType::FalseLiteral}
     };
 }
