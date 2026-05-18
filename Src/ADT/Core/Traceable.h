@@ -24,7 +24,7 @@ namespace Typed::ADT::Core
 {
     struct Traceable
     {
-        Celery::Trait::VeryLarge Line;
-        Celery::Trait::VeryLarge Column;
+        Celery::Trait::VeryLarge line;
+        Celery::Trait::VeryLarge column;
     };
 }
