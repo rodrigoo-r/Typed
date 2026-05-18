@@ -26,6 +26,8 @@ namespace Typed::Core::Frontend::Lexer
         bool string_literal = false;
         bool number_literal = false;
         bool float_literal = false;
+        Celery::Trait::VeryLarge start = 0;
+        Celery::Trait::VeryLarge end = 0;
 
     public:
         void Reset()
@@ -63,6 +65,26 @@ namespace Typed::Core::Frontend::Lexer
         void ToggleFloatLiteral()
         {
             float_literal = !float_literal;
+        }
+
+        void SetStart(const Celery::Trait::VeryLarge &start)
+        {
+            this->start = start;
+        }
+
+        void SetEnd(const Celery::Trait::VeryLarge &end)
+        {
+            this->end = end;
+        }
+
+        [[nodiscard]] Celery::Trait::VeryLarge GetStart() const
+        {
+            return start;
+        }
+
+        [[nodiscard]] Celery::Trait::VeryLarge GetEnd() const
+        {
+            return end;
         }
     };
 }
