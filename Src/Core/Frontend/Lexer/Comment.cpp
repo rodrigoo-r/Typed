@@ -41,4 +41,7 @@ void Machine::Comment()
         // Move the contents position to the end of the stream
         contents.SetPos(contents.Size());
     }
+
+    state.SetStart(contents.Pos());
+    state.SetEnd(contents.Pos());
 }
