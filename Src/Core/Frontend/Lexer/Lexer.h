@@ -18,20 +18,20 @@
 //
 
 #pragma once
-#include <Celery/String/String.h>
-
 
 #include "ADT/Stream/Token.h"
 #include "State.h"
 
 namespace Typed::Core::Frontend::Lexer
 {
-    class Machine
+    class Machine :
+        public ADT::Core::Traceable
     {
     protected:
         ADT::Stream::Token tokens;
         State state;
 
+        void Flush();
         void Comment();
 
     public:
