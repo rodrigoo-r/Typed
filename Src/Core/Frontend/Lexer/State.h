@@ -28,6 +28,8 @@ namespace Typed::Core::Frontend::Lexer
         bool float_literal = false;
         Celery::Trait::VeryLarge start = 0;
         Celery::Trait::VeryLarge end = 0;
+        Celery::Trait::VeryLarge line = 1;
+        Celery::Trait::VeryLarge column = 1;
 
     public:
         void Reset()
@@ -85,6 +87,27 @@ namespace Typed::Core::Frontend::Lexer
         [[nodiscard]] Celery::Trait::VeryLarge GetEnd() const
         {
             return end;
+        }
+
+        [[nodiscard]] Celery::Trait::VeryLarge GetLine() const
+        {
+            return line;
+        }
+
+        [[nodiscard]] Celery::Trait::VeryLarge GetColumn() const
+        {
+            return column;
+        }
+
+        void AddLine()
+        {
+            line++;
+            column = 1;
+        }
+
+        void AddColumn()
+        {
+            column++;
         }
     };
 }
