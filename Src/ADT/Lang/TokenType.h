@@ -53,6 +53,7 @@ namespace Typed::ADT::Lang
         TrueLiteral,
         FalseLiteral,
 
+        Identifier,
         Unknown
     };
 }
