@@ -22,7 +22,17 @@
 
 namespace Typed::ADT::Map
 {
-    template <typename Key, typename Value>
+    template <
+        typename Key,
+        typename Value,
+        typename Hash = ankerl::unordered_dense::hash<Key>,
+        typename Equal = std::equal_to<Key>
+    >
     using Dense =
-        ankerl::unordered_dense::map<Key, Value>;
+        ankerl::unordered_dense::map<
+            Key,
+            Value,
+            Hash,
+            Equal
+        >;
 }
