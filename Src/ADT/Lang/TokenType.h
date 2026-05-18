@@ -53,6 +53,9 @@ namespace Typed::ADT::Lang
         TrueLiteral,
         FalseLiteral,
 
+        // Punctuation
+        Semicolon,
+
         Identifier,
         Unknown
     };
