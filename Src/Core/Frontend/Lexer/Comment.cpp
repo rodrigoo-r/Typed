@@ -26,19 +26,19 @@ using namespace Typed::Core::Frontend::Lexer;
 
 void Machine::Comment()
 {
-    auto ptr = Contents.Ptr() + Contents.Pos();
-    auto end = ptr + Contents.Size();
+    auto ptr = contents.Ptr() + contents.Pos();
+    auto end = ptr + contents.Size();
 
     // Find the next newline
     auto newline = std::find(ptr, end, '\n');
     if (newline != end)
     {
         // Move the contents position to the character after the newline
-        Contents.SetPos(Contents.Pos() + (newline - ptr) + 1);
+        contents.SetPos(contents.Pos() + (newline - ptr) + 1);
     }
     else
     {
         // Move the contents position to the end of the stream
-        Contents.SetPos(Contents.Size());
+        contents.SetPos(contents.Size());
     }
 }
