@@ -17,6 +17,7 @@
 // Created by Rodrigo on 5/18/26.
 //
 
+#include "ADT/Exception/UnknownToken.h"
 #include "Lexer.h"
 
 using namespace Typed::Core;
@@ -32,6 +33,11 @@ Machine::ConstStreamRef Machine::Lex()
     while (contents.HasNext())
     {
         auto c = contents.Next();
+        if (state.IsStringLiteral() && c != '"')
+        {
+            state.AddColumn();
+            continue;
+        }
 
         if (c == '"')
         {
@@ -48,5 +54,57 @@ Machine::ConstStreamRef Machine::Lex()
             Flush();
             Comment();
         }
+
+        else if (c == ';' || c == ' ')
+        {
+            Flush();
+        }
+
+        else if (c == '\n')
+        {
+            Flush();
+            state.AddLine();
+
+            continue;
+        }
+
+        else if (
+            state.GetSize() == 1 &&
+            (
+                (c >= 'a' && c <= 'z') ||
+                c == '_' ||
+                c >= 'A' && c <= 'Z'
+            )
+        )
+        {
+            state.ToggleIdentifier();
+        }
+
+        else if (
+            state.GetSize() == 1 &&
+            c >= '0' && c <= '9'
+        )
+        {
+            state.ToggleNumberLiteral();
+        }
+
+        else if (
+            c == '.' &&
+            state.IsNumberLiteral()
+        )
+        {
+            // Prevent numbers like "1.12.2"
+            if (state.IsFloatLiteral())
+            {
+                throw ADT::Exception::UnknwonToken(
+                    state.GetLine(),
+                    state.GetColumn()
+                );
+            }
+
+            state.ToggleFloatLiteral();
+        }
+
+        state.AddColumn();
     }
 }
