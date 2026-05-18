@@ -43,11 +43,11 @@ namespace Typed::Core::Frontend::Lexer
 
     private:
 
-        EntryRef Contents;
+        EntryRef contents;
 
     public:
         Machine(EntryRef contents) :
-            Contents(contents)
+            contents(contents)
         {}
 
         ConstStreamRef Lex();
