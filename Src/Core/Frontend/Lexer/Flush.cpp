@@ -31,14 +31,15 @@ void Machine::Flush()
     auto size = state.GetSize();
     auto ptr = contents.Ptr() + start;
     ADT::Lang::Token token{
-        {
-            state.GetLine(),
-            state.GetColumn()
-        },
-        Celery::Str::External{ptr, size},
-        ADT::Lang::TokenType::Add
-    };
+            {
+                state.GetLine(),
+                state.GetColumn()
+            },
+            Celery::Str::External{ptr, size},
+            ADT::Lang::TokenType::Add
+        };
 
+    state.SetStart(contents.Pos());
     if (size == 0 && !state.IsStringLiteral())
     {
         state.Reset();
@@ -54,7 +55,19 @@ void Machine::Flush()
     } else if (state.IsNumberLiteral())
     {
         token.type = ADT::Lang::TokenType::NumberLiteral;
-    } else if (state.IsIdentifier())
+    } else if (
+        state.IsIdentifier() ||
+        (
+            token.value.Size() == 1 && (
+                token.value[0] == '+' ||
+                token.value[0] == '-' ||
+                token.value[0] == '*' ||
+                token.value[0] == '/' ||
+                token.value[0] == ';' ||
+                token.value[0] == ','
+            )
+        )
+    )
     {
         // Find the token type and assign the appropriate type
         auto it = Support::Lang::TokenMap.find(token.value);
