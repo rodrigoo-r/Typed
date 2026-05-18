@@ -28,10 +28,9 @@ namespace Typed::Core::Frontend::Lexer
         bool float_literal = false;
         bool identifier = false;
         Celery::Trait::VeryLarge start = 0;
-        Celery::Trait::VeryLarge end = 0;
         Celery::Trait::VeryLarge line = 1;
         Celery::Trait::VeryLarge column = 1;
-        Celery::Trait::VeryLarge size = 1;
+        Celery::Trait::VeryLarge size = 0;
 
     public:
         void Reset()
@@ -39,7 +38,8 @@ namespace Typed::Core::Frontend::Lexer
             string_literal = false;
             number_literal = false;
             float_literal = false;
-            size = 1;
+            identifier = false;
+            size = 0;
         }
 
         [[nodiscard]] bool IsStringLiteral() const
@@ -87,19 +87,9 @@ namespace Typed::Core::Frontend::Lexer
             this->start = start;
         }
 
-        void SetEnd(const Celery::Trait::VeryLarge &end)
-        {
-            this->end = end;
-        }
-
         [[nodiscard]] Celery::Trait::VeryLarge GetStart() const
         {
             return start;
-        }
-
-        [[nodiscard]] Celery::Trait::VeryLarge GetEnd() const
-        {
-            return end;
         }
 
         [[nodiscard]] Celery::Trait::VeryLarge GetLine() const
@@ -126,7 +116,16 @@ namespace Typed::Core::Frontend::Lexer
         void AddColumn()
         {
             column++;
+        }
+
+        void AddSize()
+        {
             size++;
+        }
+
+        void ResetSize()
+        {
+            size = 0;
         }
     };
 }
