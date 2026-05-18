@@ -112,6 +112,11 @@ namespace Typed::Core::Frontend::Lexer
             return column;
         }
 
+        [[nodiscard]] Celery::Trait::VeryLarge GetSize() const
+        {
+            return size;
+        }
+
         void AddLine()
         {
             line++;
