@@ -18,6 +18,9 @@
 //
 
 #pragma once
+#include <Celery/String/String.h>
+
+
 #include "ADT/Stream/Token.h"
 
 namespace Typed::Core::Frontend::Lexer
@@ -45,6 +48,6 @@ namespace Typed::Core::Frontend::Lexer
             Contents(contents)
         {}
 
-        ConstStreamRef Lex(const std::string &input);
+        ConstStreamRef Lex(const Celery::Str::String &input);
     };
 }
