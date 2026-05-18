@@ -18,6 +18,7 @@
 //
 
 #include "ADT/Exception/UnknownToken.h"
+#include "ADT/Exception/UnterminatedString.h"
 #include "Lexer.h"
 
 using namespace Typed::Core;
@@ -35,8 +36,22 @@ Machine::ConstStreamRef Machine::Lex()
         auto c = contents.Next();
         if (state.IsStringLiteral() && c != '"')
         {
+            if (c == '\n')
+            {
+                throw ADT::Exception::UnterminatedString(
+                    state.GetLine(),
+                    state.GetColumn()
+                );
+            }
+
             state.AddColumn();
+            state.AddSize();
             continue;
+        }
+
+        if (state.GetSize() == 0)
+        {
+            state.SetStart(contents.Pos() - 1);
         }
 
         if (c == '"')
@@ -44,36 +59,65 @@ Machine::ConstStreamRef Machine::Lex()
             if (state.IsStringLiteral())
             {
                 Flush();
+                state.AddColumn();
+                state.ResetSize();
+            } else
+            {
+                Flush();
+                state.AddColumn();
+                state.ToggleStringLiteral();
+                state.ResetSize();
             }
-
-            state.ToggleStringLiteral();
-        }
-
-        else if (c == '#')
-        {
-            Flush();
-            Comment();
-        }
-
-        else if (c == ';' || c == ' ')
-        {
-            Flush();
-        }
-
-        else if (c == '\n')
-        {
-            Flush();
-            state.AddLine();
 
             continue;
         }
 
-        else if (
-            state.GetSize() == 1 &&
+        if (c == '#')
+        {
+            Flush();
+            Comment();
+            continue;
+        }
+
+        if (
+            c == ';' ||
+            c == ',' ||
+            c == '+' ||
+            c == '-' ||
+            c == '*' ||
+            c == '/'
+        )
+        {
+            Flush();
+            state.SetStart(contents.Pos() - 1);
+            state.AddSize();
+            Flush();
+            state.AddColumn();
+
+            continue;
+        }
+
+        if (c == ' ')
+        {
+            Flush();
+            state.AddColumn();
+            state.Reset();
+            continue;
+        }
+
+        if (c == '\n')
+        {
+            Flush();
+            state.AddLine();
+            continue;
+        }
+
+        if (
+            state.GetSize() == 0 &&
             (
                 (c >= 'a' && c <= 'z') ||
                 c == '_' ||
-                c >= 'A' && c <= 'Z'
+                (c >= 'A' && c <= 'Z')
             )
         )
         {
@@ -81,7 +125,7 @@ Machine::ConstStreamRef Machine::Lex()
         }
 
         else if (
-            state.GetSize() == 1 &&
+            state.GetSize() == 0 &&
             c >= '0' && c <= '9'
         )
         {
@@ -106,5 +150,11 @@ Machine::ConstStreamRef Machine::Lex()
         }
 
         state.AddColumn();
+        state.AddSize();
     }
+
+    // Last token
+    Flush();
+
+    return tokens;
 }
