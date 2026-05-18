@@ -78,4 +78,6 @@ void Machine::Flush()
 
     tokens.PushBack(std::move(token));
     state.Reset();
+    start = contents.Pos();
+    end = start;
 }
