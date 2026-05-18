@@ -48,6 +48,6 @@ namespace Typed::Core::Frontend::Lexer
             Contents(contents)
         {}
 
-        ConstStreamRef Lex(const Celery::Str::String &input);
+        ConstStreamRef Lex();
     };
 }
