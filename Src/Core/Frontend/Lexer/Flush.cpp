@@ -59,10 +59,6 @@ void Machine::Flush()
         state.IsIdentifier() ||
         (
             token.value.Size() == 1 && (
-                token.value[0] == '+' ||
-                token.value[0] == '-' ||
-                token.value[0] == '*' ||
-                token.value[0] == '/' ||
                 token.value[0] == ';' ||
                 token.value[0] == ','
             )
