@@ -28,7 +28,7 @@ namespace Typed::ADT::Lang
     struct Token :
         Core::Traceable
     {
-        Celery::Str::External Value;
+        Celery::Str::External value;
         TokenType type;
     };
 }
