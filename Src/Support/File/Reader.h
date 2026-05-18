@@ -29,18 +29,18 @@ namespace Typed::Support::File
 {
     class Reader
     {
-        Celery::Str::External Path;
+        Celery::Str::External path;
 
     public:
         Reader &SetPath(const Celery::Str::External &path)
         {
-            Path = path;
+            this->path = path;
             return *this;
         }
 
         [[nodiscard]] ADT::Stream::File Read() const
         {
-            auto file = Celery::File::Read(Path);
+            auto file = Celery::File::Read(path);
 
             // Convert to a stream
             ADT::Stream::File result;
