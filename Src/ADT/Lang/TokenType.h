@@ -40,11 +40,16 @@ namespace Typed::ADT::Lang
         // Instructions
         Declare,
         Call,
-        Call_Method,
+        CallMethod,
         Add,
         Sub,
         Mul,
         Div,
+
+        // Literals
+        StringLiteral,
+        NumberLiteral,
+        BooleanLiteral,
 
         Unknown
     };
