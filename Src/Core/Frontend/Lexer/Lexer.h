@@ -22,13 +22,15 @@
 
 
 #include "ADT/Stream/Token.h"
+#include "State.h"
 
 namespace Typed::Core::Frontend::Lexer
 {
     class Machine
     {
     protected:
-        ADT::Stream::Token Tokens;
+        ADT::Stream::Token tokens;
+        State state;
 
         void Comment();
 
