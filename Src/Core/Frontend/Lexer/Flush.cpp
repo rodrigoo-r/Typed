@@ -28,8 +28,7 @@ using namespace Typed::Core::Frontend::Lexer;
 void Machine::Flush()
 {
     auto start = state.GetStart();
-    auto end = state.GetEnd();
-    auto size = end - start;
+    auto size = state.GetSize();
     auto ptr = contents.Ptr() + start;
     ADT::Lang::Token token{
         {
