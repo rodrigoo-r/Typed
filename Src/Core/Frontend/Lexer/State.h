@@ -26,6 +26,7 @@ namespace Typed::Core::Frontend::Lexer
         bool string_literal = false;
         bool number_literal = false;
         bool float_literal = false;
+        bool identifier = false;
         Celery::Trait::VeryLarge start = 0;
         Celery::Trait::VeryLarge end = 0;
         Celery::Trait::VeryLarge line = 1;
@@ -52,6 +53,16 @@ namespace Typed::Core::Frontend::Lexer
         [[nodiscard]] bool IsFloatLiteral() const
         {
             return float_literal;
+        }
+
+        [[nodiscard]] bool IsIdentifier() const
+        {
+            return identifier;
+        }
+
+        void ToggleIdentifier()
+        {
+            identifier = !identifier;
         }
 
         void ToggleStringLiteral()
