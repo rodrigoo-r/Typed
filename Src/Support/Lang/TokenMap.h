@@ -33,14 +33,17 @@ namespace Typed::Support::Lang
         Celery::Misc::Hash
     > TokenMap = {
         {"Use", ADT::Lang::TokenType::Use},
+
         {"Procedure", ADT::Lang::TokenType::Procedure},
         {"Begin", ADT::Lang::TokenType::Begin},
         {"End_Procedure", ADT::Lang::TokenType::EndProcedure},
+
         {"As", ADT::Lang::TokenType::As},
         {"With", ADT::Lang::TokenType::With},
         {"Arguments", ADT::Lang::TokenType::Arguments},
         {"To", ADT::Lang::TokenType::To},
         {"By", ADT::Lang::TokenType::By},
+
         {"Declare", ADT::Lang::TokenType::Declare},
         {"Call", ADT::Lang::TokenType::Call},
         {"Call_Method", ADT::Lang::TokenType::CallMethod},
@@ -48,9 +51,16 @@ namespace Typed::Support::Lang
         {"Subtract", ADT::Lang::TokenType::Sub},
         {"Multiply", ADT::Lang::TokenType::Mul},
         {"Divide", ADT::Lang::TokenType::Div},
+
         {";", ADT::Lang::TokenType::Semicolon},
         {",", ADT::Lang::TokenType::Comma},
+
         {"True", ADT::Lang::TokenType::TrueLiteral},
-        {"False", ADT::Lang::TokenType::FalseLiteral}
+        {"False", ADT::Lang::TokenType::FalseLiteral},
+
+        {"String", ADT::Lang::TokenType::String},
+        {"Float", ADT::Lang::TokenType::Float},
+        {"Integer", ADT::Lang::TokenType::Integer},
+        {"Boolean", ADT::Lang::TokenType::Boolean}
     };
 }

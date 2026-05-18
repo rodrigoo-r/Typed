@@ -47,6 +47,12 @@ namespace Typed::ADT::Lang
         Mul,
         Div,
 
+        // Data types
+        String,
+        Float,
+        Integer,
+        Boolean,
+
         // Literals
         StringLiteral,
         NumberLiteral,
