@@ -43,5 +43,4 @@ void Machine::Comment()
     }
 
     state.SetStart(contents.Pos());
-    state.SetEnd(contents.Pos());
 }
