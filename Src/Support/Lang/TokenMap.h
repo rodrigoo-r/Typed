@@ -47,8 +47,9 @@ namespace Typed::Support::Lang
         {"-", ADT::Lang::TokenType::Sub},
         {"*", ADT::Lang::TokenType::Mul},
         {"/", ADT::Lang::TokenType::Div},
-        {"True", ADT::Lang::TokenType::TrueLiteral},
         {";", ADT::Lang::TokenType::Semicolon},
+        {",", ADT::Lang::TokenType::Comma},
+        {"True", ADT::Lang::TokenType::TrueLiteral},
         {"False", ADT::Lang::TokenType::FalseLiteral}
     };
 }

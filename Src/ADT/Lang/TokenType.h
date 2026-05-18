@@ -55,6 +55,7 @@ namespace Typed::ADT::Lang
 
         // Punctuation
         Semicolon,
+        Comma,
 
         Identifier,
         Unknown
