@@ -31,6 +31,7 @@ namespace Typed::Core::Frontend::Lexer
         Celery::Trait::VeryLarge end = 0;
         Celery::Trait::VeryLarge line = 1;
         Celery::Trait::VeryLarge column = 1;
+        Celery::Trait::VeryLarge size = 1;
 
     public:
         void Reset()
@@ -38,6 +39,7 @@ namespace Typed::Core::Frontend::Lexer
             string_literal = false;
             number_literal = false;
             float_literal = false;
+            size = 1;
         }
 
         [[nodiscard]] bool IsStringLiteral() const
@@ -119,6 +121,7 @@ namespace Typed::Core::Frontend::Lexer
         void AddColumn()
         {
             column++;
+            size++;
         }
     };
 }
