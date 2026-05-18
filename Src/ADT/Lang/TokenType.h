@@ -50,7 +50,8 @@ namespace Typed::ADT::Lang
         StringLiteral,
         NumberLiteral,
         FloatLiteral,
-        BooleanLiteral,
+        TrueLiteral,
+        FalseLiteral,
 
         Unknown
     };
