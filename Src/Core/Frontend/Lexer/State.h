@@ -23,46 +23,46 @@ namespace Typed::Core::Frontend::Lexer
 {
     class State
     {
-        bool StringLiteral = false;
-        bool NumberLiteral = false;
-        bool FloatLiteral = false;
+        bool string_literal = false;
+        bool number_literal = false;
+        bool float_literal = false;
 
     public:
         void Reset()
         {
-            StringLiteral = false;
-            NumberLiteral = false;
-            FloatLiteral = false;
+            string_literal = false;
+            number_literal = false;
+            float_literal = false;
         }
 
         [[nodiscard]] bool IsStringLiteral() const
         {
-            return StringLiteral;
+            return string_literal;
         }
 
         [[nodiscard]] bool IsNumberLiteral() const
         {
-            return NumberLiteral;
+            return number_literal;
         }
 
         [[nodiscard]] bool IsFloatLiteral() const
         {
-            return FloatLiteral;
+            return float_literal;
         }
 
         void ToggleStringLiteral()
         {
-            StringLiteral = !StringLiteral;
+            string_literal = !string_literal;
         }
 
         void ToggleNumberLiteral()
         {
-            NumberLiteral = !NumberLiteral;
+            number_literal = !number_literal;
         }
 
         void ToggleFloatLiteral()
         {
-            FloatLiteral = !FloatLiteral;
+            float_literal = !float_literal;
         }
     };
 }
