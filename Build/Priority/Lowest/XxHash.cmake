@@ -23,6 +23,8 @@ if (APPLE AND UNIX)
             PRIVATE
             /opt/homebrew/opt/xxhash/include
     )
+
+    target_link_libraries(Typed PRIVATE xxhash)
 else ()
     target_include_directories(
             xxhash
