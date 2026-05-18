@@ -49,6 +49,7 @@ namespace Typed::ADT::Lang
         // Literals
         StringLiteral,
         NumberLiteral,
+        FloatLiteral,
         BooleanLiteral,
 
         Unknown
