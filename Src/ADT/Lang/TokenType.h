@@ -44,6 +44,8 @@ namespace Typed::ADT::Lang
         Add,
         Sub,
         Mul,
-        Div
+        Div,
+
+        Unknown
     };
 }
