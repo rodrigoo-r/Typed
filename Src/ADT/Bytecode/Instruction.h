@@ -24,6 +24,10 @@ namespace Typed::ADT::Bytecode
 {
     struct Instruction
     {
+        using ArgumentList =
+            Celery::Array::SmallVector<int>;
+
         InstructionType type;
+        ArgumentList arguments;
     };
 }
