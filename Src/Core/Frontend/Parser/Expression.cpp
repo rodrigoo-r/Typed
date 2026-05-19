@@ -69,12 +69,6 @@ void Machine::Expression(
                 break;
             }
 
-            case ADT::Lang::TokenType::CallMethod:
-            {
-                result = CallMethod(expr, queue);
-                break;
-            }
-
             case ADT::Lang::TokenType::Add:
             {
                 result = Add(expr);

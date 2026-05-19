@@ -44,7 +44,6 @@ namespace Typed::ADT::Lang
 
         // Instructions
         Call,
-        CallMethod,
         Add,
         Sub,
         Div,
