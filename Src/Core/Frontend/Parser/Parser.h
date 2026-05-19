@@ -48,6 +48,7 @@ namespace Typed::Core::Frontend::Parser
 
         Lexer::Machine::StreamRef tokens;
 
+        void Expect(ADT::Lang::TokenType type);
         void Use();
 
     public:
