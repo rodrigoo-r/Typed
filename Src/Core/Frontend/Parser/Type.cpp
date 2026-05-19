@@ -52,12 +52,6 @@ Machine::TreePtr Machine::Type()
             return AllocateBase(token, ADT::Lang::ASTType::Boolean);
         }
 
-        // For built-in custom types
-        case ADT::Lang::TokenType::Identifier:
-        {
-            return AllocateBase(token, ADT::Lang::ASTType::Identifier);
-        }
-
         default:
         {
             throw ADT::Exception::UnexpectedToken(
