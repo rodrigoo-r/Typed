@@ -99,6 +99,31 @@ void Machine::Expression(TreePtr body, const TokenStreamView& input)
                 break;
             }
 
+            case ADT::Lang::TokenType::StringLiteral:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::NumberLiteral:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::FloatLiteral:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::FalseLiteral:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::TrueLiteral:
+            {
+                break;
+            }
+
             default:
             {
                 throw ADT::Exception::UnexpectedToken(
