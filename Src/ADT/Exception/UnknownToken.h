@@ -24,12 +24,12 @@
 
 namespace Typed::ADT::Exception
 {
-    class UnknwonToken :
+    class UnknownToken :
         public Celery::Except::Exception,
         public Core::Traceable
     {
     public:
-        UnknwonToken(
+        UnknownToken(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :

@@ -78,7 +78,7 @@ void Machine::Flush()
     } else
     {
         // Unknown token, throw an exception
-        throw ADT::Exception::UnknwonToken(
+        throw ADT::Exception::UnknownToken(
             state.GetLine(),
             state.GetColumn()
         );
