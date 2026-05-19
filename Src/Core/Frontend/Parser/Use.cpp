@@ -27,13 +27,12 @@ using namespace Typed::Core::Frontend::Parser;
 void Machine::Use()
 {
     // We assume the Use token has been already consumed
+    auto &identifier = tokens.Peek();
     Expect(ADT::Lang::TokenType::Identifier);
-
-    auto &token = tokens.Next();
 
     // The token's value will be put to the AST, so we
     // don't have to nest an Identifier AST under the Use AST
-    auto node = AllocateBase(token, ADT::Lang::ASTType::Use);
+    auto node = AllocateBase(identifier, ADT::Lang::ASTType::Use);
 
     root->children.PushBack(node);
 }
