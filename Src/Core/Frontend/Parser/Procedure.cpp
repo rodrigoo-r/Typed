@@ -42,8 +42,7 @@ void Machine::Procedure()
         node->children.PushBack(args);
 
         Expect(ADT::Lang::TokenType::Arguments);
-        tokens.Next();
-
+        
         // Parse arguments
         while (peek.type != ADT::Lang::TokenType::Begin)
         {
