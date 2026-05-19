@@ -17,6 +17,7 @@
 // Created by Rodrigo on 5/18/26.
 //
 
+#include "ADT/Exception/UnexpectedToken.h"
 #include "ADT/Exception/UnknownToken.h"
 #include "Parser.h"
 
@@ -47,7 +48,7 @@ void Machine::Expect(ADT::Lang::TokenType type)
     auto &token = tokens.Next();
     if (token.type != type)
     {
-        throw ADT::Exception::UnknownToken(
+        throw ADT::Exception::UnexpectedToken(
             token.line,
             token.column
         );
