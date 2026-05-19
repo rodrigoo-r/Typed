@@ -33,7 +33,7 @@ namespace Typed::Support::Stream
     )
     {
         auto start = stream.Pos();
-        auto size = 0;
+        Celery::Trait::VeryLarge size = 0;
 
         // Build the stream 1 element at a time
         while (stream.HasNext())
