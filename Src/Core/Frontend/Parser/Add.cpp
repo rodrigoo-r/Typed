@@ -26,8 +26,19 @@ using namespace Typed::Core::Frontend::Parser;
 
 Machine::TreePtr Machine::Add(TokenStreamView &input)
 {
-    auto &num = input.Next();
+    auto lhs = ArithmeticBase(input);
 
-    // Validate that the input is a number
+    // Syntax:
+    // <Add/Sub> <Num> <To> <Identifier>
+    Expect(input, ADT::Lang::TokenType::To);
 
+    auto &name = input.Peek();
+    Expect(input, ADT::Lang::TokenType::Identifier);
+
+    // Create the AST and return it
+    auto ast = AllocateBase(name, ADT::Lang::ASTType::Add);
+    ast->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+    ast->children.PushBack(lhs);
+
+    return ast;
 }
