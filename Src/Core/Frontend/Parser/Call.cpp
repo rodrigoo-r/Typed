@@ -48,10 +48,7 @@ Machine::TreePtr Machine::Call(TokenStreamView &input)
 
         // Consume the token and parse arguments
         tokens.Next();
-
-        auto args = AllocateBase(peek, ADT::Lang::ASTType::Arguments);
-        call->children.PushBack(args);
-        args->children.PushBack(CallArgs(input));
+        call->children.PushBack(CallArgs(input));
     }
 
     return call;
