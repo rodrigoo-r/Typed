@@ -17,6 +17,7 @@
 // Created by Rodrigo on 5/18/26.
 //
 
+#include "ADT/Exception/UnexpectedToken.h"
 #include "ADT/Stream/External.h"
 #include "Parser.h"
 #include "Support/Equality/TokenType.h"
@@ -64,6 +65,47 @@ void Machine::Expression(TreePtr body, const TokenStreamView& input)
         parent->children.PushBack(ast);
 
         // Get the candidate to determine the expression type
+        auto &candidate = expr.Next();
 
+        switch (candidate.type)
+        {
+            case ADT::Lang::TokenType::Call:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::CallMethod:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Add:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Sub:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Mul:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Div:
+            {
+                break;
+            }
+
+            default:
+            {
+                throw ADT::Exception::UnexpectedToken(
+                    candidate.line,
+                    candidate.column
+                );
+            }
+        }
     }
 }
