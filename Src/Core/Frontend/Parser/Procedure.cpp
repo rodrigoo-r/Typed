@@ -82,6 +82,10 @@ void Machine::Procedure()
         );
     }
 
+    // Consume the Begin token
+    tokens.Next();
+    peek = tokens.Peek();
+
     // Now parse the body
     auto body = AllocateBase(peek, ADT::Lang::ASTType::Body);
     node->children.PushBack(body);
