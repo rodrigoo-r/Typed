@@ -25,7 +25,7 @@ using namespace Typed::Core;
 using namespace Typed::Core::Frontend;
 using namespace Typed::Core::Frontend::Lexer;
 
-Machine::ConstStreamRef Machine::Lex()
+Machine::StreamRef Machine::Lex()
 {
     // Clear the tokens stream
     tokens.Clear();
