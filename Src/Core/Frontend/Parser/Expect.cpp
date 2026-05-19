@@ -31,7 +31,7 @@ void Machine::Expect(ADT::Lang::TokenType type)
     if (tokens.Empty())
     {
         // Exception at line 1 column 1
-        throw ADT::Exception::UnknwonToken(1, 1);
+        throw ADT::Exception::UnknownToken(1, 1);
     }
 
     if (!tokens.HasNext())

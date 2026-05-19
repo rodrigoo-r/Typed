@@ -140,7 +140,7 @@ Machine::StreamRef Machine::Lex()
             // Prevent numbers like "1.12.2"
             if (state.IsFloatLiteral())
             {
-                throw ADT::Exception::UnknwonToken(
+                throw ADT::Exception::UnknownToken(
                     state.GetLine(),
                     state.GetColumn()
                 );
