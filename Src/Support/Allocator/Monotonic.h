@@ -24,5 +24,5 @@ namespace Typed::Support::Allocator
 {
     template <typename Value>
     using Monotonic =
-        Celery::Pmr::BumpAllocator<Value>;
+        Celery::Pmr::MonotonicAllocator<Value>;
 }
