@@ -19,6 +19,7 @@
 
 #pragma once
 #include "ADT/Lang/AST.h"
+#include "ADT/Stream/External.h"
 #include "ADT/Stream/Token.h"
 #include "Core/Frontend/Lexer/Lexer.h"
 #include "Support/Allocator/Monotonic.h"
@@ -27,6 +28,10 @@ namespace Typed::Core::Frontend::Parser
 {
     class Machine
     {
+    public:
+        using TokenStreamView =
+            ADT::Stream::External<ADT::Lang::Token>;
+
     protected:
         using Allocator =
             Support::Allocator::Monotonic<
@@ -56,7 +61,7 @@ namespace Typed::Core::Frontend::Parser
         void Procedure();
 
         void Declare(TreePtr body);
-        void Expression(TreePtr body);
+        void Expression(TreePtr body, TokenStreamView input);
 
         TreePtr Type();
 
