@@ -50,7 +50,10 @@ void Machine::Expression(TreePtr parent)
     Expression(parent, expr);
 }
 
-void Machine::Expression(TreePtr body, const TokenStreamView& input)
+void Machine::Expression(
+    TreePtr body,
+    TokenStreamView &input
+)
 {
     Queue queue;
     queue.EmplaceBack(input, body);
