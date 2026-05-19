@@ -18,7 +18,6 @@
 //
 
 #include "ADT/Exception/UnexpectedToken.h"
-#include "ADT/Stream/External.h"
 #include "Parser.h"
 #include "Support/Equality/TokenType.h"
 #include "Support/Stream/Extract.h"
@@ -147,5 +146,7 @@ void Machine::Expression(
                 );
             }
         }
+
+        ast->children.PushBack(result);
     }
 }
