@@ -66,61 +66,73 @@ void Machine::Expression(TreePtr body, const TokenStreamView& input)
 
         // Get the candidate to determine the expression type
         auto &candidate = expr.Next();
+        TreePtr result = nullptr;
 
         switch (candidate.type)
         {
             case ADT::Lang::TokenType::Call:
             {
+                result = Call(expr);
                 break;
             }
 
             case ADT::Lang::TokenType::CallMethod:
             {
+                result = CallMethod(expr);
                 break;
             }
 
             case ADT::Lang::TokenType::Add:
             {
+                result = Add(expr);
                 break;
             }
 
             case ADT::Lang::TokenType::Sub:
             {
+                result = Sub(expr);
                 break;
             }
 
             case ADT::Lang::TokenType::Mul:
             {
+                result = Mul(expr);
                 break;
             }
 
             case ADT::Lang::TokenType::Div:
             {
+                result = Div(expr);
                 break;
             }
 
             case ADT::Lang::TokenType::StringLiteral:
             {
+                result = AllocateBase(candidate, ADT::Lang::ASTType::StringLiteral);
                 break;
             }
 
             case ADT::Lang::TokenType::NumberLiteral:
             {
+                result = AllocateBase(candidate, ADT::Lang::ASTType::NumberLiteral);
                 break;
             }
 
             case ADT::Lang::TokenType::FloatLiteral:
             {
+                result = AllocateBase(candidate, ADT::Lang::ASTType::FloatLiteral);
                 break;
             }
 
             case ADT::Lang::TokenType::FalseLiteral:
             {
+                result = AllocateBase(candidate, ADT::Lang::ASTType::FalseLiteral);
                 break;
             }
 
             case ADT::Lang::TokenType::TrueLiteral:
             {
+                result = AllocateBase(candidate, ADT::Lang::ASTType::TrueLiteral);
                 break;
             }
 
