@@ -30,6 +30,7 @@ namespace Typed::ADT::Lang
         Use,
         Procedure,
         Arguments,
+        Argument,
         Body,
 
         // Data Types
