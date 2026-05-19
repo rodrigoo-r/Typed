@@ -38,7 +38,7 @@ void Machine::Expect(ADT::Lang::TokenType type)
     {
         auto &curr = tokens.Curr();
 
-        throw ADT::Exception::UnknwonToken(
+        throw ADT::Exception::UnknownToken(
             curr.line,
             curr.column
         );
@@ -47,7 +47,7 @@ void Machine::Expect(ADT::Lang::TokenType type)
     auto &token = tokens.Peek();
     if (token.type != type)
     {
-        throw ADT::Exception::UnknwonToken(
+        throw ADT::Exception::UnknownToken(
             token.line,
             token.column
         );
