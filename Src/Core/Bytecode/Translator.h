@@ -17,29 +17,20 @@
 // Created by Rodrigo on 5/19/26.
 //
 
-#include "Walker.h"
+#pragma once
+#include "ADT/Lang/AST.h"
 
-using namespace Typed;
-using namespace Typed::Core;
-using namespace Typed::Core::Walker;
-
-void Machine::Walk()
+namespace Typed::Core::Bytecode
 {
-    for (auto &child : core->children)
+    class Translator
     {
-        switch (child->type)
-        {
-            case ADT::Lang::ASTType::Use:
-            {
-                break;
-            }
+        ADT::Lang::AST *core;
 
-            case ADT::Lang::ASTType::Procedure:
-            {
-                break;
-            }
+    public:
+        Translator(ADT::Lang::AST *core)
+            : core(core)
+        {}
 
-            default: break;
-        }
-    }
+        void Translate();
+    };
 }
