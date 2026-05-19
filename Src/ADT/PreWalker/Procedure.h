@@ -33,7 +33,8 @@ namespace Typed::ADT::PreWalker
         using ArgumentMap =
             Map::Dense<
                 Celery::Str::External,
-                Runtime::ObjectType
+                Runtime::ObjectType,
+                Celery::Misc::Hash
             >;
 
         ArgumentMap arguments;

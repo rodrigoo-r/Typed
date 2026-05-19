@@ -18,6 +18,9 @@
 //
 
 #pragma once
+#include <Celery/Misc/Hash.h>
+
+
 #include "ADT/Lang/AST.h"
 #include "ADT/Map/Dense.h"
 #include "Procedure.h"
@@ -29,7 +32,8 @@ namespace Typed::ADT::PreWalker
         using ProcedureMap =
             Map::Dense<
                 Celery::Str::External,
-                Procedure
+                Procedure,
+                Celery::Misc::Hash
             >;
 
         using ImportList =
