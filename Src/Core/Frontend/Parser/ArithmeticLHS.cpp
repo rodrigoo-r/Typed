@@ -25,7 +25,7 @@ using namespace Typed::Core;
 using namespace Typed::Core::Frontend;
 using namespace Typed::Core::Frontend::Parser;
 
-Machine::TreePtr Machine::ArithmeticBase(TokenStreamView &input)
+Machine::TreePtr Machine::ArithmeticLHS(TokenStreamView &input)
 {
     auto &num = input.Next();
 
