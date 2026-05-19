@@ -42,6 +42,9 @@ namespace Typed::Core::MiddleEnd
         TreePtr root;
         Runnable result;
 
+        void Use();
+        void Procedure();
+
     public:
         PreWalker(TreePtr root)
             : root(root)
