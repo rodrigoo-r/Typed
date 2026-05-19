@@ -25,10 +25,18 @@ namespace Typed::Core::Bytecode
 {
     class Translator
     {
-        ADT::Lang::AST *core;
+    protected:
+        using Tree =
+            ADT::Lang::AST;
 
+        using TreePtr =
+            Tree *;
+
+        TreePtr core;
+
+        void Procedure(TreePtr input);
     public:
-        Translator(ADT::Lang::AST *core)
+        Translator(TreePtr core)
             : core(core)
         {}
 

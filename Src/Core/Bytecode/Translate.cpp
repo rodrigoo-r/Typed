@@ -38,6 +38,7 @@ ADT::Bytecode::TEF Translator::Translate()
 
             case ADT::Lang::ASTType::Procedure:
             {
+                Procedure(child);
                 break;
             }
 
