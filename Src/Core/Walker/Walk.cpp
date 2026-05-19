@@ -17,28 +17,16 @@
 // Created by Rodrigo on 5/19/26.
 //
 
-#pragma once
-#include "ADT/Lang/AST.h"
+#include "Walker.h"
 
-namespace Typed::Core::Walker
+using namespace Typed;
+using namespace Typed::Core;
+using namespace Typed::Core::Walker;
+
+void Machine::Walk()
 {
-    class Machine
+    for (auto ast : root->children)
     {
-    public:
-        using Tree =
-            ADT::Lang::AST;
 
-        using TreePtr =
-            Tree *;
-
-    protected:
-        TreePtr root;
-
-    public:
-        Machine(TreePtr root)
-            : root(root)
-        {}
-
-        void Walk();
-    };
+    }
 }
