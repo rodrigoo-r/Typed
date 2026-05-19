@@ -48,6 +48,8 @@ namespace Typed::Core::Frontend::Parser
 
         Lexer::Machine::StreamRef tokens;
 
+        void Use();
+
     public:
         Machine(Lexer::Machine::StreamRef tokens) :
             tokens(tokens)
