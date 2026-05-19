@@ -25,6 +25,13 @@ namespace Typed::Core::Bytecode
 {
     class Translator
     {
+    public:
+        using Executable =
+            ADT::Bytecode::TEF;
+
+        using ExecutableRef =
+            Executable &;
+
     protected:
         using Tree =
             ADT::Lang::AST;
@@ -32,6 +39,7 @@ namespace Typed::Core::Bytecode
         using TreePtr =
             Tree *;
 
+        Executable result;
         TreePtr core;
 
         void Procedure(TreePtr input);
@@ -40,6 +48,6 @@ namespace Typed::Core::Bytecode
             : core(core)
         {}
 
-        ADT::Bytecode::TEF Translate();
+        ExecutableRef Translate();
     };
 }
