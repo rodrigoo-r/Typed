@@ -46,7 +46,7 @@ namespace Typed::ADT::Lang
         Call,
         CallMethod,
         Add,
-        Suv,
+        Sub,
         Div,
         Mul,
 
