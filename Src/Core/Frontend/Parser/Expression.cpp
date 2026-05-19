@@ -27,15 +27,6 @@ using namespace Typed::Core;
 using namespace Typed::Core::Frontend;
 using namespace Typed::Core::Frontend::Parser;
 
-struct ExpressionQueueElement
-{
-    Machine::TokenStreamView tokens;
-    Machine::TreePtr parent;
-};
-
-using Queue =
-    Celery::Array::Vector<ExpressionQueueElement>;
-
 void Machine::Expression(TreePtr parent)
 {
     auto expr = Support::Stream::Extract<
@@ -54,7 +45,7 @@ void Machine::Expression(
     TokenStreamView &input
 )
 {
-    Queue queue;
+    ExprQueue queue;
     queue.EmplaceBack(input, body);
 
     while (!queue.Empty())
@@ -74,13 +65,13 @@ void Machine::Expression(
         {
             case ADT::Lang::TokenType::Call:
             {
-                result = Call(expr);
+                result = Call(expr, queue);
                 break;
             }
 
             case ADT::Lang::TokenType::CallMethod:
             {
-                result = CallMethod(expr);
+                result = CallMethod(expr, queue);
                 break;
             }
 
