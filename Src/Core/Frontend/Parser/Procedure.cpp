@@ -91,45 +91,14 @@ void Machine::Procedure()
         {
             case ADT::Lang::TokenType::Declare:
             {
-                break;
-            }
-
-            case ADT::Lang::TokenType::Call:
-            {
-                break;
-            }
-
-            case ADT::Lang::TokenType::CallMethod:
-            {
-                break;
-            }
-
-            case ADT::Lang::TokenType::Add:
-            {
-                break;
-            }
-
-            case ADT::Lang::TokenType::Sub:
-            {
-                break;
-            }
-
-            case ADT::Lang::TokenType::Mul:
-            {
-                break;
-            }
-
-            case ADT::Lang::TokenType::Div:
-            {
+                Declare(body);
                 break;
             }
 
             default:
             {
-                throw ADT::Exception::UnexpectedToken(
-                    peek.line,
-                    peek.column
-                );
+                Expression(node);
+                break;
             }
         }
     }

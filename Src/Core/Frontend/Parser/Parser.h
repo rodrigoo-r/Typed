@@ -55,6 +55,9 @@ namespace Typed::Core::Frontend::Parser
         void Use();
         void Procedure();
 
+        void Declare(TreePtr body);
+        void Expression(TreePtr body);
+
         TreePtr Type();
 
     public:
