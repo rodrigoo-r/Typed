@@ -59,6 +59,11 @@ void Machine::Expression(TreePtr body, const TokenStreamView& input)
         auto [expr, parent] = queue.Back();
         queue.PopBack();
 
+        // Create the expression AST
+        auto ast = AllocateBase(expr.Peek(), ADT::Lang::ASTType::Expression);
+        parent->children.PushBack(ast);
+
+        // Get the candidate to determine the expression type
 
     }
 }
