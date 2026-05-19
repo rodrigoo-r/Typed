@@ -18,4 +18,5 @@ target_link_libraries(
         Celery::Celery
         CLI11::CLI11
         unordered_dense::unordered_dense
+        magic_enum::magic_enum
 )

@@ -33,6 +33,12 @@ FetchContent_Declare(
         GIT_TAG        v4.8.1
 )
 
+FetchContent_Declare(
+        magic_enum
+        GIT_REPOSITORY https://github.com/Neargye/magic_enum
+        GIT_TAG        v0.9.8
+)
+
 # Fetch xxHash only if the platform is not Apple
 # For some weird reason, xxHash does not compile on macOS, so it's
 # better for macOS users to install it system-wide instead of using the bundled version
@@ -46,4 +52,4 @@ if (NOT APPLE)
     FetchContent_MakeAvailable(xxhash)
 endif ()
 
-FetchContent_MakeAvailable(CLI11 Celery unordered_dense)
+FetchContent_MakeAvailable(CLI11 Celery unordered_dense magic_enum)
