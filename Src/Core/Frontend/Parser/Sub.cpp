@@ -26,7 +26,7 @@ using namespace Typed::Core::Frontend::Parser;
 
 Machine::TreePtr Machine::Sub(TokenStreamView &input)
 {
-    auto ast = ArithmeticBase(input, ADT::Lang::TokenType::To);;
+    auto ast = ArithmeticBase(input, ADT::Lang::TokenType::To);
     ast->type = ADT::Lang::ASTType::Sub;
 
     return ast;
