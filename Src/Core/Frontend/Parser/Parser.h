@@ -32,17 +32,17 @@ namespace Typed::Core::Frontend::Parser
         using TokenStreamView =
             ADT::Stream::External<ADT::Lang::Token>;
 
-    protected:
-        using Allocator =
-            Support::Allocator::Monotonic<
-                ADT::Lang::AST
-            >;
-
         using Tree =
             ADT::Lang::AST;
 
         using TreePtr =
             Tree *;
+
+    protected:
+        using Allocator =
+            Support::Allocator::Monotonic<
+                ADT::Lang::AST
+            >;
 
         Lexer::Machine::StreamRef tokens;
 
