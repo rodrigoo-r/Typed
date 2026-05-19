@@ -31,6 +31,6 @@ namespace Typed::Core::Walker
             : core(core)
         {}
 
-        void Run();
+        void Walk();
     };
 }
