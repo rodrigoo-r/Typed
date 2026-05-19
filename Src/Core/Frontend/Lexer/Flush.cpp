@@ -70,6 +70,7 @@ void Machine::Flush()
         if (it != Support::Lang::TokenMap.end())
         {
             token.type = it->second;
+            token.value = Celery::Str::External{"", 0};
         }
         else
         {
