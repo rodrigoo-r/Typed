@@ -44,7 +44,7 @@ void Machine::Expect(ADT::Lang::TokenType type)
         );
     }
 
-    auto &token = tokens.Peek();
+    auto &token = tokens.Next();
     if (token.type != type)
     {
         throw ADT::Exception::UnknownToken(
