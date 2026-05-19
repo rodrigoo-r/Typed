@@ -56,7 +56,7 @@ void Machine::Procedure()
             auto type = Type();
 
             // Build the AST
-            auto arg = Allocate(ADT::Lang::ASTType::Argument);
+            auto arg = AllocateBase(peek, ADT::Lang::ASTType::Argument);
             arg->children.PushBack(AllocateBase(peek, ADT::Lang::ASTType::Identifier));
             arg->children.PushBack(type);
 
