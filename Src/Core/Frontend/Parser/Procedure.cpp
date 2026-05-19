@@ -107,5 +107,9 @@ void Machine::Procedure()
                 break;
             }
         }
+
+        // Update the peek for the next iteration
+        if (tokens.HasNext())
+            peek = tokens.Peek();
     }
 }
