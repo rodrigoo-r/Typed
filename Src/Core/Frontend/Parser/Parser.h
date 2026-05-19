@@ -46,10 +46,10 @@ namespace Typed::Core::Frontend::Parser
 
         TreePtr Allocate(ADT::Lang::ASTType type);
 
-        Lexer::Machine::ConstStreamRef tokens;
+        Lexer::Machine::StreamRef tokens;
 
     public:
-        Machine(Lexer::Machine::ConstStreamRef tokens) :
+        Machine(Lexer::Machine::StreamRef tokens) :
             tokens(tokens)
         {}
 
