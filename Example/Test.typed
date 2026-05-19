@@ -16,7 +16,7 @@ Procedure Main
 With Arguments
     # No arguments for this procedure
     # Example:
-    # Arg1 as String,
+    Arg1 as String
     # Arg2 as Integer
 Begin
     # Declare a variable
