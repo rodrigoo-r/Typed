@@ -25,7 +25,10 @@ using namespace Typed::Core;
 using namespace Typed::Core::Frontend;
 using namespace Typed::Core::Frontend::Parser;
 
-Machine::TreePtr Machine::Call(TokenStreamView &input)
+Machine::TreePtr Machine::Call(
+    TokenStreamView &input,
+    ExprQueue &queue
+)
 {
     auto &name = input.Peek();
     Expect(input, ADT::Lang::TokenType::Identifier);
@@ -48,7 +51,7 @@ Machine::TreePtr Machine::Call(TokenStreamView &input)
 
         // Consume the token and parse arguments
         tokens.Next();
-        call->children.PushBack(CallArgs(input));
+        call->children.PushBack(CallArgs(input, queue));
     }
 
     return call;
