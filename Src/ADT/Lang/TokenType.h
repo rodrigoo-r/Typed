@@ -37,6 +37,7 @@ namespace Typed::ADT::Lang
         Arguments,
         To,
         By,
+        From,
 
         // Instructions
         Declare,

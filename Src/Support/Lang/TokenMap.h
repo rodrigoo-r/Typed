@@ -43,6 +43,7 @@ namespace Typed::Support::Lang
         {"Arguments", ADT::Lang::TokenType::Arguments},
         {"To", ADT::Lang::TokenType::To},
         {"By", ADT::Lang::TokenType::By},
+        {"From", ADT::Lang::TokenType::From},
 
         {"Declare", ADT::Lang::TokenType::Declare},
         {"Call", ADT::Lang::TokenType::Call},
