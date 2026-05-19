@@ -19,6 +19,8 @@
 
 #include "ADT/Stream/External.h"
 #include "Parser.h"
+#include "Support/Equality/TokenType.h"
+#include "Support/Stream/Extract.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -34,14 +36,29 @@ struct ExpressionQueueElement
 using Queue =
     Celery::Array::Vector<ExpressionQueueElement>;
 
-void Machine::Expression(TreePtr body, TokenStreamView input)
+void Machine::Expression(TreePtr parent)
+{
+    auto expr = Support::Stream::Extract<
+        ADT::Lang::Token,
+        Support::Equality::TokenType
+    >(
+        tokens,
+        ADT::Lang::TokenType::Semicolon
+    );
+
+    Expression(parent, expr);
+}
+
+void Machine::Expression(TreePtr body, const TokenStreamView& input)
 {
     Queue queue;
     queue.EmplaceBack(input, body);
 
     while (!queue.Empty())
     {
-        auto el = queue.Back();
+        auto [expr, parent] = queue.Back();
         queue.PopBack();
+
+
     }
 }
