@@ -44,6 +44,15 @@ namespace Typed::Core::Frontend::Parser
                 ADT::Lang::AST
             >;
 
+        struct ExpressionQueueElement
+        {
+            TokenStreamView tokens;
+            TreePtr parent;
+        };
+
+        using ExprQueue =
+            Celery::Array::Vector<ExpressionQueueElement>;
+
         Lexer::Machine::StreamRef tokens;
 
         TreePtr root = nullptr;
@@ -66,9 +75,9 @@ namespace Typed::Core::Frontend::Parser
         void Expression(TreePtr parent);
         void Expression(TreePtr body, TokenStreamView &input);
 
-        TreePtr CallArgs(TokenStreamView &input);
-        TreePtr Call(TokenStreamView &input);
-        TreePtr CallMethod(TokenStreamView &input);
+        TreePtr CallArgs(TokenStreamView &input, ExprQueue &queue);
+        TreePtr Call(TokenStreamView &input, ExprQueue &queue);
+        TreePtr CallMethod(TokenStreamView &input, ExprQueue &queue);
         TreePtr Add(TokenStreamView &input);
         TreePtr Sub(TokenStreamView &input);
         TreePtr Mul(TokenStreamView &input);
