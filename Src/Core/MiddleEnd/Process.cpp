@@ -31,6 +31,7 @@ PreWalker::RunnableRef PreWalker::Process()
         {
             case ADT::Lang::ASTType::Use:
             {
+                Use(ast);
                 break;
             }
 
