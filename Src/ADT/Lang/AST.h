@@ -30,8 +30,8 @@ namespace Typed::ADT::Lang
     struct AST :
         Core::Traceable
     {
-        Celery::Str::External value;
         ASTType type;
+        Celery::Str::External value;
         Celery::Array::Vector<AST *> children;
     };
 }
