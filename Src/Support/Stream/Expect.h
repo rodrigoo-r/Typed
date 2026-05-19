@@ -37,7 +37,7 @@ namespace Typed::Support::Stream
             ADT::Core::Traceable
         >
     >
-    void Expect(Stream stream, T expected)
+    void Expect(Stream stream, auto expected)
     {
         // Edge case: No elements
         if (stream.Empty())
