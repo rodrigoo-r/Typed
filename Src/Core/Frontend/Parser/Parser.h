@@ -63,14 +63,15 @@ namespace Typed::Core::Frontend::Parser
         void Declare(TreePtr parent);
 
         void Expression(TreePtr parent);
-        void Expression(TreePtr body, const TokenStreamView& input);
+        void Expression(TreePtr body, TokenStreamView &input);
 
-        TreePtr Call(const TokenStreamView& input);
-        TreePtr CallMethod(const TokenStreamView& input);
-        TreePtr Add(const TokenStreamView& input);
-        TreePtr Sub(const TokenStreamView& input);
-        TreePtr Mul(const TokenStreamView& input);
-        TreePtr Div(const TokenStreamView& input);
+        TreePtr CallArgs(TokenStreamView &input);
+        TreePtr Call(TokenStreamView &input);
+        TreePtr CallMethod(TokenStreamView &input);
+        TreePtr Add(TokenStreamView &input);
+        TreePtr Sub(TokenStreamView &input);
+        TreePtr Mul(TokenStreamView &input);
+        TreePtr Div(TokenStreamView &input);
 
         TreePtr Type();
 
