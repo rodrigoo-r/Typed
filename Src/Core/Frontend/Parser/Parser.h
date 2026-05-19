@@ -78,6 +78,8 @@ namespace Typed::Core::Frontend::Parser
         TreePtr CallArgs(TokenStreamView &input, ExprQueue &queue);
         TreePtr Call(TokenStreamView &input, ExprQueue &queue);
         TreePtr CallMethod(TokenStreamView &input, ExprQueue &queue);
+
+        TreePtr ArithmeticBase(TokenStreamView &input);
         TreePtr Add(TokenStreamView &input);
         TreePtr Sub(TokenStreamView &input);
         TreePtr Mul(TokenStreamView &input);
