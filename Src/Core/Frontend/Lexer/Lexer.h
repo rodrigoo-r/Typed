@@ -38,8 +38,8 @@ namespace Typed::Core::Frontend::Lexer
         using EntryRef =
             Celery::Array::Stream<char> &;
 
-        using ConstStreamRef =
-            const ADT::Stream::Token&;
+        using StreamRef =
+            ADT::Stream::Token&;
 
     private:
 
@@ -50,6 +50,6 @@ namespace Typed::Core::Frontend::Lexer
             contents(contents)
         {}
 
-        ConstStreamRef Lex();
+        StreamRef Lex();
     };
 }
