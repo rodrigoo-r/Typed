@@ -18,6 +18,7 @@
 //
 
 #pragma once
+#include "Context.h"
 #include "InstructionType.h"
 
 namespace Typed::ADT::Bytecode
@@ -25,7 +26,7 @@ namespace Typed::ADT::Bytecode
     struct Instruction
     {
         using ArgumentList =
-            Celery::Array::SmallVector<int>;
+            Celery::Array::SmallVector<Context>;
 
         InstructionType type;
         ArgumentList arguments;
