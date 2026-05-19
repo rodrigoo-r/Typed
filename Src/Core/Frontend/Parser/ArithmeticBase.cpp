@@ -42,7 +42,7 @@ Machine::TreePtr Machine::ArithmeticBase(TokenStreamView &input)
         );
     }
 
-    auto lhs = AllocateBase(
+    return AllocateBase(
         num,
         num.type == ADT::Lang::TokenType::NumberLiteral ?
             ADT::Lang::ASTType::NumberLiteral
@@ -50,18 +50,4 @@ Machine::TreePtr Machine::ArithmeticBase(TokenStreamView &input)
             ADT::Lang::ASTType::FloatLiteral
         : ADT::Lang::ASTType::Identifier
     );
-
-    // Syntax:
-    // <Add/Sub> <Num> <To> <Identifier>
-    Expect(input, ADT::Lang::TokenType::To);
-
-    auto &name = input.Peek();
-    Expect(input, ADT::Lang::TokenType::Identifier);
-
-    // Create the AST and return it
-    auto ast = AllocateBase(num, ADT::Lang::ASTType::Add);
-    ast->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
-    ast->children.PushBack(lhs);
-
-    return ast;
 }
