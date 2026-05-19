@@ -18,6 +18,7 @@
 //
 
 #pragma once
+#include "ADT/Bytecode/TEF.h"
 #include "ADT/Lang/AST.h"
 
 namespace Typed::Core::Bytecode
@@ -31,6 +32,6 @@ namespace Typed::Core::Bytecode
             : core(core)
         {}
 
-        void Translate();
+        ADT::Bytecode::TEF Translate();
     };
 }

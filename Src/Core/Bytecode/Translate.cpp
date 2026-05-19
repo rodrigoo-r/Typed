@@ -23,8 +23,10 @@ using namespace Typed;
 using namespace Typed::Core;
 using namespace Typed::Core::Bytecode;
 
-void Translator::Translate()
+ADT::Bytecode::TEF Translator::Translate()
 {
+    ADT::Bytecode::TEF result;
+
     for (auto &child : core->children)
     {
         switch (child->type)
@@ -42,4 +44,6 @@ void Translator::Translate()
             default: break;
         }
     }
+
+    return result;
 }
