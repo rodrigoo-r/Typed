@@ -1,0 +1,68 @@
+/*
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #                           Typed                     # *
+ * #                   A text formatting DSL             # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #         Created by Rodrigo R. & Contributors        # *
+ * #         Released under the Apache License 2.0       # *
+ * #            Check LICENSE.MD for more info           # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+*/
+
+//
+// Created by Rodrigo on 5/19/26.
+//
+
+#pragma once
+#include <Celery/Trait/Type.h>
+
+#include "ADT/Core/Traceable.h"
+#include "ADT/Equality/Agnostic.h"
+#include "ADT/Exception/UnexpectedToken.h"
+#include "ADT/Exception/UnknownToken.h"
+#include "ADT/Stream/External.h"
+
+namespace Typed::Support::Stream
+{
+    template <
+        class T,
+        class Stream = ADT::Stream::External<T>,
+        typename Equal = ADT::Equality::Agnostic,
+        typename = Celery::Trait::EnsureInherits<
+            T,
+            ADT::Core::Traceable
+        >
+    >
+    void Expect(Stream stream, T expected)
+    {
+        // Edge case: No elements
+        if (stream.Empty())
+        {
+            // Exception at line 1 column 1
+            throw ADT::Exception::UnknownToken(1, 1);
+        }
+
+        if (!stream.HasNext())
+        {
+            auto &curr = stream.Curr();
+
+            throw ADT::Exception::UnknownToken(
+                curr.line,
+                curr.column
+            );
+        }
+
+        auto &token = stream.Next();
+        if (!Equal::Equals(token, expected))
+        {
+            throw ADT::Exception::UnexpectedToken(
+                token.line,
+                token.column
+            );
+        }
+    }
+}
