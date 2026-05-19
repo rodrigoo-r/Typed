@@ -62,6 +62,13 @@ void Machine::Procedure()
 
             args->children.PushBack(arg);
             peek = tokens.Peek();
+
+            // Make sure there is a comma if there's more arguments
+            if (peek.type == ADT::Lang::TokenType::Comma)
+            {
+                Expect(ADT::Lang::TokenType::Comma);
+                peek = tokens.Peek();
+            }
         }
     }
 
