@@ -49,7 +49,7 @@ namespace Typed::Support::Stream
 
         // Return the view
         return {
-            stream.Data() + start,
+            stream.Ptr() + start,
             size
         };
     }
