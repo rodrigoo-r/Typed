@@ -55,6 +55,8 @@ namespace Typed::Core::Frontend::Parser
         void Use();
         void Procedure();
 
+        TreePtr Type();
+
     public:
         Machine(Lexer::Machine::StreamRef tokens) :
             tokens(tokens)
