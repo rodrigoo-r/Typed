@@ -129,6 +129,12 @@ void Machine::Expression(
                 break;
             }
 
+            case ADT::Lang::TokenType::Identifier:
+            {
+                result = AllocateBase(candidate, ADT::Lang::ASTType::Identifier);
+                break;
+            }
+
             default:
             {
                 throw ADT::Exception::UnexpectedToken(
