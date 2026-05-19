@@ -30,6 +30,6 @@ namespace Typed::ADT::Bytecode
             Celery::Array::SmallVector<Label>;
 
         LabelList labels;
-        int entry_point; // The entry label's index
+        Celery::Trait::VeryLarge entry_point; // The entry label's index
     };
 }

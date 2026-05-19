@@ -36,6 +36,6 @@ namespace Typed::ADT::Bytecode
         ProcedureList procedures;
 
         // Entry point's idx
-        int entry_point = 0;
+        Celery::Trait::VeryLarge entry_point = 0;
     };
 }
