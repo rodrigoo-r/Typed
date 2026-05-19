@@ -40,7 +40,7 @@ namespace Typed::ADT::Lang
         Boolean,
 
         // Expression
-        Expressions,
+        Expression,
 
         // Instructions
         Call,
