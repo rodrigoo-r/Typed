@@ -39,6 +39,10 @@ namespace Typed::Core::Frontend::Parser
         using TreePtr =
             Tree *;
 
+        Lexer::Machine::StreamRef tokens;
+
+        TreePtr root = nullptr;
+
         TreePtr AllocateBase(
             ADT::Lang::Token &token,
             ADT::Lang::ASTType type
@@ -46,15 +50,15 @@ namespace Typed::Core::Frontend::Parser
 
         TreePtr Allocate(ADT::Lang::ASTType type);
 
-        Lexer::Machine::StreamRef tokens;
-
         void Expect(ADT::Lang::TokenType type);
         void Use();
 
     public:
         Machine(Lexer::Machine::StreamRef tokens) :
             tokens(tokens)
-        {}
+        {
+            root = AllocateBase(tokens.Peek(), ADT::Lang::ASTType::Root);
+        }
 
         TreePtr Parse();
     };
