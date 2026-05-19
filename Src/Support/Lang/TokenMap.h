@@ -47,7 +47,6 @@ namespace Typed::Support::Lang
 
         {"Declare", ADT::Lang::TokenType::Declare},
         {"Call", ADT::Lang::TokenType::Call},
-        {"Call_Method", ADT::Lang::TokenType::CallMethod},
         {"Add", ADT::Lang::TokenType::Add},
         {"Subtract", ADT::Lang::TokenType::Sub},
         {"Multiply", ADT::Lang::TokenType::Mul},

@@ -42,7 +42,6 @@ namespace Typed::ADT::Lang
         // Instructions
         Declare,
         Call,
-        CallMethod,
         Add,
         Sub,
         Mul,
