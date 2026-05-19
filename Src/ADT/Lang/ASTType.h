@@ -57,7 +57,8 @@ namespace Typed::ADT::Lang
         StringLiteral,
         NumberLiteral,
         FloatLiteral,
-        BooleanLiteral,
+        TrueLiteral,
+        FalseLiteral,
 
         // Identifier
         Identifier
