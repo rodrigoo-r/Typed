@@ -33,6 +33,7 @@ namespace Typed::Support::Stream
     )
     {
         auto start = stream.Pos();
+        bool met_delim = false;
         Celery::Trait::VeryLarge size = 0;
 
         // Build the stream 1 element at a time
@@ -41,10 +42,19 @@ namespace Typed::Support::Stream
             auto next = stream.Next();
             if (Eq::Equals(next, Dest))
             {
+                met_delim = true;
                 break;
             }
 
             size++;
+        }
+
+        if (!met_delim)
+        {
+            throw ADT::Exception::UnexpectedToken(
+                stream.Curr().line,
+                stream.Curr().column
+            );
         }
 
         // Return the view
