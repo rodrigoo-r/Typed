@@ -17,30 +17,36 @@
 // Created by Rodrigo on 5/19/26.
 //
 
-#include "Walker.h"
+#pragma once
+#include "ADT/Lang/AST.h"
+#include "ADT/PreWalker/File.h"
 
-using namespace Typed;
-using namespace Typed::Core;
-using namespace Typed::Core::Walker;
-
-void Machine::Walk()
+namespace Typed::Core::MiddleEnd
 {
-    for (auto ast : root->children)
+    class PreWalker
     {
-        switch (ast->type)
-        {
-            case ADT::Lang::ASTType::Procedure:
-            {
-                Procedure(ast);
-                break;
-            }
+        using Tree =
+            ADT::Lang::AST;
 
-            case ADT::Lang::ASTType::Use:
-            {
-                break;
-            }
+        using TreePtr =
+            Tree *;
 
-            default: break;
-        }
-    }
+    public:
+        using Runnable =
+            ADT::PreWalker::File;
+
+        using RunnableRef =
+            Runnable &;
+
+    protected:
+        TreePtr root;
+        Runnable result;
+
+    public:
+        PreWalker(TreePtr root)
+            : root(root)
+        {}
+
+        RunnableRef Process();
+    };
 }
