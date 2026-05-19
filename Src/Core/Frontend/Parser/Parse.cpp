@@ -36,6 +36,7 @@ Machine::TreePtr Machine::Parse()
         {
             case ADT::Lang::TokenType::Use:
             {
+                Use();
                 break;
             }
 
