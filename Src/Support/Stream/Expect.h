@@ -56,12 +56,12 @@ namespace Typed::Support::Stream
             );
         }
 
-        auto &token = stream.Next();
-        if (!Equal::Equals(token, expected))
+        auto &element = stream.Next();
+        if (!Equal::Equals(element, expected))
         {
             throw ADT::Exception::UnexpectedToken(
-                token.line,
-                token.column
+                element.line,
+                element.column
             );
         }
     }
