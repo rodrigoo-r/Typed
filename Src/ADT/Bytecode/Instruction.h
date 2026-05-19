@@ -18,11 +18,12 @@
 //
 
 #pragma once
+#include "InstructionType.h"
 
 namespace Typed::ADT::Bytecode
 {
     struct Instruction
     {
-
+        InstructionType type;
     };
 }
