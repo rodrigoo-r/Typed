@@ -27,7 +27,7 @@ namespace Typed::Core::Frontend::Parser
 {
     class Machine
     {
-    public:
+    protected:
         using Allocator =
             Support::Allocator::Monotonic<
                 ADT::Lang::AST
@@ -39,13 +39,10 @@ namespace Typed::Core::Frontend::Parser
         using TreePtr =
             Tree *;
 
-        using TokenStreamView =
-            Celery::Array::External<ADT::Lang::Token>;
-
-    protected:
-        TokenStreamView tokens;
+        Lexer::Machine::StreamRef tokens;
 
         TreePtr root = nullptr;
+
         TreePtr AllocateBase(
             ADT::Lang::Token &token,
             ADT::Lang::ASTType type
@@ -65,7 +62,7 @@ namespace Typed::Core::Frontend::Parser
 
     public:
         Machine(Lexer::Machine::StreamRef tokens) :
-            tokens(tokens.Ptr(), tokens.Size())
+            tokens(tokens)
         {
             root = AllocateBase(tokens.Peek(), ADT::Lang::ASTType::Root);
         }
