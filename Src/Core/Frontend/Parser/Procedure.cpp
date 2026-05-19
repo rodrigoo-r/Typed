@@ -28,9 +28,10 @@ using namespace Typed::Core::Frontend::Parser;
 void Machine::Procedure()
 {
     // Expect the procedure's name
+    auto &identifier = tokens.Peek();
     Expect(ADT::Lang::TokenType::Identifier);
 
-    auto node = Allocate(ADT::Lang::ASTType::Procedure);
+    auto node = AllocateBase(identifier, ADT::Lang::ASTType::Procedure);
     root->children.PushBack(node);
 
     // Case: The procedure has arguments
