@@ -29,6 +29,7 @@ namespace Typed::ADT::Bytecode
         using LabelList =
             Celery::Array::SmallVector<Label>;
 
-
+        LabelList labels;
+        int entry_point; // The entry label's index
     };
 }
