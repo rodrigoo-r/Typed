@@ -42,7 +42,7 @@ Machine::TreePtr Machine::CallMethod(
     call->children.PushBack(AllocateBase(from, ADT::Lang::ASTType::Identifier));
 
     // Parse arguments if any
-    if (!tokens.HasNext()) return call;
+    if (!input.HasNext()) return call;
     Expect(input, ADT::Lang::TokenType::With);
     call->children.PushBack(CallArgs(input, queue));
 
