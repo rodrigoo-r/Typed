@@ -26,8 +26,6 @@ using namespace Typed::Core::Frontend::Parser;
 
 Machine::TreePtr Machine::Parse()
 {
-    auto root = AllocateBase(tokens.Peek(), ADT::Lang::ASTType::Root);
-
     while (tokens.HasNext())
     {
         auto &token = tokens.Next();
