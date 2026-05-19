@@ -21,22 +21,18 @@ With Arguments
 Begin
     # Declare a variable
     Declare
-        My_Regex as Regex
+        My_Regex_Pattern as String
     With
-        Call
-            Regex
-        With
-            "[a-zA-Z0-9]+"
+        "[a-zA-Z0-9]+"
     ; # Create a regex to match alphanumeric strings
 
     Declare
         My_Replaced_String as String
     With
-        Call_Method
-            Replace_One
-        From
-            My_Regex
+        Call
+            Regex_Replace_One
         With
+            My_Regex_Pattern,
             "Hello, World!",
             "Hi"
         ; # Replace "Hello" with "Hi"
