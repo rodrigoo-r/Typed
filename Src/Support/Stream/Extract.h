@@ -1,0 +1,56 @@
+/*
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #                           Typed                     # *
+ * #                   A text formatting DSL             # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #         Created by Rodrigo R. & Contributors        # *
+ * #         Released under the Apache License 2.0       # *
+ * #            Check LICENSE.MD for more info           # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+*/
+
+//
+// Created by Rodrigo on 5/19/26.
+//
+
+#pragma once
+#include "ADT/Equality/Agnostic.h"
+#include "ADT/Stream/External.h"
+
+namespace Typed::Support::Stream
+{
+    template <
+        typename T,
+        typename Eq = ADT::Equality::Agnostic
+    >
+    ADT::Stream::External<T> Extract(
+        Celery::Array::Stream<T> &stream,
+        auto Dest
+    )
+    {
+        auto start = stream.Pos();
+        auto size = 0;
+
+        // Build the stream 1 element at a time
+        while (stream.HasNext())
+        {
+            auto next = stream.Next();
+            if (Eq::Equals(next, Dest))
+            {
+                break;
+            }
+
+            size++;
+        }
+
+        // Return the view
+        return {
+            stream.Data() + start,
+            size
+        };
+    }
+}
