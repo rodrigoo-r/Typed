@@ -24,12 +24,12 @@ using namespace Typed::Core;
 using namespace Typed::Core::Frontend;
 using namespace Typed::Core::Frontend::Parser;
 
-void Machine::Declare(TreePtr body)
+void Machine::Declare(TreePtr parent)
 {
     // Syntax:
     // Declare <Identifier> As <Type> With <Expression>
     auto decl = Allocate(ADT::Lang::ASTType::Declare);    // Consume the Declare token
-    body->children.PushBack(decl);
+    parent->children.PushBack(decl);
 
     auto &name = tokens.Peek();
     Expect(ADT::Lang::TokenType::Identifier);
