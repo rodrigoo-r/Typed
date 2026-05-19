@@ -38,6 +38,12 @@ Machine::TreePtr Machine::Parse()
                 break;
             }
 
+            case ADT::Lang::TokenType::Procedure:
+            {
+                Procedure();
+                break;
+            }
+
             default:
             {
                 break;
