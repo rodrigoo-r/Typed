@@ -34,6 +34,8 @@ namespace Typed::Core::Walker
     protected:
         TreePtr root;
 
+        void Procedure(TreePtr ast);
+
     public:
         Machine(TreePtr root)
             : root(root)
