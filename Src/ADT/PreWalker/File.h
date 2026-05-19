@@ -32,6 +32,12 @@ namespace Typed::ADT::PreWalker
                 Procedure
             >;
 
+        using ImportList =
+            Celery::Array::Vector<
+                Celery::Str::External
+            >;
+
         ProcedureMap procedures;
+        ImportList imports;
     };
 }
