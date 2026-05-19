@@ -79,4 +79,58 @@ void Machine::Procedure()
             peek.column
         );
     }
+
+    // Now parse the body
+    auto body = AllocateBase(peek, ADT::Lang::ASTType::Body);
+    node->children.PushBack(body);
+    while (peek.type != ADT::Lang::TokenType::EndProcedure)
+    {
+        peek = tokens.Next();
+
+        switch (peek.type)
+        {
+            case ADT::Lang::TokenType::Declare:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Call:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::CallMethod:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Add:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Sub:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Mul:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Div:
+            {
+                break;
+            }
+
+            default:
+            {
+                throw ADT::Exception::UnexpectedToken(
+                    peek.line,
+                    peek.column
+                );
+            }
+        }
+    }
 }
