@@ -31,48 +31,47 @@ Machine::TreePtr Machine::CallArgs(
 {
     auto args = AllocateBase(input.Peek(), ADT::Lang::ASTType::Arguments);
 
-    // Collect and parse arguments
+    auto start = input.Pos();
+    Celery::Trait::VeryLarge size = 0;
+
+    // Create the argument AST
+    auto arg = AllocateBase(input.Peek(), ADT::Lang::ASTType::Argument);
+    args->children.PushBack(arg);
+
     while (input.HasNext())
     {
-        auto start = input.Pos();
-        Celery::Trait::VeryLarge size = 0;
+        auto &token = input.Next();
 
-        // Create the argument AST
-        auto arg = AllocateBase(input.Peek(), ADT::Lang::ASTType::Argument);
-        args->children.PushBack(arg);
-
-        while (input.HasNext())
+        // Split at delimiter
+        if (token.type == ADT::Lang::TokenType::Comma)
         {
-            auto &token = input.Next();
+            // Create the view and push it
+            TokenStreamView view{
+                input.Ptr() + start,
+                size
+            };
 
-            // Split at delimiter
-            if (token.type == ADT::Lang::TokenType::Comma)
-            {
-                // Create the view and push it
-                TokenStreamView view{
-                    input.Ptr() + start,
-                    size
-                };
+            queue.EmplaceBack(view, arg);
+            start = input.Pos();
+            size = 0;
 
-                queue.EmplaceBack(view, arg);
-                start = input.Pos();
-                size = 0;
-            } else
-            {
-                size++;
-            }
+            arg = AllocateBase(input.Peek(), ADT::Lang::ASTType::Argument);
+            args->children.PushBack(arg);
+        } else
+        {
+            size++;
         }
-
-        // Add the last arg
-        if (size == 0) break;
-
-        TokenStreamView view{
-            input.Ptr() + start,
-            size
-        };
-
-        queue.EmplaceBack(view, arg);
     }
+
+    // Add the last arg
+    if (size == 0) return args;
+
+    TokenStreamView view{
+        input.Ptr() + start,
+        size
+    };
+
+    queue.EmplaceBack(view, arg);
 
     return args;
 }
