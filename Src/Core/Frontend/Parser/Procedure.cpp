@@ -85,7 +85,7 @@ void Machine::Procedure()
     node->children.PushBack(body);
     while (peek.type != ADT::Lang::TokenType::EndProcedure)
     {
-        peek = tokens.Next();
+        peek = tokens.Peek();
 
         switch (peek.type)
         {
