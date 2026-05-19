@@ -24,6 +24,7 @@
 
 #include "Core/Frontend/Lexer/Lexer.h"
 #include "Core/Frontend/Parser/Parser.h"
+#include "Core/Walker/Walker.h"
 #include "Support/File/Reader.h"
 #include "Support/Printer/ASTPrinter.h"
 
@@ -41,7 +42,9 @@ void Subcommand::Run(const std::string &input)
 
     Core::Frontend::Parser::Machine parser(tokens);
     auto root = parser.Parse();
-    Support::Printer::ASTPrinter printer(root);
-    printer.Print();
+
+    // Run the code
+    Core::Walker::Machine walker(root);
+    walker.Walk();
 
 }
