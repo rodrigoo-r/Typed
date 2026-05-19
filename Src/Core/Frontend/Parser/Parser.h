@@ -56,6 +56,7 @@ namespace Typed::Core::Frontend::Parser
         TreePtr Allocate(ADT::Lang::ASTType type);
 
         void Expect(ADT::Lang::TokenType type);
+        void Expect(TokenStreamView &input, ADT::Lang::TokenType type);
 
         void Use();
         void Procedure();
