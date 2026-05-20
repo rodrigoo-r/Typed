@@ -64,17 +64,26 @@ ADT::Runtime::Object Walker::Expression(
 
         case ADT::Lang::ASTType::StringLiteral:
         {
-            break;
+            return {
+                ADT::Runtime::ObjectType::String,
+                expr->value
+            };
         }
 
         case ADT::Lang::ASTType::FalseLiteral:
         {
-            break;
+            return {
+                ADT::Runtime::ObjectType::Boolean,
+                false
+            };
         }
 
         case ADT::Lang::ASTType::TrueLiteral:
         {
-            break;
+            return {
+                ADT::Runtime::ObjectType::Boolean,
+                true
+            };
         }
 
         case ADT::Lang::ASTType::FloatLiteral:
