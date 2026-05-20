@@ -19,21 +19,24 @@
 
 #pragma once
 
-#include "ADT/List/Procedure.h"
+#include "ADT/Map/Procedure.h"
 #include "Println.h"
 #include "Support/Printer/ASTPrinter.h"
 
 namespace Typed::Runtime::IO
 {
-    inline ADT::List::Procedure Package = {
+    inline ADT::Map::Procedure Package = {
         {
+            "Println",
             {
-                {"f", ADT::Runtime::ObjectType::String},
-                {"_", ADT::Runtime::ObjectType::Any},
-            },
-            nullptr,
-            true,
-            Println
+                {
+                    {"f", ADT::Runtime::ObjectType::String},
+                    {"_", ADT::Runtime::ObjectType::Any},
+                },
+                nullptr,
+                true,
+                Println
+            }
         }
     };
 }
