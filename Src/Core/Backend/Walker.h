@@ -38,7 +38,8 @@ namespace Typed::Core::Backend
         using VariableMap =
             ADT::Map::Dense<
                 Celery::Str::External,
-                ADT::Runtime::Object
+                ADT::Runtime::Object,
+                Celery::Misc::Hash
             >;
 
     protected:
