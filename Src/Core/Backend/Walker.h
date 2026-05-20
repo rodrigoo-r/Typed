@@ -19,6 +19,7 @@
 
 #pragma once
 #include "ADT/PreWalker/File.h"
+#include "ADT/Runtime/Object.h"
 
 namespace Typed::Core::Backend
 {
@@ -34,10 +35,13 @@ namespace Typed::Core::Backend
         using ProcedureRef =
             ADT::PreWalker::Procedure &;
 
+        using VariableList =
+            Celery::Array::Vector<ADT::Runtime::Object>;
+
     protected:
         RunnableRef runnable;
 
-        void Procedure(ProcedureRef procedure);
+        void Procedure(ProcedureRef procedure, VariableList args);
 
     public:
         Walker(RunnableRef runnable)
