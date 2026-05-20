@@ -39,7 +39,7 @@ ADT::Runtime::Object Walker::Expression(
 
         case ADT::Lang::ASTType::Call:
         {
-            break;
+            return Call(stack, expr);
         }
 
         case ADT::Lang::ASTType::Add:
