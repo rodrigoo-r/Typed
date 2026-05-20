@@ -19,6 +19,7 @@
 
 #pragma once
 #include <Celery/String/External.h>
+#include <Celery/String/String.h>
 
 
 #include "ObjectType.h"
@@ -34,7 +35,11 @@ namespace Typed::ADT::Runtime
                 int,
                 float,
                 bool,
-                Celery::Str::External
+                Celery::Str::External,
+
+                // Only runtime-provided functions can
+                // return owned memory
+                Celery::Str::String
             >;
 
         ObjectType type;

@@ -29,6 +29,8 @@ namespace Typed::ADT::Runtime
         Boolean,
 
         // Reserved for native types
-        Any
+        Any,
+        OwnedString,
+        Void
     };
 }
