@@ -74,6 +74,17 @@ void Machine::Procedure()
         }
     }
 
+    // Parse return types if necessary
+    peek = tokens.Peek();
+    if (peek.type == ADT::Lang::TokenType::Returns)
+    {
+        auto type = Allocate(ADT::Lang::ASTType::ReturnType);
+        node->children.PushBack(type);
+        type->children.PushBack(type);
+
+        peek = tokens.Peek();
+    }
+
     if (peek.type != ADT::Lang::TokenType::Begin)
     {
         throw ADT::Exception::UnexpectedToken(
