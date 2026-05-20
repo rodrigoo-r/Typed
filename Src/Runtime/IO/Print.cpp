@@ -21,6 +21,8 @@
 
 #include "ADT/Exception/MismatchedArgCount.h"
 #include "Support/Printer/ASTPrinter.h"
+#include "Support/Runtime/GetObjValue.h"
+#include "Support/Runtime/TypeChecker.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -49,8 +51,7 @@ void IO::Print(
     ADT::Lang::AST *trace
 )
 {
-    auto &fmt_obj = args[0];
-    auto &fmt = std::get<Celery::Str::External>(fmt_obj.value);
+    auto &fmt = Support::Runtime::GetStrObj(args[0]);
     auto line = trace->line;
     auto col = trace->column;
     Celery::Trait::VeryLarge pos = 1;
@@ -61,7 +62,7 @@ void IO::Print(
         auto c = fmt[i];
 
         // Match formats
-        if (c == '$' && fmt.Size() < i + 1)
+        if (c == '$' && fmt.Size() > i + 1)
         {
             auto f = fmt[i + 1];
             auto can_continue = true;
@@ -71,9 +72,21 @@ void IO::Print(
                 case 'S':
                 {
                     auto &arg = GetArg(args, pos, line, col);
+                    Support::Runtime::TypeCheck(
+                        arg.type,
+                        ADT::Runtime::ObjectType::String,
+                        line,
+                        col
+                    );
+
+                    auto &val = Support::Runtime::GetStrObj(arg);
                     can_continue = false;
+                    Celery::Io::Print(val);
+
                     break;
                 }
+
+                default: break;
             }
 
             // Skip the next character if we found a format
