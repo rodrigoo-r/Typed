@@ -35,13 +35,16 @@ namespace Typed::Core::Backend
         using ProcedureRef =
             ADT::PreWalker::Procedure &;
 
-        using VariableList =
-            Celery::Array::Vector<ADT::Runtime::Object>;
+        using VariableMap =
+            ADT::Map::Dense<
+                Celery::Str::External,
+                ADT::Runtime::Object
+            >;
 
     protected:
         RunnableRef runnable;
 
-        void Procedure(ProcedureRef procedure, VariableList args);
+        void Procedure(ProcedureRef procedure, VariableMap &args);
 
     public:
         Walker(RunnableRef runnable)
