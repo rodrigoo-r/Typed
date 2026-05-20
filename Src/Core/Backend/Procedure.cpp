@@ -25,9 +25,17 @@ using namespace Typed::Core::Backend;
 
 void Walker::Procedure(
     ProcedureRef procedure,
-    VariableMap &args
+    VariableMap &args,
+    TreePtr trace
 )
 {
+    // Make sure there's the same amount of args
+    // as expected
+    if (procedure.arguments.size() != args.size())
+    {
+
+    }
+
     // Initialize the stack for this procedure
     VariableMap stack;
 
@@ -37,5 +45,5 @@ void Walker::Procedure(
         stack.try_emplace(name, std::move(arg));
     }
 
-    
+
 }
