@@ -30,7 +30,8 @@ void PreWalker::Procedure(TreePtr ast)
     ADT::PreWalker::Procedure proc;
 
     // Process arguments, if any
-    auto body = ast->children[0];
+    auto body_idx = 0;
+    auto body = ast->children[body_idx];
     if (body->type == ADT::Lang::ASTType::Arguments)
     {
         for (auto arg : body->children)
@@ -75,7 +76,45 @@ void PreWalker::Procedure(TreePtr ast)
             );
         }
 
-        body = ast->children[1];
+        body_idx++;
+        body = ast->children[body_idx];
+    }
+
+    // Parse return type if any
+    if (body->type == ADT::Lang::ASTType::ReturnType)
+    {
+        auto return_type = body->children[0]->type;
+        switch (return_type)
+        {
+            case ADT::Lang::ASTType::Integer:
+            {
+                proc.return_type = ADT::Runtime::ObjectType::Integer;
+                break;
+            }
+
+            case ADT::Lang::ASTType::String:
+            {
+                proc.return_type = ADT::Runtime::ObjectType::String;
+                break;
+            }
+
+            case ADT::Lang::ASTType::Float:
+            {
+                proc.return_type = ADT::Runtime::ObjectType::Float;
+                break;
+            }
+
+            case ADT::Lang::ASTType::Boolean:
+            {
+                proc.return_type = ADT::Runtime::ObjectType::Boolean;
+                break;
+            }
+
+            default: break;
+        }
+
+        body_idx++;
+        body = ast->children[body_idx];
     }
 
     // Set the body
