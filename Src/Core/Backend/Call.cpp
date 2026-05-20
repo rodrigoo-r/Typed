@@ -44,6 +44,7 @@ ADT::Runtime::Object Walker::Call(
     {
         ADT::List::Object args;
         Procedure(proc->second, args, body);
+        return {};
     }
 
     // Get args too
