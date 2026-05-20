@@ -17,9 +17,6 @@
 // Created by Rodrigo on 5/20/26.
 //
 
-#include <complex>
-
-
 #include "ADT/Exception/MismatchedArgCount.h"
 #include "ADT/Exception/MismatchedType.h"
 #include "Walker.h"
