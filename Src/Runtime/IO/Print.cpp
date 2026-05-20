@@ -19,17 +19,17 @@
 
 #include "Print.h"
 
-
-#include "Println.h"
-
 #include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::IO;
 
-void IO::Println(ADT::List::Object &args)
+void IO::Print(ADT::List::Object &args)
 {
-    Print(args);
-    Celery::Io::Println();
+    auto &fmt_obj = args[0];
+    auto &fmt = std::get<Celery::Str::External>(fmt_obj.value);
+
+
+    Celery::Io::Println(fmt);
 }
