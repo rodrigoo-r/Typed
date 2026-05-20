@@ -33,7 +33,7 @@ namespace Typed::ADT::Exception
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Mismatched argument count"),
+            Exception("Mismatched types"),
             Traceable{line, column}
         {}
     };
