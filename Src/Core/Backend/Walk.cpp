@@ -28,11 +28,6 @@ using namespace Typed::Core::Backend;
 
 void Walker::Walk()
 {
-    // Get the main procedure
-    auto main = runnable.procedures.find("Main");
-    if (main == runnable.procedures.end())
-        throw ADT::Exception::UnknownEntryPoint();
-
     // Add imported libraries
     for (auto &lib_name : runnable.imports)
     {
@@ -46,6 +41,11 @@ void Walker::Walk()
             runnable.procedures.emplace(name, proc);
         }
     }
+
+    // Get the main procedure
+    auto main = runnable.procedures.find("Main");
+    if (main == runnable.procedures.end())
+        throw ADT::Exception::UnknownEntryPoint();
 
     // Run the main procedure
     ADT::List::Object args;
