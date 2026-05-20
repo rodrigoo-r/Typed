@@ -29,8 +29,12 @@ namespace Typed::ADT::Exception
         public Core::Traceable
     {
     public:
-        MismatchedArgCount() :
-            Exception("Mismatched argument count")
+        MismatchedArgCount(
+            Celery::Trait::VeryLarge line,
+            Celery::Trait::VeryLarge column
+        ) :
+            Exception("Mismatched argument count"),
+            Traceable{line, column}
         {}
     };
 }
