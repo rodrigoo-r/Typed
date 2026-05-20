@@ -19,31 +19,12 @@
 
 #include "ADT/Exception/MismatchedArgCount.h"
 #include "ADT/Exception/MismatchedType.h"
+#include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
 
 using namespace Typed;
 using namespace Typed::Core;
 using namespace Typed::Core::Backend;
-
-void DoTypeChecking(
-    ADT::PreWalker::Argument &expected,
-    ADT::Runtime::Object &arg,
-    Celery::Trait::VeryLarge line,
-    Celery::Trait::VeryLarge column
-)
-{
-    // Find the expected type
-    if (
-        expected.type != arg.type &&
-        expected.type != ADT::Runtime::ObjectType::Any
-    )
-    {
-        throw ADT::Exception::MismatchedType(
-            line,
-            column
-        );
-    }
-}
 
 void ProcessArg(
     ADT::List::Object &args,
@@ -65,7 +46,12 @@ void ProcessArg(
 
     auto &arg = args[i];
     auto &expected = procedure.arguments[i];
-    DoTypeChecking(expected, arg, line, column);
+    Support::Runtime::TypeCheck(
+        expected.type,
+        arg.type,
+        line,
+        column
+    );
 
     // Don't use the stack if the procedure is native
     if (procedure.native == nullptr)
@@ -128,9 +114,9 @@ void Walker::Procedure(
         {
             auto &arg = args[i];
 
-            DoTypeChecking(
-                procedure.arguments[procedure.arguments.Size() - 1],
-                arg,
+            Support::Runtime::TypeCheck(
+                procedure.arguments[procedure.arguments.Size() - 1].type,
+                arg.type,
                 line,
                 column
             );
