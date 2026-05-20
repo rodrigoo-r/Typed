@@ -24,7 +24,7 @@ using namespace Typed::Core;
 using namespace Typed::Core::Backend;
 
 void Walker::Expression(
-    VariableMap &maps,
+    VariableMap &stack,
     TreePtr body
 )
 {
