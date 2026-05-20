@@ -25,6 +25,12 @@ namespace Typed::Core::Backend
 {
     class Walker
     {
+        using Tree =
+            ADT::Lang::AST;
+
+        using TreePtr =
+            Tree *;
+
     public:
         using Runnable =
             ADT::PreWalker::File;
@@ -45,7 +51,11 @@ namespace Typed::Core::Backend
     protected:
         RunnableRef runnable;
 
-        void Procedure(ProcedureRef procedure, VariableMap &args);
+        void Procedure(
+            ProcedureRef procedure,
+            VariableMap &args,
+            TreePtr trace
+        );
 
     public:
         Walker(RunnableRef runnable)
