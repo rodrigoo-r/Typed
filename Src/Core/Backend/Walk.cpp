@@ -18,6 +18,8 @@
 //
 
 #include "ADT/Exception/UnknownEntryPoint.h"
+#include "ADT/Exception/UnknownLibrary.h"
+#include "Support/Runtime/LibraryMap.h"
 #include "Walker.h"
 
 using namespace Typed;
@@ -30,6 +32,20 @@ void Walker::Walk()
     auto main = runnable.procedures.find("Main");
     if (main == runnable.procedures.end())
         throw ADT::Exception::UnknownEntryPoint();
+
+    // Add imported libraries
+    for (auto &lib_name : runnable.imports)
+    {
+        auto pkg = Support::Runtime::LibraryMap.find(lib_name);
+        if (pkg == Support::Runtime::LibraryMap.end())
+            throw ADT::Exception::UnknownLibrary(lib_name);
+
+        // Add all procedures imported
+        for (auto &[name, proc] : pkg->second)
+        {
+            runnable.procedures.emplace(name, proc);
+        }
+    }
 
     // Run the main procedure
     ADT::List::Object args;
