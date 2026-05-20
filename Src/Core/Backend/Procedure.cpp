@@ -68,5 +68,9 @@ void Walker::Procedure(
         stack.try_emplace(name, std::move(arg));
     }
 
-
+    // Begin execution
+    for (auto ast : procedure.body->children)
+    {
+        Expression(stack, ast);
+    }
 }
