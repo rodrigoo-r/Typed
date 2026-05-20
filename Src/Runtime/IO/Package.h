@@ -29,6 +29,7 @@ namespace Typed::Runtime::IO
         {
             {
                 {"f", ADT::Runtime::ObjectType::String},
+                {"_", ADT::Runtime::ObjectType::Any},
             },
             nullptr,
             true,
