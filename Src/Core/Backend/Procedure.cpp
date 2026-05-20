@@ -145,7 +145,7 @@ void Walker::Procedure(
     // Execute the procedure directly if it's native
     if (procedure.native != nullptr)
     {
-        procedure.native(args);
+        procedure.native(args, trace);
         return;
     }
 
