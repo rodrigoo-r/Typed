@@ -32,6 +32,6 @@ void Walker::Walk()
         throw ADT::Exception::UnknownEntryPoint();
 
     // Run the main procedure
-    VariableMap args{};
+    ArgumentList args;
     Procedure(main->second, args, nullptr);
 }
