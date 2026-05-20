@@ -41,7 +41,7 @@ void Walker::Procedure(
 
     // Make sure there's the same amount of args
     // as expected
-    if (procedure.arguments.Size() != args.Size())
+    if (procedure.arguments.Size() != args.Size() && !procedure.variadic)
     {
         throw ADT::Exception::MismatchedArgCount(
             line,
