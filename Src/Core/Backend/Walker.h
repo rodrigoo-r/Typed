@@ -49,10 +49,13 @@ namespace Typed::Core::Backend
                 Celery::Misc::Hash
             >;
 
-        using ArgumentList =
+        using ObjectList =
             Celery::Array::Vector<
                 ADT::Runtime::Object
-        >;
+            >;
+
+        using ArgumentList =
+            ObjectList;
 
         using ExpressionQueue =
             ADT::Queue::DoubleEnded<TreePtr>;
