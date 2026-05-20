@@ -81,11 +81,7 @@ Machine::StreamRef Machine::Lex()
 
         if (
             c == ';' ||
-            c == ',' ||
-            c == '+' ||
-            c == '-' ||
-            c == '*' ||
-            c == '/'
+            c == ','
         )
         {
             Flush();
