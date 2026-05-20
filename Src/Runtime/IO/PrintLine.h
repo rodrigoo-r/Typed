@@ -17,17 +17,11 @@
 // Created by Rodrigo on 5/20/26.
 //
 
-#include "Println.h"
+#pragma once
+#include "ADT/Lang/AST.h"
+#include "ADT/List/Object.h"
 
-#include "Print.h"
-#include "Support/Printer/ASTPrinter.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::IO;
-
-void IO::Println(ADT::List::Object &args, ADT::Lang::AST *trace)
+namespace Typed::Runtime::IO
 {
-    Print(args, trace);
-    Celery::Io::Println();
+    void PrintLine(ADT::List::Object &, ADT::Lang::AST *);
 }

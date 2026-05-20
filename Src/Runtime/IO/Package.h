@@ -21,14 +21,14 @@
 
 #include "ADT/Map/Procedure.h"
 #include "Print.h"
-#include "Println.h"
+#include "PrintLine.h"
 #include "Support/Printer/ASTPrinter.h"
 
 namespace Typed::Runtime::IO
 {
     inline ADT::Map::Procedure Package = {
         {
-            "Println",
+            "Print_Line",
             {
                 {
                     {"f", ADT::Runtime::ObjectType::String},
@@ -36,7 +36,7 @@ namespace Typed::Runtime::IO
                 },
                 nullptr,
                 true,
-                Println
+                PrintLine
             }
         },
         {
