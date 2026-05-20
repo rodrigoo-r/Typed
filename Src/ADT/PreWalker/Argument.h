@@ -13,28 +13,16 @@
  * #-----------------------------------------------------# *
 */
 
-//
-// Created by Rodrigo on 5/19/26.
-//
-
 #pragma once
+#include <Celery/String/External.h>
+
 #include "ADT/Runtime/ObjectType.h"
-#include "Argument.h"
 
 namespace Typed::ADT::PreWalker
 {
-    struct Procedure
+    struct Argument
     {
-        using Tree =
-            Lang::AST;
-
-        using TreePtr =
-            Tree *;
-
-        using ArgumentList =
-            Celery::Array::Vector<Argument>;
-
-        ArgumentList arguments;
-        TreePtr body;
+        Celery::Str::External name;
+        Runtime::ObjectType type;
     };
 }
