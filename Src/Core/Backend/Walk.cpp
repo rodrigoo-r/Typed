@@ -33,5 +33,5 @@ void Walker::Walk()
 
     // Run the main procedure
     VariableMap args{};
-    Procedure(main->second, args);
+    Procedure(main->second, args, nullptr);
 }
