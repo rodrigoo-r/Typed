@@ -22,6 +22,7 @@
 #include "ADT/Map/Procedure.h"
 #include "Print.h"
 #include "PrintLine.h"
+#include "ReadLine.h"
 #include "Support/Printer/ASTPrinter.h"
 
 namespace Typed::Runtime::IO
@@ -49,6 +50,15 @@ namespace Typed::Runtime::IO
                 nullptr,
                 true,
                 Print
+            },
+        },
+        {
+            "Read_Line",
+            {
+                {},
+                nullptr,
+                true,
+                ReadLine
             },
         }
     };

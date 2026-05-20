@@ -30,6 +30,7 @@ namespace Typed::ADT::Lang
         Use,
         Procedure,
         Arguments,
+        ReturnType,
         Argument,
         Body,
 
@@ -48,6 +49,7 @@ namespace Typed::ADT::Lang
         Sub,
         Div,
         Mul,
+        Return,
 
         // Declarations
         Declare,
