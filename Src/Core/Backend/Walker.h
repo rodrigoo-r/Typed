@@ -19,6 +19,7 @@
 
 #pragma once
 #include "ADT/PreWalker/File.h"
+#include "ADT/Queue/DoubleEnded.h"
 #include "ADT/Runtime/Object.h"
 
 namespace Typed::Core::Backend
@@ -52,6 +53,9 @@ namespace Typed::Core::Backend
             Celery::Array::Vector<
                 ADT::Runtime::Object
         >;
+
+        using ExpressionQueue =
+            ADT::Queue::DoubleEnded<TreePtr>;
 
     protected:
         RunnableRef runnable;
