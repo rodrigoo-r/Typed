@@ -22,9 +22,10 @@
 #include <Celery/Io/Io.h>
 #include <magic_enum/magic_enum.hpp>
 
+#include "Core/Backend/Walker.h"
 #include "Core/Frontend/Lexer/Lexer.h"
 #include "Core/Frontend/Parser/Parser.h"
-#include "Core/Walker/Walker.h"
+#include "Core/MiddleEnd/PreWalker.h"
 #include "Support/File/Reader.h"
 #include "Support/Printer/ASTPrinter.h"
 
@@ -43,8 +44,13 @@ void Subcommand::Run(const std::string &input)
     Core::Frontend::Parser::Machine parser(tokens);
     auto root = parser.Parse();
 
-    // Run the code
-    Core::Walker::Machine walker(root);
-    walker.Walk();
+    Support::Printer::ASTPrinter printer(root);
+    printer.Print();
 
+    Core::MiddleEnd::PreWalker pre_walker(root);
+    auto &file = pre_walker.Process();
+
+    // Run the code
+    Core::Backend::Walker walker(file);
+    walker.Walk();
 }
