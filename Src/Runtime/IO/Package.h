@@ -36,6 +36,7 @@ namespace Typed::Runtime::IO
                     {"_", ADT::Runtime::ObjectType::Any},
                 },
                 nullptr,
+                ADT::Runtime::ObjectType::Void,
                 true,
                 PrintLine
             }
@@ -48,6 +49,7 @@ namespace Typed::Runtime::IO
                     {"_", ADT::Runtime::ObjectType::Any},
                 },
                 nullptr,
+                ADT::Runtime::ObjectType::Void,
                 true,
                 Print
             },
@@ -57,6 +59,7 @@ namespace Typed::Runtime::IO
             {
                 {},
                 nullptr,
+                ADT::Runtime::ObjectType::Void,
                 true,
                 ReadLine
             },
