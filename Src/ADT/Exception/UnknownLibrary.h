@@ -19,22 +19,28 @@
 
 #pragma once
 #include <Celery/Except/Base.h>
+#include <Celery/String/External.h>
 
 #include "ADT/Core/Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class UnknownLibrary :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Celery::Except::Exception
     {
+        Celery::Str::External &name;
+
     public:
         UnknownLibrary(
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            Celery::Str::External &name
         ) :
             Exception("Unknown library"),
-            Traceable{line, column}
+            name(name)
         {}
+
+        [[nodiscard]] Celery::Str::External &GetName()
+        const {
+            return name;
+        }
     };
 }
