@@ -49,17 +49,12 @@ namespace Typed::Core::Backend
                 Celery::Misc::Hash
             >;
 
-        using ArgumentList =
-            Celery::Array::Vector<
-                ADT::Runtime::Object
-            >;
-
     protected:
         RunnableRef runnable;
 
         void Procedure(
             ProcedureRef procedure,
-            ArgumentList &args,
+            ADT::List::Object &args,
             TreePtr trace
         );
 
