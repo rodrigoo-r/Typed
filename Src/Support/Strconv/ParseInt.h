@@ -21,7 +21,6 @@
 #include <Celery/String/External.h>
 
 
-#pragma once
 #include <climits>
 
 namespace Typed::Support::Strconv
