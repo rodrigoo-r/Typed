@@ -17,6 +17,9 @@
 // Created by Rodrigo on 5/20/26.
 //
 
+#include <complex>
+
+
 #include "ADT/Exception/MismatchedArgCount.h"
 #include "ADT/Exception/MismatchedType.h"
 #include "Walker.h"
@@ -24,6 +27,53 @@
 using namespace Typed;
 using namespace Typed::Core;
 using namespace Typed::Core::Backend;
+
+void DoTypeChecking(
+    ADT::PreWalker::Argument &expected,
+    ADT::Runtime::Object &arg,
+    Celery::Trait::VeryLarge line,
+    Celery::Trait::VeryLarge column
+)
+{
+    // Find the expected type
+    if (
+        expected.type != arg.type &&
+        expected.type != ADT::Runtime::ObjectType::Any
+    )
+    {
+        throw ADT::Exception::MismatchedType(
+            line,
+            column
+        );
+    }
+}
+
+void ProcessArg(
+    ADT::List::Object &args,
+    Walker::ProcedureRef procedure,
+    Celery::Trait::VeryLarge line,
+    Celery::Trait::VeryLarge column,
+    Celery::Trait::VeryLarge i,
+    Walker::VariableMap &stack
+)
+{
+    // Make sure the procedure has enough arguments
+    if (procedure.arguments.Size() <= i)
+    {
+        throw ADT::Exception::MismatchedArgCount(
+            line,
+            column
+        );
+    }
+
+    auto &arg = args[i];
+    auto &expected = procedure.arguments[i];
+    DoTypeChecking(expected, arg, line, column);
+
+    // Don't use the stack if the procedure is native
+    if (procedure.native == nullptr)
+        stack.try_emplace(expected.name, std::move(arg));
+}
 
 void Walker::Procedure(
     ProcedureRef procedure,
@@ -53,26 +103,46 @@ void Walker::Procedure(
     VariableMap stack;
 
     // Push all args to the stack
-    for (auto i = 0; i < args.Size(); ++i)
+    Celery::Trait::SignedVeryLarge args_size = args.Size();
+    if (procedure.variadic)
     {
-        auto &arg = args[i];
-        auto &expected = procedure.arguments[i];
+        // Get the index where the arg type changes
+        auto last = args[0].type;
+        Celery::Trait::SignedVeryLarge change = -1;
 
-        // Find the expected type
-        if (
-            expected.type != arg.type &&
-            expected.type != ADT::Runtime::ObjectType::Any
-        )
+        for (auto i = 0; i < args.Size(); ++i)
         {
-            throw ADT::Exception::MismatchedType(
+            auto &arg = args[i];
+            if (last != arg.type)
+            {
+                change = i;
+                break;
+            }
+
+            last = arg.type;
+        }
+
+        // Do tye checking until the idx where it changes
+        args_size = change;
+
+        // Make sure all other args are the same type
+        if (change == -1) change = 0;
+        for (auto i = change; i < args.Size(); ++i)
+        {
+            auto &arg = args[i];
+
+            DoTypeChecking(
+                procedure.arguments[procedure.arguments.Size()],
+                arg,
                 line,
                 column
             );
         }
+    }
 
-        // Don't use the stack if the procedure is native
-        if (procedure.native == nullptr)
-            stack.try_emplace(expected.name, std::move(arg));
+    for (auto i = 0; i < args_size; ++i)
+    {
+        ProcessArg(args, procedure, line, column, i, stack);
     }
 
     // Execute the procedure directly if it's native
