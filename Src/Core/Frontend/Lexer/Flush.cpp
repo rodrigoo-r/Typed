@@ -51,7 +51,7 @@ void Machine::Flush()
         token.type = ADT::Lang::TokenType::StringLiteral;
     } else if (state.IsFloatLiteral())
     {
-        token.type = ADT::Lang::TokenType::NumberLiteral;
+        token.type = ADT::Lang::TokenType::FloatLiteral;
     } else if (state.IsNumberLiteral())
     {
         token.type = ADT::Lang::TokenType::NumberLiteral;
