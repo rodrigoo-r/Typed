@@ -17,6 +17,7 @@
 // Created by Rodrigo on 5/20/26.
 //
 
+#include "Support/Strconv/ParseFloat.h"
 #include "Support/Strconv/ParseInt.h"
 #include "Walker.h"
 
@@ -89,7 +90,10 @@ ADT::Runtime::Object Walker::Expression(
 
         case ADT::Lang::ASTType::FloatLiteral:
         {
-            break;
+            return {
+                ADT::Runtime::ObjectType::Float,
+                Support::Strconv::ParseFloat(expr->value)
+            };
         }
 
         case ADT::Lang::ASTType::NumberLiteral:
@@ -98,7 +102,6 @@ ADT::Runtime::Object Walker::Expression(
                 ADT::Runtime::ObjectType::Integer,
                 Support::Strconv::ParseInt(expr->value)
             };
-            break;
         }
 
         case ADT::Lang::ASTType::Identifier:
