@@ -18,7 +18,7 @@
 //
 
 #pragma once
-#include "ADT/Runtime/ObjectType.h"
+#include "ADT/Lang/AST.h"
 #include "Argument.h"
 
 namespace Typed::ADT::PreWalker
