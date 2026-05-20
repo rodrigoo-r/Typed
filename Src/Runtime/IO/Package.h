@@ -20,6 +20,7 @@
 #pragma once
 
 #include "ADT/Map/Procedure.h"
+#include "Print.h"
 #include "Println.h"
 #include "Support/Printer/ASTPrinter.h"
 
@@ -37,6 +38,18 @@ namespace Typed::Runtime::IO
                 true,
                 Println
             }
+        },
+        {
+            "Print",
+            {
+                {
+                    {"f", ADT::Runtime::ObjectType::String},
+                    {"_", ADT::Runtime::ObjectType::Any},
+                },
+                nullptr,
+                true,
+                Print
+            },
         }
     };
 }
