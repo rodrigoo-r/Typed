@@ -60,7 +60,7 @@ namespace Typed::Runtime::IO
                 {},
                 nullptr,
                 ADT::Runtime::ObjectType::Void,
-                true,
+                false,
                 ReadLine
             },
         }
