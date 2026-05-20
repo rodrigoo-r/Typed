@@ -17,21 +17,22 @@
 // Created by Rodrigo on 5/20/26.
 //
 
-#include "ADT/Exception/UnknownEntryPoint.h"
-#include "Walker.h"
+#pragma once
 
-using namespace Typed;
-using namespace Typed::Core;
-using namespace Typed::Core::Backend;
+#include "ADT/List/Procedure.h"
+#include "Println.h"
+#include "Support/Printer/ASTPrinter.h"
 
-void Walker::Walk()
+namespace Typed::Runtime::IO
 {
-    // Get the main procedure
-    auto main = runnable.procedures.find("Main");
-    if (main == runnable.procedures.end())
-        throw ADT::Exception::UnknownEntryPoint();
-
-    // Run the main procedure
-    ADT::List::Object args;
-    Procedure(main->second, args, nullptr);
+    inline ADT::List::Procedure Package = {
+        {
+            {
+                {"f", ADT::Runtime::ObjectType::String},
+            },
+            nullptr,
+            true,
+            Println
+        }
+    };
 }
