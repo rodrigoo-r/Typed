@@ -42,12 +42,12 @@ ADT::Runtime::Object Walker::Call(
 
     if (children.Size() == 1)
     {
-        ArgumentList args;
+        ADT::List::Object args;
         Procedure(proc->second, args, body);
     }
 
     // Get args too
-    ArgumentList args;
+    ADT::List::Object args;
     auto args_node = children[1];
 
     for (auto &arg_node : args_node->children)

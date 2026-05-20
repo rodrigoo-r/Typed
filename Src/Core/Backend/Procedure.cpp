@@ -27,7 +27,7 @@ using namespace Typed::Core::Backend;
 
 void Walker::Procedure(
     ProcedureRef procedure,
-    ArgumentList &args,
+    ADT::List::Object &args,
     TreePtr trace
 )
 {
