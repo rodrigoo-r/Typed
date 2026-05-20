@@ -38,6 +38,7 @@ namespace Typed::ADT::Lang
         To,
         By,
         From,
+        Returns,
 
         // Instructions
         Declare,
@@ -46,6 +47,7 @@ namespace Typed::ADT::Lang
         Sub,
         Mul,
         Div,
+        Return,
 
         // Data types
         String,

@@ -44,6 +44,7 @@ namespace Typed::Support::Lang
         {"To", ADT::Lang::TokenType::To},
         {"By", ADT::Lang::TokenType::By},
         {"From", ADT::Lang::TokenType::From},
+        {"Returns", ADT::Lang::TokenType::Returns},
 
         {"Declare", ADT::Lang::TokenType::Declare},
         {"Call", ADT::Lang::TokenType::Call},
@@ -51,6 +52,7 @@ namespace Typed::Support::Lang
         {"Subtract", ADT::Lang::TokenType::Sub},
         {"Multiply", ADT::Lang::TokenType::Mul},
         {"Divide", ADT::Lang::TokenType::Div},
+        {"Return", ADT::Lang::TokenType::Return},
 
         {";", ADT::Lang::TokenType::Semicolon},
         {",", ADT::Lang::TokenType::Comma},
