@@ -18,9 +18,10 @@
 //
 
 #pragma once
+#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
 
 namespace Typed::Runtime::IO
 {
-    void Println(ADT::List::Object &);
+    void Println(ADT::List::Object &, ADT::Lang::AST *);
 }
