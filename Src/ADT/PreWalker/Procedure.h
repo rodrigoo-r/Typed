@@ -42,6 +42,6 @@ namespace Typed::ADT::PreWalker
         TreePtr body;
 
         // Used for runtime-provided functions
-        void (*native)(ObjectList);
+        void (*native)(ObjectList &);
     };
 }
