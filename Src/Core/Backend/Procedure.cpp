@@ -73,6 +73,20 @@ void Walker::Procedure(
     // Begin execution
     for (auto ast : procedure.body->children)
     {
-        Expression(stack, ast);
+        switch (ast->type)
+        {
+            case ADT::Lang::ASTType::Expression:
+            {
+                Expression(stack, ast);
+                break;
+            }
+
+            case ADT::Lang::ASTType::Declare:
+            {
+                break;
+            }
+
+            default: break;
+        }
     }
 }
