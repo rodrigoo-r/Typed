@@ -89,6 +89,11 @@ void Walker::Procedure(
     Celery::Trait::SignedVeryLarge args_size = args.Size();
     if (procedure.variadic)
     {
+        if (args.Empty())
+        {
+            throw ADT::Exception::MismatchedArgCount(line, column);
+        }
+
         // Get the index where the arg type changes
         auto last = args[0].type;
         Celery::Trait::SignedVeryLarge change = -1;
