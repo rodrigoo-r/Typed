@@ -31,8 +31,13 @@ namespace Typed::Core::Backend
         using RunnableRef =
             Runnable &;
 
+        using ProcedureRef =
+            ADT::PreWalker::Procedure &;
+
     protected:
         RunnableRef runnable;
+
+        void Procedure(ProcedureRef procedure);
 
     public:
         Walker(RunnableRef runnable)
