@@ -19,6 +19,7 @@
 
 #pragma once
 #include "ADT/Lang/AST.h"
+#include "ADT/Runtime/Object.h"
 #include "Argument.h"
 
 namespace Typed::ADT::PreWalker
@@ -34,7 +35,13 @@ namespace Typed::ADT::PreWalker
         using ArgumentList =
             Celery::Array::Vector<Argument>;
 
+        using ObjectList =
+            Celery::Array::Vector<Runtime::Object>;
+
         ArgumentList arguments;
         TreePtr body;
+
+        // Used for runtime-provided functions
+        void (*native)(ObjectList);
     };
 }
