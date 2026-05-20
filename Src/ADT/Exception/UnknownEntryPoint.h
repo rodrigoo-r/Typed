@@ -29,7 +29,7 @@ namespace Typed::ADT::Exception
     {
     public:
         UnknownEntryPoint() :
-            Exception("Unknown token")
+            Exception("Unknown entry point")
         {}
     };
 }
