@@ -70,6 +70,13 @@ void Walker::Procedure(
         stack.try_emplace(expected.name, std::move(arg));
     }
 
+    // Execute the procedure directly if it's native
+    if (procedure.native != nullptr)
+    {
+        procedure.native(args);
+        return;
+    }
+
     // Begin execution
     for (auto ast : procedure.body->children)
     {
