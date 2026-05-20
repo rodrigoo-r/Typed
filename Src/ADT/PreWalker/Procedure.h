@@ -37,6 +37,7 @@ namespace Typed::ADT::PreWalker
 
         ArgumentList arguments;
         TreePtr body;
+        Runtime::ObjectType return_type;
         bool variadic;
 
         // Used for runtime-provided functions
