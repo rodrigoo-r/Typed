@@ -24,7 +24,7 @@
 
 namespace Typed::ADT::Exception
 {
-    class UnexpectedToken :
+    class UnknownEntryPoint :
         public Celery::Except::Exception
     {
     public:
