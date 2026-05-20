@@ -1,7 +1,7 @@
 # Test Script
 # This is a comment
 
-Use Regex; # Import the Regex library
+#Use Regex; # Import the Regex library
 Use IO; # Import the IO library for printing
 # Available libraries:
 # - Regex
@@ -16,52 +16,13 @@ Procedure Main
 With Arguments
     # No arguments for this procedure
     # Example:
-    Arg1 as String
+    # Arg1 as String
     # Arg2 as Integer
 Begin
-    # Declare a variable
-    Declare
-        My_Regex_Pattern as String
-    With
-        "[a-zA-Z0-9]+"
-    ; # Create a regex to match alphanumeric strings
-
-    Declare
-        My_Replaced_String as String
-    With
-        Call
-            Regex_Replace_One
-        With
-            My_Regex_Pattern,
-            "Hello, World!",
-            "Hi"
-        ; # Replace "Hello" with "Hi"
-
     Call
-        Print
+        Println
     With
-        # Formats:
-        # $S - String
-        # $I - Integer
-        # $F - Float
-        "$S", # Format goes first, then arguments
-        My_Replaced_String
-    ; # Print the result
-
-    Declare
-        Result as Integer
-    With
-        5;
-
-    Add
-        15
-    To
-        Result; # Add 15 to the result
-
-    Call
-        Print
-    With
-        "$I",
-        Result
-    ; # Print the final result
+        "$S",
+        "Hello, world"
+    ;
 End_Procedure
