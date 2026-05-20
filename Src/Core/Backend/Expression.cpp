@@ -17,6 +17,7 @@
 // Created by Rodrigo on 5/20/26.
 //
 
+#include "Support/Strconv/Atoi.h"
 #include "Walker.h"
 
 using namespace Typed;
@@ -93,6 +94,10 @@ ADT::Runtime::Object Walker::Expression(
 
         case ADT::Lang::ASTType::NumberLiteral:
         {
+            return {
+                ADT::Runtime::ObjectType::Integer,
+                Support::Strconv::Atoi(expr->value)
+            };
             break;
         }
 
