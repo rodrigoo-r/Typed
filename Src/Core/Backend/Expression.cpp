@@ -17,7 +17,7 @@
 // Created by Rodrigo on 5/20/26.
 //
 
-#include "Support/Strconv/Atoi.h"
+#include "Support/Strconv/ParseInt.h"
 #include "Walker.h"
 
 using namespace Typed;
@@ -96,7 +96,7 @@ ADT::Runtime::Object Walker::Expression(
         {
             return {
                 ADT::Runtime::ObjectType::Integer,
-                Support::Strconv::Atoi(expr->value)
+                Support::Strconv::ParseInt(expr->value)
             };
             break;
         }

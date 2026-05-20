@@ -26,7 +26,7 @@
 
 namespace Typed::Support::Strconv
 {
-    inline int Atoi(Celery::Str::External &str)
+    inline int ParseInt(Celery::Str::External &str)
     {
         auto size = str.Size();
         size_t i = 0;
