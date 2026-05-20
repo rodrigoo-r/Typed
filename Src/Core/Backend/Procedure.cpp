@@ -59,7 +59,10 @@ void Walker::Procedure(
         auto &expected = procedure.arguments[i];
 
         // Find the expected type
-        if (expected.type != arg.type)
+        if (
+            expected.type != arg.type &&
+            expected.type != ADT::Runtime::ObjectType::Any
+        )
         {
             throw ADT::Exception::MismatchedType(
                 line,
@@ -67,7 +70,9 @@ void Walker::Procedure(
             );
         }
 
-        stack.try_emplace(expected.name, std::move(arg));
+        // Don't use the stack if the procedure is native
+        if (procedure.native == nullptr)
+            stack.try_emplace(expected.name, std::move(arg));
     }
 
     // Execute the procedure directly if it's native
