@@ -22,7 +22,23 @@ Begin
     Call
         Println
     With
-        "$S",
-        "Hello, world"
+        "$S! This is my int: $I",
+        "Hello, world",
+        25
+    ;
+
+    Call
+        Println
+    With
+        "And this is my float: $F",
+        25.19
+    ;
+
+    Call
+        Println
+    With
+        "And my boolean: $B. And my other boolean: $B",
+        True,
+        False
     ;
 End_Procedure
