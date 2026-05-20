@@ -49,16 +49,10 @@ namespace Typed::Core::Backend
                 Celery::Misc::Hash
             >;
 
-        using ObjectList =
+        using ArgumentList =
             Celery::Array::Vector<
                 ADT::Runtime::Object
             >;
-
-        using ArgumentList =
-            ObjectList;
-
-        using ExpressionQueue =
-            ADT::Queue::DoubleEnded<TreePtr>;
 
     protected:
         RunnableRef runnable;
@@ -69,7 +63,7 @@ namespace Typed::Core::Backend
             TreePtr trace
         );
 
-        void Expression(
+        ADT::Runtime::Object Expression(
             VariableMap &stack,
             TreePtr body
         );
