@@ -129,7 +129,7 @@ void Walker::Procedure(
             auto &arg = args[i];
 
             DoTypeChecking(
-                procedure.arguments[procedure.arguments.Size()],
+                procedure.arguments[procedure.arguments.Size() - 1],
                 arg,
                 line,
                 column
