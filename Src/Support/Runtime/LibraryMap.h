@@ -22,7 +22,6 @@
 #include <Celery/String/External.h>
 
 
-#include "ADT/List/Procedure.h"
 #include "ADT/Map/Dense.h"
 #include "Runtime/IO/Package.h"
 
@@ -30,7 +29,7 @@ namespace Typed::Support::Runtime
 {
     inline ADT::Map::Dense<
         Celery::Str::External,
-        ADT::List::Procedure,
+        ADT::Map::Procedure,
         Celery::Misc::Hash
     > LibraryMap = {
         {"IO", Typed::Runtime::IO::Package}
