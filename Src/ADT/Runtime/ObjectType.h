@@ -26,6 +26,9 @@ namespace Typed::ADT::Runtime
         String,
         Float,
         Integer,
-        Boolean
+        Boolean,
+
+        // Reserved for native types
+        Any
     };
 }
