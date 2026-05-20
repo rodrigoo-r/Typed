@@ -27,7 +27,7 @@ using namespace Typed::Core::Backend;
 
 void Walker::Procedure(
     ProcedureRef procedure,
-    VariableMap &args,
+    ArgumentList &args,
     TreePtr trace
 )
 {
@@ -41,7 +41,7 @@ void Walker::Procedure(
 
     // Make sure there's the same amount of args
     // as expected
-    if (procedure.arguments.size() != args.size())
+    if (procedure.arguments.Size() != args.Size())
     {
         throw ADT::Exception::MismatchedArgCount(
             line,
@@ -53,11 +53,13 @@ void Walker::Procedure(
     VariableMap stack;
 
     // Push all args to the stack
-    for (auto &[name, arg] : args)
+    for (auto i = 0; i < args.Size(); ++i)
     {
+        auto &arg = args[i];
+        auto &expected = procedure.arguments[i];
+
         // Find the expected type
-        auto expected = procedure.arguments.at(name);
-        if (expected != arg.type)
+        if (expected.type != arg.type)
         {
             throw ADT::Exception::MismatchedType(
                 line,
@@ -65,7 +67,7 @@ void Walker::Procedure(
             );
         }
 
-        stack.try_emplace(name, std::move(arg));
+        stack.try_emplace(expected.name, std::move(arg));
     }
 
     // Begin execution
