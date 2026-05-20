@@ -86,6 +86,57 @@ void IO::Print(
                     break;
                 }
 
+                case 'F':
+                {
+                    auto &arg = GetArg(args, pos, line, col);
+                    Support::Runtime::TypeCheck(
+                        arg.type,
+                        ADT::Runtime::ObjectType::Float,
+                        line,
+                        col
+                    );
+
+                    auto &val = Support::Runtime::GetFloatObj(arg);
+                    can_continue = false;
+                    Celery::Io::Print(val);
+
+                    break;
+                }
+
+                case 'I':
+                {
+                    auto &arg = GetArg(args, pos, line, col);
+                    Support::Runtime::TypeCheck(
+                        arg.type,
+                        ADT::Runtime::ObjectType::Integer,
+                        line,
+                        col
+                    );
+
+                    auto &val = Support::Runtime::GetIntObj(arg);
+                    can_continue = false;
+                    Celery::Io::Print(val);
+
+                    break;
+                }
+
+                case 'B':
+                {
+                    auto &arg = GetArg(args, pos, line, col);
+                    Support::Runtime::TypeCheck(
+                        arg.type,
+                        ADT::Runtime::ObjectType::Boolean,
+                        line,
+                        col
+                    );
+
+                    auto &val = Support::Runtime::GetBoolObj(arg);
+                    can_continue = false;
+                    Celery::Io::Print(val);
+
+                    break;
+                }
+
                 default: break;
             }
 
