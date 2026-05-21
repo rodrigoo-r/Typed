@@ -172,4 +172,7 @@ ADT::Runtime::Object Walker::Procedure(
             column
         );
     }
+
+    // Return an empty object otherwise
+    return {};
 }
