@@ -112,6 +112,11 @@ void Machine::Procedure()
                 break;
             }
 
+            case ADT::Lang::TokenType::Return:
+            {
+                Return(body);
+            }
+
             default:
             {
                 Expression(body);
