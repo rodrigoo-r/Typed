@@ -36,6 +36,11 @@ namespace Typed::Support::Runtime
         return GetObjValue<Celery::Str::External>(obj);
     }
 
+    inline Celery::Str::String &GetOwnedStrObj(ADT::Runtime::Object &obj)
+    {
+        return GetObjValue<Celery::Str::String>(obj);
+    }
+
     inline float &GetFloatObj(ADT::Runtime::Object &obj)
     {
         return GetObjValue<float>(obj);
