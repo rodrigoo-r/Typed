@@ -57,6 +57,11 @@ namespace Typed::Core::Backend
             TreePtr trace
         );
 
+        void Declare(
+            VariableMap &stack,
+            TreePtr body
+        );
+
         ADT::Runtime::Object Expression(
             VariableMap &stack,
             TreePtr body
