@@ -68,6 +68,7 @@ namespace Typed::Core::Backend
         );
 
         ADT::Runtime::Object Return(
+            ProcedureRef procedure,
             VariableMap &stack,
             TreePtr body
         );
