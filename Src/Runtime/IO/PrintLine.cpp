@@ -26,8 +26,13 @@ using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::IO;
 
-void IO::PrintLine(ADT::List::Object &args, ADT::Lang::AST *trace)
+ADT::Runtime::Object IO::PrintLine(
+    ADT::List::Object &args,
+    ADT::Lang::AST *trace
+)
 {
     Print(args, trace);
     Celery::Io::Println();
+
+    return {};
 }

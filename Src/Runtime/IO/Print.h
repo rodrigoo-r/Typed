@@ -23,5 +23,5 @@
 
 namespace Typed::Runtime::IO
 {
-    void Print(ADT::List::Object &, ADT::Lang::AST *);
+    ADT::Runtime::Object Print(ADT::List::Object &, ADT::Lang::AST *);
 }

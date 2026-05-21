@@ -46,7 +46,7 @@ ADT::Runtime::Object &GetArg(
     return obj;
 }
 
-void IO::Print(
+ADT::Runtime::Object IO::Print(
     ADT::List::Object &args,
     ADT::Lang::AST *trace
 )
@@ -150,4 +150,6 @@ void IO::Print(
 
         Celery::Io::Print(c);
     }
+
+    return {};
 }
