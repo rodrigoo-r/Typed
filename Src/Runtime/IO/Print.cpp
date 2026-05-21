@@ -79,6 +79,15 @@ ADT::Runtime::Object IO::Print(
                         col
                     );
 
+                    // Special case: Owned strings
+                    if (arg.type == ADT::Runtime::ObjectType::OwnedString)
+                    {
+                        auto &val = Support::Runtime::GetOwnedStrObj(arg);
+                        can_continue = false;
+                        Celery::Io::Print(val);
+                        break;
+                    }
+
                     auto &val = Support::Runtime::GetStrObj(arg);
                     can_continue = false;
                     Celery::Io::Print(val);
