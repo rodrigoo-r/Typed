@@ -58,7 +58,7 @@ void ProcessArg(
         stack.try_emplace(expected.name, std::move(arg));
 }
 
-void Walker::Procedure(
+ADT::Runtime::Object Walker::Procedure(
     ProcedureRef procedure,
     ADT::List::Object &args,
     TreePtr trace
@@ -136,8 +136,7 @@ void Walker::Procedure(
     // Execute the procedure directly if it's native
     if (procedure.native != nullptr)
     {
-        procedure.native(args, trace);
-        return;
+        return procedure.native(args, trace);
     }
 
     // Begin execution
@@ -152,6 +151,11 @@ void Walker::Procedure(
             }
 
             case ADT::Lang::ASTType::Declare:
+            {
+                break;
+            }
+
+            case ADT::Lang::ASTType::Return:
             {
                 break;
             }

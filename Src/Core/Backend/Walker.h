@@ -51,7 +51,7 @@ namespace Typed::Core::Backend
     protected:
         RunnableRef runnable;
 
-        void Procedure(
+        ADT::Runtime::Object Procedure(
             ProcedureRef procedure,
             ADT::List::Object &args,
             TreePtr trace

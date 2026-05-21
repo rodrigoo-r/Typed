@@ -41,6 +41,6 @@ namespace Typed::ADT::PreWalker
         bool variadic = false;
 
         // Used for runtime-provided functions
-        void (*native)(List::Object &, TreePtr) = nullptr;
+        Runtime::Object (*native)(List::Object &, TreePtr) = nullptr;
     };
 }
