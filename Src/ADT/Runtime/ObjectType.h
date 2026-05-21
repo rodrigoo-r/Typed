@@ -23,14 +23,15 @@ namespace Typed::ADT::Runtime
 {
     enum class ObjectType
     {
+        // Reserved for native types
+        Void,
+        Any,
+        OwnedString,
+
         String,
         Float,
         Integer,
         Boolean,
 
-        // Reserved for native types
-        Any,
-        OwnedString,
-        Void
     };
 }
