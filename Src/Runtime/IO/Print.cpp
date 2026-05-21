@@ -73,8 +73,8 @@ ADT::Runtime::Object IO::Print(
                 {
                     auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
-                        arg.type,
                         ADT::Runtime::ObjectType::String,
+                        arg.type,
                         line,
                         col
                     );
@@ -90,8 +90,8 @@ ADT::Runtime::Object IO::Print(
                 {
                     auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
-                        arg.type,
                         ADT::Runtime::ObjectType::Float,
+                        arg.type,
                         line,
                         col
                     );
@@ -107,8 +107,8 @@ ADT::Runtime::Object IO::Print(
                 {
                     auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
-                        arg.type,
                         ADT::Runtime::ObjectType::Integer,
+                        arg.type,
                         line,
                         col
                     );
@@ -124,8 +124,8 @@ ADT::Runtime::Object IO::Print(
                 {
                     auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
-                        arg.type,
                         ADT::Runtime::ObjectType::Boolean,
+                        arg.type,
                         line,
                         col
                     );
