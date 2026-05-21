@@ -152,6 +152,7 @@ ADT::Runtime::Object Walker::Procedure(
 
             case ADT::Lang::ASTType::Declare:
             {
+                Declare(stack, ast);
                 break;
             }
 
