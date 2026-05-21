@@ -138,6 +138,15 @@ void Machine::Expression(
             }
         }
 
+        // Make sure there's no remaining tokens
+        if (expr.HasNext())
+        {
+            throw ADT::Exception::UnexpectedToken(
+                expr.Peek().line,
+                expr.Peek().column
+            );
+        }
+
         ast->children.PushBack(result);
     }
 }
