@@ -157,7 +157,7 @@ ADT::Runtime::Object Walker::Procedure(
 
             case ADT::Lang::ASTType::Return:
             {
-                return Return(stack, ast);
+                return Return(procedure, stack, ast);
             }
 
             default: break;
