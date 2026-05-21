@@ -74,6 +74,7 @@ namespace Typed::Core::Frontend::Parser
 
         void Expression(TreePtr parent);
         void Expression(TreePtr body, TokenStreamView &input);
+        void Return(TreePtr parent);
 
         TreePtr CallArgs(TokenStreamView &input, ExprQueue &queue);
         TreePtr Call(TokenStreamView &input, ExprQueue &queue);
