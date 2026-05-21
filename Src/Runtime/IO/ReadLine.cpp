@@ -18,14 +18,32 @@
 //
 
 #include "ReadLine.h"
+#include <Celery/Io/Io.h>
 
 #include "Print.h"
-#include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::IO;
 
-void IO::ReadLine(ADT::List::Object &args, ADT::Lang::AST *trace)
+ADT::Runtime::Object IO::ReadLine(
+    ADT::List::Object &args,
+    ADT::Lang::AST *trace
+)
 {
+    // Flush the stdout buffer before reading
+    Celery::Io::IStdout.Flush();
+
+    // Read the line
+    std::string line;
+    std::getline(std::cin, line);
+
+    // Copy the string
+    Celery::Str::String str;
+    str.Write(line.data(), line.size());
+
+    return {
+        ADT::Runtime::ObjectType::OwnedString,
+        std::move(str)
+    };
 }
