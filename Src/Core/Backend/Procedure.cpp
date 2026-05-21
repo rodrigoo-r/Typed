@@ -17,8 +17,8 @@
 // Created by Rodrigo on 5/20/26.
 //
 
+#include "ADT/Exception/ExpectedReturn.h"
 #include "ADT/Exception/MismatchedArgCount.h"
-#include "ADT/Exception/MismatchedType.h"
 #include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
 
@@ -162,5 +162,14 @@ ADT::Runtime::Object Walker::Procedure(
 
             default: break;
         }
+    }
+
+    // No return statement
+    if (procedure.return_type != ADT::Runtime::ObjectType::Void)
+    {
+        throw ADT::Exception::ExpectedReturn(
+            line,
+            column
+        );
     }
 }
