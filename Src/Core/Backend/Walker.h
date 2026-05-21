@@ -67,6 +67,11 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
+        void Return(
+            VariableMap &stack,
+            TreePtr body
+        );
+
     public:
         Walker(RunnableRef runnable)
             : runnable(runnable)
