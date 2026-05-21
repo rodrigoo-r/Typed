@@ -43,8 +43,7 @@ ADT::Runtime::Object Walker::Call(
     if (children.Size() == 1)
     {
         ADT::List::Object args;
-        Procedure(proc->second, args, body);
-        return {};
+        return Procedure(proc->second, args, body);
     }
 
     // Get args too
@@ -57,6 +56,5 @@ ADT::Runtime::Object Walker::Call(
         args.PushBack(Expression(stack, arg));
     }
 
-    Procedure(proc->second, args, body);
-    return {};
+    return Procedure(proc->second, args, body);
 }
