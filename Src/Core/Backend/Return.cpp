@@ -23,10 +23,10 @@ using namespace Typed;
 using namespace Typed::Core;
 using namespace Typed::Core::Backend;
 
-void Walker::Return(
+ADT::Runtime::Object Walker::Return(
     VariableMap &stack,
     TreePtr body
 )
 {
-
+    return Expression(stack, body->children[0]);
 }

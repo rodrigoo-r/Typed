@@ -67,7 +67,7 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
-        void Return(
+        ADT::Runtime::Object Return(
             VariableMap &stack,
             TreePtr body
         );
