@@ -14,17 +14,24 @@ namespace Typed::Support::Runtime
         Celery::Trait::VeryLarge line,
         Celery::Trait::VeryLarge column
     )
-        {
-            // Find the expected type
-            if (
+    {
+        // Find the expected type
+        if (
+            (
+                expected != actual &&
+                expected == ADT::Runtime::ObjectType::String &&
+                actual != ADT::Runtime::ObjectType::String &&
+                actual != ADT::Runtime::ObjectType::OwnedString
+            ) || (
                 expected != actual &&
                 expected != ADT::Runtime::ObjectType::Any
             )
-            {
-                throw ADT::Exception::MismatchedType(
-                    line,
-                    column
-                );
-            }
+        )
+        {
+            throw ADT::Exception::MismatchedType(
+                line,
+                column
+            );
         }
+    }
 }
