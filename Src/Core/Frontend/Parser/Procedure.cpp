@@ -151,6 +151,8 @@ void Machine::Procedure()
             peek = tokens.Peek();
     }
 
+    // Consume the end procedure token
+    tokens.Next();
     body_queue.pop_front();
 
     // Make sure the body queue is empty at the end
