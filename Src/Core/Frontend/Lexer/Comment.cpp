@@ -42,5 +42,6 @@ void Machine::Comment()
         contents.SetPos(contents.Size());
     }
 
+    state.AddLine();
     state.SetStart(contents.Pos());
 }
