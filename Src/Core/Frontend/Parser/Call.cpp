@@ -37,8 +37,23 @@ Machine::TreePtr Machine::Call(
     auto call = AllocateBase(name, ADT::Lang::ASTType::Call);
     call->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
 
+    if (!input.HasNext())
+    {
+        throw ADT::Exception::UnexpectedToken(
+            input.Curr().line,
+            input.Curr().column
+        );
+    }
+
+    // Stop parsing arguments if needed
+    auto &peek = input.Peek();
+    if (peek.type == ADT::Lang::TokenType::EndCall)
+    {
+        input.Next();
+        return call;
+    }
+
     // Parse arguments if needed
-    if (!input.HasNext()) return call;
     Expect(input, ADT::Lang::TokenType::With);
     call->children.PushBack(CallArgs(input, queue));
 
