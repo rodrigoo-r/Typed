@@ -62,6 +62,9 @@ namespace Typed::ADT::Lang
         FalseLiteral,
 
         // Boolean operations
+        If,
+        ElseIf,
+        Else,
         And,
         Or,
         Not,
