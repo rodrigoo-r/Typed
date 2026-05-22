@@ -78,6 +78,11 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
+        ADT::Runtime::Object Variable(
+            VariableMap &stack,
+            TreePtr body
+        );
+
     public:
         Walker(RunnableRef runnable)
             : runnable(runnable)
