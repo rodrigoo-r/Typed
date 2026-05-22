@@ -83,6 +83,31 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
+        void ArithmeticBase(
+            VariableMap &stack,
+            TreePtr body
+        );
+
+        void Add(
+            VariableMap &stack,
+            TreePtr body
+        );
+
+        void Sub(
+            VariableMap &stack,
+            TreePtr body
+        );
+
+        void Mul(
+            VariableMap &stack,
+            TreePtr body
+        );
+
+        void Div(
+            VariableMap &stack,
+            TreePtr body
+        );
+
     public:
         Walker(RunnableRef runnable)
             : runnable(runnable)
