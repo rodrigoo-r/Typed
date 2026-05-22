@@ -34,40 +34,7 @@ Machine::TreePtr Machine::BooleanOperation(
     auto op = Allocate(ADT::Lang::ASTType::Root);
     op->children.PushBack(result);
 
-    // Collect tokens until we find a delimiter
-    Celery::Trait::VeryLarge start = input.Pos();
-    Celery::Trait::VeryLarge size = 0;
-    auto found_delim = false;
-
-    while (input.HasNext())
-    {
-        auto &next = input.Next();
-        if (
-            next.type == ADT::Lang::TokenType::And ||
-            next.type == ADT::Lang::TokenType::Or
-        )
-        {
-            found_delim = true;
-            break;
-        }
-
-        size++;
-    }
-
-    // Make sure we found the delimiter
-    if (!found_delim)
-    {
-        throw ADT::Exception::UnexpectedToken(
-            input.Curr().line,
-            input.Curr().column
-        );
-    }
-
-    // Construct the view
-    ADT::Stream::External<ADT::Lang::Token> stream{
-        input.Ptr() + start,
-        size
-    };
+   auto stream = ExtractUntilBoolean(input);
 
     switch (op_token.type)
     {
