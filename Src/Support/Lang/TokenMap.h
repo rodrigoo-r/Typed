@@ -45,6 +45,9 @@ namespace Typed::Support::Lang
         {"By", ADT::Lang::TokenType::By},
         {"From", ADT::Lang::TokenType::From},
         {"Returns", ADT::Lang::TokenType::Returns},
+        {"Than", ADT::Lang::TokenType::Than},
+        {"Then", ADT::Lang::TokenType::Then},
+        {"Is", ADT::Lang::TokenType::Is},
 
         {"Declare", ADT::Lang::TokenType::Declare},
         {"Call", ADT::Lang::TokenType::Call},
@@ -53,6 +56,17 @@ namespace Typed::Support::Lang
         {"Multiply", ADT::Lang::TokenType::Mul},
         {"Divide", ADT::Lang::TokenType::Div},
         {"Return", ADT::Lang::TokenType::Return},
+
+        {"Greater", ADT::Lang::TokenType::Greater},
+        {"If", ADT::Lang::TokenType::If},
+        {"Else_If", ADT::Lang::TokenType::ElseIf},
+        {"Else", ADT::Lang::TokenType::Else},
+        {"Or", ADT::Lang::TokenType::Or},
+        {"And", ADT::Lang::TokenType::And},
+        {"Not", ADT::Lang::TokenType::Not},
+        {"Equal", ADT::Lang::TokenType::Equal},
+        {"Greater", ADT::Lang::TokenType::Greater},
+        {"Less", ADT::Lang::TokenType::Less},
 
         {";", ADT::Lang::TokenType::Semicolon},
         {",", ADT::Lang::TokenType::Comma},
