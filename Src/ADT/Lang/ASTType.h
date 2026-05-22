@@ -61,6 +61,16 @@ namespace Typed::ADT::Lang
         TrueLiteral,
         FalseLiteral,
 
+        // Boolean operations
+        And,
+        Or,
+        Not,
+        Equal,
+        Greater,
+        Less,
+        GreaterEqual,
+        LessEqual,
+
         // Identifier
         Identifier
     };
