@@ -34,5 +34,8 @@ void Machine::Use()
     // don't have to nest an Identifier AST under the Use AST
     auto node = AllocateBase(identifier, ADT::Lang::ASTType::Use);
 
+    // Consume the semicolon
+    Expect(ADT::Lang::TokenType::Semicolon);
+
     root->children.PushBack(node);
 }
