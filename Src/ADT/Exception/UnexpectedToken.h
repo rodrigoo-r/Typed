@@ -33,7 +33,7 @@ namespace Typed::ADT::Exception
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Unknown token"),
+            Exception("Unexpected token"),
             Traceable{line, column}
         {}
     };
