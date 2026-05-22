@@ -101,9 +101,9 @@ namespace Typed::Core::Frontend::Parser
         TreePtr Div(TokenStreamView &input);
         TreePtr And(TokenStreamView &input);
         TreePtr Or(TokenStreamView &input);
-        TreePtr Equal(TokenStreamView &input);
-        TreePtr Greater(TokenStreamView &input);
-        TreePtr Less(TokenStreamView &input);
+        TreePtr Equal(TokenStreamView &input, TreePtr op);
+        TreePtr Greater(TokenStreamView &input, TreePtr op);
+        TreePtr Less(TokenStreamView &input, TreePtr op);
         TreePtr BooleanOperation(
             TokenStreamView &input,
             TreePtr result
