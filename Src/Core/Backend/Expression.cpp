@@ -106,7 +106,7 @@ ADT::Runtime::Object Walker::Expression(
 
         case ADT::Lang::ASTType::Identifier:
         {
-            break;
+            return Variable(stack, expr);
         }
 
         default: break;
