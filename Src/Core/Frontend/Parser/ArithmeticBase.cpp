@@ -29,10 +29,25 @@ Machine::TreePtr Machine::ArithmeticBase(
     ADT::Lang::TokenType delimiter
 )
 {
-    auto lhs = ArithmeticLHS(input);
-
     // Syntax:
-    // <Add/Sub/Mul/Div> <Num> <To/By> <Identifier>
+    // <Add/Sub> <Num> <To> <Identifier>
+    // <Mul/Div> <Identifier> <By> <Num>
+    if (delimiter == ADT::Lang::TokenType::By)
+    {
+        auto &name = input.Peek();
+        Expect(input, ADT::Lang::TokenType::Identifier);
+        Expect(input, delimiter);
+
+        // Create the AST and return it
+        auto lhs = ArithmeticLHS(input);
+        auto ast = AllocateBase(name, ADT::Lang::ASTType::Add);
+        ast->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+        ast->children.PushBack(lhs);
+
+        return ast;
+    }
+
+    auto lhs = ArithmeticLHS(input);
     Expect(input, delimiter);
 
     auto &name = input.Peek();
