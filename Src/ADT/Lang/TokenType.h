@@ -39,6 +39,20 @@ namespace Typed::ADT::Lang
         By,
         From,
         Returns,
+        Then,
+        Is,
+        Than,
+
+        // Boolean operations
+        If,
+        Else,
+        ElseIf,
+        And,
+        Or,
+        Not,
+        Equal,
+        Greater,
+        Less,
 
         // Instructions
         Declare,
