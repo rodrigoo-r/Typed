@@ -17,6 +17,7 @@
 // Created by Rodrigo on 5/18/26.
 //
 
+#include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
 
 using namespace Typed;
@@ -46,7 +47,10 @@ Machine::TreePtr Machine::Parse()
 
             default:
             {
-                break;
+                throw ADT::Exception::UnexpectedToken(
+                    token.line,
+                    token.column
+                );
             }
         }
     }
