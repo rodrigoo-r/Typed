@@ -20,7 +20,6 @@
 #include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
 #include "Support/Equality/TokenType.h"
-#include "Support/Stream/Extract.h"
 
 using namespace Typed;
 using namespace Typed::Core;
