@@ -129,7 +129,7 @@ void Machine::Procedure()
 
             case ADT::Lang::TokenType::If:
             {
-                If(last_el.body);
+                If(last_el.body, body_queue);
                 break;
             }
 
