@@ -113,7 +113,8 @@ void Machine::Procedure()
 
             case ADT::Lang::TokenType::Return:
             {
-                return Return(body);
+                Return(body);
+                break;
             }
 
             default:
