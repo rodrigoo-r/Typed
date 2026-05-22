@@ -32,6 +32,7 @@ Machine::TreePtr Machine::BooleanOperation(
 {
     auto &op_token = input.Peek();
     auto op = Allocate(ADT::Lang::ASTType::Root);
+    op->children.PushBack(result);
 
     // Collect tokens until we find a delimiter
     Celery::Trait::VeryLarge start = input.Pos();
