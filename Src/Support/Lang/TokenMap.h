@@ -37,6 +37,7 @@ namespace Typed::Support::Lang
         {"Procedure", ADT::Lang::TokenType::Procedure},
         {"Begin", ADT::Lang::TokenType::Begin},
         {"End_Procedure", ADT::Lang::TokenType::EndProcedure},
+        {"End_If", ADT::Lang::TokenType::EndIf},
 
         {"as", ADT::Lang::TokenType::As},
         {"With", ADT::Lang::TokenType::With},

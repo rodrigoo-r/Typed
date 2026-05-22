@@ -32,6 +32,7 @@ namespace Typed::ADT::Lang
         // Delimiters
         Begin,
         EndProcedure,
+        EndIf,
         As,
         With,
         Arguments,
