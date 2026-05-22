@@ -117,6 +117,12 @@ void Machine::Procedure()
                 break;
             }
 
+            case ADT::Lang::TokenType::If:
+            {
+                If(body);
+                break;
+            }
+
             default:
             {
                 Expression(body);
