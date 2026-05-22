@@ -33,6 +33,7 @@ namespace Typed::ADT::Lang
         Begin,
         EndProcedure,
         EndIf,
+        EndCall,
         As,
         With,
         Arguments,

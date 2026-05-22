@@ -38,6 +38,7 @@ namespace Typed::Support::Lang
         {"Begin", ADT::Lang::TokenType::Begin},
         {"End_Procedure", ADT::Lang::TokenType::EndProcedure},
         {"End_If", ADT::Lang::TokenType::EndIf},
+        {"End_Call", ADT::Lang::TokenType::EndCall},
 
         {"as", ADT::Lang::TokenType::As},
         {"With", ADT::Lang::TokenType::With},
