@@ -29,6 +29,7 @@ using namespace Typed::Core::Frontend::Parser;
 void Machine::Procedure()
 {
     // Expect the procedure's name
+    auto &proc_token = tokens.Curr();
     auto &identifier = tokens.Peek();
     Expect(ADT::Lang::TokenType::Identifier);
 
@@ -99,33 +100,48 @@ void Machine::Procedure()
     // Now parse the body
     auto body = AllocateBase(peek, ADT::Lang::ASTType::Body);
     node->children.PushBack(body);
+
+    BodyQueue body_queue = {
+        {
+            body,
+            proc_token
+        }
+    };
+
     while (peek.type != ADT::Lang::TokenType::EndProcedure)
     {
         peek = tokens.Peek();
+        auto &last_el = body_queue.front();
 
         switch (peek.type)
         {
             case ADT::Lang::TokenType::Declare:
             {
-                Declare(body);
+                Declare(last_el.body);
                 break;
             }
 
             case ADT::Lang::TokenType::Return:
             {
-                Return(body);
+                Return(last_el.body);
                 break;
             }
 
             case ADT::Lang::TokenType::If:
             {
-                If(body);
+                If(last_el.body);
+                break;
+            }
+
+            case ADT::Lang::TokenType::EndIf:
+            {
+                EndIf(body_queue);
                 break;
             }
 
             default:
             {
-                Expression(body);
+                Expression(last_el.body);
                 break;
             }
         }
@@ -133,5 +149,18 @@ void Machine::Procedure()
         // Update the peek for the next iteration
         if (tokens.HasNext())
             peek = tokens.Peek();
+    }
+
+    body_queue.pop_front();
+
+    // Make sure the body queue is empty at the end
+    if (!body_queue.empty())
+    {
+        auto &trace = body_queue.front();
+
+        throw ADT::Exception::UnexpectedToken(
+            trace.match.line,
+            trace.match.column
+        );
     }
 }
