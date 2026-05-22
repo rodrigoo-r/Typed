@@ -18,6 +18,9 @@
 //
 
 #pragma once
+#include <deque>
+
+
 #include "ADT/Lang/AST.h"
 #include "ADT/Stream/External.h"
 #include "ADT/Stream/Token.h"
@@ -50,8 +53,17 @@ namespace Typed::Core::Frontend::Parser
             TreePtr parent;
         };
 
+        struct BodyQueueElement
+        {
+            TreePtr body;
+            ADT::Lang::Token &match;
+        };
+
         using ExprQueue =
             Celery::Array::Vector<ExpressionQueueElement>;
+
+        using BodyQueue =
+            std::deque<BodyQueueElement>;
 
         Lexer::Machine::StreamRef tokens;
 
@@ -75,7 +87,8 @@ namespace Typed::Core::Frontend::Parser
         void Expression(TreePtr parent);
         void Expression(TreePtr body, TokenStreamView &input);
         void Return(TreePtr parent);
-        void If(TreePtr parent);
+        void If(TreePtr parent, BodyQueue &body_queue);
+        void EndIf(BodyQueue &body_queue);
 
         TreePtr CallArgs(TokenStreamView &input, ExprQueue &queue);
         TreePtr Call(TokenStreamView &input, ExprQueue &queue);
