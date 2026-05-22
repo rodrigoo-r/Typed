@@ -74,19 +74,19 @@ Machine::TreePtr Machine::BooleanOperation(
         case ADT::Lang::TokenType::Equal:
         {
             op->type = ADT::Lang::ASTType::Equal;
-            return Equal(stream);
+            return Equal(stream, op);
         }
 
         case ADT::Lang::TokenType::Greater:
         {
             op->type = ADT::Lang::ASTType::Greater;
-            return Greater(stream);
+            return Greater(stream, op);
         }
 
         case ADT::Lang::TokenType::Less:
         {
             op->type = ADT::Lang::ASTType::Less;
-            return Less(stream);
+            return Less(stream, op);
         }
 
         default:
