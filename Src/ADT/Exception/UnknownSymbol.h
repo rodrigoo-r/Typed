@@ -25,11 +25,16 @@
 namespace Typed::ADT::Exception
 {
     class UnknownSymbol :
-        public Celery::Except::Exception
+        public Celery::Except::Exception,
+        public Core::Traceable
     {
     public:
-        UnknownSymbol() :
-            Exception("Unknown symbol")
+        UnknownSymbol(
+            Celery::Trait::VeryLarge line,
+            Celery::Trait::VeryLarge column
+        ) :
+            Exception("Unknown symbol"),
+            Traceable{line, column}
         {}
     };
 }
