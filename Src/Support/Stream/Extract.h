@@ -20,6 +20,7 @@
 #pragma once
 #include "ADT/Equality/Agnostic.h"
 #include "ADT/Stream/External.h"
+#include "ADT/Exception/UnexpectedToken.h"
 
 namespace Typed::Support::Stream
 {
