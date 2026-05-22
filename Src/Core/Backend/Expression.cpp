@@ -46,21 +46,25 @@ ADT::Runtime::Object Walker::Expression(
 
         case ADT::Lang::ASTType::Add:
         {
+            Add(stack, body);
             break;
         }
 
         case ADT::Lang::ASTType::Sub:
         {
+            Sub(stack, body);
             break;
         }
 
         case ADT::Lang::ASTType::Mul:
         {
+            Mul(stack, body);
             break;
         }
 
         case ADT::Lang::ASTType::Div:
         {
+            Div(stack, body);
             break;
         }
 
