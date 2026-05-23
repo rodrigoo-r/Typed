@@ -88,6 +88,11 @@ namespace Typed::ADT::Scope
 
         FakeIterator Get(const Key &key)
         {
+            if (top == nullptr)
+            {
+                PushScope();
+            }
+
             auto scope = top;
             while (scope != nullptr)
             {
@@ -106,8 +111,8 @@ namespace Typed::ADT::Scope
             // By this point, we should've searched all
             // existing scopes
             return {
-                scope,
-                scope->map.end()
+                top,
+                top->map.end()
             };
         }
 
