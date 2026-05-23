@@ -18,6 +18,8 @@
 //
 
 #include "ADT/Exception/UnknownProcedure.h"
+#include "Support/Runtime/GetObjValue.h"
+#include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
 
 using namespace Typed;
@@ -33,7 +35,18 @@ void Walker::If(
     auto &cond = body->children[0];
     auto &then = body->children[1];
 
-    // TODO: Evaluate condition
+    // Evaluate the condition
+    auto cond_obj = Expression(stack, cond);
+    Support::Runtime::TypeCheck(
+        ADT::Runtime::ObjectType::Boolean,
+        cond_obj.type,
+        cond->line,
+        cond->column
+    );
 
-    Body(procedure, then, stack);
+    // Run the body only if the condition evaluates to true
+    if (Support::Runtime::GetBoolObj(cond_obj))
+    {
+        Body(procedure, then, stack);
+    }
 }
