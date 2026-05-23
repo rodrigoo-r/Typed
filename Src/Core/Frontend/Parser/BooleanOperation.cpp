@@ -19,6 +19,7 @@
 
 #include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
+#include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -27,33 +28,53 @@ using namespace Typed::Core::Frontend::Parser;
 
 Machine::TreePtr Machine::BooleanOperation(
     TokenStreamView &input,
-    TreePtr result
+    TreePtr result,
+    ExprQueue &queue
 )
 {
     auto &op_token = input.Peek();
-    auto op = Allocate(ADT::Lang::ASTType::Root);
+    auto op = AllocateBase(
+        input.Next(),
+        ADT::Lang::ASTType::Root
+    );
+
     op->children.PushBack(result);
 
-   auto stream = ExtractUntilBoolean(input);
+    auto stream = ExtractUntilBoolean(input, false);
+    auto expr = AllocateBase(op_token, ADT::Lang::ASTType::Expression);
+    queue.EmplaceBack(stream, expr);
+    op->children.PushBack(expr);
 
     switch (op_token.type)
     {
         case ADT::Lang::TokenType::Equal:
         {
             op->type = ADT::Lang::ASTType::Equal;
-            return Equal(stream, op);
+            break;
         }
 
         case ADT::Lang::TokenType::Greater:
         {
             op->type = ADT::Lang::ASTType::Greater;
-            return Greater(stream, op);
+            break;
         }
 
         case ADT::Lang::TokenType::Less:
         {
             op->type = ADT::Lang::ASTType::Less;
-            return Less(stream, op);
+            break;
+        }
+
+        case ADT::Lang::TokenType::GreaterEqual:
+        {
+            op->type = ADT::Lang::ASTType::GreaterEqual;
+            break;
+        }
+
+        case ADT::Lang::TokenType::LessEqual:
+        {
+            op->type = ADT::Lang::ASTType::LessEqual;
+            break;
         }
 
         default:
@@ -64,4 +85,6 @@ Machine::TreePtr Machine::BooleanOperation(
             );
         }
     }
+
+    return op;
 }
