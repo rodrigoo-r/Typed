@@ -95,12 +95,7 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
-        ADT::Runtime::Object And(
-            VariableStack &stack,
-            TreePtr body
-        );
-
-        ADT::Runtime::Object Or(
+        ADT::Runtime::Object Binary(
             VariableStack &stack,
             TreePtr body
         );
