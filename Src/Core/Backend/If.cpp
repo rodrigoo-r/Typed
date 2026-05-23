@@ -17,7 +17,6 @@
 // Created by Rodrigo on 5/23/26.
 //
 
-#include "ADT/Exception/UnknownProcedure.h"
 #include "Support/Runtime/GetObjValue.h"
 #include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
