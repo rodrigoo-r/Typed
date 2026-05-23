@@ -25,21 +25,20 @@ using namespace Typed;
 using namespace Typed::Core;
 using namespace Typed::Core::Backend;
 
-bool Walker::If(
-    ProcedureRef procedure,
+bool Walker::EvaluateCondition(
     VariableStack &stack,
-    TreePtr body
+    TreePtr cond
 )
 {
-    auto &cond = body->children[0];
-    auto &then = body->children[1];
+    // Evaluate the condition
+    auto cond_obj = Expression(stack, cond);
+    Support::Runtime::TypeCheck(
+        ADT::Runtime::ObjectType::Boolean,
+        cond_obj.type,
+        cond->line,
+        cond->column
+    );
 
-    // Run the body only if the condition evaluates to true
-    if (EvaluateCondition(stack, cond))
-    {
-        Body(procedure, then, stack);
-        return true;
-    }
-
-    return false;
+    // Return the result
+    return Support::Runtime::GetBoolObj(cond_obj);
 }

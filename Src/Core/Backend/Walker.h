@@ -100,6 +100,11 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
+        bool EvaluateCondition(
+            VariableStack &stack,
+            TreePtr cond
+        );
+
         bool If(
             ProcedureRef procedure,
             VariableStack &stack,
@@ -107,6 +112,12 @@ namespace Typed::Core::Backend
         );
 
         void ConditionGroup(
+            ProcedureRef procedure,
+            VariableStack &stack,
+            TreePtr body
+        );
+
+        void While(
             ProcedureRef procedure,
             VariableStack &stack,
             TreePtr body
