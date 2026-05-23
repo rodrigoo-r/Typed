@@ -56,7 +56,7 @@ void Machine::For(TreePtr parent, BodyQueue &body_queue)
     auto body = AllocateBase(for_token, ADT::Lang::ASTType::Body);
 
     Expect(ADT::Lang::TokenType::Begin);
-    body_queue.emplace_back(body, for_token);
+    body_queue.emplace_front(body, for_token);
 
     auto decl = AllocateBase(var_name, ADT::Lang::ASTType::Declare);
     decl->children.PushBack(AllocateBase(var_name, ADT::Lang::ASTType::Identifier));
