@@ -114,21 +114,27 @@ namespace Typed::ADT::Scope
             };
         }
 
-        void Set(const Key &key, const Value &value)
+        void Emplace(
+            const Key &key,
+            auto &&...args
+        )
         {
             // Update if it exists first
             auto it = Get(key);
             if (!it.IsEnd())
             {
-                it.it->second = value;
+                it.scope->map.try_emplace(
+                    key,
+                    std::forward<decltype(args)>(args)...
+                );
             }
             else
             {
                 // Insert at the top stack if it doesn't exist
-                top->map.insert({
+                top->map.try_emplace(
                     key,
-                    value
-                });
+                    std::forward<decltype(args)>(args)...
+                );
             }
         }
     };
