@@ -32,7 +32,9 @@ void Machine::EndIf(BodyQueue &body_queue)
 
     // Make sure the last element matches the block declaration
     if (
-        last_el.match.type != ADT::Lang::TokenType::If
+        last_el.match.type != ADT::Lang::TokenType::If &&
+        last_el.match.type != ADT::Lang::TokenType::ElseIf &&
+        last_el.match.type != ADT::Lang::TokenType::Else
     )
     {
         throw ADT::Exception::UnexpectedToken(
