@@ -40,6 +40,10 @@ namespace Typed::ADT::Lang
         Float,
         Boolean,
 
+        // Loops
+        For,
+        While,
+
         // Expression
         Expression,
 
