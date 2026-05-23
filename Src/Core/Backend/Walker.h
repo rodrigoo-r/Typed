@@ -95,26 +95,6 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
-        void Add(
-            VariableStack &stack,
-            TreePtr body
-        );
-
-        void Sub(
-            VariableStack &stack,
-            TreePtr body
-        );
-
-        void Mul(
-            VariableStack &stack,
-            TreePtr body
-        );
-
-        void Div(
-            VariableStack &stack,
-            TreePtr body
-        );
-
     public:
         Walker(RunnableRef runnable)
             : runnable(runnable)

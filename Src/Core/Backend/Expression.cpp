@@ -45,26 +45,11 @@ ADT::Runtime::Object Walker::Expression(
         }
 
         case ADT::Lang::ASTType::Add:
-        {
-            Add(stack, expr);
-            break;
-        }
-
         case ADT::Lang::ASTType::Sub:
-        {
-            Sub(stack, expr);
-            break;
-        }
-
         case ADT::Lang::ASTType::Mul:
-        {
-            Mul(stack, expr);
-            break;
-        }
-
         case ADT::Lang::ASTType::Div:
         {
-            Div(stack, expr);
+            ArithmeticBase(stack, expr);
             break;
         }
 
