@@ -31,31 +31,7 @@ void Machine::Else(
 )
 {
     auto &else_token = tokens.Next();
-
-    // Make sure the last child is an If child
-    if (
-        parent->type != ADT::Lang::ASTType::If &&
-        parent->type != ADT::Lang::ASTType::ConditionGroup
-    )
-    {
-        throw ADT::Exception::UnexpectedToken(
-            parent->line,
-            parent->column
-        );
-    }
-
-    auto real_parent = parent->children.Back();
-    if (real_parent->type != ADT::Lang::ASTType::ConditionGroup)
-    {
-        auto group = AllocateBase(
-            tokens.Curr(),
-            ADT::Lang::ASTType::ConditionGroup
-        );
-
-        group->children.PushBack(real_parent);
-        parent->children.Back() = group;
-        real_parent = group;
-    }
+    auto last = ConditionGroup(parent, body_queue);
 
     auto ast = AllocateBase(
         tokens.Peek(),
@@ -68,7 +44,7 @@ void Machine::Else(
     );
 
     Expect(ADT::Lang::TokenType::Begin);
-    real_parent->children.PushBack(ast);
+    last->children.PushBack(ast);
     ast->children.PushBack(body);
 
     // Add the body to the queue

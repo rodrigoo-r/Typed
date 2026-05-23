@@ -30,29 +30,8 @@ void Machine::ElseIf(
     BodyQueue &body_queue
 )
 {
-    // Make sure the last child is an If child
-    if (
-        parent->type != ADT::Lang::ASTType::If &&
-        parent->type != ADT::Lang::ASTType::ElseIf &&
-        parent->type != ADT::Lang::ASTType::ConditionGroup
-    )
-    {
-        throw ADT::Exception::UnexpectedToken(
-            parent->line,
-            parent->column
-        );
-    }
+    auto last = ConditionGroup(parent, body_queue);
 
-    if (parent->children.Back()->type != ADT::Lang::ASTType::ConditionGroup)
-    {
-        auto group = AllocateBase(
-            tokens.Curr(),
-            ADT::Lang::ASTType::ConditionGroup
-        );
-
-        group->children.PushBack(parent->children.Back());
-        parent->children.Back() = group;
-    }
-
-    If(parent->children.Back(), body_queue);
+    If(last, body_queue);
+    last->children.Back()->type = ADT::Lang::ASTType::ElseIf;
 }
