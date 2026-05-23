@@ -73,6 +73,12 @@ ADT::Runtime::Object Walker::Body(
                 break;
             }
 
+            case ADT::Lang::ASTType::While:
+            {
+                While(procedure, stack, ast);
+                break;
+            }
+
             default: break;
         }
     }
