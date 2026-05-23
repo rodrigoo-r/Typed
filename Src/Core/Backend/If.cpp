@@ -26,7 +26,7 @@ using namespace Typed;
 using namespace Typed::Core;
 using namespace Typed::Core::Backend;
 
-void Walker::If(
+bool Walker::If(
     ProcedureRef procedure,
     VariableStack &stack,
     TreePtr body
@@ -48,5 +48,8 @@ void Walker::If(
     if (Support::Runtime::GetBoolObj(cond_obj))
     {
         Body(procedure, then, stack);
+        return true;
     }
+
+    return false;
 }

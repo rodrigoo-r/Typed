@@ -100,7 +100,7 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
-        void If(
+        bool If(
             ProcedureRef procedure,
             VariableStack &stack,
             TreePtr body
