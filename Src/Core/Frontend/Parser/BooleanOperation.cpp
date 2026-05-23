@@ -38,7 +38,10 @@ Machine::TreePtr Machine::BooleanOperation(
         ADT::Lang::ASTType::Root
     );
 
-    op->children.PushBack(result);
+    // Wrap the result inside an expression
+    auto lhs_expr = AllocateBase(op_token, ADT::Lang::ASTType::Expression);
+    lhs_expr->children.PushBack(result);
+    op->children.PushBack(lhs_expr);
 
     auto stream = ExtractUntilBoolean(input, false);
     auto expr = AllocateBase(op_token, ADT::Lang::ASTType::Expression);
