@@ -17,8 +17,6 @@
 // Created by Rodrigo on 5/23/26.
 //
 
-#include "Support/Runtime/GetObjValue.h"
-#include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
 
 using namespace Typed;
@@ -34,12 +32,18 @@ void Walker::While(
     auto &cond = body->children[0];
     auto &then = body->children[1];
 
+    // Manually control the scope
+    stack.PushScope();
+
     while (true)
     {
         // Break when the condition becomes false
         if (!EvaluateCondition(stack, cond)) break;
 
         // Run the body
-        Body(procedure, then, stack);
+        Body(procedure, then, stack, false);
     }
+
+    // Remove the last scope once we're done
+    stack.PopScope();
 }
