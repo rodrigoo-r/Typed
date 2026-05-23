@@ -98,6 +98,16 @@ ADT::Runtime::Object Walker::Expression(
             return Variable(stack, expr);
         }
 
+        case ADT::Lang::ASTType::And:
+        {
+            return And(stack, expr);
+        }
+
+        case ADT::Lang::ASTType::Or:
+        {
+            return Or(stack, expr);
+        }
+
         default: break;
     }
 

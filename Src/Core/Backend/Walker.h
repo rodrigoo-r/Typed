@@ -95,6 +95,16 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
+        ADT::Runtime::Object And(
+            VariableStack &stack,
+            TreePtr body
+        );
+
+        ADT::Runtime::Object Or(
+            VariableStack &stack,
+            TreePtr body
+        );
+
         void If(
             ProcedureRef procedure,
             VariableStack &stack,
