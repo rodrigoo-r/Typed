@@ -79,9 +79,35 @@ Machine::StreamRef Machine::Lex()
             continue;
         }
 
+        // Parse '==', '>=', '<=', '!='
+        if (
+            (
+                c == '=' ||
+                c == '>' ||
+                c == '<'
+            ) &&
+            contents.HasNext() &&
+            contents.Peek() == '='
+        )
+        {
+            Flush();
+            state.SetStart(contents.Pos() - 1);
+            state.AddSize();
+            state.AddSize();
+
+            Flush();
+            state.AddColumn();
+            state.AddColumn();
+            contents.Next();
+
+            continue;
+        }
+
         if (
             c == ';' ||
-            c == ','
+            c == ',' ||
+            c == '>' ||
+            c == '<'
         )
         {
             Flush();
