@@ -111,12 +111,7 @@ Begin
     End_Call;
 
     If
-        9 >= 7 Or
-        1 <= 2 Or
-        2 < 5 Or
-        5 > 2 And
-        1 < 2 Or
-        1 == 1
+        False
     Then
     Begin
         Declare
@@ -129,6 +124,20 @@ Begin
         With
             "Inner Result: $I",
             Result
+        End_Call;
+    Else_If 1 == 1 Then
+    Begin
+        Call
+            Print_Line
+        With
+            "Elseif!"
+        End_Call;
+    Else
+    Begin
+        Call
+            Print_Line
+        With
+            "No inner result"
         End_Call;
     End_If
 
