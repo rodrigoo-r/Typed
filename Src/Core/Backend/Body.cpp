@@ -52,6 +52,12 @@ ADT::Runtime::Object Walker::Body(
                 return Return(procedure, stack, ast);
             }
 
+            case ADT::Lang::ASTType::If:
+            {
+                If(procedure, stack, ast);
+                break;
+            }
+
             default: break;
         }
     }
