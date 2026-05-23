@@ -33,7 +33,8 @@ void Machine::ElseIf(
     // Make sure the last child is an If child
     if (
         parent->type != ADT::Lang::ASTType::If &&
-        parent->type != ADT::Lang::ASTType::ElseIf
+        parent->type != ADT::Lang::ASTType::ElseIf &&
+        parent->type != ADT::Lang::ASTType::ConditionGroup
     )
     {
         throw ADT::Exception::UnexpectedToken(
@@ -42,6 +43,12 @@ void Machine::ElseIf(
         );
     }
 
-    If(parent, body_queue);
-    parent->children.Back()->type = ADT::Lang::ASTType::ElseIf;
+    if (parent->children.Back()->type != ADT::Lang::ASTType::ConditionGroup)
+    {
+        auto group = Allocate(ADT::Lang::ASTType::ConditionGroup);
+        group->children.PushBack(parent->children.Back());
+        parent->children.Back() = group;
+    }
+
+    If(parent->children.Back(), body_queue);
 }
