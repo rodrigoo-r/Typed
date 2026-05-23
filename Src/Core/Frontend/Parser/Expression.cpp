@@ -138,6 +138,33 @@ void Machine::Expression(
             }
         }
 
+        // Parse boolean expression if any
+        if (
+            expr.HasNext() &&
+            (
+                expr.Peek().type == ADT::Lang::TokenType::Less ||
+                expr.Peek().type == ADT::Lang::TokenType::Greater ||
+                expr.Peek().type == ADT::Lang::TokenType::LessEqual ||
+                expr.Peek().type == ADT::Lang::TokenType::GreaterEqual ||
+                expr.Peek().type == ADT::Lang::TokenType::Equal
+            )
+        )
+        {
+            result = BooleanOperation(expr, result, queue);
+        }
+
+        // Parse boolean delimiters
+        if (
+            expr.HasNext() &&
+            (
+                expr.Peek().type == ADT::Lang::TokenType::And ||
+                expr.Peek().type == ADT::Lang::TokenType::Or
+            )
+        )
+        {
+            result = BooleanOperator(expr, result, queue);
+        }
+
         // Make sure there's no remaining tokens
         if (expr.HasNext())
         {
