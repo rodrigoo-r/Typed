@@ -42,8 +42,6 @@ namespace Typed::ADT::Lang
         From,
         Returns,
         Then,
-        Is,
-        Than,
 
         // Boolean operations
         If,
@@ -55,6 +53,9 @@ namespace Typed::ADT::Lang
         Equal,
         Greater,
         Less,
+        GreaterEqual,
+        LessEqual,
+        NotEqual,
 
         // Instructions
         Declare,

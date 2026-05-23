@@ -47,9 +47,7 @@ namespace Typed::Support::Lang
         {"By", ADT::Lang::TokenType::By},
         {"From", ADT::Lang::TokenType::From},
         {"Returns", ADT::Lang::TokenType::Returns},
-        {"Than", ADT::Lang::TokenType::Than},
         {"Then", ADT::Lang::TokenType::Then},
-        {"Is", ADT::Lang::TokenType::Is},
 
         {"Declare", ADT::Lang::TokenType::Declare},
         {"Call", ADT::Lang::TokenType::Call},
@@ -72,6 +70,11 @@ namespace Typed::Support::Lang
 
         {";", ADT::Lang::TokenType::Semicolon},
         {",", ADT::Lang::TokenType::Comma},
+        {">", ADT::Lang::TokenType::Less},
+        {"<", ADT::Lang::TokenType::Greater},
+        {"==", ADT::Lang::TokenType::Equal},
+        {">=", ADT::Lang::TokenType::GreaterEqual},
+        {"<=", ADT::Lang::TokenType::LessEqual},
 
         {"True", ADT::Lang::TokenType::TrueLiteral},
         {"False", ADT::Lang::TokenType::FalseLiteral},
