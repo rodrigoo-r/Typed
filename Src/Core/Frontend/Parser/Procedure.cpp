@@ -151,6 +151,12 @@ void Machine::Procedure()
                 break;
             }
 
+            case ADT::Lang::TokenType::For:
+            {
+                For(last_el.body, body_queue);
+                break;
+            }
+
             default:
             {
                 Expression(last_el.body);
