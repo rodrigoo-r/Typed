@@ -90,7 +90,7 @@ namespace Typed::ADT::Scope
         {
             if (top == nullptr)
             {
-                PushScope();
+                throw Celery::Except::OutOfRange();
             }
 
             auto scope = top;
