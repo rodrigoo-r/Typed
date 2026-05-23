@@ -114,6 +114,9 @@ void Walker::For(
     // Execute the loop
     while (true)
     {
+        auto var_it = stack.Get(decl_name);
+        auto &var = var_it.it->second;
+
         // Execute the body
         Body(procedure, loop_body, stack, false);
 
@@ -122,21 +125,23 @@ void Walker::For(
             auto &from_int = Support::Runtime::GetIntObj(from_obj);
             auto &to_int = Support::Runtime::GetIntObj(to_obj);
             auto &step_int = Support::Runtime::GetIntObj(step_obj);
+            auto &var_int = Support::Runtime::GetIntObj(var);
 
-            if (from_int >= to_int)
+            if (var_int >= to_int)
                 break;
 
-            from_int += step_int;
+            var_int += step_int;
         } else
         {
             auto &from_float = Support::Runtime::GetFloatObj(from_obj);
             auto &to_float = Support::Runtime::GetFloatObj(to_obj);
             auto &step_float = Support::Runtime::GetFloatObj(step_obj);
+            auto &var_float = Support::Runtime::GetFloatObj(var);
 
-            if (from_float >= to_float)
+            if (var_float >= to_float)
                 break;
 
-            from_float += step_float;
+            var_float += step_float;
         }
     }
 }
