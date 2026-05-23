@@ -88,7 +88,9 @@ namespace Typed::Core::Frontend::Parser
         void Expression(TreePtr body, TokenStreamView &input);
         void Return(TreePtr parent);
         void If(TreePtr parent, BodyQueue &body_queue);
+
         void For(TreePtr parent, BodyQueue &body_queue);
+        void EndFor(BodyQueue &body_queue);
 
         TreePtr ConditionGroup(TreePtr parent, BodyQueue &body_queue);
         void ElseIf(TreePtr parent, BodyQueue &body_queue);
