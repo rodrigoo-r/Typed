@@ -55,20 +55,14 @@ void Machine::Flush()
     } else if (state.IsNumberLiteral())
     {
         token.type = ADT::Lang::TokenType::NumberLiteral;
-    } else if (
-        state.IsIdentifier() ||
-        (
-            token.value.Size() == 1 && (
-                token.value[0] == ';' ||
-                token.value[0] == ','
-            )
-        )
-    )
+    } else
     {
         // Find the token type and assign the appropriate type
         auto it = Support::Lang::TokenMap.find(token.value);
+        auto found = false;
         if (it != Support::Lang::TokenMap.end())
         {
+            found = true;
             token.type = it->second;
             token.value = Celery::Str::External{"", 0};
         }
@@ -76,13 +70,15 @@ void Machine::Flush()
         {
             token.type = ADT::Lang::TokenType::Identifier;
         }
-    } else
-    {
-        // Unknown token, throw an exception
-        throw ADT::Exception::UnknownToken(
-            state.GetLine(),
-            state.GetColumn()
-        );
+
+        if (!state.IsIdentifier() && !found)
+        {
+            // Unknown token, throw an exception
+            throw ADT::Exception::UnknownToken(
+                state.GetLine(),
+                state.GetColumn()
+            );
+        }
     }
 
     tokens.PushBack(std::move(token));
