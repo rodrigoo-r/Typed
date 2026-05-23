@@ -139,41 +139,5 @@ ADT::Runtime::Object Walker::Procedure(
         return procedure.native(args, trace);
     }
 
-    // Begin execution
-    for (auto ast : procedure.body->children)
-    {
-        switch (ast->type)
-        {
-            case ADT::Lang::ASTType::Expression:
-            {
-                Expression(stack, ast);
-                break;
-            }
-
-            case ADT::Lang::ASTType::Declare:
-            {
-                Declare(stack, ast);
-                break;
-            }
-
-            case ADT::Lang::ASTType::Return:
-            {
-                return Return(procedure, stack, ast);
-            }
-
-            default: break;
-        }
-    }
-
-    // No return statement
-    if (procedure.return_type != ADT::Runtime::ObjectType::Void)
-    {
-        throw ADT::Exception::ExpectedReturn(
-            line,
-            column
-        );
-    }
-
-    // Return an empty object otherwise
-    return {};
+    return Body(procedure, procedure.body, stack);
 }

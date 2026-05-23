@@ -58,6 +58,12 @@ namespace Typed::Core::Backend
             TreePtr trace
         );
 
+        ADT::Runtime::Object Body(
+            ProcedureRef procedure,
+            TreePtr body,
+            VariableStack &stack
+        );
+
         void Declare(
             VariableStack &stack,
             TreePtr body

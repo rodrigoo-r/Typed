@@ -1,0 +1,70 @@
+/*
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #                           Typed                     # *
+ * #                   A text formatting DSL             # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #         Created by Rodrigo R. & Contributors        # *
+ * #         Released under the Apache License 2.0       # *
+ * #            Check LICENSE.MD for more info           # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+*/
+
+//
+// Created by Rodrigo on 5/23/26.
+//
+
+#include "ADT/Exception/ExpectedReturn.h"
+#include "Walker.h"
+
+using namespace Typed;
+using namespace Typed::Core;
+using namespace Typed::Core::Backend;
+
+ADT::Runtime::Object Walker::Body(
+    ProcedureRef procedure,
+    TreePtr body,
+    VariableStack &stack
+)
+{
+    // Begin execution
+    for (auto ast : body->children)
+    {
+        switch (ast->type)
+        {
+            case ADT::Lang::ASTType::Expression:
+            {
+                Expression(stack, ast);
+                break;
+            }
+
+            case ADT::Lang::ASTType::Declare:
+            {
+                Declare(stack, ast);
+                break;
+            }
+
+            case ADT::Lang::ASTType::Return:
+            {
+                return Return(procedure, stack, ast);
+            }
+
+            default: break;
+        }
+    }
+
+    // No return statement
+    if (procedure.return_type != ADT::Runtime::ObjectType::Void)
+    {
+        throw ADT::Exception::ExpectedReturn(
+            body->line,
+            body->column
+        );
+    }
+
+    // Return an empty object otherwise
+    return {};
+}
