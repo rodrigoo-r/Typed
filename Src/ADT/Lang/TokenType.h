@@ -29,15 +29,23 @@ namespace Typed::ADT::Lang
         // Definitions
         Procedure,
 
+        // Loops
+        For,
+        While,
+
         // Delimiters
         Begin,
         EndProcedure,
+        EndFor,
         EndIf,
         EndCall,
         As,
         With,
         Arguments,
         To,
+        Step,
+        Do,
+        In,
         By,
         From,
         Returns,

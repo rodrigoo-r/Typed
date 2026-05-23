@@ -39,6 +39,7 @@ namespace Typed::Support::Lang
         {"End_Procedure", ADT::Lang::TokenType::EndProcedure},
         {"End_If", ADT::Lang::TokenType::EndIf},
         {"End_Call", ADT::Lang::TokenType::EndCall},
+        {"End_For", ADT::Lang::TokenType::EndFor},
 
         {"as", ADT::Lang::TokenType::As},
         {"With", ADT::Lang::TokenType::With},
@@ -48,6 +49,12 @@ namespace Typed::Support::Lang
         {"From", ADT::Lang::TokenType::From},
         {"Returns", ADT::Lang::TokenType::Returns},
         {"Then", ADT::Lang::TokenType::Then},
+        {"Step", ADT::Lang::TokenType::Step},
+        {"Do", ADT::Lang::TokenType::Do},
+        {"In", ADT::Lang::TokenType::In},
+
+        {"For", ADT::Lang::TokenType::For},
+        {"While", ADT::Lang::TokenType::While},
 
         {"Declare", ADT::Lang::TokenType::Declare},
         {"Call", ADT::Lang::TokenType::Call},
