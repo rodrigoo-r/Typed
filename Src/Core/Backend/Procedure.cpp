@@ -139,5 +139,18 @@ ADT::Runtime::Object Walker::Procedure(
         return procedure.native(args, trace);
     }
 
-    return Body(procedure, procedure.body, stack);
+    auto ret = Body(procedure, procedure.body, stack);
+    if (ret.type == ADT::Runtime::ObjectType::Void)
+    {
+        // No return statement
+        if (procedure.return_type != ADT::Runtime::ObjectType::Void)
+        {
+            throw ADT::Exception::ExpectedReturn(
+                line,
+                column
+            );
+        }
+    }
+
+    return ret;
 }

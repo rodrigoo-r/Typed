@@ -56,15 +56,6 @@ ADT::Runtime::Object Walker::Body(
         }
     }
 
-    // No return statement
-    if (procedure.return_type != ADT::Runtime::ObjectType::Void)
-    {
-        throw ADT::Exception::ExpectedReturn(
-            body->line,
-            body->column
-        );
-    }
-
     // Return an empty object otherwise
     return {};
 }
