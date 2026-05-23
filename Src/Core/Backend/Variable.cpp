@@ -30,8 +30,8 @@ ADT::Runtime::Object Walker::Variable(
 )
 {
     // Try to find the variable
-    auto it = stack.find(body->value);
-    if (it == stack.end())
+    auto it = stack.Get(body->value);
+    if (it.IsEnd())
     {
         throw ADT::Exception::UnknownSymbol(
             body->line,
@@ -39,5 +39,5 @@ ADT::Runtime::Object Walker::Variable(
         );
     }
 
-    return it->second;
+    return it.it->second;
 }
