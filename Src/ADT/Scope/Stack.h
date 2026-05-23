@@ -56,10 +56,7 @@ namespace Typed::ADT::Scope
     public:
         struct FakeIterator
         {
-        private:
             InnerScope *scope = nullptr;
-
-        public:
             InnerMap::iterator it;
 
             FakeIterator(
