@@ -121,23 +121,11 @@ namespace Typed::ADT::Scope
             auto &&...args
         )
         {
-            // Update if it exists first
-            auto it = Get(key);
-            if (!it.IsEnd())
-            {
-                it.scope->map.try_emplace(
-                    key,
-                    std::forward<decltype(args)>(args)...
-                );
-            }
-            else
-            {
-                // Insert at the top stack if it doesn't exist
-                top->map.try_emplace(
-                    key,
-                    std::forward<decltype(args)>(args)...
-                );
-            }
+            // Insert at the top stack so the stack is scoped
+            top->map.try_emplace(
+                key,
+                std::forward<decltype(args)>(args)...
+            );
         }
 
         ~Stack()
