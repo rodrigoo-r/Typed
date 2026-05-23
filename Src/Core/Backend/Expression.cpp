@@ -99,13 +99,14 @@ ADT::Runtime::Object Walker::Expression(
         }
 
         case ADT::Lang::ASTType::And:
-        {
-            return And(stack, expr);
-        }
-
         case ADT::Lang::ASTType::Or:
+        case ADT::Lang::ASTType::Equal:
+        case ADT::Lang::ASTType::Less:
+        case ADT::Lang::ASTType::Greater:
+        case ADT::Lang::ASTType::GreaterEqual:
+        case ADT::Lang::ASTType::LessEqual:
         {
-            return Or(stack, expr);
+            return Binary(stack, expr);
         }
 
         default: break;
