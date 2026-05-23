@@ -47,11 +47,11 @@ void Machine::If(
     >(tokens, ADT::Lang::TokenType::Then);
 
     parent->children.PushBack(ast);
-    ast->children.PushBack(body);
     Expect(ADT::Lang::TokenType::Begin);
 
     // Parse the expression
     Expression(ast, condition_stream);
+    ast->children.PushBack(body);
 
     // Add the body to the queue
     body_queue.emplace_front(
