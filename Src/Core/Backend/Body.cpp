@@ -30,6 +30,8 @@ ADT::Runtime::Object Walker::Body(
     VariableStack &stack
 )
 {
+    stack.PushScope();
+
     // Begin execution
     for (auto ast : body->children)
     {
@@ -62,6 +64,7 @@ ADT::Runtime::Object Walker::Body(
         }
     }
 
+    stack.PopScope();
     // Return an empty object otherwise
     return {};
 }
