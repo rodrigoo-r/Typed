@@ -135,11 +135,13 @@ void Machine::Procedure()
 
             case ADT::Lang::TokenType::ElseIf:
             {
+                ElseIf(last_el.body, body_queue);
                 break;
             }
 
             case ADT::Lang::TokenType::Else:
             {
+                Else(last_el.body, body_queue);
                 break;
             }
 
