@@ -14,7 +14,7 @@
 */
 
 //
-// Created by Rodrigo on 5/22/26.
+// Created by Rodrigo on 5/23/26.
 //
 
 #include "ADT/Exception/UnexpectedToken.h"
@@ -25,16 +25,28 @@ using namespace Typed::Core;
 using namespace Typed::Core::Frontend;
 using namespace Typed::Core::Frontend::Parser;
 
-void Machine::EndIf(BodyQueue &body_queue)
+void Machine::End(
+    ADT::Lang::TokenType received,
+    BodyQueue &body_queue
+)
 {
     auto &last_el = body_queue.front();
     auto &trace = tokens.Next();
 
     // Make sure the last element matches the block declaration
     if (
-        last_el.match.type != ADT::Lang::TokenType::If &&
-        last_el.match.type != ADT::Lang::TokenType::ElseIf &&
-        last_el.match.type != ADT::Lang::TokenType::Else
+        (
+            received == ADT::Lang::TokenType::EndFor &&
+            last_el.match.type != ADT::Lang::TokenType::For
+        ) || (
+            received == ADT::Lang::TokenType::EndIf &&
+            last_el.match.type != ADT::Lang::TokenType::If &&
+            last_el.match.type != ADT::Lang::TokenType::ElseIf &&
+            last_el.match.type != ADT::Lang::TokenType::Else
+        ) || (
+            received == ADT::Lang::TokenType::EndWhile &&
+            last_el.match.type != ADT::Lang::TokenType::While
+        )
     )
     {
         throw ADT::Exception::UnexpectedToken(

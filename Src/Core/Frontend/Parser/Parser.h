@@ -90,15 +90,13 @@ namespace Typed::Core::Frontend::Parser
         void If(TreePtr parent, BodyQueue &body_queue);
 
         void For(TreePtr parent, BodyQueue &body_queue);
-        void EndFor(BodyQueue &body_queue);
 
         void While(TreePtr parent, BodyQueue &body_queue);
-        void EndWhile(BodyQueue &body_queue);
 
         TreePtr ConditionGroup(TreePtr parent, BodyQueue &body_queue);
         void ElseIf(TreePtr parent, BodyQueue &body_queue);
         void Else(TreePtr parent, BodyQueue &body_queue);
-        void EndIf(BodyQueue &body_queue);
+        void End(ADT::Lang::TokenType received, BodyQueue &body_queue);
 
         TreePtr CallArgs(TokenStreamView &input, ExprQueue &queue);
         TreePtr Call(TokenStreamView &input, ExprQueue &queue);

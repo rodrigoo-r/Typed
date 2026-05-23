@@ -147,7 +147,7 @@ void Machine::Procedure()
 
             case ADT::Lang::TokenType::EndIf:
             {
-                EndIf(body_queue);
+                End(peek.type, body_queue);
                 break;
             }
 
@@ -159,7 +159,7 @@ void Machine::Procedure()
 
             case ADT::Lang::TokenType::EndFor:
             {
-                EndFor(body_queue);
+                End(peek.type, body_queue);
                 break;
             }
 
@@ -171,7 +171,7 @@ void Machine::Procedure()
 
             case ADT::Lang::TokenType::EndWhile:
             {
-                EndWhile(body_queue);
+                End(peek.type, body_queue);
                 break;
             }
 
