@@ -133,6 +133,16 @@ void Machine::Procedure()
                 break;
             }
 
+            case ADT::Lang::TokenType::ElseIf:
+            {
+                break;
+            }
+
+            case ADT::Lang::TokenType::Else:
+            {
+                break;
+            }
+
             case ADT::Lang::TokenType::EndIf:
             {
                 EndIf(body_queue);
