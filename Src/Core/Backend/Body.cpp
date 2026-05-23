@@ -17,7 +17,6 @@
 // Created by Rodrigo on 5/23/26.
 //
 
-#include "ADT/Exception/ExpectedReturn.h"
 #include "Walker.h"
 
 using namespace Typed;
@@ -65,6 +64,12 @@ ADT::Runtime::Object Walker::Body(
             case ADT::Lang::ASTType::ConditionGroup:
             {
                 ConditionGroup(procedure, stack, ast);
+                break;
+            }
+
+            case ADT::Lang::ASTType::For:
+            {
+                For(procedure, stack, ast);
                 break;
             }
 
