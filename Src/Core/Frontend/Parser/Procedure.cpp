@@ -145,18 +145,14 @@ void Machine::Procedure()
                 break;
             }
 
-            case ADT::Lang::TokenType::EndIf:
-            {
-                End(peek.type, body_queue);
-                break;
-            }
-
             case ADT::Lang::TokenType::For:
             {
                 For(last_el.body, body_queue);
                 break;
             }
 
+            case ADT::Lang::TokenType::EndWhile:
+            case ADT::Lang::TokenType::EndIf:
             case ADT::Lang::TokenType::EndFor:
             {
                 End(peek.type, body_queue);
@@ -166,12 +162,6 @@ void Machine::Procedure()
             case ADT::Lang::TokenType::While:
             {
                 While(last_el.body, body_queue);
-                break;
-            }
-
-            case ADT::Lang::TokenType::EndWhile:
-            {
-                End(peek.type, body_queue);
                 break;
             }
 
