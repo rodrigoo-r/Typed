@@ -31,7 +31,10 @@ void Machine::ElseIf(
 )
 {
     // Make sure the last child is an If child
-    if (parent->type != ADT::Lang::ASTType::If)
+    if (
+        parent->type != ADT::Lang::ASTType::If &&
+        parent->type != ADT::Lang::ASTType::ElseIf
+    )
     {
         throw ADT::Exception::UnexpectedToken(
             parent->line,
