@@ -119,11 +119,24 @@ Begin
         1 == 1
     Then
     Begin
+        Declare
+            Result as Integer
+        With
+            467;
+
         Call
             Print_Line
         With
-            "Result after Div: $I",
+            "Inner Result: $I",
             Result
         End_Call;
     End_If
+
+    Call
+        Print_Line
+    With
+        "Outer Result: $I",
+        Result
+    End_Call;
+
 End_Procedure
