@@ -26,7 +26,8 @@ using namespace Typed::Core::Frontend;
 using namespace Typed::Core::Frontend::Parser;
 
 Machine::TokenStreamView Machine::ExtractUntilBoolean(
-    TokenStreamView &input
+    TokenStreamView &input,
+    bool throw_unmatched
 )
 {
     // Collect tokens until we find a delimiter
@@ -36,7 +37,7 @@ Machine::TokenStreamView Machine::ExtractUntilBoolean(
 
     while (input.HasNext())
     {
-        auto &next = input.Next();
+        auto &next = input.Peek();
         if (
             next.type == ADT::Lang::TokenType::And ||
             next.type == ADT::Lang::TokenType::Or
@@ -46,11 +47,13 @@ Machine::TokenStreamView Machine::ExtractUntilBoolean(
             break;
         }
 
+        input.Next();
+        // Ignore operations as needed
         size++;
     }
 
     // Make sure we found the delimiter
-    if (!found_delim)
+    if (!found_delim && throw_unmatched)
     {
         throw ADT::Exception::UnexpectedToken(
             input.Curr().line,
