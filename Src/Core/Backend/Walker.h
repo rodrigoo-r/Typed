@@ -61,7 +61,8 @@ namespace Typed::Core::Backend
         ADT::Runtime::Object Body(
             ProcedureRef procedure,
             TreePtr body,
-            VariableStack &stack
+            VariableStack &stack,
+            bool create_scope = false
         );
 
         void Declare(
@@ -118,6 +119,12 @@ namespace Typed::Core::Backend
         );
 
         void While(
+            ProcedureRef procedure,
+            VariableStack &stack,
+            TreePtr body
+        );
+
+        void For(
             ProcedureRef procedure,
             VariableStack &stack,
             TreePtr body

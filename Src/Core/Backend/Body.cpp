@@ -27,10 +27,12 @@ using namespace Typed::Core::Backend;
 ADT::Runtime::Object Walker::Body(
     ProcedureRef procedure,
     TreePtr body,
-    VariableStack &stack
+    VariableStack &stack,
+    bool create_scope
 )
 {
-    stack.PushScope();
+    if (create_scope)
+        stack.PushScope();
 
     // Begin execution
     for (auto ast : body->children)
