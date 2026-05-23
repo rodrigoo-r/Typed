@@ -144,4 +144,7 @@ void Walker::For(
             var_float += step_float;
         }
     }
+
+    // Destroy the scope after we're done
+    stack.PopScope();
 }
