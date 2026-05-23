@@ -45,7 +45,11 @@ void Machine::ElseIf(
 
     if (parent->children.Back()->type != ADT::Lang::ASTType::ConditionGroup)
     {
-        auto group = Allocate(ADT::Lang::ASTType::ConditionGroup);
+        auto group = AllocateBase(
+            tokens.Curr(),
+            ADT::Lang::ASTType::ConditionGroup
+        );
+
         group->children.PushBack(parent->children.Back());
         parent->children.Back() = group;
     }
