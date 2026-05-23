@@ -77,7 +77,9 @@ ADT::Runtime::Object Walker::Body(
         }
     }
 
-    stack.PopScope();
+    if (create_scope)
+        stack.PopScope();
+
     // Return an empty object otherwise
     return {};
 }
