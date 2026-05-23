@@ -60,6 +60,12 @@ ADT::Runtime::Object Walker::Body(
                 break;
             }
 
+            case ADT::Lang::ASTType::ConditionGroup:
+            {
+                ConditionGroup(procedure, stack, ast);
+                break;
+            }
+
             default: break;
         }
     }
