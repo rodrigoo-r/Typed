@@ -148,4 +148,41 @@ Begin
         Result
     End_Call;
 
+    For
+        I as Integer
+    In
+        0
+    To
+        10
+    Step
+        1
+    Do
+    Begin
+        Call
+            Print_Line
+        With
+            "I: $I",
+            I
+        End_Call;
+    End_For
+
+    Declare
+        I as Integer
+    With
+        0;
+
+    While
+        I < 10
+    Do
+    Begin
+        Call
+            Print_Line
+        With
+            "I in While: $I",
+            I
+        End_Call;
+
+        Add 1 To I;
+    End_While
+
 End_Procedure
