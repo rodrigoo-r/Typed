@@ -163,6 +163,18 @@ void Machine::Procedure()
                 break;
             }
 
+            case ADT::Lang::TokenType::While:
+            {
+                While(last_el.body, body_queue);
+                break;
+            }
+
+            case ADT::Lang::TokenType::EndWhile:
+            {
+                EndWhile(body_queue);
+                break;
+            }
+
             default:
             {
                 Expression(last_el.body);

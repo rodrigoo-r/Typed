@@ -92,6 +92,9 @@ namespace Typed::Core::Frontend::Parser
         void For(TreePtr parent, BodyQueue &body_queue);
         void EndFor(BodyQueue &body_queue);
 
+        void While(TreePtr parent, BodyQueue &body_queue);
+        void EndWhile(BodyQueue &body_queue);
+
         TreePtr ConditionGroup(TreePtr parent, BodyQueue &body_queue);
         void ElseIf(TreePtr parent, BodyQueue &body_queue);
         void Else(TreePtr parent, BodyQueue &body_queue);
