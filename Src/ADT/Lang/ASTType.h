@@ -65,6 +65,7 @@ namespace Typed::ADT::Lang
         If,
         ElseIf,
         Else,
+        ConditionGroup,
         And,
         Or,
         Not,
