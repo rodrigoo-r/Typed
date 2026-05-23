@@ -139,5 +139,13 @@ namespace Typed::ADT::Scope
                 );
             }
         }
+
+        ~Stack()
+        {
+            while (top != nullptr)
+            {
+                PopScope();
+            }
+        }
     };
 }
