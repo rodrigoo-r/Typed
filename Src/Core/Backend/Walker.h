@@ -62,7 +62,7 @@ namespace Typed::Core::Backend
             ProcedureRef procedure,
             TreePtr body,
             VariableStack &stack,
-            bool create_scope = false
+            bool create_scope = true
         );
 
         void Declare(
