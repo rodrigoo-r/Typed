@@ -95,6 +95,12 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
+        void If(
+            ProcedureRef procedure,
+            VariableStack &stack,
+            TreePtr body
+        );
+
     public:
         Walker(RunnableRef runnable)
             : runnable(runnable)
