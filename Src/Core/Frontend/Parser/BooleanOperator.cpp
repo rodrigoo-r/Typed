@@ -91,26 +91,20 @@ Machine::TreePtr Machine::BooleanOperator(
 
             result = op;
             last_op = op_token.type;
-        } else
+        }
+        else
         {
+            // Take the current RHS of the lower-precedence operator
             auto last_rhs = result->children.PopBackMove();
 
-            // Steal the left hand side
+            // Build the higher-precedence subtree
             op->children.PushBack(last_rhs);
             op->children.PushBack(expr);
 
-            // Create a new binary node
-            auto binary = AllocateBase(
-                op_token,
-                GetASTType(last_op)
-            );
-
-            binary->children.PushBack(result);
-            binary->children.PushBack(op);
             queue.EmplaceBack(stream, expr);
 
-            result = binary;
-            last_op = op_token.type;
+            // Reattach it as the RHS of the existing operator
+            result->children.PushBack(op);
         }
     }
 
