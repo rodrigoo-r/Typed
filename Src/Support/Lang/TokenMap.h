@@ -40,6 +40,7 @@ namespace Typed::Support::Lang
         {"End_If", ADT::Lang::TokenType::EndIf},
         {"End_Call", ADT::Lang::TokenType::EndCall},
         {"End_For", ADT::Lang::TokenType::EndFor},
+        {"End_While", ADT::Lang::TokenType::EndWhile},
 
         {"as", ADT::Lang::TokenType::As},
         {"With", ADT::Lang::TokenType::With},

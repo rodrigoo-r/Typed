@@ -37,6 +37,7 @@ namespace Typed::ADT::Lang
         Begin,
         EndProcedure,
         EndFor,
+        EndWhile,
         EndIf,
         EndCall,
         As,
