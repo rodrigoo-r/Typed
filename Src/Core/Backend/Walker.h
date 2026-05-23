@@ -90,7 +90,7 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
-        void ArithmeticBase(
+        void Arithmetic(
             VariableStack &stack,
             TreePtr body
         );

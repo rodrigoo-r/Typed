@@ -49,7 +49,7 @@ ADT::Runtime::Object Walker::Expression(
         case ADT::Lang::ASTType::Mul:
         case ADT::Lang::ASTType::Div:
         {
-            ArithmeticBase(stack, expr);
+            Arithmetic(stack, expr);
             break;
         }
 

@@ -64,7 +64,7 @@ void PerformOp(
     }
 }
 
-void Walker::ArithmeticBase(
+void Walker::Arithmetic(
     VariableStack &stack,
     TreePtr body
 )
