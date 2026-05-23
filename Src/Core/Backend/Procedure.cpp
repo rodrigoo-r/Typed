@@ -55,7 +55,7 @@ void ProcessArg(
 
     // Don't use the stack if the procedure is native
     if (procedure.native == nullptr)
-        stack.try_emplace(expected.name, std::move(arg));
+        stack.Emplace(expected.name, std::move(arg));
 }
 
 ADT::Runtime::Object Walker::Procedure(
