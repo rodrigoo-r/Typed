@@ -73,8 +73,8 @@ void Walker::ArithmeticBase(
     auto &value = body->children[1]->value;
 
     // Get the variable
-    auto var_it = stack.find(name);
-    if (var_it == stack.end())
+    auto var_it = stack.Get(name);
+    if (var_it.IsEnd())
     {
         throw ADT::Exception::UnknownSymbol(
             body->line,
@@ -82,7 +82,7 @@ void Walker::ArithmeticBase(
         );
     }
 
-    auto &var = var_it->second;
+    auto &var = var_it.it->second;
 
     // Type check the variable
     if (

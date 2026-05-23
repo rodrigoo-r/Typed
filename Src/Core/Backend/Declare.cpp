@@ -50,5 +50,5 @@ void Walker::Declare(
         body->column
     );
 
-    stack[name] = std::move(obj);
+    stack.Emplace(name, obj);
 }
