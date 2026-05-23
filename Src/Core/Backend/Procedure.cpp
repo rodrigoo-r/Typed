@@ -32,7 +32,7 @@ void ProcessArg(
     Celery::Trait::VeryLarge line,
     Celery::Trait::VeryLarge column,
     Celery::Trait::VeryLarge i,
-    Walker::VariableMap &stack
+    Walker::VariableStack &stack
 )
 {
     // Make sure the procedure has enough arguments
@@ -83,7 +83,7 @@ ADT::Runtime::Object Walker::Procedure(
     }
 
     // Initialize the stack for this procedure
-    VariableMap stack;
+    VariableStack stack;
 
     // Push all args to the stack
     Celery::Trait::SignedVeryLarge args_size = args.Size();

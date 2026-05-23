@@ -20,6 +20,7 @@
 #pragma once
 #include "ADT/PreWalker/File.h"
 #include "ADT/Runtime/Object.h"
+#include "ADT/Scope/Stack.h"
 
 namespace Typed::Core::Backend
 {
@@ -41,8 +42,8 @@ namespace Typed::Core::Backend
         using ProcedureRef =
             ADT::PreWalker::Procedure &;
 
-        using VariableMap =
-            ADT::Map::Dense<
+        using VariableStack =
+            ADT::Scope::Stack<
                 Celery::Str::External,
                 ADT::Runtime::Object,
                 Celery::Misc::Hash
@@ -58,53 +59,53 @@ namespace Typed::Core::Backend
         );
 
         void Declare(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         ADT::Runtime::Object Expression(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         ADT::Runtime::Object Call(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         ADT::Runtime::Object Return(
             ProcedureRef procedure,
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         ADT::Runtime::Object Variable(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         void ArithmeticBase(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         void Add(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         void Sub(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         void Mul(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 
         void Div(
-            VariableMap &stack,
+            VariableStack &stack,
             TreePtr body
         );
 

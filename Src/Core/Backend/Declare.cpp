@@ -25,7 +25,7 @@ using namespace Typed::Core;
 using namespace Typed::Core::Backend;
 
 void Walker::Declare(
-    VariableMap &stack,
+    VariableStack &stack,
     TreePtr body
 )
 {

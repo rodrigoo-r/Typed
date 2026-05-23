@@ -25,7 +25,7 @@ using namespace Typed::Core;
 using namespace Typed::Core::Backend;
 
 ADT::Runtime::Object Walker::Call(
-    VariableMap &stack,
+    VariableStack &stack,
     TreePtr body
 )
 {

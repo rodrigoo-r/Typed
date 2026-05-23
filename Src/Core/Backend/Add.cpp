@@ -23,7 +23,7 @@ using namespace Typed;
 using namespace Typed::Core;
 using namespace Typed::Core::Backend;
 
-void Walker::Add(VariableMap &stack, TreePtr body)
+void Walker::Add(VariableStack &stack, TreePtr body)
 {
     ArithmeticBase(stack, body);
 }

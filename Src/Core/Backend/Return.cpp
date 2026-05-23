@@ -26,7 +26,7 @@ using namespace Typed::Core::Backend;
 
 ADT::Runtime::Object Walker::Return(
     ProcedureRef procedure,
-    VariableMap &stack,
+    VariableStack &stack,
     TreePtr body
 )
 {
