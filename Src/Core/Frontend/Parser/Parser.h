@@ -99,14 +99,19 @@ namespace Typed::Core::Frontend::Parser
         TreePtr Sub(TokenStreamView &input);
         TreePtr Mul(TokenStreamView &input);
         TreePtr Div(TokenStreamView &input);
-        TreePtr And(TokenStreamView &input);
-        TreePtr Or(TokenStreamView &input);
-        TreePtr Equal(TokenStreamView &input, TreePtr op);
-        TreePtr Greater(TokenStreamView &input, TreePtr op);
-        TreePtr Less(TokenStreamView &input, TreePtr op);
+        TokenStreamView ExtractUntilBoolean(
+            TokenStreamView &input,
+            bool throw_unmatched = true
+        );
         TreePtr BooleanOperation(
             TokenStreamView &input,
-            TreePtr result
+            TreePtr result,
+            ExprQueue &queue
+        );
+        TreePtr BooleanOperator(
+            TokenStreamView &input,
+            TreePtr result,
+            ExprQueue &queue
         );
 
         TreePtr Type();
