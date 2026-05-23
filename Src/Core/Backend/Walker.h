@@ -106,6 +106,12 @@ namespace Typed::Core::Backend
             TreePtr body
         );
 
+        void ConditionGroup(
+            ProcedureRef procedure,
+            VariableStack &stack,
+            TreePtr body
+        );
+
     public:
         Walker(RunnableRef runnable)
             : runnable(runnable)
