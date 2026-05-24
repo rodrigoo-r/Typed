@@ -36,10 +36,15 @@ void Machine::Declare(TreePtr parent)
     Expect(ADT::Lang::TokenType::As);
 
     auto type = Type();
-    Expect(ADT::Lang::TokenType::With);
 
-    // Build the AST structure
-    decl->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
-    decl->children.PushBack(type);
-    Expression(decl);
+    // Allow variables with no initial value
+    if (tokens.Peek().type == ADT::Lang::TokenType::With)
+    {
+        Expect(ADT::Lang::TokenType::With);
+
+        // Build the AST structure
+        decl->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+        decl->children.PushBack(type);
+        Expression(decl);
+    }
 }
