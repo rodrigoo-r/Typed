@@ -80,6 +80,8 @@ namespace Typed::ADT::Lang
         Float,
         Integer,
         Boolean,
+        List,
+        Dictionary,
 
         // Literals
         StringLiteral,

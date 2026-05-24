@@ -86,6 +86,8 @@ namespace Typed::Support::Lang
         {"String", ADT::Lang::TokenType::String},
         {"Float", ADT::Lang::TokenType::Float},
         {"Integer", ADT::Lang::TokenType::Integer},
-        {"Boolean", ADT::Lang::TokenType::Boolean}
+        {"Boolean", ADT::Lang::TokenType::Boolean},
+        {"List", ADT::Lang::TokenType::List},
+        {"Dictionary", ADT::Lang::TokenType::Dictionary}
     };
 }
