@@ -17,39 +17,20 @@
 // Created by Rodrigo on 5/24/26.
 //
 
-#pragma once
-
-#include "ADT/Map/Procedure.h"
-#include "Add.h"
+#include "ADT/List/Object.h"
 #include "Pop.h"
 
-namespace Typed::Runtime::Lists
+using namespace Typed;
+using namespace Typed::Runtime;
+using namespace Typed::Runtime::Lists;
+
+ADT::Runtime::Object Lists::Pop(
+    ADT::List::Object &args,
+    ADT::Lang::AST *_
+)
 {
-    inline ADT::Map::Procedure Package = {
-        {
-            "List_Add",
-            {
-                {
-                    {"l", ADT::Runtime::ObjectType::List},
-                    {"_", ADT::Runtime::ObjectType::Any},
-                },
-                nullptr,
-                ADT::Runtime::ObjectType::Void,
-                true,
-                Add
-            }
-        },
-        {
-            "List_Pop",
-            {
-                {
-                    {"l", ADT::Runtime::ObjectType::List}
-                },
-                nullptr,
-                ADT::Runtime::ObjectType::Void,
-                false,
-                Pop
-           }
-        }
-    };
+    auto &list = Support::Runtime::GetListObj(args[0]);
+    list->PopBack();
+
+    return {};
 }

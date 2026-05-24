@@ -18,38 +18,11 @@
 //
 
 #pragma once
-
-#include "ADT/Map/Procedure.h"
-#include "Add.h"
-#include "Pop.h"
+#include "ADT/Lang/AST.h"
+#include "ADT/List/Object.h"
+#include "ADT/Runtime/Object.h"
 
 namespace Typed::Runtime::Lists
 {
-    inline ADT::Map::Procedure Package = {
-        {
-            "List_Add",
-            {
-                {
-                    {"l", ADT::Runtime::ObjectType::List},
-                    {"_", ADT::Runtime::ObjectType::Any},
-                },
-                nullptr,
-                ADT::Runtime::ObjectType::Void,
-                true,
-                Add
-            }
-        },
-        {
-            "List_Pop",
-            {
-                {
-                    {"l", ADT::Runtime::ObjectType::List}
-                },
-                nullptr,
-                ADT::Runtime::ObjectType::Void,
-                false,
-                Pop
-           }
-        }
-    };
+    ADT::Runtime::Object Pop(ADT::List::Object &, ADT::Lang::AST *);
 }
