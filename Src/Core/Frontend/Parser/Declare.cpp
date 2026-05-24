@@ -46,5 +46,8 @@ void Machine::Declare(TreePtr parent)
     {
         Expect(ADT::Lang::TokenType::With);
         Expression(decl);
+    } else
+    {
+        Expect(ADT::Lang::TokenType::Semicolon);
     }
 }
