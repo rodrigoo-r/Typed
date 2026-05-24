@@ -31,10 +31,12 @@ namespace Typed::ADT::Runtime
 namespace Typed::ADT::Map
 {
     using Object =
-        Dense<
-            Runtime::Object,
-            Runtime::Object,
-            Support::Hash::AgnosticObject<Runtime::Object>,
-            Support::Equality::Object
+        Memory::HeapRef<
+            Dense<
+                Runtime::Object,
+                Runtime::Object,
+                Support::Hash::AgnosticObject<Runtime::Object>,
+                Support::Equality::Object
+            >
         >;
 }

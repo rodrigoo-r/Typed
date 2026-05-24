@@ -20,6 +20,8 @@
 #pragma once
 #include <Celery/Array/SmallVector.h>
 
+#include "ADT/Memory/HeapRef.h"
+
 // Forward declaration
 namespace Typed::ADT::Runtime
 {
@@ -34,7 +36,9 @@ namespace Typed::ADT::List
         >;
 
     using DynamicObject =
-        Celery::Array::Vector<
-            Runtime::Object
+        Memory::HeapRef<
+            Celery::Array::Vector<
+                Runtime::Object
+            >
         >;
 }
