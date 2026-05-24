@@ -61,13 +61,13 @@ void Walker::Declare(
     {
         ADT::Runtime::Object obj;
         obj.type = ADT::Runtime::ObjectType::List;
-        obj.value = ADT::List::DynamicObject();
+        obj.value = ADT::List::DynamicObject::Make();
         stack.Emplace(name, std::move(obj));
     } else if (type == ADT::Lang::ASTType::Dictionary)
     {
         ADT::Runtime::Object obj;
         obj.type = ADT::Runtime::ObjectType::Dictionary;
-        obj.value = ADT::Map::Object();
+        obj.value = ADT::Map::Object::Make();
         stack.Emplace(name, std::move(obj));
     }
     else
