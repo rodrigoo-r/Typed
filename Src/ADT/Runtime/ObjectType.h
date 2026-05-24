@@ -32,5 +32,7 @@ namespace Typed::ADT::Runtime
         Float,
         Integer,
         Boolean,
+        List,
+        Dictionary
     };
 }

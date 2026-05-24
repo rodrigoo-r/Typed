@@ -18,10 +18,12 @@
 //
 
 #pragma once
+#include <Celery/Array/Vector.h>
 #include <Celery/String/External.h>
 #include <Celery/String/String.h>
 
 
+#include "ADT/List/Object.h"
 #include "ObjectType.h"
 
 namespace Typed::ADT::Runtime
@@ -36,6 +38,7 @@ namespace Typed::ADT::Runtime
                 float,
                 bool,
                 Celery::Str::External,
+                List::DynamicObject,
 
                 // Only runtime-provided functions can
                 // return owned memory

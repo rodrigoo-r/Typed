@@ -20,12 +20,21 @@
 #pragma once
 #include <Celery/Array/SmallVector.h>
 
-#include "ADT/Runtime/Object.h"
+// Forward declaration
+namespace Typed::ADT::Runtime
+{
+    struct Object;
+}
 
 namespace Typed::ADT::List
 {
     using Object =
         Celery::Array::SmallVector<
+            Runtime::Object
+        >;
+
+    using DynamicObject =
+        Celery::Array::Vector<
             Runtime::Object
         >;
 }
