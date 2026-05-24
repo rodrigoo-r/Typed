@@ -18,39 +18,11 @@
 //
 
 #pragma once
-#include "Support/Allocator/Monotonic.h"
+#include <Celery/Ptr/Shared.h>
 
 namespace Typed::ADT::Memory
 {
-    template <
-        typename T,
-        typename Allocator = Support::Allocator::Monotonic<T>
-    >
-    class HeapRef
-    {
-        T *ptr = nullptr;
-
-    public:
-        HeapRef(auto &&...args)
-        {
-            ptr = Allocator::Allocate(std::forward<decltype(args)>(args)...);
-        }
-
-        T *operator->()
-        {
-            return ptr;
-        }
-
-        T &operator*()
-        {
-            return *ptr;
-        }
-
-        ~HeapRef()
-        {
-            if (ptr == nullptr) return;
-            Allocator::Deallocate(ptr);
-            ptr = nullptr;
-        }
-    };
+    template <typename T>
+    using HeapRef =
+        Celery::Ptr::Shared<T>;
 }
