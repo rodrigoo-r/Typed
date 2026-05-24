@@ -23,6 +23,7 @@
 #include "Access.h"
 #include "Add.h"
 #include "Pop.h"
+#include "Set.h"
 #include "Size.h"
 
 namespace Typed::Runtime::Lists
@@ -76,6 +77,20 @@ namespace Typed::Runtime::Lists
                 ADT::Runtime::ObjectType::Any,
                 false,
                 Access
+            }
+        },
+        {
+            "List_Set",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::List},
+                    {"i", ADT::Runtime::ObjectType::Integer},
+                    {"o", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Void,
+                false,
+                Set
             }
         }
     };
