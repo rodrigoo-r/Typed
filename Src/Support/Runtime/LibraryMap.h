@@ -24,6 +24,7 @@
 
 #include "ADT/Map/Dense.h"
 #include "Runtime/IO/Package.h"
+#include "Runtime/Lists/Package.h"
 
 namespace Typed::Support::Runtime
 {
@@ -32,6 +33,7 @@ namespace Typed::Support::Runtime
         ADT::Map::Procedure,
         Celery::Misc::Hash
     > LibraryMap = {
-        {"IO", Typed::Runtime::IO::Package}
+        {"IO", Typed::Runtime::IO::Package},
+        {"Lists", Typed::Runtime::Lists::Package},
     };
 }
