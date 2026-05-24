@@ -22,6 +22,7 @@
 #include "ADT/Map/Procedure.h"
 #include "Add.h"
 #include "Pop.h"
+#include "Size.h"
 
 namespace Typed::Runtime::Lists
 {
@@ -50,6 +51,18 @@ namespace Typed::Runtime::Lists
                 false,
                 Pop
            }
+        },
+        {
+            "List_Size",
+            {
+                    {
+                        {"l", ADT::Runtime::ObjectType::List}
+                    },
+                    nullptr,
+                    ADT::Runtime::ObjectType::Void,
+                    false,
+                    Size
+               }
         }
     };
 }
