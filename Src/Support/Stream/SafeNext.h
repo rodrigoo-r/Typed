@@ -18,19 +18,13 @@
 //
 
 #pragma once
-#include "ADT/Exception/OutOfBounds.h"
-#include "ADT/Stream/External.h"
 #include "SafePeek.h"
 
 namespace Typed::Support::Stream
 {
-    template <
-        typename T,
-        typename Adapter = ADT::Stream::External<T>
-    >
-    T &SafeNext(Adapter &adapter)
+    auto &SafeNext(auto &adapter)
     {
-        auto &peek = SafePeek<T, Adapter>(adapter);
+        auto &peek = SafePeek(adapter);
         adapter.Next();
 
         return peek;

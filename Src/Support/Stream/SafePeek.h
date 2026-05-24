@@ -19,15 +19,10 @@
 
 #pragma once
 #include "ADT/Exception/OutOfBounds.h"
-#include "ADT/Stream/External.h"
 
 namespace Typed::Support::Stream
 {
-    template <
-        typename T,
-        typename Adapter = ADT::Stream::External<T>
-    >
-    T &SafePeek(Adapter &adapter)
+    auto &SafePeek(auto &adapter)
     {
         // Special case: Empty stream
         if (adapter.Empty())
