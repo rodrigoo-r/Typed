@@ -41,7 +41,10 @@ ADT::Runtime::Object Lists::Add(
         auto &arg = args[i];
 
         // Make sure the object isn't void
-        if (arg.type == ADT::Runtime::ObjectType::Void)
+        if (
+            arg.type == ADT::Runtime::ObjectType::Void ||
+            arg.type == ADT::Runtime::ObjectType::Any
+        )
         {
             throw ADT::Exception::MismatchedType(
                 trace->line,
