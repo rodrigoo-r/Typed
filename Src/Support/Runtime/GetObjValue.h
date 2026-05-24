@@ -34,12 +34,14 @@ namespace Typed::Support::Equality
 namespace Typed::ADT::Map
 {
     using Object =
-        Dense<
+        Memory::HeapRef<
+            Dense<
             Runtime::Object,
             Runtime::Object,
             Support::Hash::AgnosticObject<Runtime::Object>,
             Support::Equality::Object
-        >;
+        >
+    >;
 }
 
 namespace Typed::Support::Runtime
