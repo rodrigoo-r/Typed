@@ -88,10 +88,10 @@ void PrintDictionary(ADT::Runtime::Object &obj)
 
     Celery::Io::Print("Dict(");
 
-    auto last = val.size() - 1;
+    auto last = val->size() - 1;
     Celery::Trait::VeryLarge i = 0;
 
-    for (auto &pair : val)
+    for (auto &pair : *val)
     {
         PrintObject(pair.first);
         Celery::Io::Print(" : ");
@@ -113,8 +113,8 @@ void PrintList(ADT::Runtime::Object &obj)
     Celery::Io::Print("List(");
     auto &val = Support::Runtime::GetListObj(obj);
 
-    auto last = val.Size() - 1;
-    for (auto i = 0; i < val.Size(); i++)
+    auto last = val->Size() - 1;
+    for (auto i = 0; i < val->Size(); i++)
     {
         PrintObject(obj);
 
