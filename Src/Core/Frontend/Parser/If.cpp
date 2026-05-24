@@ -31,13 +31,13 @@ void Machine::If(
     BodyQueue &body_queue
 )
 {
-    auto &if_token = tokens.Next();
+    auto &if_token = Support::Stream::SafeNext(tokens);
     auto ast = AllocateBase(
-        tokens.Peek(),
+        Support::Stream::SafePeek(tokens),
         ADT::Lang::ASTType::If
     );
     auto body = AllocateBase(
-        tokens.Peek(),
+        Support::Stream::SafePeek(tokens),
         ADT::Lang::ASTType::Body
     );
 

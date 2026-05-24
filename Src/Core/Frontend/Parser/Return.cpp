@@ -18,6 +18,7 @@
 //
 
 #include "Parser.h"
+#include "Support/Stream/SafePeek.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -28,7 +29,7 @@ void Machine::Return(TreePtr parent)
 {
     // Allocate the return node
     auto node = AllocateBase(
-        tokens.Peek(),
+        Support::Stream::SafePeek(tokens),
         ADT::Lang::ASTType::Return
     );
 

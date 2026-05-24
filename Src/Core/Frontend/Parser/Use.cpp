@@ -18,6 +18,7 @@
 //
 
 #include "Parser.h"
+#include "Support/Stream/SafePeek.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -27,7 +28,7 @@ using namespace Typed::Core::Frontend::Parser;
 void Machine::Use()
 {
     // We assume the Use token has been already consumed
-    auto &identifier = tokens.Peek();
+    auto &identifier = Support::Stream::SafePeek(tokens);
     Expect(ADT::Lang::TokenType::Identifier);
 
     // The token's value will be put to the AST, so we

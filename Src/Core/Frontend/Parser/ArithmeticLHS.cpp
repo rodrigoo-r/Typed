@@ -19,6 +19,7 @@
 
 #include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
+#include "Support/Stream/SafeNext.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -27,7 +28,7 @@ using namespace Typed::Core::Frontend::Parser;
 
 Machine::TreePtr Machine::ArithmeticLHS(TokenStreamView &input)
 {
-    auto &num = input.Next();
+    auto &num = Support::Stream::SafeNext(input);
 
     // Validate that the input is a number, float or identifier
     if (

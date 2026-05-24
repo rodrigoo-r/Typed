@@ -19,6 +19,7 @@
 
 #include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
+#include "Support/Stream/SafeNext.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -28,7 +29,7 @@ using namespace Typed::Core::Frontend::Parser;
 Machine::TreePtr Machine::Type()
 {
     // Get the next token and ensure it's a type
-    auto &token = tokens.Next();
+    auto &token = Support::Stream::SafeNext(tokens);
 
     switch (token.type)
     {

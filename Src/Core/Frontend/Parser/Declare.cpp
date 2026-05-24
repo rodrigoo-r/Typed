@@ -31,7 +31,7 @@ void Machine::Declare(TreePtr parent)
     auto decl = Allocate(ADT::Lang::ASTType::Declare);    // Consume the Declare token
     parent->children.PushBack(decl);
 
-    auto &name = tokens.Peek();
+    auto &name = Support::Stream::SafePeek(tokens);
     Expect(ADT::Lang::TokenType::Identifier);
     Expect(ADT::Lang::TokenType::As);
 
@@ -42,7 +42,10 @@ void Machine::Declare(TreePtr parent)
     decl->children.PushBack(type);
 
     // Allow variables with no initial value
-    if (tokens.Peek().type == ADT::Lang::TokenType::With)
+    if (
+        Support::Stream::SafePeek(tokens).type ==
+            ADT::Lang::TokenType::With
+    )
     {
         Expect(ADT::Lang::TokenType::With);
         Expression(decl);

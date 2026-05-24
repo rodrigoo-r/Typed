@@ -19,8 +19,9 @@
 
 #pragma once
 #include "ADT/Equality/Agnostic.h"
-#include "ADT/Stream/External.h"
 #include "ADT/Exception/UnexpectedToken.h"
+#include "ADT/Stream/External.h"
+#include "SafeNext.h"
 
 namespace Typed::Support::Stream
 {
@@ -40,7 +41,7 @@ namespace Typed::Support::Stream
         // Build the stream 1 element at a time
         while (stream.HasNext())
         {
-            auto next = stream.Next();
+            auto &next = SafeNext(stream);
             if (Eq::Equals(next, Dest))
             {
                 met_delim = true;

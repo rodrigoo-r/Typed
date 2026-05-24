@@ -17,8 +17,8 @@
 // Created by Rodrigo on 5/19/26.
 //
 
-#include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
+#include "Support/Stream/SafePeek.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -30,23 +30,15 @@ Machine::TreePtr Machine::Call(
     ExprQueue &queue
 )
 {
-    auto &name = input.Peek();
+    auto &name = Support::Stream::SafePeek(input);
     Expect(input, ADT::Lang::TokenType::Identifier);
 
     // Allocate the call node
     auto call = AllocateBase(name, ADT::Lang::ASTType::Call);
     call->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
 
-    if (!input.HasNext())
-    {
-        throw ADT::Exception::UnexpectedToken(
-            input.Curr().line,
-            input.Curr().column
-        );
-    }
-
     // Stop parsing arguments if needed
-    auto &peek = input.Peek();
+    auto &peek = Support::Stream::SafePeek(input);
     if (peek.type == ADT::Lang::TokenType::EndCall)
     {
         input.Next();

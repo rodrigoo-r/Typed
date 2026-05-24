@@ -28,13 +28,13 @@ using namespace Typed::Core::Frontend::Parser;
 
 void Machine::While(TreePtr parent, BodyQueue &body_queue)
 {
-    auto &while_token = tokens.Next();
+    auto &while_token = Support::Stream::SafeNext(tokens);
     auto ast = AllocateBase(
-        tokens.Peek(),
+        Support::Stream::SafePeek(tokens),
         ADT::Lang::ASTType::While
     );
     auto body = AllocateBase(
-        tokens.Peek(),
+        Support::Stream::SafePeek(tokens),
         ADT::Lang::ASTType::Body
     );
 

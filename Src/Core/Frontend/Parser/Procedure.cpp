@@ -20,6 +20,8 @@
 #include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
 #include "Support/Equality/TokenType.h"
+#include "Support/Stream/SafeNext.h"
+#include "Support/Stream/SafePeek.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -30,27 +32,27 @@ void Machine::Procedure()
 {
     // Expect the procedure's name
     auto &proc_token = tokens.Curr();
-    auto &identifier = tokens.Peek();
+    auto &identifier = Support::Stream::SafePeek(tokens);
     Expect(ADT::Lang::TokenType::Identifier);
 
     auto node = AllocateBase(identifier, ADT::Lang::ASTType::Procedure);
     root->children.PushBack(node);
 
     // Case: The procedure has arguments
-    auto &peek = tokens.Peek();
+    auto peek = Support::Stream::SafePeek(tokens);
     if (peek.type == ADT::Lang::TokenType::With)
     {
         auto args = Allocate(ADT::Lang::ASTType::Arguments);
         node->children.PushBack(args);
 
         Expect(ADT::Lang::TokenType::Arguments);
-        peek = tokens.Peek();
+        peek = Support::Stream::SafePeek(tokens);
 
         // Parse arguments
         while (peek.type != ADT::Lang::TokenType::Begin)
         {
             // Expect the argument's structure: <Identifier> As <Type>
-            peek = tokens.Peek();
+            peek = Support::Stream::SafePeek(tokens);
             Expect(ADT::Lang::TokenType::Identifier);
             Expect(ADT::Lang::TokenType::As);
 
@@ -63,39 +65,28 @@ void Machine::Procedure()
             arg->children.PushBack(type);
 
             args->children.PushBack(arg);
-            peek = tokens.Peek();
+            peek = Support::Stream::SafePeek(tokens);
 
             // Make sure there is a comma if there's more arguments
             if (peek.type == ADT::Lang::TokenType::Comma)
             {
                 Expect(ADT::Lang::TokenType::Comma);
-                peek = tokens.Peek();
+                peek = Support::Stream::SafePeek(tokens);
             }
         }
     }
 
     // Parse return types if necessary
-    peek = tokens.Peek();
+    peek = Support::Stream::SafePeek(tokens);
     if (peek.type == ADT::Lang::TokenType::Returns)
     {
         auto type = Allocate(ADT::Lang::ASTType::ReturnType);
         node->children.PushBack(type);
         type->children.PushBack(type);
-
-        peek = tokens.Peek();
     }
 
-    if (peek.type != ADT::Lang::TokenType::Begin)
-    {
-        throw ADT::Exception::UnexpectedToken(
-            peek.line,
-            peek.column
-        );
-    }
-
-    // Consume the Begin token
-    tokens.Next();
-    peek = tokens.Peek();
+    Expect(ADT::Lang::TokenType::Begin);
+    peek = Support::Stream::SafePeek(tokens);
 
     // Now parse the body
     auto body = AllocateBase(peek, ADT::Lang::ASTType::Body);
@@ -110,7 +101,7 @@ void Machine::Procedure()
 
     while (peek.type != ADT::Lang::TokenType::EndProcedure)
     {
-        peek = tokens.Peek();
+        peek = Support::Stream::SafePeek(tokens);
         auto &last_el = body_queue.front();
 
         switch (peek.type)
@@ -173,12 +164,11 @@ void Machine::Procedure()
         }
 
         // Update the peek for the next iteration
-        if (tokens.HasNext())
-            peek = tokens.Peek();
+        peek = Support::Stream::SafePeek(tokens);
     }
 
     // Consume the end procedure token
-    tokens.Next();
+    Support::Stream::SafeNext(tokens);
     body_queue.pop_front();
 
     // Make sure the body queue is empty at the end

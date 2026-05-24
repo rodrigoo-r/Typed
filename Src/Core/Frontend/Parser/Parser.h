@@ -26,6 +26,7 @@
 #include "ADT/Stream/Token.h"
 #include "Core/Frontend/Lexer/Lexer.h"
 #include "Support/Allocator/Monotonic.h"
+#include "Support/Stream/SafePeek.h"
 
 namespace Typed::Core::Frontend::Parser
 {
@@ -128,7 +129,10 @@ namespace Typed::Core::Frontend::Parser
         Machine(Lexer::Machine::StreamRef tokens) :
             tokens(tokens)
         {
-            root = AllocateBase(tokens.Peek(), ADT::Lang::ASTType::Root);
+            root = AllocateBase(
+                Support::Stream::SafePeek(tokens),
+                ADT::Lang::ASTType::Root
+            );
         }
 
         TreePtr Parse();

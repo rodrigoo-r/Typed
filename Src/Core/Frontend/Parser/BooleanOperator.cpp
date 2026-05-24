@@ -18,6 +18,7 @@
 //
 
 #include "Parser.h"
+#include "Support/Stream/SafePeek.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -60,7 +61,7 @@ Machine::TreePtr Machine::BooleanOperator(
 )
 {
     TreePtr op = nullptr;
-    ADT::Lang::TokenType last_op = input.Peek().type;
+    ADT::Lang::TokenType last_op = Support::Stream::SafePeek(input).type;
 
     while (input.HasNext())
     {

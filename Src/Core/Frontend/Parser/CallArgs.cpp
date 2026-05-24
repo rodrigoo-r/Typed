@@ -29,14 +29,20 @@ Machine::TreePtr Machine::CallArgs(
     ExprQueue &queue
 )
 {
-    auto args = AllocateBase(input.Peek(), ADT::Lang::ASTType::Arguments);
+    auto args = AllocateBase(
+        Support::Stream::SafePeek(input),
+        ADT::Lang::ASTType::Arguments
+    );
 
     auto start = input.Pos();
     Celery::Trait::VeryLarge size = 0;
     Celery::Trait::VeryLarge call_nest = 0;
 
     // Create the argument AST
-    auto arg = AllocateBase(input.Peek(), ADT::Lang::ASTType::Argument);
+    auto arg = AllocateBase(
+        Support::Stream::SafePeek(input),
+        ADT::Lang::ASTType::Argument
+    );
     args->children.PushBack(arg);
 
     while (input.HasNext())
@@ -56,7 +62,11 @@ Machine::TreePtr Machine::CallArgs(
             start = input.Pos();
             size = 0;
 
-            arg = AllocateBase(input.Peek(), ADT::Lang::ASTType::Argument);
+            arg = AllocateBase(
+                Support::Stream::SafePeek(input),
+                ADT::Lang::ASTType::Argument
+            );
+
             args->children.PushBack(arg);
         }
         else if (token.type == ADT::Lang::TokenType::Call)

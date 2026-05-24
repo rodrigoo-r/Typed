@@ -18,6 +18,7 @@
 //
 
 #include "Parser.h"
+#include "Support/Stream/SafeNext.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -28,5 +29,8 @@ Machine::TreePtr Machine::Allocate(
     ADT::Lang::ASTType type
 )
 {
-    return AllocateBase(tokens.Next(), type);
+    return AllocateBase(
+        Support::Stream::SafeNext(tokens),
+        type
+    );
 }

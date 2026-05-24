@@ -25,6 +25,7 @@
 #include "ADT/Exception/UnexpectedToken.h"
 #include "ADT/Exception/UnknownToken.h"
 #include "ADT/Stream/External.h"
+#include "SafeNext.h"
 
 namespace Typed::Support::Stream
 {
@@ -39,24 +40,7 @@ namespace Typed::Support::Stream
     >
     void Expect(Stream &stream, auto expected)
     {
-        // Edge case: No elements
-        if (stream.Empty())
-        {
-            // Exception at line 1 column 1
-            throw ADT::Exception::UnknownToken(1, 1);
-        }
-
-        if (!stream.HasNext())
-        {
-            auto &curr = stream.Curr();
-
-            throw ADT::Exception::UnknownToken(
-                curr.line,
-                curr.column
-            );
-        }
-
-        auto &element = stream.Next();
+        auto &element = SafeNext(stream);
         if (!Equal::Equals(element, expected))
         {
             throw ADT::Exception::UnexpectedToken(

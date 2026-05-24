@@ -19,6 +19,7 @@
 
 #include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
+#include "Support/Stream/SafeNext.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -31,7 +32,7 @@ void Machine::End(
 )
 {
     auto &last_el = body_queue.front();
-    auto &trace = tokens.Next();
+    auto &trace = Support::Stream::SafeNext(tokens);
 
     // Make sure the last element matches the block declaration
     if (

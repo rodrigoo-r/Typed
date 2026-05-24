@@ -17,8 +17,8 @@
 // Created by Rodrigo on 5/23/26.
 //
 
-#include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
+#include "Support/Stream/SafeNext.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -30,16 +30,16 @@ void Machine::Else(
     BodyQueue &body_queue
 )
 {
-    auto &else_token = tokens.Next();
+    auto &else_token = Support::Stream::SafeNext(tokens);
     auto last = ConditionGroup(parent, body_queue);
 
     auto ast = AllocateBase(
-        tokens.Peek(),
+        Support::Stream::SafePeek(tokens),
         ADT::Lang::ASTType::Else
     );
 
     auto body = AllocateBase(
-        tokens.Peek(),
+        Support::Stream::SafePeek(tokens),
         ADT::Lang::ASTType::Body
     );
 

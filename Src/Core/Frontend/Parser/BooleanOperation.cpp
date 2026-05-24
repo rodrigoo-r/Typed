@@ -20,6 +20,8 @@
 #include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
 #include "Support/Printer/ASTPrinter.h"
+#include "Support/Stream/SafeNext.h"
+#include "Support/Stream/SafePeek.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -32,9 +34,9 @@ Machine::TreePtr Machine::BooleanOperation(
     ExprQueue &queue
 )
 {
-    auto &op_token = input.Peek();
+    auto &op_token = Support::Stream::SafePeek(input);
     auto op = AllocateBase(
-        input.Next(),
+        Support::Stream::SafeNext(input),
         ADT::Lang::ASTType::Root
     );
 

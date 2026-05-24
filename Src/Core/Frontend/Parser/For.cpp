@@ -28,11 +28,11 @@ using namespace Typed::Core::Frontend::Parser;
 
 void Machine::For(TreePtr parent, BodyQueue &body_queue)
 {
-    auto &for_token = tokens.Peek();
+    auto &for_token = Support::Stream::SafePeek(tokens);
     auto ast = Allocate(ADT::Lang::ASTType::For);
     parent->children.PushBack(ast);
 
-    auto &var_name = tokens.Peek();
+    auto &var_name = Support::Stream::SafePeek(tokens);
     Expect(ADT::Lang::TokenType::Identifier);
     Expect(ADT::Lang::TokenType::As);
     auto type = Type();

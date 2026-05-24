@@ -21,6 +21,7 @@
 #include "Parser.h"
 #include "Support/Equality/TokenType.h"
 #include "Support/Stream/Extract.h"
+#include "Support/Stream/SafeNext.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -54,11 +55,14 @@ void Machine::Expression(
         queue.PopBack();
 
         // Create the expression AST
-        auto ast = AllocateBase(expr.Peek(), ADT::Lang::ASTType::Expression);
+        auto ast = AllocateBase(
+            Support::Stream::SafePeek(expr),
+            ADT::Lang::ASTType::Expression
+        );
         parent->children.PushBack(ast);
 
         // Get the candidate to determine the expression type
-        auto &candidate = expr.Next();
+        auto &candidate = Support::Stream::SafeNext(expr);
         TreePtr result = nullptr;
 
         switch (candidate.type)

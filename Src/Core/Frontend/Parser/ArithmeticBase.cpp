@@ -18,6 +18,7 @@
 //
 
 #include "Parser.h"
+#include "Support/Stream/SafePeek.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -34,7 +35,7 @@ Machine::TreePtr Machine::ArithmeticBase(
     // <Mul/Div> <Identifier> <By> <Num>
     if (delimiter == ADT::Lang::TokenType::By)
     {
-        auto &name = input.Peek();
+        auto &name = Support::Stream::SafePeek(input);
         Expect(input, ADT::Lang::TokenType::Identifier);
         Expect(input, delimiter);
 
@@ -50,7 +51,7 @@ Machine::TreePtr Machine::ArithmeticBase(
     auto lhs = ArithmeticLHS(input);
     Expect(input, delimiter);
 
-    auto &name = input.Peek();
+    auto &name = Support::Stream::SafePeek(input);
     Expect(input, ADT::Lang::TokenType::Identifier);
 
     // Create the AST and return it
