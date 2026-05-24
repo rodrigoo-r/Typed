@@ -7,10 +7,10 @@ Use IO; # Import the IO library for printing
 # - Regex
 # - IO
 # - Math
-# - String
-# - List
-# - Dictionary
-# - FileSystem
+# - Strings
+# - Lists
+# - Dictionaries
+# - File_System
 
 Procedure Main
 With Arguments

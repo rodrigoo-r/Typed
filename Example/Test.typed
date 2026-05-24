@@ -3,14 +3,15 @@
 
 #Use Regex; # Import the Regex library
 Use IO; # Import the IO library for printing
+Use Lists;
 # Available libraries:
 # - Regex
 # - IO
 # - Math
-# - String
-# - List
-# - Dictionary
-# - FileSystem
+# - Strings
+# - Lists
+# - Dictionaries
+# - File_System
 
 Procedure Main
 With Arguments
@@ -184,5 +185,61 @@ Begin
 
         Add 1 To I;
     End_While
+
+    Declare My_List as List;
+    Declare My_Dict as Dictionary;
+
+    Call
+        List_Add
+    With
+        My_List,
+        "Hello",
+        2.5,
+        True
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "My List: $L",
+        My_List
+    End_Call;
+
+    Call
+        List_Pop
+    With
+        My_List
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "My List: $L. Access: $S",
+        My_List,
+        Call List_Access With My_List, 0 End_Call
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "My Dict: $D",
+        My_Dict
+    End_Call;
+
+    Call
+        List_Set
+    With
+        My_List,
+        0,
+        "Goodbye"
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "My List: $L",
+        My_List
+    End_Call;
+
 
 End_Procedure
