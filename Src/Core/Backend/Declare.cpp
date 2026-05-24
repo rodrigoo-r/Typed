@@ -1,5 +1,5 @@
 /*
- * #-----------------------------------------------------# *
+* #-----------------------------------------------------# *
  * #                                                     # *
  * #                           Typed                     # *
  * #                   A text formatting DSL             # *
@@ -17,6 +17,8 @@
 // Created by Rodrigo on 5/21/26.
 //
 
+#include "ADT/Exception/ExpectedInitialValue.h"
+#include "ADT/Exception/UnexpectedToken.h"
 #include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
 
@@ -32,23 +34,66 @@ void Walker::Declare(
     // Note: redefining variables is allowed in Typed
     auto &name = body->children[0]->value;
     auto &type = body->children[1]->type;
-    auto &value = body->children[2];
 
-    auto obj = Expression(stack, value);
+    if (
+        (
+            // Lists and Dictionaries can't have init values
+            (
+                type == ADT::Lang::ASTType::List ||
+                type == ADT::Lang::ASTType::Dictionary
+            ) &&
+            body->children.Size() > 2
+        ) || (
+            // Other types must have init values
+            type != ADT::Lang::ASTType::List &&
+            type != ADT::Lang::ASTType::Dictionary &&
+            body->children.Size() == 2
+        )
+    )
+    {
+        throw ADT::Exception::ExpectedInitialValue(
+            body->line,
+            body->column
+        );
+    }
 
-    // Do type checking
-    Support::Runtime::TypeCheck(
-        type == ADT::Lang::ASTType::String ?
-            ADT::Runtime::ObjectType::String :
-        type == ADT::Lang::ASTType::Integer ?
-            ADT::Runtime::ObjectType::Integer :
-        type == ADT::Lang::ASTType::Float ?
-            ADT::Runtime::ObjectType::Float :
-        ADT::Runtime::ObjectType::Boolean,
-        obj.type,
-        body->line,
-        body->column
-    );
+    if (type == ADT::Lang::ASTType::List)
+    {
+        ADT::Runtime::Object obj;
+        obj.type = ADT::Runtime::ObjectType::List;
+        obj.value = ADT::List::DynamicObject();
+        stack.Emplace(name, std::move(obj));
+    } else if (type == ADT::Lang::ASTType::Dictionary)
+    {
+        ADT::Runtime::Object obj;
+        obj.type = ADT::Runtime::ObjectType::Dictionary;
+        obj.value = ADT::Map::Object();
+        stack.Emplace(name, std::move(obj));
+    }
+    else
+    {
+        auto &value = body->children[2];
 
-    stack.Emplace(name, obj);
+        auto obj = Expression(stack, value);
+
+        // Do type checking
+        Support::Runtime::TypeCheck(
+            type == ADT::Lang::ASTType::String ?
+                ADT::Runtime::ObjectType::String :
+            type == ADT::Lang::ASTType::Integer ?
+                ADT::Runtime::ObjectType::Integer :
+            type == ADT::Lang::ASTType::Float ?
+                ADT::Runtime::ObjectType::Float :
+            type == ADT::Lang::ASTType::Boolean ?
+                ADT::Runtime::ObjectType::Boolean :
+            type == ADT::Lang::ASTType::List ?
+                ADT::Runtime::ObjectType::List :
+                ADT::Runtime::ObjectType::Dictionary,
+            obj.type,
+            body->line,
+            body->column
+        );
+
+        stack.Emplace(name, std::move(obj));
+    }
 }
