@@ -32,7 +32,7 @@ namespace Typed::Support::Hash
         using is_avalanching = void;
         using is_transparent = void;
 
-        Celery::Trait::VeryLarge operator()(T &&obj)
+        Celery::Trait::VeryLarge operator()(const T &obj) const
         {
             switch (obj.type)
             {
