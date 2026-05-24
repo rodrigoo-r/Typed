@@ -22,7 +22,7 @@
 
 
 #include "ADT/Lang/Token.h"
-#include "ADT/Runtime/Object.h"
+#include "ADT/Runtime/ObjectType.h"
 #include "Support/Runtime/GetObjValue.h"
 
 namespace Typed::Support::Equality
@@ -31,9 +31,12 @@ namespace Typed::Support::Equality
     {
         using is_transparent = void;
 
+        // NOTE: We don't import Runtime::Object here
+        // to avoid circular imports
+        template <typename T>
         static bool Equals(
-            ADT::Runtime::Object &lhs,
-            ADT::Runtime::Object &rhs
+            T &&lhs,
+            T &&rhs
         )
         {
             if (
@@ -96,13 +99,13 @@ namespace Typed::Support::Equality
         }
 
         bool operator()(
-            ADT::Runtime::Object &lhs,
-            ADT::Runtime::Object &rhs
+            auto &&lhs,
+            auto &&rhs
         ) const noexcept
         {
             return Equals(
-                lhs,
-                rhs
+                std::forward<decltype(lhs)>(lhs),
+                std::forward<decltype(rhs)>(rhs)
             );
         }
     };

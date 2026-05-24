@@ -24,6 +24,7 @@
 
 
 #include "ADT/List/Object.h"
+#include "ADT/Map/Object.h"
 #include "ObjectType.h"
 
 namespace Typed::ADT::Runtime
@@ -39,6 +40,7 @@ namespace Typed::ADT::Runtime
                 bool,
                 Celery::Str::External,
                 List::DynamicObject,
+                Map::Object,
 
                 // Only runtime-provided functions can
                 // return owned memory

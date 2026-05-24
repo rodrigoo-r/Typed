@@ -20,39 +20,71 @@
 
 #pragma once
 #include <Celery/String/External.h>
+#include <Celery/String/String.h>
 
-#include "ADT/Runtime/Object.h"
+#include "ADT/List/Object.h"
+#include "ADT/Map/Dense.h"
+#include "Support/Hash/Object.h"
+
+namespace Typed::Support::Equality
+{
+    struct Object;
+}
+
+namespace Typed::ADT::Map
+{
+    using Object =
+        Dense<
+            Runtime::Object,
+            Runtime::Object,
+            Support::Equality::Object,
+            Support::Hash::AgnosticObject<Runtime::Object>
+        >;
+}
 
 namespace Typed::Support::Runtime
 {
+    // NOTE: We don't import Runtime::Object to avoid
+    // circular dependencies
+
     template <typename T>
-    T &GetObjValue(ADT::Runtime::Object &obj)
+    T &GetObjValue(auto &&obj)
     {
         return std::get<T>(obj.value);
     }
 
-    inline Celery::Str::External &GetStrObj(ADT::Runtime::Object &obj)
+    auto &GetStrObj(auto &&obj)
     {
         return GetObjValue<Celery::Str::External>(obj);
     }
 
-    inline Celery::Str::String &GetOwnedStrObj(ADT::Runtime::Object &obj)
+    auto &GetOwnedStrObj(auto &&obj)
     {
         return GetObjValue<Celery::Str::String>(obj);
     }
 
-    inline float &GetFloatObj(ADT::Runtime::Object &obj)
+    auto &GetFloatObj(auto &&obj)
     {
         return GetObjValue<float>(obj);
     }
 
-    inline int &GetIntObj(ADT::Runtime::Object &obj)
+    auto &GetIntObj(auto &&obj)
     {
         return GetObjValue<int>(obj);
     }
 
-    inline bool &GetBoolObj(ADT::Runtime::Object &obj)
+    auto &GetBoolObj(auto &&obj)
     {
         return GetObjValue<bool>(obj);
+    }
+
+    auto &GetListObj(auto &&obj)
+    {
+        return GetObjValue<ADT::List::DynamicObject>(obj);
+    }
+
+    auto &GetDictionaryObj(auto &&obj)
+    {
+        return GetObjValue<ADT::Map::Object>(obj);
     }
 }
