@@ -20,6 +20,7 @@
 #pragma once
 #include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
+#include "ADT/Runtime/Object.h"
 
 namespace Typed::Runtime::IO
 {
