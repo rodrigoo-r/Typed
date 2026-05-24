@@ -86,7 +86,7 @@ void PrintDictionary(ADT::Runtime::Object &obj)
 {
     auto &val = Support::Runtime::GetDictionaryObj(obj);
 
-    Celery::Io::Print("Dict(");
+    Celery::Io::Print("Dictionary(");
 
     auto last = val->size() - 1;
     Celery::Trait::VeryLarge i = 0;
