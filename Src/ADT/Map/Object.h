@@ -34,7 +34,7 @@ namespace Typed::ADT::Map
         Dense<
             Runtime::Object,
             Runtime::Object,
-            Support::Equality::Object,
-            Support::Hash::AgnosticObject<Runtime::Object>
+            Support::Hash::AgnosticObject<Runtime::Object>,
+            Support::Equality::Object
         >;
 }
