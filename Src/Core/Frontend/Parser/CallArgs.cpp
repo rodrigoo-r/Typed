@@ -36,7 +36,7 @@ Machine::TreePtr Machine::CallArgs(
 
     auto start = input.Pos();
     Celery::Trait::VeryLarge size = 0;
-    Celery::Trait::VeryLarge call_nest = 0;
+    Celery::Trait::VeryLarge call_nest = 1;
 
     // Create the argument AST
     auto arg = AllocateBase(
@@ -50,7 +50,10 @@ Machine::TreePtr Machine::CallArgs(
         auto &token = input.Next();
 
         // Split at delimiter
-        if (token.type == ADT::Lang::TokenType::Comma)
+        if (
+            token.type == ADT::Lang::TokenType::Comma &&
+            call_nest == 1
+        )
         {
             // Create the view and push it
             TokenStreamView view{
