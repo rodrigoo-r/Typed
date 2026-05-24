@@ -20,6 +20,7 @@
 #pragma once
 
 #include "ADT/Map/Procedure.h"
+#include "Access.h"
 #include "Add.h"
 #include "Pop.h"
 #include "Size.h"
@@ -55,14 +56,27 @@ namespace Typed::Runtime::Lists
         {
             "List_Size",
             {
-                    {
-                        {"l", ADT::Runtime::ObjectType::List}
-                    },
-                    nullptr,
-                    ADT::Runtime::ObjectType::Void,
-                    false,
-                    Size
-               }
+                {
+                    {"l", ADT::Runtime::ObjectType::List}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Void,
+                false,
+                Size
+            }
+        },
+        {
+            "List_Access",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::List},
+                    {"i", ADT::Runtime::ObjectType::Integer}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Any,
+                false,
+                Access
+            }
         }
     };
 }
