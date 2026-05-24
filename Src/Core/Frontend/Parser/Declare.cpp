@@ -37,14 +37,14 @@ void Machine::Declare(TreePtr parent)
 
     auto type = Type();
 
+    // Build the AST structure
+    decl->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+    decl->children.PushBack(type);
+
     // Allow variables with no initial value
     if (tokens.Peek().type == ADT::Lang::TokenType::With)
     {
         Expect(ADT::Lang::TokenType::With);
-
-        // Build the AST structure
-        decl->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
-        decl->children.PushBack(type);
         Expression(decl);
     }
 }
