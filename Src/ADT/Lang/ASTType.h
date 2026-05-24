@@ -39,6 +39,8 @@ namespace Typed::ADT::Lang
         Integer,
         Float,
         Boolean,
+        List,
+        Dictionary,
 
         // Loops
         For,

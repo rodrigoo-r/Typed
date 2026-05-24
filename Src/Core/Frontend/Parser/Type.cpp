@@ -52,6 +52,16 @@ Machine::TreePtr Machine::Type()
             return AllocateBase(token, ADT::Lang::ASTType::Boolean);
         }
 
+        case ADT::Lang::TokenType::List:
+        {
+            return AllocateBase(token, ADT::Lang::ASTType::List);
+        }
+
+        case ADT::Lang::TokenType::Dictionary:
+        {
+            return AllocateBase(token, ADT::Lang::ASTType::Dictionary);
+        }
+
         default:
         {
             throw ADT::Exception::UnexpectedToken(
