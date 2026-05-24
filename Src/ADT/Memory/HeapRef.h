@@ -45,5 +45,11 @@ namespace Typed::ADT::Memory
         {
             return *ptr;
         }
+
+        ~HeapRef()
+        {
+            if (ptr == nullptr) return;
+            Allocator::Deallocate(ptr);
+        }
     };
 }
