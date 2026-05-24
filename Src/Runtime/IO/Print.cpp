@@ -112,11 +112,17 @@ void PrintList(ADT::Runtime::Object &obj)
 {
     Celery::Io::Print("List(");
     auto &val = Support::Runtime::GetListObj(obj);
+    if (val->Empty())
+    {
+        Celery::Io::Print(')');
+        return;
+    }
 
     auto last = val->Size() - 1;
     for (auto i = 0; i < val->Size(); i++)
     {
-        PrintObject(obj);
+        auto &el = (*val)[i];
+        PrintObject(el);
 
         if (i != last)
             Celery::Io::Print(", ");
@@ -189,13 +195,12 @@ ADT::Runtime::Object IO::Print(
         {
             auto f = fmt[i + 1];
             auto can_continue = true;
-            ADT::Runtime::Object &arg = args.Front();
 
             switch (f)
             {
                 case 'S':
                 {
-                    arg = GetArg(args, pos, line, col);
+                    auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
                         ADT::Runtime::ObjectType::String,
                         arg.type,
@@ -204,12 +209,13 @@ ADT::Runtime::Object IO::Print(
                     );
 
                     can_continue = false;
+                    PrintString(arg);
                     break;
                 }
 
                 case 'F':
                 {
-                    arg = GetArg(args, pos, line, col);
+                    auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
                         ADT::Runtime::ObjectType::Float,
                         arg.type,
@@ -218,12 +224,13 @@ ADT::Runtime::Object IO::Print(
                     );
 
                     can_continue = false;
+                    PrintFloat(arg);
                     break;
                 }
 
                 case 'I':
                 {
-                    arg = GetArg(args, pos, line, col);
+                    auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
                         ADT::Runtime::ObjectType::Integer,
                         arg.type,
@@ -232,12 +239,13 @@ ADT::Runtime::Object IO::Print(
                     );
 
                     can_continue = false;
+                    PrintInt(arg);
                     break;
                 }
 
                 case 'B':
                 {
-                    arg = GetArg(args, pos, line, col);
+                    auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
                         ADT::Runtime::ObjectType::Boolean,
                         arg.type,
@@ -246,12 +254,13 @@ ADT::Runtime::Object IO::Print(
                     );
 
                     can_continue = false;
+                    PrintBool(arg);
                     break;
                 }
 
                 case 'L':
                 {
-                    arg = GetArg(args, pos, line, col);
+                    auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
                         ADT::Runtime::ObjectType::List,
                         arg.type,
@@ -260,12 +269,13 @@ ADT::Runtime::Object IO::Print(
                     );
 
                     can_continue = false;
+                    PrintList(arg);
                     break;
                 }
 
                 case 'D':
                 {
-                    arg = GetArg(args, pos, line, col);
+                    auto &arg = GetArg(args, pos, line, col);
                     Support::Runtime::TypeCheck(
                         ADT::Runtime::ObjectType::Dictionary,
                         arg.type,
@@ -274,6 +284,7 @@ ADT::Runtime::Object IO::Print(
                     );
 
                     can_continue = false;
+                    PrintDictionary(arg);
                     break;
                 }
 
@@ -283,7 +294,6 @@ ADT::Runtime::Object IO::Print(
             // Skip the next character if we found a format
             if (!can_continue)
             {
-                PrintObject(arg);
                 i++;
                 continue;
             }
