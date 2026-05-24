@@ -50,6 +50,7 @@ namespace Typed::ADT::Memory
         {
             if (ptr == nullptr) return;
             Allocator::Deallocate(ptr);
+            ptr = nullptr;
         }
     };
 }
