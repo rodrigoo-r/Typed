@@ -19,6 +19,7 @@
 
 #include <Celery/Misc/StringEqual.h>
 
+#include "Support/Equality/Object.h"
 #include "Support/Runtime/GetObjValue.h"
 #include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
@@ -144,43 +145,7 @@ ADT::Runtime::Object Walker::Binary(
     }
     else if (is_equal)
     {
-        if (
-            left_obj.type == ADT::Runtime::ObjectType::OwnedString
-        )
-        {
-            // Account for special cases
-            if (right_obj.type == ADT::Runtime::ObjectType::OwnedString)
-            {
-                auto &left_str = Support::Runtime::GetOwnedStrObj(left_obj);
-                auto &right_str = Support::Runtime::GetOwnedStrObj(right_obj);
-                result = Celery::Misc::StringEquality::Cmp(left_str, right_str);
-            } else
-            {
-                auto &left_str = Support::Runtime::GetOwnedStrObj(left_obj);
-                auto &right_str = Support::Runtime::GetStrObj(right_obj);
-                result = Celery::Misc::StringEquality::Cmp(left_str, right_str);
-            }
-        } else if (
-            left_obj.type == ADT::Runtime::ObjectType::String
-        )
-        {
-            // Account for special cases
-            if (right_obj.type == ADT::Runtime::ObjectType::OwnedString)
-            {
-                auto &left_str = Support::Runtime::GetStrObj(left_obj);
-                auto &right_str = Support::Runtime::GetOwnedStrObj(right_obj);
-                result = Celery::Misc::StringEquality::Cmp(left_str, right_str);
-            } else
-            {
-                auto &left_str = Support::Runtime::GetStrObj(left_obj);
-                auto &right_str = Support::Runtime::GetStrObj(right_obj);
-                result = Celery::Misc::StringEquality::Cmp(left_str, right_str);
-            }
-        }
-        else
-        {
-            result = left_obj.value == right_obj.value;
-        }
+        result = Support::Equality::Object::Equals(left_obj, right_obj);
     }
     else
     {
