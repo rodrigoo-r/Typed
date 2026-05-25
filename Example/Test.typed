@@ -4,6 +4,8 @@
 #Use Regex; # Import the Regex library
 Use IO; # Import the IO library for printing
 Use Lists;
+Use Dictionaries;
+Use Strings;
 # Available libraries:
 # - Regex
 # - IO
@@ -85,7 +87,8 @@ Begin
         Print_Line
     With
         "Result after Add: $I",
-        Result;
+        Result
+    End_Call;
 
     Multiply
         Result
@@ -239,6 +242,48 @@ Begin
     With
         "My List: $L",
         My_List
+    End_Call;
+
+    Call
+        Dictionary_Set
+    With
+        My_Dict,
+        "Hello",
+        "World"
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "My Dict: $D",
+        My_Dict
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "Hello: $S",
+        Call
+            Dictionary_Access
+        With
+            My_Dict, "Hello"
+        End_Call
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "First letter: $S",
+        Call
+            String_Access
+        With
+            Call
+                Dictionary_Access
+            With
+                My_Dict, "Hello"
+            End_Call,
+            0
+        End_Call
     End_Call;
 
 
