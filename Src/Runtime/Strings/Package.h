@@ -21,6 +21,7 @@
 
 #include "ADT/Map/Procedure.h"
 #include "Access.h"
+#include "Add.h"
 #include "Size.h"
 
 namespace Typed::Runtime::Strings
@@ -49,6 +50,19 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::String,
                 false,
                 Access
+            }
+        },
+        {
+            "String_Add",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Void,
+                false,
+                Add
             }
         }
     };
