@@ -36,7 +36,7 @@ ADT::Runtime::Object Strings::Access(
     char *ptr = nullptr;
     Celery::Trait::VeryLarge size = 0;
 
-    if (obj.type != ADT::Runtime::ObjectType::String)
+    if (obj.type == ADT::Runtime::ObjectType::String)
     {
         auto &str = Support::Runtime::GetStrObj(obj);
         ptr = str.Ptr();
