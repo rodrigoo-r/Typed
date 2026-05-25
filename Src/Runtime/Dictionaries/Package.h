@@ -20,6 +20,7 @@
 #pragma once
 
 #include "ADT/Map/Procedure.h"
+#include "Get.h"
 #include "Set.h"
 #include "Support/Printer/ASTPrinter.h"
 
@@ -38,6 +39,19 @@ namespace Typed::Runtime::Dictionaries
                 ADT::Runtime::ObjectType::Void,
                 false,
                 Set
+            }
+        },
+        {
+            "Dictionary_Get",
+            {
+                {
+                    {"d", ADT::Runtime::ObjectType::Dictionary},
+                    {"k", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Any,
+                false,
+                Get
             }
         }
     };
