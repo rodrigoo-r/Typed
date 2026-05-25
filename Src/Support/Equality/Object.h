@@ -21,7 +21,6 @@
 #include <Celery/Misc/StringEqual.h>
 
 
-#include "ADT/Lang/Token.h"
 #include "ADT/Runtime/ObjectType.h"
 #include "Support/Runtime/GetObjValue.h"
 
@@ -33,10 +32,9 @@ namespace Typed::Support::Equality
 
         // NOTE: We don't import Runtime::Object here
         // to avoid circular imports
-        template <typename T>
         static bool Equals(
-            T &&lhs,
-            T &&rhs
+            auto &&lhs,
+            auto &&rhs
         )
         {
             if (
