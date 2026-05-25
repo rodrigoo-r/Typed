@@ -22,6 +22,7 @@
 #include "ADT/Map/Procedure.h"
 #include "Access.h"
 #include "Set.h"
+#include "Size.h"
 #include "Support/Printer/ASTPrinter.h"
 
 namespace Typed::Runtime::Dictionaries
@@ -52,6 +53,18 @@ namespace Typed::Runtime::Dictionaries
                 ADT::Runtime::ObjectType::Any,
                 false,
                 Access
+            }
+        },
+        {
+            "Dictionary_Size",
+            {
+                {
+                    {"d", ADT::Runtime::ObjectType::Dictionary}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Any,
+                false,
+                Size
             }
         }
     };
