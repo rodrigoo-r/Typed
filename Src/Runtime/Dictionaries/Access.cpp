@@ -36,7 +36,7 @@ ADT::Runtime::Object Dictionaries::Access(
     auto &key = args[1];
 
     auto it = dict->find(key);
-    if (it != dict->end())
+    if (it == dict->end())
     {
         throw ADT::Exception::UnknownElement(
             trace->line,
