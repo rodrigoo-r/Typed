@@ -18,38 +18,11 @@
 //
 
 #pragma once
-
-#include "ADT/Map/Procedure.h"
-#include "Access.h"
-#include "Size.h"
+#include "ADT/Lang/AST.h"
+#include "ADT/List/Object.h"
+#include "ADT/Runtime/Object.h"
 
 namespace Typed::Runtime::Strings
 {
-    inline ADT::Map::Procedure Package = {
-        {
-            "String_Size",
-            {
-                {
-                    {"s", ADT::Runtime::ObjectType::String}
-                },
-                nullptr,
-                ADT::Runtime::ObjectType::Void,
-                false,
-                Size
-            }
-        },
-        {
-            "String_Access",
-            {
-                {
-                    {"s", ADT::Runtime::ObjectType::String},
-                    {"i", ADT::Runtime::ObjectType::Integer}
-                },
-                nullptr,
-                ADT::Runtime::ObjectType::String,
-                false,
-                Access
-            }
-        }
-    };
+    ADT::Runtime::Object Access(ADT::List::Object &, ADT::Lang::AST *);
 }
