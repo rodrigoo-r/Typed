@@ -50,7 +50,7 @@ namespace Typed::Support::Hash
 
                 case ADT::Runtime::ObjectType::String:
                 {
-                    auto &str_val = std::get<Celery::Str::String>(obj.value);
+                    auto &str_val = std::get<Celery::Str::External>(obj.value);
                     return XXH3_64bits(str_val.Ptr(), str_val.Size());
                 }
 
@@ -62,7 +62,7 @@ namespace Typed::Support::Hash
 
                 case ADT::Runtime::ObjectType::OwnedString:
                 {
-                    auto &str_val = std::get<Celery::Str::External>(obj.value);
+                    auto &str_val = std::get<Celery::Str::String>(obj.value);
                     return XXH3_64bits(str_val.Ptr(), str_val.Size());
                 }
 
