@@ -17,7 +17,9 @@
 // Created by Rodrigo on 5/19/26.
 //
 
+#include "ADT/Exception/UnexpectedToken.h"
 #include "Parser.h"
+#include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed;
 using namespace Typed::Core;
@@ -81,11 +83,22 @@ Machine::TreePtr Machine::CallArgs(
         {
             call_nest--;
             if (call_nest == 0) break;
+
+            size++;
         }
         else
         {
             size++;
         }
+    }
+
+    // Make sure the nest size is 0 at the end
+    if (call_nest != 0)
+    {
+        throw ADT::Exception::UnexpectedToken(
+            input.Curr().line,
+            input.Curr().column
+        );
     }
 
     // Add the last arg
