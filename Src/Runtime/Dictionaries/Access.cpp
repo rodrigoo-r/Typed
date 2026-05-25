@@ -17,7 +17,7 @@
 // Created by Rodrigo on 5/25/26.
 //
 
-#include "Get.h"
+#include "Access.h"
 
 #include "ADT/Exception/UnknownElement.h"
 #include "ADT/Lang/AST.h"
@@ -27,7 +27,7 @@ using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::Dictionaries;
 
-ADT::Runtime::Object Dictionaries::Get(
+ADT::Runtime::Object Dictionaries::Access(
     ADT::List::Object &args,
     ADT::Lang::AST *trace
 )

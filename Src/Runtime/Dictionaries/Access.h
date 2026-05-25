@@ -24,7 +24,7 @@
 
 namespace Typed::Runtime::Dictionaries
 {
-    ADT::Runtime::Object Get(
+    ADT::Runtime::Object Access(
         ADT::List::Object &args,
         ADT::Lang::AST *trace
     );

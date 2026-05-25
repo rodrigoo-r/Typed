@@ -20,7 +20,7 @@
 #pragma once
 
 #include "ADT/Map/Procedure.h"
-#include "Get.h"
+#include "Access.h"
 #include "Set.h"
 #include "Support/Printer/ASTPrinter.h"
 
@@ -42,7 +42,7 @@ namespace Typed::Runtime::Dictionaries
             }
         },
         {
-            "Dictionary_Get",
+            "Dictionary_Access",
             {
                 {
                     {"d", ADT::Runtime::ObjectType::Dictionary},
