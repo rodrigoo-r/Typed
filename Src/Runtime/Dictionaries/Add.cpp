@@ -14,28 +14,26 @@
 */
 
 //
-// Created by Rodrigo on 5/20/26.
+// Created by Rodrigo on 5/25/26.
 //
 
-#pragma once
-#include <Celery/Misc/Hash.h>
-#include <Celery/String/External.h>
+#include "Add.h"
 
+#include "ADT/Lang/AST.h"
+#include "ADT/Runtime/Object.h"
 
-#include "ADT/Map/Dense.h"
-#include "Runtime/Dictionaries/Package.h"
-#include "Runtime/IO/Package.h"
-#include "Runtime/Lists/Package.h"
-
-namespace Typed::Support::Runtime
+namespace Typed::Runtime::Dictionaries
 {
-    inline ADT::Map::Dense<
-        Celery::Str::External,
-        ADT::Map::Procedure,
-        Celery::Misc::Hash
-    > LibraryMap = {
-        {"IO", Typed::Runtime::IO::Package},
-        {"Lists", Typed::Runtime::Lists::Package},
-        {"Dictionaries", Typed::Runtime::Dictionaries::Package},
-    };
+    ADT::Runtime::Object Add(
+        ADT::List::Object &args,
+        ADT::Lang::AST *trace
+    )
+    {
+        auto &dict = Support::Runtime::GetDictionaryObj(args[0]);
+        auto &key = args[1];
+        auto &val = args[2];
+
+        dict->emplace(key, val);
+        return {};
+    }
 }

@@ -18,24 +18,27 @@
 //
 
 #pragma once
-#include <Celery/Misc/Hash.h>
-#include <Celery/String/External.h>
 
+#include "ADT/Map/Procedure.h"
+#include "Add.h"
+#include "Support/Printer/ASTPrinter.h"
 
-#include "ADT/Map/Dense.h"
-#include "Runtime/Dictionaries/Package.h"
-#include "Runtime/IO/Package.h"
-#include "Runtime/Lists/Package.h"
-
-namespace Typed::Support::Runtime
+namespace Typed::Runtime::Dictionaries
 {
-    inline ADT::Map::Dense<
-        Celery::Str::External,
-        ADT::Map::Procedure,
-        Celery::Misc::Hash
-    > LibraryMap = {
-        {"IO", Typed::Runtime::IO::Package},
-        {"Lists", Typed::Runtime::Lists::Package},
-        {"Dictionaries", Typed::Runtime::Dictionaries::Package},
+    inline ADT::Map::Procedure Package = {
+        {
+            "Dictionary_Add",
+            {
+                {
+                    {"d", ADT::Runtime::ObjectType::Dictionary},
+                    {"k", ADT::Runtime::ObjectType::Any},
+                    {"v", ADT::Runtime::ObjectType::Any},
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Void,
+                false,
+                Add
+            }
+        }
     };
 }
