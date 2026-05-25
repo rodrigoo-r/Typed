@@ -17,23 +17,15 @@
 // Created by Rodrigo on 5/25/26.
 //
 
-#include "Add.h"
+#pragma once
 
 #include "ADT/Lang/AST.h"
 #include "ADT/Runtime/Object.h"
 
 namespace Typed::Runtime::Dictionaries
 {
-    ADT::Runtime::Object Add(
+    ADT::Runtime::Object Set(
         ADT::List::Object &args,
         ADT::Lang::AST *trace
-    )
-    {
-        auto &dict = Support::Runtime::GetDictionaryObj(args[0]);
-        auto &key = args[1];
-        auto &val = args[2];
-
-        dict->emplace(key, val);
-        return {};
-    }
+    );
 }

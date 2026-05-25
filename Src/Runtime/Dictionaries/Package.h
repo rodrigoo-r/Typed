@@ -20,14 +20,14 @@
 #pragma once
 
 #include "ADT/Map/Procedure.h"
-#include "Add.h"
+#include "Set.h"
 #include "Support/Printer/ASTPrinter.h"
 
 namespace Typed::Runtime::Dictionaries
 {
     inline ADT::Map::Procedure Package = {
         {
-            "Dictionary_Add",
+            "Dictionary_Set",
             {
                 {
                     {"d", ADT::Runtime::ObjectType::Dictionary},
@@ -37,7 +37,7 @@ namespace Typed::Runtime::Dictionaries
                 nullptr,
                 ADT::Runtime::ObjectType::Void,
                 false,
-                Add
+                Set
             }
         }
     };
