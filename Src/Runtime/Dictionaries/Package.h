@@ -21,6 +21,7 @@
 
 #include "ADT/Map/Procedure.h"
 #include "Access.h"
+#include "Remove.h"
 #include "Set.h"
 #include "Size.h"
 #include "Support/Printer/ASTPrinter.h"
@@ -56,13 +57,26 @@ namespace Typed::Runtime::Dictionaries
             }
         },
         {
+            "Dictionary_Remove",
+            {
+                {
+                    {"d", ADT::Runtime::ObjectType::Dictionary},
+                    {"k", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Void,
+                false,
+                Remove
+            }
+        },
+        {
             "Dictionary_Size",
             {
                 {
                     {"d", ADT::Runtime::ObjectType::Dictionary}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::Any,
+                ADT::Runtime::ObjectType::Integer,
                 false,
                 Size
             }
