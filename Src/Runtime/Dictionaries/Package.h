@@ -51,7 +51,7 @@ namespace Typed::Runtime::Dictionaries
                 nullptr,
                 ADT::Runtime::ObjectType::Any,
                 false,
-                Get
+                Access
             }
         }
     };
