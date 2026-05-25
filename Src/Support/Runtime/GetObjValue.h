@@ -50,42 +50,83 @@ namespace Typed::Support::Runtime
     // circular dependencies
 
     template <typename T>
-    T &GetObjValue(auto &&obj)
+    T &GetObjValue(auto &obj)
     {
         return std::get<T>(obj.value);
     }
 
-    auto &GetStrObj(auto &&obj)
+    template <typename T>
+    const T &GetObjValue(const auto &obj)
+    {
+        return std::get<T>(obj.value);
+    }
+
+    auto &GetStrObj(auto &obj)
     {
         return GetObjValue<Celery::Str::External>(obj);
     }
 
-    auto &GetOwnedStrObj(auto &&obj)
+    const auto &GetStrObj(const auto &obj)
+    {
+        return GetObjValue<Celery::Str::External>(obj);
+    }
+
+    auto &GetOwnedStrObj(auto &obj)
     {
         return GetObjValue<Celery::Str::String>(obj);
     }
 
-    auto &GetFloatObj(auto &&obj)
+    const auto &GetOwnedStrObj(const auto &obj)
+    {
+        return GetObjValue<Celery::Str::String>(obj);
+    }
+
+    auto &GetFloatObj(auto &obj)
     {
         return GetObjValue<float>(obj);
     }
 
-    auto &GetIntObj(auto &&obj)
+    const auto &GetFloatObj(const auto &obj)
+    {
+        return GetObjValue<float>(obj);
+    }
+
+    auto &GetIntObj(auto &obj)
     {
         return GetObjValue<int>(obj);
     }
 
-    auto &GetBoolObj(auto &&obj)
+    const auto &GetIntObj(const auto &obj)
+    {
+        return GetObjValue<int>(obj);
+    }
+
+    auto &GetBoolObj(auto &obj)
     {
         return GetObjValue<bool>(obj);
     }
 
-    auto &GetListObj(auto &&obj)
+    const auto &GetBoolObj(const auto &obj)
+    {
+        return GetObjValue<bool>(obj);
+    }
+
+    auto &GetListObj(auto &obj)
     {
         return GetObjValue<ADT::List::DynamicObject>(obj);
     }
 
-    auto &GetDictionaryObj(auto &&obj)
+    const auto &GetListObj(const auto &obj)
+    {
+        return GetObjValue<ADT::List::DynamicObject>(obj);
+    }
+
+    auto &GetDictionaryObj(auto &obj)
+    {
+        return GetObjValue<ADT::Map::Object>(obj);
+    }
+
+    const auto &GetDictionaryObj(const auto &obj)
     {
         return GetObjValue<ADT::Map::Object>(obj);
     }
