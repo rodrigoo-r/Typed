@@ -24,6 +24,7 @@
 #include "Add.h"
 #include "Contains.h"
 #include "FindIndex.h"
+#include "ReplaceOne.h"
 #include "Size.h"
 #include "Trim.h"
 #include "TrimLeft.h"
@@ -130,6 +131,20 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::Integer,
                 false,
                 FindIndex
+            }
+        },
+        {
+            "String_Replace_One",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"l", ADT::Runtime::ObjectType::String},
+                    {"t", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                ReplaceOne
             }
         }
     };
