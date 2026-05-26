@@ -32,38 +32,38 @@ ADT::Runtime::Object Strings::TrimRight(
     auto &obj = args[0];
     char *ptr = nullptr;
     Celery::Trait::VeryLarge size = 0;
-    Celery::Trait::VeryLarge start = 0;
+    Celery::Trait::VeryLarge end = 0;
 
     if (obj.type == ADT::Runtime::ObjectType::String)
     {
         auto &str = Support::Runtime::GetStrObj(obj);
         ptr = str.Ptr();
         size = str.Size();
-        start = size - 1;
+        end = size - 1;
     } else
     {
         auto &str = Support::Runtime::GetOwnedStrObj(obj);
         ptr = str.Ptr();
         size = str.Size();
-        start = size - 1;
+        end = size - 1;
     }
 
     // Remove all empty characters
     while (
-        start > 0 &&
+        end > 0 &&
         (
-            ptr[start] == ' ' ||
-            ptr[start] == '\t' ||
-            ptr[start] == '\n' ||
-            ptr[start] == '\r'
+            ptr[end] == ' ' ||
+            ptr[end] == '\t' ||
+            ptr[end] == '\n' ||
+            ptr[end] == '\r'
         )
     )
     {
-        --start;
+        --end;
     }
 
     // Edge case: the string is empty
-    if (start == 0)
+    if (end == 0)
     {
         return {
             ADT::Runtime::ObjectType::String,
@@ -76,13 +76,13 @@ ADT::Runtime::Object Strings::TrimRight(
     {
         return {
             ADT::Runtime::ObjectType::String,
-            Celery::Str::External(ptr, size - start)
+            Celery::Str::External(ptr, end + 1)
         };
     }
 
     // Otherwise, return an owned string
     return {
         ADT::Runtime::ObjectType::OwnedString,
-        Celery::Str::String(ptr, size - start)
+        Celery::Str::String(ptr, end + 1)
     };
 }
