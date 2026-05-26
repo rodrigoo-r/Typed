@@ -23,6 +23,7 @@
 #include "Access.h"
 #include "Add.h"
 #include "Contains.h"
+#include "FindIndex.h"
 #include "Size.h"
 #include "Trim.h"
 #include "TrimLeft.h"
@@ -116,6 +117,19 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::Boolean,
                 false,
                 Contains
+            }
+        },
+        {
+            "String_Find_Index",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"t", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Integer,
+                false,
+                FindIndex
             }
         }
     };

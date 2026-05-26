@@ -14,27 +14,15 @@
 */
 
 //
-// Created by Rodrigo on 5/25/26.
+// Created by Rodrigo on 5/26/26.
 //
 
+#pragma once
+#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
-#include "Contains.h"
+#include "ADT/Runtime/Object.h"
 
-#include "FindIndex.h"
-#include "Support/Runtime/AccessString.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::Strings;
-
-ADT::Runtime::Object Strings::Contains(
-    ADT::List::Object &args,
-    ADT::Lang::AST *_
-)
+namespace Typed::Runtime::Strings
 {
-    auto res = FindIndex(args, _);
-    return {
-        ADT::Runtime::ObjectType::Boolean,
-        Support::Runtime::GetIntObj(res) != -1
-    };
+    ADT::Runtime::Object FindIndex(ADT::List::Object &, ADT::Lang::AST *);
 }
