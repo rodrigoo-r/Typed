@@ -23,6 +23,7 @@
 #include "Access.h"
 #include "Add.h"
 #include "Size.h"
+#include "Trim.h"
 #include "TrimLeft.h"
 #include "TrimRight.h"
 
@@ -89,6 +90,18 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::String,
                 false,
                 TrimRight
+            }
+        },
+        {
+            "String_Trim",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                Trim
             }
         }
     };
