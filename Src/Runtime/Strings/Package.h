@@ -24,6 +24,7 @@
 #include "Add.h"
 #include "Contains.h"
 #include "FindIndex.h"
+#include "FindIndexes.h"
 #include "ReplaceOne.h"
 #include "Size.h"
 #include "Trim.h"
@@ -131,6 +132,20 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::Integer,
                 false,
                 FindIndex
+            }
+        },
+        {
+            "String_Find_Indexes",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"t", ADT::Runtime::ObjectType::String},
+                    {"m", ADT::Runtime::ObjectType::Integer}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::List,
+                false,
+                FindIndexes
             }
         },
         {

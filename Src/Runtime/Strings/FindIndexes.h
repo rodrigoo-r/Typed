@@ -17,25 +17,12 @@
 // Created by Rodrigo on 5/26/26.
 //
 
+#pragma once
+#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
-#include "FindIndex.h"
+#include "ADT/Runtime/Object.h"
 
-#include "FindIndexes.h"
-#include "Support/Runtime/AccessString.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::Strings;
-
-ADT::Runtime::Object Strings::FindIndex(
-    ADT::List::Object &args,
-    ADT::Lang::AST *_
-)
+namespace Typed::Runtime::Strings
 {
-    args.EmplaceBack(
-        ADT::Runtime::ObjectType::Integer,
-        1
-    );
-
-    return FindIndexes(args, _);
+    ADT::Runtime::Object FindIndexes(ADT::List::Object &, ADT::Lang::AST *);
 }
