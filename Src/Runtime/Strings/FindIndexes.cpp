@@ -92,7 +92,8 @@ ADT::Runtime::Object Strings::FindIndexes(
             );
 
             // Reset the count
-            start = 0;
+            start = -1;
+            matched_chars = 0;
 
             // Break when we find the maximum matches
             if (max_matches == result->Size())
