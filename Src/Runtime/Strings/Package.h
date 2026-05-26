@@ -29,6 +29,8 @@
 #include "ReplaceMany.h"
 #include "ReplaceOne.h"
 #include "Size.h"
+#include "ToLower.h"
+#include "ToUpper.h"
 #include "Trim.h"
 #include "TrimLeft.h"
 #include "TrimRight.h"
@@ -191,6 +193,30 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::String,
                 false,
                 ReplaceAll
+            }
+        },
+        {
+            "String_To_Lower",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                ToLower
+            }
+        },
+        {
+            "String_To_Upper",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                ToUpper
             }
         }
     };
