@@ -25,6 +25,8 @@
 #include "Contains.h"
 #include "FindIndex.h"
 #include "FindIndexes.h"
+#include "ReplaceAll.h"
+#include "ReplaceMany.h"
 #include "ReplaceOne.h"
 #include "Size.h"
 #include "Trim.h"
@@ -160,6 +162,35 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::String,
                 false,
                 ReplaceOne
+            }
+        },
+        {
+            "String_Replace_Many",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"l", ADT::Runtime::ObjectType::String},
+                    {"t", ADT::Runtime::ObjectType::String},
+                    {"m", ADT::Runtime::ObjectType::Integer}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                ReplaceMany
+            }
+        },
+        {
+            "String_Replace_All",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"l", ADT::Runtime::ObjectType::String},
+                    {"t", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                ReplaceAll
             }
         }
     };
