@@ -35,71 +35,49 @@ ADT::Runtime::Object Strings::FindIndexes(
     auto &obj = args[0];
     auto &target_obj = args[1];
     auto &max_match_obj = args[2];
-    auto target = Support::Runtime::AccessString(target_obj);
+
     auto str = Support::Runtime::AccessString(obj);
+    auto target = Support::Runtime::AccessString(target_obj);
     auto max_matches = Support::Runtime::GetIntObj(max_match_obj);
-    Celery::Trait::VeryLarge matched_chars = 0;
-    auto max_count = target.Size();
-    int start = 0;
+
     auto result = ADT::List::DynamicObject::Make();
 
-    // Edge case: if both are empty
-    if (target.Empty() && str.Empty())
+    if (str.Empty() || target.Empty())
     {
         return {
-            ADT::Runtime::ObjectType::Boolean,
-            true
+            ADT::Runtime::ObjectType::List,
+            result
         };
     }
 
-    // Edge case: if one is empty and the other isn't
-    if (target.Empty() || str.Empty())
+    for (size_t i = 0; i + target.Size() <= str.Size(); ++i)
     {
-        return {
-            ADT::Runtime::ObjectType::Boolean,
-            false
-        };
-    }
+        bool matched = true;
 
-    // Match characters
-    for (auto i = 0; i < str.Size(); i++)
-    {
-        auto c = target[matched_chars];
-        auto look = str[i];
-
-        if (c == look)
+        for (size_t j = 0; j < target.Size(); ++j)
         {
-            matched_chars++;
-        } else
-        {
-            // Reset the counter
-            matched_chars = 0;
-            start = -1;
+            if (str[i + j] != target[j])
+            {
+                matched = false;
+                break;
+            }
         }
 
-        // Update the start index if we matched 1 character
-        if (matched_chars == 1)
-        {
-            start = i;
-        }
-
-        // Break early if the matched chars are met
-        if (matched_chars == max_count)
+        if (matched)
         {
             result->EmplaceBack(
                 ADT::Runtime::ObjectType::Integer,
-                start
+                static_cast<int>(i)
             );
 
-            // Reset the count
-            start = -1;
-            matched_chars = 0;
-
-            // Break when we find the maximum matches
-            if (max_matches == result->Size())
+            if (max_matches > 0 &&
+                result->Size() >= static_cast<size_t>(max_matches))
             {
                 break;
             }
+
+            // Skip over the matched substring to avoid overlaps
+            i += target.Size() - 1;
         }
     }
 
