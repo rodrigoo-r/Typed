@@ -23,6 +23,8 @@
 #include "Access.h"
 #include "Add.h"
 #include "Size.h"
+#include "TrimLeft.h"
+#include "TrimRight.h"
 
 namespace Typed::Runtime::Strings
 {
@@ -63,6 +65,30 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::Void,
                 false,
                 Add
+            }
+        },
+        {
+            "String_Trim_Left",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                TrimLeft
+            }
+        },
+        {
+            "String_Trim_Right",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                TrimRight
             }
         }
     };
