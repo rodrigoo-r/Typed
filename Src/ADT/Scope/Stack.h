@@ -121,17 +121,10 @@ namespace Typed::ADT::Scope
             auto &&...args
         )
         {
-            auto it = top->map.find(key);
-            if (it != top->map.end())
-            {
-                top->map.erase(it);
-            }
+            Value value(std::forward<decltype(args)>(args)...);
 
             // Insert at the top stack so the stack is scoped
-            top->map.try_emplace(
-                key,
-                std::forward<decltype(args)>(args)...
-            );
+            top->map[key] = value;
         }
 
         ~Stack()
