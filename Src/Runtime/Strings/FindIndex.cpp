@@ -37,5 +37,13 @@ ADT::Runtime::Object Strings::FindIndex(
         1
     );
 
-    return FindIndexes(args, _);
+    auto obj = FindIndexes(args, _);
+    auto &indexes = Support::Runtime::GetListObj(obj);
+
+    if (indexes->Empty()) return {
+        ADT::Runtime::ObjectType::Integer,
+        -1
+    };
+
+    return indexes->Front();
 }
