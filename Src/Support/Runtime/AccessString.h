@@ -14,28 +14,22 @@
 */
 
 //
-// Created by Rodrigo on 5/24/26.
+// Created by Rodrigo on 5/25/26.
 //
 
-#include "ADT/List/Object.h"
-#include "Size.h"
+#pragma once
+#include <Celery/String/External.h>
 
-#include "Support/Runtime/AccessString.h"
+#include "ADT/Runtime/Object.h"
 
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::Strings;
-
-ADT::Runtime::Object Strings::Size(
-    ADT::List::Object &args,
-    ADT::Lang::AST *_
-)
+namespace Typed::Support::Runtime
 {
-    auto &obj = args[0];
-    auto str = Support::Runtime::AccessString(obj);
+    Celery::Str::External AccessString(ADT::Runtime::Object &obj)
+    {
+        if (obj.type == ADT::Runtime::ObjectType::String)
+            return GetStrObj(obj);
 
-    return {
-        ADT::Runtime::ObjectType::Integer,
-        (int)str.Size()
-    };
+        auto &str = GetOwnedStrObj(obj);
+        return {str.Ptr(), str.Size()};
+    }
 }

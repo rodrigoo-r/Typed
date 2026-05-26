@@ -20,6 +20,8 @@
 #include "ADT/List/Object.h"
 #include "TrimLeft.h"
 
+#include "Support/Runtime/AccessString.h"
+
 using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::Strings;
@@ -30,21 +32,10 @@ ADT::Runtime::Object Strings::TrimLeft(
 )
 {
     auto &obj = args[0];
-    char *ptr = nullptr;
-    Celery::Trait::VeryLarge size = 0;
+    auto str = Support::Runtime::AccessString(obj);
+    char *ptr = str.Ptr();
+    Celery::Trait::VeryLarge size = str.Size();
     Celery::Trait::VeryLarge start = 0;
-
-    if (obj.type == ADT::Runtime::ObjectType::String)
-    {
-        auto &str = Support::Runtime::GetStrObj(obj);
-        ptr = str.Ptr();
-        size = str.Size();
-    } else
-    {
-        auto &str = Support::Runtime::GetOwnedStrObj(obj);
-        ptr = str.Ptr();
-        size = str.Size();
-    }
 
     // Remove all empty characters
     while (

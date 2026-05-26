@@ -21,6 +21,7 @@
 #include "Access.h"
 
 #include "ADT/Exception/OutOfBounds.h"
+#include "Support/Runtime/AccessString.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -32,21 +33,10 @@ ADT::Runtime::Object Strings::Access(
 )
 {
     auto &obj = args[0];
+    auto str = Support::Runtime::AccessString(obj);
     auto &idx = Support::Runtime::GetIntObj(args[1]);
-    char *ptr = nullptr;
-    Celery::Trait::VeryLarge size = 0;
-
-    if (obj.type == ADT::Runtime::ObjectType::String)
-    {
-        auto &str = Support::Runtime::GetStrObj(obj);
-        ptr = str.Ptr();
-        size = str.Size();
-    } else
-    {
-        auto &str = Support::Runtime::GetOwnedStrObj(obj);
-        ptr = str.Ptr();
-        size = str.Size();
-    }
+    char *ptr = str.Ptr();
+    Celery::Trait::VeryLarge size = str.Size();
 
     // Make sure that the index is within bounds
     if (idx >= size)
@@ -57,6 +47,19 @@ ADT::Runtime::Object Strings::Access(
         );
     }
 
+    // Return an owned string if the original is owned
+    if (obj.type == ADT::Runtime::ObjectType::OwnedString)
+    {
+        return {
+            ADT::Runtime::ObjectType::OwnedString,
+            Celery::Str::String(
+                ptr + idx,
+                1
+            )
+        };
+    }
+
+    // Otherwise, return a view
     return {
         ADT::Runtime::ObjectType::String,
         Celery::Str::External(
