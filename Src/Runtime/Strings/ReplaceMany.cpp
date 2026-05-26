@@ -35,46 +35,62 @@ ADT::Runtime::Object Strings::ReplaceMany(
 {
     ADT::List::Object find_indexes_arg;
     find_indexes_arg.EmplaceBack(args[0]);
+    find_indexes_arg.EmplaceBack(args[1]);
     find_indexes_arg.EmplaceBack(args[3]);
 
     auto res = FindIndexes(find_indexes_arg, _);
+
     auto &obj = args[0];
-    auto &target_obj = args[1];
-    auto &replacing_obj = args[2];
+    auto &find_obj = args[1];
+    auto &replacement_obj = args[2];
+
     auto str = Support::Runtime::AccessString(obj);
-    auto replacing = Support::Runtime::AccessString(replacing_obj);
-    auto target = Support::Runtime::AccessString(target_obj);
+    auto find = Support::Runtime::AccessString(find_obj);
+    auto replacement = Support::Runtime::AccessString(replacement_obj);
+
     auto &indexes = Support::Runtime::GetListObj(res);
-    auto last_replaced_idx = 0;
+
+    // Nothing to replace
+    if (indexes->Empty())
+    {
+        return obj;
+    }
 
     Celery::Str::String result;
+
     result.Resize(
         str.Size()
-        - (replacing.Size() * indexes->Size())
-        + (target.Size() * indexes->Size())
+        - (find.Size() * indexes->Size())
+        + (replacement.Size() * indexes->Size())
     );
+
+    Celery::Trait::VeryLarge last_pos = 0;
 
     for (auto &idx_obj : *indexes)
     {
-        auto &idx = Support::Runtime::GetIntObj(idx_obj);
+        auto idx = Support::Runtime::GetIntObj(idx_obj);
 
-        // If not found, exit early
-        if (idx == -1) return obj;
-
-        // Write everything before the index
+        // Copy text before the match
         result.Write(
-            str.Ptr() + last_replaced_idx,
-            idx - last_replaced_idx
+            str.Ptr() + last_pos,
+            idx - last_pos
         );
 
-        // Write the replaced index
+        // Copy replacement text
         result.Write(
-            target.Ptr(),
-            target.Size()
+            replacement.Ptr(),
+            replacement.Size()
         );
 
-        last_replaced_idx = idx + replacing.Size();
+        // Skip over the matched text
+        last_pos = idx + find.Size();
     }
+
+    // Copy remaining tail
+    result.Write(
+        str.Ptr() + last_pos,
+        str.Size() - last_pos
+    );
 
     return {
         ADT::Runtime::ObjectType::OwnedString,
