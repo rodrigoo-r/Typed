@@ -286,5 +286,25 @@ Begin
         End_Call
     End_Call;
 
+    Declare
+        S as String
+    With
+        "     Hello, World       ";
+
+    Declare
+        S as String
+    With
+        Call
+            String_Trim
+        With
+            S
+        End_Call;
+
+    Call
+        Print_Line
+    With
+        "Trimmed: '$S'",
+        S
+    End_Call;
 
 End_Procedure
