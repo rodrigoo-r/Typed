@@ -37,7 +37,7 @@ ADT::Runtime::Object Strings::ToUpper(
     Celery::Str::String result;
 
     // Resize the result
-    result.Resize(str.Size());
+    result.ResizeFill(str.Size(), ' ');
 
     // Write the string
     for (auto i = 0; i < str.Size(); i++)
