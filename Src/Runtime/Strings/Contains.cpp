@@ -21,7 +21,6 @@
 #include "Contains.h"
 
 #include "FindIndex.h"
-#include "Support/Runtime/AccessString.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
