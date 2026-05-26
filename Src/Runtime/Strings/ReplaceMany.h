@@ -17,25 +17,12 @@
 // Created by Rodrigo on 5/26/26.
 //
 
+#pragma once
+#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
-#include "ReplaceOne.h"
+#include "ADT/Runtime/Object.h"
 
-#include "FindIndex.h"
-#include "ReplaceMany.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::Strings;
-
-ADT::Runtime::Object Strings::ReplaceOne(
-    ADT::List::Object &args,
-    ADT::Lang::AST *_
-)
+namespace Typed::Runtime::Strings
 {
-    args.EmplaceBack(
-        ADT::Runtime::ObjectType::Integer,
-        1
-    );
-
-    return ReplaceMany(args, _);
+    ADT::Runtime::Object ReplaceMany(ADT::List::Object &, ADT::Lang::AST *);
 }
