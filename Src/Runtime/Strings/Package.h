@@ -22,6 +22,7 @@
 #include "ADT/Map/Procedure.h"
 #include "Access.h"
 #include "Add.h"
+#include "Contains.h"
 #include "Size.h"
 #include "Trim.h"
 #include "TrimLeft.h"
@@ -102,6 +103,19 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::String,
                 false,
                 Trim
+            }
+        },
+        {
+            "String_Contains",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"t", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Boolean,
+                false,
+                Contains
             }
         }
     };
