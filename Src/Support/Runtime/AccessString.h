@@ -24,7 +24,7 @@
 
 namespace Typed::Support::Runtime
 {
-    Celery::Str::External AccessString(ADT::Runtime::Object &obj)
+    inline Celery::Str::External AccessString(ADT::Runtime::Object &obj)
     {
         if (obj.type == ADT::Runtime::ObjectType::String)
             return GetStrObj(obj);
