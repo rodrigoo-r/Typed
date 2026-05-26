@@ -121,6 +121,12 @@ namespace Typed::ADT::Scope
             auto &&...args
         )
         {
+            auto it = top->map.find(key);
+            if (it != top->map.end())
+            {
+                top->map.erase(it);
+            }
+
             // Insert at the top stack so the stack is scoped
             top->map.try_emplace(
                 key,
