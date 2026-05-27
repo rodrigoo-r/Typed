@@ -14,38 +14,19 @@
 */
 
 //
-// Created by Rodrigo on 5/20/26.
+// Created by Rodrigo on 5/27/26.
 //
 
-#include "Print.h"
+#pragma once
+#include <Celery/String/String.h>
 
-#include "ADT/Exception/MismatchedArgCount.h"
-#include "ADT/Stdout/Wrapper.h"
-#include "Support/Format/Format.h"
-#include "Support/Printer/ASTPrinter.h"
-#include "Support/Runtime/AccessString.h"
+#include "ADT/List/Object.h"
 
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::IO;
-
-inline ADT::Stdout::Wrapper out;
-
-ADT::Runtime::Object IO::Print(
-    ADT::List::Object &args,
-    ADT::Lang::AST *trace
-)
+namespace Typed::Support::Format
 {
-    auto &obj = args[0];
-    auto fmt = Support::Runtime::AccessString(obj);
-
-    Support::Format::Format(
-        fmt,
-        args,
-        out,
-        trace->line,
-        trace->column
+    template <typename Adapter>
+    void String(
+        ADT::Runtime::Object &obj,
+        Adapter &adapter
     );
-
-    return {};
 }

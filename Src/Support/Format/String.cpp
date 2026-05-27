@@ -14,38 +14,38 @@
 */
 
 //
-// Created by Rodrigo on 5/20/26.
+// Created by Rodrigo on 5/27/26.
 //
 
-#include "Print.h"
+#include "String.h"
 
-#include "ADT/Exception/MismatchedArgCount.h"
+#include "ADT/List/Object.h"
+#include "ADT/Runtime/Object.h"
 #include "ADT/Stdout/Wrapper.h"
-#include "Support/Format/Format.h"
-#include "Support/Printer/ASTPrinter.h"
 #include "Support/Runtime/AccessString.h"
 
 using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::IO;
+using namespace Typed::Support;
+using namespace Typed::Support::Format;
 
-inline ADT::Stdout::Wrapper out;
-
-ADT::Runtime::Object IO::Print(
-    ADT::List::Object &args,
-    ADT::Lang::AST *trace
+template<typename Adapter>
+void Format::String(
+    ADT::Runtime::Object &obj,
+    Adapter &adapter
 )
 {
-    auto &obj = args[0];
-    auto fmt = Support::Runtime::AccessString(obj);
-
-    Support::Format::Format(
-        fmt,
-        args,
-        out,
-        trace->line,
-        trace->column
-    );
-
-    return {};
+    auto val = Runtime::AccessString(obj);
+    adapter.Write(val.Ptr(), val.Size());
 }
+
+template
+void Format::String(
+    ADT::Runtime::Object &,
+    ADT::Stdout::Wrapper &
+);
+
+template
+void Format::String(
+    ADT::Runtime::Object &,
+    Celery::Str::String &
+);

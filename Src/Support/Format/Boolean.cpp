@@ -14,38 +14,42 @@
 */
 
 //
-// Created by Rodrigo on 5/20/26.
+// Created by Rodrigo on 5/27/26.
 //
 
-#include "Print.h"
+#include "Boolean.h"
 
-#include "ADT/Exception/MismatchedArgCount.h"
+#include "ADT/Runtime/Object.h"
 #include "ADT/Stdout/Wrapper.h"
-#include "Support/Format/Format.h"
-#include "Support/Printer/ASTPrinter.h"
-#include "Support/Runtime/AccessString.h"
 
 using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::IO;
+using namespace Typed::Support;
+using namespace Typed::Support::Format;
 
-inline ADT::Stdout::Wrapper out;
-
-ADT::Runtime::Object IO::Print(
-    ADT::List::Object &args,
-    ADT::Lang::AST *trace
+template<typename Adapter>
+void Format::Boolean(
+    ADT::Runtime::Object &obj,
+    Adapter &adapter
 )
 {
-    auto &obj = args[0];
-    auto fmt = Support::Runtime::AccessString(obj);
+    auto &val = Runtime::GetBoolObj(obj);
+    if (val)
+    {
+        adapter.Write("True", 4);
+        return;
+    }
 
-    Support::Format::Format(
-        fmt,
-        args,
-        out,
-        trace->line,
-        trace->column
-    );
-
-    return {};
+    adapter.Write("False", 5);
 }
+
+template
+void Format::Boolean(
+    ADT::Runtime::Object &,
+    ADT::Stdout::Wrapper &
+);
+
+template
+void Format::Boolean(
+    ADT::Runtime::Object &,
+    Celery::Str::String &
+);
