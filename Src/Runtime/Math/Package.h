@@ -38,7 +38,7 @@ namespace Typed::Runtime::Math
                 },
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
-                true,
+                false,
                 Sine
             }
         },
@@ -50,7 +50,7 @@ namespace Typed::Runtime::Math
                 },
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
-                true,
+                false,
                 Cosine
             }
         },
@@ -62,7 +62,7 @@ namespace Typed::Runtime::Math
                 },
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
-                true,
+                false,
                 Tangent
             }
         },
@@ -74,7 +74,7 @@ namespace Typed::Runtime::Math
                 },
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
-                true,
+                false,
                 HyperbolicSine
             }
         },
@@ -86,7 +86,7 @@ namespace Typed::Runtime::Math
                 },
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
-                true,
+                false,
                 HyperbolicCosine
             }
         },
@@ -98,7 +98,7 @@ namespace Typed::Runtime::Math
                 },
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
-                true,
+                false,
                 HyperbolicTangent
             }
         }
