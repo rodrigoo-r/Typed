@@ -25,6 +25,7 @@
 #include "Contains.h"
 #include "FindIndex.h"
 #include "FindIndexes.h"
+#include "Format.h"
 #include "ReplaceAll.h"
 #include "ReplaceMany.h"
 #include "ReplaceOne.h"
@@ -217,6 +218,18 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::String,
                 false,
                 ToUpper
+            }
+        },
+        {
+            "String_Format",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                true,
+                Format
             }
         }
     };
