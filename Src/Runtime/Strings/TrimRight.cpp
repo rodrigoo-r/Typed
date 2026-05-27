@@ -41,10 +41,12 @@ ADT::Runtime::Object Strings::TrimRight(
     while (
         end > 0 &&
         (
-            ptr[end] == ' ' ||
-            ptr[end] == '\t' ||
-            ptr[end] == '\n' ||
-            ptr[end] == '\r'
+            std::isblank(ptr[end]) ||
+            std::iswblank(ptr[end]) ||
+            std::isspace(ptr[end]) ||
+            std::iswspace(ptr[end]) ||
+            std::iscntrl(ptr[end]) ||
+            std::iswcntrl(ptr[end])
         )
     )
     {

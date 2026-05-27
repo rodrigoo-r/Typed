@@ -41,10 +41,12 @@ ADT::Runtime::Object Strings::TrimLeft(
     while (
         start < size &&
         (
-            ptr[start] == ' ' ||
-            ptr[start] == '\t' ||
-            ptr[start] == '\n' ||
-            ptr[start] == '\r'
+            std::isblank(ptr[start]) ||
+            std::iswblank(ptr[start]) ||
+            std::isspace(ptr[start]) ||
+            std::iswspace(ptr[start]) ||
+            std::iscntrl(ptr[start]) ||
+            std::iswcntrl(ptr[start])
         )
     )
     {
