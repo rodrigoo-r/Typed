@@ -19,7 +19,7 @@
 
 #include "ADT/List/Object.h"
 
-#include "HyperbolicSine.h"
+#include "HyperbolicCosine.h"
 
 #include "Support/Math/Calculate.h"
 
@@ -27,7 +27,7 @@ using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::Math;
 
-ADT::Runtime::Object Math::HyperbolicSine(
+ADT::Runtime::Object Math::HyperbolicCosine(
     ADT::List::Object &args,
     ADT::Lang::AST *trace
 )
