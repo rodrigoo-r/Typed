@@ -14,32 +14,41 @@
 */
 
 //
-// Created by Rodrigo on 5/20/26.
+// Created by Rodrigo on 5/24/26.
 //
 
 #pragma once
-#include <Celery/Misc/Hash.h>
-#include <Celery/String/External.h>
 
+#include "ADT/Map/Procedure.h"
+#include "Cosine.h"
+#include "Sine.h"
 
-#include "ADT/Map/Dense.h"
-#include "Runtime/Dictionaries/Package.h"
-#include "Runtime/IO/Package.h"
-#include "Runtime/Lists/Package.h"
-#include "Runtime/Math/Package.h"
-#include "Runtime/Strings/Package.h"
-
-namespace Typed::Support::Runtime
+namespace Typed::Runtime::Math
 {
-    inline ADT::Map::Dense<
-        Celery::Str::External,
-        ADT::Map::Procedure,
-        Celery::Misc::Hash
-    > LibraryMap = {
-        {"IO", Typed::Runtime::IO::Package},
-        {"Lists", Typed::Runtime::Lists::Package},
-        {"Dictionaries", Typed::Runtime::Dictionaries::Package},
-        {"Strings", Typed::Runtime::Strings::Package},
-        {"Math", Typed::Runtime::Math::Package},
+    inline ADT::Map::Procedure Package = {
+        {
+            "Sine",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                true,
+                Sine
+            }
+        },
+        {
+            "Cosine",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                true,
+                Cosine
+            }
+        }
     };
 }

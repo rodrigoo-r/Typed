@@ -14,32 +14,15 @@
 */
 
 //
-// Created by Rodrigo on 5/20/26.
+// Created by Rodrigo on 5/27/26.
 //
 
 #pragma once
-#include <Celery/Misc/Hash.h>
-#include <Celery/String/External.h>
+#include "ADT/Lang/AST.h"
+#include "ADT/List/Object.h"
+#include "ADT/Runtime/Object.h"
 
-
-#include "ADT/Map/Dense.h"
-#include "Runtime/Dictionaries/Package.h"
-#include "Runtime/IO/Package.h"
-#include "Runtime/Lists/Package.h"
-#include "Runtime/Math/Package.h"
-#include "Runtime/Strings/Package.h"
-
-namespace Typed::Support::Runtime
+namespace Typed::Runtime::Math
 {
-    inline ADT::Map::Dense<
-        Celery::Str::External,
-        ADT::Map::Procedure,
-        Celery::Misc::Hash
-    > LibraryMap = {
-        {"IO", Typed::Runtime::IO::Package},
-        {"Lists", Typed::Runtime::Lists::Package},
-        {"Dictionaries", Typed::Runtime::Dictionaries::Package},
-        {"Strings", Typed::Runtime::Strings::Package},
-        {"Math", Typed::Runtime::Math::Package},
-    };
+    ADT::Runtime::Object Cosine(ADT::List::Object &, ADT::Lang::AST *);
 }
