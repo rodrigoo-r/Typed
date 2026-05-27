@@ -32,5 +32,5 @@ ADT::Runtime::Object Math::Sine(
     ADT::Lang::AST *trace
 )
 {
-    return Support::Math::Calculate(args, trace, std::tan);;
+    return Support::Math::Calculate(args, trace, std::sinf);
 }

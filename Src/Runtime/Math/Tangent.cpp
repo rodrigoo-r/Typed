@@ -34,5 +34,5 @@ ADT::Runtime::Object Math::Tangent(
     ADT::Lang::AST *trace
 )
 {
-    return Support::Math::Calculate(args, trace, std::tan);
+    return Support::Math::Calculate(args, trace, std::tanf);
 }
