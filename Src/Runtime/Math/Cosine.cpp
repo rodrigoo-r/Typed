@@ -21,7 +21,7 @@
 
 #include "Cosine.h"
 
-#include "ADT/Exception/MismatchedType.h"
+#include "Support/Math/Calculate.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -32,27 +32,5 @@ ADT::Runtime::Object Math::Cosine(
     ADT::Lang::AST *trace
 )
 {
-    auto &target = args[0];
-    if (target.type == ADT::Runtime::ObjectType::Float)
-    {
-        auto &val = Support::Runtime::GetFloatObj(target);
-        return {
-            ADT::Runtime::ObjectType::Float,
-            std::cos(val)
-        };
-    }
-
-    if (target.type == ADT::Runtime::ObjectType::Integer)
-    {
-        auto &val = Support::Runtime::GetIntObj(target);
-        return {
-            ADT::Runtime::ObjectType::Float,
-            std::cos(static_cast<float>(val))
-        };
-    }
-
-    throw ADT::Exception::MismatchedType(
-        trace->line,
-        trace->column
-    );
+    return Support::Math::Calculate(args, trace, std::tan);
 }

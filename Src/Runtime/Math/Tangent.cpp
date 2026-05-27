@@ -19,7 +19,9 @@
 
 #include "ADT/List/Object.h"
 
-#include "Sine.h"
+#include "Tangent.h"
+
+#include <complex>
 
 #include "Support/Math/Calculate.h"
 
@@ -27,10 +29,10 @@ using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::Math;
 
-ADT::Runtime::Object Math::Sine(
+ADT::Runtime::Object Math::Tangent(
     ADT::List::Object &args,
     ADT::Lang::AST *trace
 )
 {
-    return Support::Math::Calculate(args, trace, std::tan);;
+    return Support::Math::Calculate(args, trace, std::tan);
 }
