@@ -24,7 +24,6 @@
 #include "Support/Path/Join.h"
 #include "Support/Runtime/AccessString.h"
 #include "Support/Runtime/ConvertToString.h"
-#include "Support/Runtime/TypeChecker.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
