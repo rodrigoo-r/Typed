@@ -23,8 +23,10 @@
 #include "CreateFile.h"
 #include "Cwd.h"
 #include "FileExists.h"
+#include "IsAbsolute.h"
 #include "IsDirectory.h"
 #include "IsFile.h"
+#include "IsRelative.h"
 #include "IsSymLink.h"
 #include "ReadFile.h"
 #include "ToAbsolute.h"
@@ -79,6 +81,18 @@ namespace Typed::Runtime::FileSystem
             }
         },
         {
+            "Is_Absolute_Path",
+            {
+                {
+                    {"p", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Boolean,
+                false,
+                IsAbsolute
+            }
+        },
+        {
             "Is_Directory",
             {
                 {
@@ -100,6 +114,18 @@ namespace Typed::Runtime::FileSystem
                 ADT::Runtime::ObjectType::Boolean,
                 false,
                 IsFile
+            }
+        },
+        {
+            "Is_Relative_Path",
+            {
+                {
+                    {"p", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Boolean,
+                false,
+                IsRelative
             }
         },
         {
