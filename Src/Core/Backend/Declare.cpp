@@ -19,6 +19,7 @@
 
 #include "ADT/Exception/ExpectedInitialValue.h"
 #include "ADT/Exception/UnexpectedToken.h"
+#include "Support/Runtime/AccessString.h"
 #include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
 
@@ -70,10 +71,32 @@ void Walker::Declare(
         obj.value = ADT::Map::Object::Make();
         stack.Emplace(name, std::move(obj));
     }
+    else if (type == ADT::Lang::ASTType::Regex)
+    {
+        auto &value = body->children[2];
+        auto obj = Expression(stack, value);
+
+        Support::Runtime::TypeCheck(
+            ADT::Runtime::ObjectType::String,
+            obj.type,
+            body->line,
+            body->column
+        );
+
+        ADT::Regex::Ref regex;
+        auto str = Support::Runtime::AccessString(obj);
+        Celery::Str::String pattern{str.Ptr(), str.Size()};
+
+        regex.Build(pattern);
+        stack.Emplace(
+            name,
+            ADT::Runtime::ObjectType::Regex,
+            std::move(regex)
+        );
+    }
     else
     {
         auto &value = body->children[2];
-
         auto obj = Expression(stack, value);
 
         // Do type checking
@@ -84,11 +107,7 @@ void Walker::Declare(
                 ADT::Runtime::ObjectType::Integer :
             type == ADT::Lang::ASTType::Float ?
                 ADT::Runtime::ObjectType::Float :
-            type == ADT::Lang::ASTType::Boolean ?
-                ADT::Runtime::ObjectType::Boolean :
-            type == ADT::Lang::ASTType::List ?
-                ADT::Runtime::ObjectType::List :
-                ADT::Runtime::ObjectType::Dictionary,
+                ADT::Runtime::ObjectType::Boolean,
             obj.type,
             body->line,
             body->column
