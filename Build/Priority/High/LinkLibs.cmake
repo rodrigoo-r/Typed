@@ -19,6 +19,5 @@ target_link_libraries(
         CLI11::CLI11
         unordered_dense::unordered_dense
         magic_enum::magic_enum
-        absl
         re2
 )
