@@ -35,21 +35,12 @@ void Walker::Declare(
     // Note: redefining variables is allowed in Typed
     auto &name = body->children[0]->value;
     auto &type = body->children[1]->type;
+    bool has_init = body->children.Size() > 2;
 
     if (
-        (
-            // Lists and Dictionaries can't have init values
-            (
-                type == ADT::Lang::ASTType::List ||
-                type == ADT::Lang::ASTType::Dictionary
-            ) &&
-            body->children.Size() > 2
-        ) || (
-            // Other types must have init values
-            type != ADT::Lang::ASTType::List &&
-            type != ADT::Lang::ASTType::Dictionary &&
-            body->children.Size() == 2
-        )
+        type != ADT::Lang::ASTType::List &&
+        type != ADT::Lang::ASTType::Dictionary &&
+        has_init
     )
     {
         throw ADT::Exception::ExpectedInitialValue(
@@ -58,13 +49,13 @@ void Walker::Declare(
         );
     }
 
-    if (type == ADT::Lang::ASTType::List)
+    if (type == ADT::Lang::ASTType::List && !has_init)
     {
         ADT::Runtime::Object obj;
         obj.type = ADT::Runtime::ObjectType::List;
         obj.value = ADT::List::DynamicObject::Make();
         stack.Emplace(name, std::move(obj));
-    } else if (type == ADT::Lang::ASTType::Dictionary)
+    } else if (type == ADT::Lang::ASTType::Dictionary && !has_init)
     {
         ADT::Runtime::Object obj;
         obj.type = ADT::Runtime::ObjectType::Dictionary;
@@ -75,6 +66,13 @@ void Walker::Declare(
     {
         auto &value = body->children[2];
         auto obj = Expression(stack, value);
+
+        // Best case: if the object is already a regex
+        if (obj.type == ADT::Runtime::ObjectType::Regex)
+        {
+            stack.Emplace(name, std::move(obj));
+            return;
+        }
 
         Support::Runtime::TypeCheck(
             ADT::Runtime::ObjectType::String,
@@ -107,7 +105,11 @@ void Walker::Declare(
                 ADT::Runtime::ObjectType::Integer :
             type == ADT::Lang::ASTType::Float ?
                 ADT::Runtime::ObjectType::Float :
-                ADT::Runtime::ObjectType::Boolean,
+            type == ADT::Lang::ASTType::Boolean ?
+                ADT::Runtime::ObjectType::Boolean :
+            type == ADT::Lang::ASTType::List ?
+                ADT::Runtime::ObjectType::List :
+                ADT::Runtime::ObjectType::Dictionary,
             obj.type,
             body->line,
             body->column
