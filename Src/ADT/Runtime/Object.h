@@ -18,7 +18,6 @@
 //
 
 #pragma once
-#include <Celery/Array/Vector.h>
 #include <Celery/String/External.h>
 #include <Celery/String/String.h>
 
@@ -26,6 +25,7 @@
 #include "ADT/List/Object.h"
 #include "ADT/Map/Object.h"
 #include "ObjectType.h"
+#include "re2/re2.h"
 
 namespace Typed::ADT::Runtime
 {
@@ -41,6 +41,7 @@ namespace Typed::ADT::Runtime
                 Celery::Str::External,
                 List::DynamicObject,
                 Map::Object,
+                RE2,
 
                 // Only runtime-provided functions can
                 // return owned memory

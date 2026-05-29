@@ -88,6 +88,7 @@ namespace Typed::Support::Lang
         {"Integer", ADT::Lang::TokenType::Integer},
         {"Boolean", ADT::Lang::TokenType::Boolean},
         {"List", ADT::Lang::TokenType::List},
-        {"Dictionary", ADT::Lang::TokenType::Dictionary}
+        {"Dictionary", ADT::Lang::TokenType::Dictionary},
+        {"Regex", ADT::Lang::TokenType::Regex}
     };
 }

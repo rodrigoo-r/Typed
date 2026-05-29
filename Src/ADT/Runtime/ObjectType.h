@@ -33,6 +33,7 @@ namespace Typed::ADT::Runtime
         Integer,
         Boolean,
         List,
-        Dictionary
+        Dictionary,
+        Regex
     };
 }

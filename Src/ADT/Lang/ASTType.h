@@ -41,6 +41,7 @@ namespace Typed::ADT::Lang
         Boolean,
         List,
         Dictionary,
+        Regex,
 
         // Loops
         For,
