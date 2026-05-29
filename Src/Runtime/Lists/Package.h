@@ -61,7 +61,7 @@ namespace Typed::Runtime::Lists
                     {"l", ADT::Runtime::ObjectType::List}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::Void,
+                ADT::Runtime::ObjectType::Integer,
                 false,
                 Size
             }

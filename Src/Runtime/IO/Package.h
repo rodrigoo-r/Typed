@@ -23,7 +23,6 @@
 #include "Print.h"
 #include "PrintLine.h"
 #include "ReadLine.h"
-#include "Support/Printer/ASTPrinter.h"
 
 namespace Typed::Runtime::IO
 {
@@ -59,7 +58,7 @@ namespace Typed::Runtime::IO
             {
                 {},
                 nullptr,
-                ADT::Runtime::ObjectType::Void,
+                ADT::Runtime::ObjectType::OwnedString,
                 false,
                 ReadLine
             },
