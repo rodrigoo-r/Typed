@@ -24,6 +24,7 @@
 
 #include "ADT/Map/Dense.h"
 #include "Runtime/Dictionaries/Package.h"
+#include "Runtime/FileSystem/Package.h"
 #include "Runtime/IO/Package.h"
 #include "Runtime/Lists/Package.h"
 #include "Runtime/Math/Package.h"
@@ -41,5 +42,6 @@ namespace Typed::Support::Runtime
         {"Dictionaries", Typed::Runtime::Dictionaries::Package},
         {"Strings", Typed::Runtime::Strings::Package},
         {"Math", Typed::Runtime::Math::Package},
+        {"File_System", Typed::Runtime::FileSystem::Package},
     };
 }
