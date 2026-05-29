@@ -14,41 +14,42 @@
 */
 
 //
-// Created by Rodrigo on 5/19/26.
+// Created by Rodrigo on 5/29/26.
 //
 
 #pragma once
-#include <Celery/String/External.h>
 #include <Celery/String/String.h>
+#include <re2/re2.h>
 
+#include "ADT/Memory/HeapRef.h"
 
-#include "ADT/List/Object.h"
-#include "ADT/Map/Object.h"
-#include "ADT/Regex/Ref.h"
-#include "ObjectType.h"
-
-namespace Typed::ADT::Runtime
+namespace Typed::ADT::Regex
 {
-    struct Object
+    class Ref
     {
-        // A value can hold either of the 4
-        // primitives allowed
-        using Value =
-            std::variant<
-                int,
-                float,
-                bool,
-                Celery::Str::External,
-                List::DynamicObject,
-                Map::Object,
-                Regex::Ref,
+    public:
+        using Pattern =
+            RE2;
 
-                // Only runtime-provided functions can
-                // return owned memory
-                Celery::Str::String
-            >;
+        using PatternRef =
+            Memory::HeapRef<Pattern>;
 
-        ObjectType type;
-        Value value;
+    private:
+        PatternRef pattern;
+
+    public:
+        Ref()
+            : pattern(nullptr)
+        {}
+
+        void Build(Celery::Str::String &p)
+        {
+            pattern = PatternRef::Make(p.CStr());
+        }
+
+        auto &GetPattern()
+        {
+            return pattern;
+        }
     };
 }

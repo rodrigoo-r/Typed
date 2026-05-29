@@ -24,6 +24,7 @@
 
 #include "ADT/List/Object.h"
 #include "ADT/Map/Dense.h"
+#include "ADT/Regex/Ref.h"
 #include "Support/Hash/Object.h"
 
 namespace Typed::Support::Equality
@@ -36,12 +37,12 @@ namespace Typed::ADT::Map
     using Object =
         Memory::HeapRef<
             Dense<
-            Runtime::Object,
-            Runtime::Object,
-            Support::Hash::AgnosticObject<Runtime::Object>,
-            Support::Equality::Object
-        >
-    >;
+                Runtime::Object,
+                Runtime::Object,
+                Support::Hash::AgnosticObject<Runtime::Object>,
+                Support::Equality::Object
+            >
+        >;
 }
 
 namespace Typed::Support::Runtime
@@ -129,5 +130,15 @@ namespace Typed::Support::Runtime
     const auto &GetDictionaryObj(const auto &obj)
     {
         return GetObjValue<ADT::Map::Object>(obj);
+    }
+
+    auto &GetRegexObj(auto &obj)
+    {
+        return GetObjValue<ADT::Regex::Ref>(obj);
+    }
+
+    const auto &GetRegexObj(const auto &obj)
+    {
+        return GetObjValue<ADT::Regex::Ref>(obj);
     }
 }
