@@ -11,14 +11,6 @@
 #                                                     #
 #-----------------------------------------------------#
 
-# Link all libraries
-target_link_libraries(
-        ${PROJECT_NAME}
-        PRIVATE
-        Celery::Celery
-        CLI11::CLI11
-        unordered_dense::unordered_dense
-        magic_enum::magic_enum
-        absl
-        re2
-)
+set(ABSL_ENABLE_INSTALL OFF)
+set(RE2_BUILD_TESTING OFF)
+set(RE2_INSTALL OFF)
