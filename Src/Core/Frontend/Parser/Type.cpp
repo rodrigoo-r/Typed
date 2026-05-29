@@ -63,6 +63,11 @@ Machine::TreePtr Machine::Type()
             return AllocateBase(token, ADT::Lang::ASTType::Dictionary);
         }
 
+        case ADT::Lang::TokenType::Regex:
+        {
+            return AllocateBase(token, ADT::Lang::ASTType::Regex);
+        }
+
         default:
         {
             throw ADT::Exception::UnexpectedToken(
