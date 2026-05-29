@@ -27,6 +27,7 @@
 #include "IsFile.h"
 #include "IsSymLink.h"
 #include "ReadFile.h"
+#include "ToAbsolute.h"
 
 namespace Typed::Runtime::FileSystem
 {
@@ -117,7 +118,7 @@ namespace Typed::Runtime::FileSystem
             "Join_Path",
             {
                 {
-                    {"p", ADT::Runtime::ObjectType::String}
+                    {"p", ADT::Runtime::ObjectType::List}
                 },
                 nullptr,
                 ADT::Runtime::ObjectType::Boolean,
@@ -135,6 +136,18 @@ namespace Typed::Runtime::FileSystem
                 ADT::Runtime::ObjectType::OwnedString,
                 false,
                 ReadFile
+            }
+        },
+        {
+            "To_Absolute_Path",
+            {
+                {
+                    {"p", ADT::Runtime::ObjectType::List}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::OwnedString,
+                false,
+                ToAbsolute
             }
         }
     };

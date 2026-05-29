@@ -17,7 +17,7 @@
 // Created by Rodrigo on 5/29/26.
 //
 
-#include "JoinPath.h"
+#include "ToAbsolute.h"
 
 #include <filesystem>
 
@@ -30,14 +30,15 @@ using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::FileSystem;
 
-ADT::Runtime::Object FileSystem::JoinPath(
+ADT::Runtime::Object FileSystem::ToAbsolute(
     ADT::List::Object &args,
     ADT::Lang::AST *trace
 )
 {
     auto path = Support::Path::Join(args, trace);
+    auto abs = std::filesystem::absolute(path);
+    auto result_str = abs.string();
 
-    auto result_str = path.string();
     return {
         ADT::Runtime::ObjectType::String,
         Celery::Str::String{result_str.data(), result_str.size()}
