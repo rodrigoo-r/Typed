@@ -114,6 +114,18 @@ namespace Typed::Runtime::FileSystem
             }
         },
         {
+            "Join_Path",
+            {
+                {
+                    {"p", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Boolean,
+                false,
+                IsSymLink
+            }
+        },
+        {
             "Read_File",
             {
                 {
