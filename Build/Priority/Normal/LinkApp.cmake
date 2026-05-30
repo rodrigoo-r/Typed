@@ -11,23 +11,10 @@
 #                                                     #
 #-----------------------------------------------------#
 
-# Add an alias for the root directory of the project, which can be used
-# in the source code to include headers from the root directory without
-# using relative paths
-target_include_directories(
-        ${PROJECT_NAME}
-        PRIVATE
-        ${CMAKE_SOURCE_DIR}/Src
-)
-
-target_include_directories(
-        ${TEST_TARGET_NAME}
-        PRIVATE
-        ${CMAKE_SOURCE_DIR}/Src
-)
-
-target_include_directories(
+target_link_libraries(
         ${APP_TARGET_NAME}
         PRIVATE
-        ${CMAKE_SOURCE_DIR}/Src
+        ${PROJECT_NAME}
 )
+
+enable_testing()

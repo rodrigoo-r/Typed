@@ -51,6 +51,11 @@ FetchContent_Declare(
         GIT_TAG 2025-11-05
 )
 
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+
 # Fetch xxHash only if the platform is not Apple
 # For some weird reason, xxHash does not compile on macOS, so it's
 # better for macOS users to install it system-wide instead of using the bundled version
@@ -71,4 +76,5 @@ FetchContent_MakeAvailable(
         magic_enum
         absl
         re2
+        googletest
 )
