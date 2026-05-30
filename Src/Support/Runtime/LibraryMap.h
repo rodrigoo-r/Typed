@@ -28,6 +28,7 @@
 #include "Runtime/IO/Package.h"
 #include "Runtime/Lists/Package.h"
 #include "Runtime/Math/Package.h"
+#include "Runtime/RegexEngine/Package.h"
 #include "Runtime/Strings/Package.h"
 
 namespace Typed::Support::Runtime
@@ -43,5 +44,6 @@ namespace Typed::Support::Runtime
         {"Strings", Typed::Runtime::Strings::Package},
         {"Math", Typed::Runtime::Math::Package},
         {"File_System", Typed::Runtime::FileSystem::Package},
+        {"Regex_Engine", Typed::Runtime::RegexEngine::Package}
     };
 }
