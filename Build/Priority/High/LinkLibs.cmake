@@ -14,18 +14,9 @@
 # Link all libraries
 target_link_libraries(
         ${PROJECT_NAME}
-        PRIVATE
+        PUBLIC
         Celery::Celery
         CLI11::CLI11
-        unordered_dense::unordered_dense
-        magic_enum::magic_enum
-        re2
-)
-
-target_link_libraries(
-        ${TEST_TARGET_NAME}
-        PRIVATE
-        Celery::Celery
         unordered_dense::unordered_dense
         magic_enum::magic_enum
         re2
