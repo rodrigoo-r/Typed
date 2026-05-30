@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "ADT/Exception/Traceable.h"
 #include "ADT/Stream/File.h"
 
 namespace Typed::Support::Failable
@@ -28,6 +29,7 @@ namespace Typed::Support::Failable
         ADT::Stream::File &contents;
 
         void PrintMessage(const char *message);
+        void PrintConsiderations();
         void Fail(ADT::Exception::Traceable &traceable);
         void Fail(std::exception &except);
 
@@ -52,6 +54,7 @@ namespace Typed::Support::Failable
                 exit(1);
             } catch (std::exception &except)
             {
+                Fail(except);
                 exit(1);
             }
         }

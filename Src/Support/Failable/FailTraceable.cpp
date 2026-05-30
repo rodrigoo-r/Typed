@@ -27,6 +27,27 @@
 using namespace Typed;
 using namespace Typed::Support;
 
+void PrintSpaces(
+    Celery::Trait::VeryLarge line,
+    Celery::Trait::VeryLarge column
+)
+{
+    // Print spaces for the separator
+    Celery::Io::Print("  ");
+
+    // Print as many blank spaces as digits in the line
+    while (line > 0)
+    {
+        Celery::Io::Print(" ");
+        line /= 10;
+    }
+
+    for (auto i = 0; i < column; i++)
+    {
+        Celery::Io::Print(" ");
+    }
+}
+
 void Failable::Failable::Fail(
     ADT::Exception::Traceable &traceable
 )
@@ -59,7 +80,7 @@ void Failable::Failable::Fail(
     Celery::Io::Print(
         Celery::Misc::Ansi::White,
         traceable.line,
-        " | ",
+        " │ ",
         Celery::Misc::Ansi::Reset
     );
 
@@ -93,25 +114,19 @@ void Failable::Failable::Fail(
         Celery::Misc::Ansi::Reset
     );
 
-    // Print spaces for the separator
-    Celery::Io::Print("  ");
-
-    // Print as many blank spaces as digits in the line
-    auto line = traceable.line;
-    while (line > 0)
-    {
-        Celery::Io::Print(" ");
-        line /= 10;
-    }
-
-    for (auto i = 0; i < traceable.column; i++)
-    {
-        Celery::Io::Print(" ");
-    }
-
+    PrintSpaces(traceable.line, traceable.column);
     Celery::Io::Println(
         Celery::Misc::Ansi::Bright::Red,
         "^",
         Celery::Misc::Ansi::Reset
     );
+
+    PrintSpaces(traceable.line, traceable.column);
+    Celery::Io::Println(
+        Celery::Misc::Ansi::Bright::Red,
+        "here!",
+        Celery::Misc::Ansi::Reset
+    );
+
+    PrintConsiderations();
 }
