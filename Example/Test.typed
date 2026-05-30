@@ -1,13 +1,14 @@
 # Test Script
 # This is a comment
 
-#Use Regex; # Import the Regex library
 Use IO; # Import the IO library for printing
 Use Lists;
 Use Dictionaries;
 Use Strings;
+Use Math;
+Use File_System;
 # Available libraries:
-# - Regex
+# - Regex_Engine
 # - IO
 # - Math
 # - Strings
@@ -305,6 +306,49 @@ Begin
     With
         "Trimmed: '$S'",
         S
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "Replace: $S",
+        Call
+            String_To_Upper
+        With
+            "Hell. I will see you in Hell."
+        End_Call
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "Fmt: $S",
+        Call
+            String_Format
+        With
+            "Hello, $S!",
+            "World"
+        End_Call
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "Sine of 180: $F",
+        Call
+            Sine
+        With
+            180
+        End_Call
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "Cwd: $S",
+        Call
+            Process_Cwd
+        End_Call
     End_Call;
 
 End_Procedure
