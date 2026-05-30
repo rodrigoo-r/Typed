@@ -40,7 +40,7 @@ void Walker::Declare(
     if (
         type != ADT::Lang::ASTType::List &&
         type != ADT::Lang::ASTType::Dictionary &&
-        has_init
+        !has_init
     )
     {
         throw ADT::Exception::ExpectedInitialValue(
