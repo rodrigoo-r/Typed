@@ -31,13 +31,13 @@ void Machine::Flush()
     auto size = state.GetSize();
     auto ptr = contents.Ptr() + start;
     ADT::Lang::Token token{
-            {
-                state.GetLine(),
-                state.GetColumn()
-            },
-            Celery::Str::External{ptr, size},
-            ADT::Lang::TokenType::Add
-        };
+        {
+            state.GetTokenLine(),
+            state.GetTokenColumn()
+        },
+        Celery::Str::External{ptr, size},
+        ADT::Lang::TokenType::Add
+    };
 
     state.SetStart(contents.Pos());
     if (size == 0 && !state.IsStringLiteral())

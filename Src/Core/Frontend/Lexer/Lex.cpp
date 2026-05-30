@@ -27,7 +27,7 @@ using namespace Typed::Core::Frontend::Lexer;
 
 Machine::StreamRef Machine::Lex()
 {
-    // Clear the tokens stream
+    // Clear the token stream
     tokens.Clear();
 
     // Iterate over the contents
@@ -52,6 +52,10 @@ Machine::StreamRef Machine::Lex()
         if (state.GetSize() == 0)
         {
             state.SetStart(contents.Pos() - 1);
+            state.SetTokenPosition(
+                state.GetLine(),
+                state.GetColumn()
+            );
         }
 
         if (c == '"')
@@ -91,7 +95,13 @@ Machine::StreamRef Machine::Lex()
         )
         {
             Flush();
+
             state.SetStart(contents.Pos() - 1);
+            state.SetTokenPosition(
+                state.GetLine(),
+                state.GetColumn()
+            );
+
             state.AddSize();
             state.AddSize();
 
@@ -111,8 +121,15 @@ Machine::StreamRef Machine::Lex()
         )
         {
             Flush();
+
             state.SetStart(contents.Pos() - 1);
+            state.SetTokenPosition(
+                state.GetLine(),
+                state.GetColumn()
+            );
+
             state.AddSize();
+
             Flush();
             state.AddColumn();
 

@@ -31,6 +31,8 @@ namespace Typed::Core::Frontend::Lexer
         Celery::Trait::VeryLarge line = 1;
         Celery::Trait::VeryLarge column = 1;
         Celery::Trait::VeryLarge size = 0;
+        Celery::Trait::VeryLarge token_line = 1;
+        Celery::Trait::VeryLarge token_column = 1;
 
     public:
         void Reset()
@@ -126,6 +128,25 @@ namespace Typed::Core::Frontend::Lexer
         void ResetSize()
         {
             size = 0;
+        }
+        
+        void SetTokenPosition(
+            const Celery::Trait::VeryLarge& line,
+            const Celery::Trait::VeryLarge& column
+        )
+        {
+            token_line = line;
+            token_column = column;
+        }
+
+        [[nodiscard]] Celery::Trait::VeryLarge GetTokenLine() const
+        {
+            return token_line;
+        }
+
+        [[nodiscard]] Celery::Trait::VeryLarge GetTokenColumn() const
+        {
+            return token_column;
         }
     };
 }
