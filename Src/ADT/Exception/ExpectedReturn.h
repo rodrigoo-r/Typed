@@ -18,23 +18,24 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
 
-#include "ADT/Core/Traceable.h"
+#include "Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class ExpectedReturn :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         ExpectedReturn(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Expected a return statement"),
-            Traceable{line, column}
+            Traceable(
+                "Expected a return statement",
+                line,
+                column
+            )
         {}
     };
 }

@@ -21,8 +21,6 @@
 #include <Celery/Except/Base.h>
 #include <Celery/String/External.h>
 
-#include "ADT/Core/Traceable.h"
-
 namespace Typed::ADT::Exception
 {
     class UnknownLibrary :

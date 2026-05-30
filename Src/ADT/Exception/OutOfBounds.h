@@ -18,23 +18,23 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
-
-#include "ADT/Core/Traceable.h"
+#include "Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class OutOfBounds :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         OutOfBounds(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Index out of bounds"),
-            Traceable{line, column}
+            Traceable(
+                "Index out of bounds",
+                line,
+                column
+            )
         {}
     };
 }

@@ -18,23 +18,24 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
 
-#include "ADT/Core/Traceable.h"
+#include "Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class CouldNotOpenFile :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         CouldNotOpenFile(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Could not open file"),
-            Traceable{line, column}
+            Traceable(
+                "Could not open file",
+                line,
+                column
+            )
         {}
     };
 }

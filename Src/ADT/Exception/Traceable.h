@@ -14,28 +14,28 @@
 */
 
 //
-// Created by Rodrigo on 5/18/26.
+// Created by Rodrigo on 5/30/26.
 //
 
 #pragma once
+#include <Celery/Except/Base.h>
 
-#include "Traceable.h"
+#include "ADT/Core/Traceable.h"
 
 namespace Typed::ADT::Exception
 {
-    class CouldNotCreateDirectory :
-        public Traceable
+    class Traceable :
+        public Celery::Except::Exception,
+        public Core::Traceable
     {
     public:
-        CouldNotCreateDirectory(
+        Traceable(
+            const char *msg,
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Traceable(
-                "Could not create a directory",
-                line,
-                column
-            )
+            Exception(msg),
+            Core::Traceable{line, column}
         {}
     };
 }

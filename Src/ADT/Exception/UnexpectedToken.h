@@ -18,23 +18,24 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
 
-#include "ADT/Core/Traceable.h"
+#include "ADT/Exception/Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class UnexpectedToken :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         UnexpectedToken(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Unexpected token"),
-            Traceable{line, column}
+            Traceable(
+                "Unexpected token",
+                line,
+                column
+            )
         {}
     };
 }

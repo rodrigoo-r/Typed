@@ -18,23 +18,24 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
 
-#include "ADT/Core/Traceable.h"
+#include "Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class UnknownToken :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         UnknownToken(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Unknown token"),
-            Traceable{line, column}
+            Traceable(
+                "Unknown token",
+                line,
+                column
+            )
         {}
     };
 }

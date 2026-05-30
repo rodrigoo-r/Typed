@@ -18,23 +18,24 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
 
-#include "ADT/Core/Traceable.h"
+#include "ADT/Exception/Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class MismatchedArgCount :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         MismatchedArgCount(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Mismatched argument count"),
-            Traceable{line, column}
+            Traceable(
+                "Mismatched argument count",
+                line,
+                column
+            )
         {}
     };
 }

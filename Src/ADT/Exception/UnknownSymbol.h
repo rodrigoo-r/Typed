@@ -21,20 +21,23 @@
 #include <Celery/Except/Base.h>
 
 #include "ADT/Core/Traceable.h"
+#include "Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class UnknownSymbol :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         UnknownSymbol(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Unknown symbol"),
-            Traceable{line, column}
+            Traceable(
+                "Unknown symbol",
+                line,
+                column
+            )
         {}
     };
 }

@@ -25,6 +25,7 @@
 #include "Core/Frontend/Lexer/Lexer.h"
 #include "Core/Frontend/Parser/Parser.h"
 #include "Core/MiddleEnd/PreWalker.h"
+#include "Support/Failable/Failable.h"
 #include "Support/File/Reader.h"
 
 using namespace Typed;
@@ -36,16 +37,30 @@ void Subcommand::Run(const std::string &input)
     reader.SetPath({input.data(), input.size()});
 
     auto contents = reader.Read();
+    Support::Failable::Failable failable(contents);
+
     Core::Frontend::Lexer::Machine lexer(contents);
-    auto &tokens = lexer.Lex();
+    auto &tokens = failable.Try(
+        &Core::Frontend::Lexer::Machine::Lex,
+        lexer
+    );
 
     Core::Frontend::Parser::Machine parser(tokens);
-    auto root = parser.Parse();
+    auto root = failable.Try(
+        &Core::Frontend::Parser::Machine::Parse,
+        parser
+    );
 
     Core::MiddleEnd::PreWalker pre_walker(root);
-    auto &file = pre_walker.Process();
+    auto &file = failable.Try(
+        &Core::MiddleEnd::PreWalker::Process,
+        pre_walker
+    );
 
     // Run the code
     Core::Backend::Walker walker(file);
-    walker.Walk();
+    failable.Try(
+        &Core::Backend::Walker::Walk,
+        walker
+    );
 }

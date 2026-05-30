@@ -18,23 +18,23 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
-
-#include "ADT/Core/Traceable.h"
+#include "Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class MismatchedType :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         MismatchedType(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Mismatched types"),
-            Traceable{line, column}
+            Traceable(
+                "Mismatched types",
+                line,
+                column
+            )
         {}
     };
 }

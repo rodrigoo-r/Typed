@@ -20,8 +20,6 @@
 #pragma once
 #include <Celery/Except/Base.h>
 
-#include "ADT/Core/Traceable.h"
-
 namespace Typed::ADT::Exception
 {
     class UnknownEntryPoint :

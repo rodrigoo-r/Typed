@@ -18,23 +18,22 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
-
-#include "ADT/Core/Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class UnterminatedString :
-        public Celery::Except::Exception,
-        public Core::Traceable
+        public Traceable
     {
     public:
         UnterminatedString(
             Celery::Trait::VeryLarge line,
             Celery::Trait::VeryLarge column
         ) :
-            Exception("Unterminated string literal"),
-            Traceable{line, column}
+            Traceable(
+                "Unterminated string literal",
+                line,
+                column
+            )
         {}
     };
 }
