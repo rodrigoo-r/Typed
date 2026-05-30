@@ -14,23 +14,15 @@
 */
 
 //
-// Created by Rodrigo on 5/27/26.
+// Created by Rodrigo on 5/30/26.
 //
 
+#pragma once
+#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
+#include "ADT/Runtime/Object.h"
 
-#include "Cosine.h"
-
-#include "Support/Math/Calculate.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::Math;
-
-ADT::Runtime::Object Math::Cosine(
-    ADT::List::Object &args,
-    ADT::Lang::AST *trace
-)
+namespace Typed::Runtime::Math
 {
-    return Support::Math::Calculate(args, trace, std::cosf);
+    ADT::Runtime::Object HyperbolicCosineDegrees(ADT::List::Object &, ADT::Lang::AST *);
 }

@@ -14,23 +14,25 @@
 */
 
 //
-// Created by Rodrigo on 5/27/26.
+// Created by Rodrigo on 5/30/26.
 //
 
 #include "ADT/List/Object.h"
 
-#include "HyperbolicSine.h"
+#include "HyperbolicTangentDegrees.h"
 
-#include "Support/Math/Calculate.h"
+#include <complex>
+
+#include "Support/Math/CalculateDegrees.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
 using namespace Typed::Runtime::Math;
 
-ADT::Runtime::Object Math::HyperbolicSine(
+ADT::Runtime::Object Math::HyperbolicTangentDegrees(
     ADT::List::Object &args,
     ADT::Lang::AST *trace
 )
 {
-    return Support::Math::Calculate(args, trace, std::sinhf);
+    return Support::Math::CalculateDegrees(args, trace, std::tanhf);
 }

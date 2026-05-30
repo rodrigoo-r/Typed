@@ -24,5 +24,5 @@
 
 namespace Typed::Runtime::Math
 {
-    ADT::Runtime::Object HyperbolicSine(ADT::List::Object &, ADT::Lang::AST *);
+    ADT::Runtime::Object HyperbolicSineRadians(ADT::List::Object &, ADT::Lang::AST *);
 }

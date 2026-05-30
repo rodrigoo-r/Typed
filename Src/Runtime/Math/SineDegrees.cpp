@@ -14,15 +14,23 @@
 */
 
 //
-// Created by Rodrigo on 5/27/26.
+// Created by Rodrigo on 5/30/26.
 //
 
-#pragma once
-#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
-#include "ADT/Runtime/Object.h"
 
-namespace Typed::Runtime::Math
+#include "SineDegrees.h"
+
+#include "Support/Math/CalculateDegrees.h"
+
+using namespace Typed;
+using namespace Typed::Runtime;
+using namespace Typed::Runtime::Math;
+
+ADT::Runtime::Object Math::SineDegrees(
+    ADT::List::Object &args,
+    ADT::Lang::AST *trace
+)
 {
-    ADT::Runtime::Object Tangent(ADT::List::Object &, ADT::Lang::AST *);
+    return Support::Math::CalculateDegrees(args, trace, std::sinf);
 }

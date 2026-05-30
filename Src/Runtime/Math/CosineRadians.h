@@ -24,5 +24,5 @@
 
 namespace Typed::Runtime::Math
 {
-    ADT::Runtime::Object HyperbolicTangent(ADT::List::Object &, ADT::Lang::AST *);
+    ADT::Runtime::Object CosineRadians(ADT::List::Object &, ADT::Lang::AST *);
 }

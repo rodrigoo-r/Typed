@@ -14,25 +14,15 @@
 */
 
 //
-// Created by Rodrigo on 5/27/26.
+// Created by Rodrigo on 5/30/26.
 //
 
+#pragma once
+#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
+#include "ADT/Runtime/Object.h"
 
-#include "HyperbolicTangent.h"
-
-#include <complex>
-
-#include "Support/Math/Calculate.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::Math;
-
-ADT::Runtime::Object Math::HyperbolicTangent(
-    ADT::List::Object &args,
-    ADT::Lang::AST *trace
-)
+namespace Typed::Runtime::Math
 {
-    return Support::Math::Calculate(args, trace, std::tanhf);
+    ADT::Runtime::Object RadiansToDegrees(ADT::List::Object &, ADT::Lang::AST *);
 }

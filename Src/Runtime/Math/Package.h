@@ -20,18 +20,25 @@
 #pragma once
 
 #include "ADT/Map/Procedure.h"
-#include "Cosine.h"
-#include "HyperbolicCosine.h"
-#include "HyperbolicSine.h"
-#include "HyperbolicTangent.h"
-#include "Sine.h"
-#include "Tangent.h"
+#include "CosineDegrees.h"
+#include "CosineRadians.h"
+#include "HyperbolicCosineDegrees.h"
+#include "HyperbolicCosineRadians.h"
+#include "HyperbolicSineDegrees.h"
+#include "HyperbolicSineRadians.h"
+#include "HyperbolicTangentDegrees.h"
+#include "HyperbolicTangentRadians.h"
+#include "RadiansToDegrees.h"
+#include "SineDegrees.h"
+#include "SineRadians.h"
+#include "TangentDegrees.h"
+#include "TangentRadians.h"
 
 namespace Typed::Runtime::Math
 {
     inline ADT::Map::Procedure Package = {
         {
-            "Sine",
+            "Sine_Radians",
             {
                 {
                     {"l", ADT::Runtime::ObjectType::Any}
@@ -39,11 +46,11 @@ namespace Typed::Runtime::Math
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
                 false,
-                Sine
+                SineRadians
             }
         },
         {
-            "Cosine",
+            "Cosine_Radians",
             {
                 {
                     {"l", ADT::Runtime::ObjectType::Any}
@@ -51,11 +58,11 @@ namespace Typed::Runtime::Math
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
                 false,
-                Cosine
+                CosineRadians
             }
         },
         {
-            "Tangent",
+            "Tangent_Radians",
             {
                 {
                     {"l", ADT::Runtime::ObjectType::Any}
@@ -63,11 +70,11 @@ namespace Typed::Runtime::Math
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
                 false,
-                Tangent
+                TangentRadians
             }
         },
         {
-            "Hyperbolic_Sine",
+            "Hyperbolic_Sine_Radians",
             {
                 {
                     {"l", ADT::Runtime::ObjectType::Any}
@@ -75,11 +82,11 @@ namespace Typed::Runtime::Math
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
                 false,
-                HyperbolicSine
+                HyperbolicSineRadians
             }
         },
         {
-            "Hyperbolic_Cosine",
+            "Hyperbolic_Cosine_Radians",
             {
                 {
                     {"l", ADT::Runtime::ObjectType::Any}
@@ -87,11 +94,11 @@ namespace Typed::Runtime::Math
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
                 false,
-                HyperbolicCosine
+                HyperbolicCosineRadians
             }
         },
         {
-            "Hyperbolic_Tangent",
+            "Hyperbolic_Tangent_Radians",
             {
                 {
                     {"l", ADT::Runtime::ObjectType::Any}
@@ -99,7 +106,91 @@ namespace Typed::Runtime::Math
                 nullptr,
                 ADT::Runtime::ObjectType::Float,
                 false,
-                HyperbolicTangent
+                HyperbolicTangentRadians
+            }
+        },
+        {
+            "Sine_Degrees",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                false,
+                SineDegrees
+            }
+        },
+        {
+            "Cosine_Degrees",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                false,
+                CosineDegrees
+            }
+        },
+        {
+            "Tangent_Degrees",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                false,
+                TangentDegrees
+            }
+        },
+        {
+            "Hyperbolic_Sine_Degrees",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                false,
+                HyperbolicSineDegrees
+            }
+        },
+        {
+            "Hyperbolic_Cosine_Degrees",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                false,
+                HyperbolicCosineDegrees
+            }
+        },
+        {
+            "Hyperbolic_Tangent_Degrees",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                false,
+                HyperbolicTangentDegrees
+            }
+        },
+        {
+            "Radians_To_Degrees",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::Any}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Float,
+                false,
+                RadiansToDegrees
             }
         }
     };

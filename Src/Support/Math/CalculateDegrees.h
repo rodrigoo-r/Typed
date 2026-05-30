@@ -14,17 +14,27 @@
 */
 
 //
-// Created by Rodrigo on 5/27/26.
+// Created by Rodrigo on 5/30/26.
 //
 
 #pragma once
-#include "ADT/Exception/MismatchedType.h"
 #include "ADT/Lang/AST.h"
 #include "ADT/Runtime/Object.h"
+#include "Calculate.h"
 
 namespace Typed::Support::Math
 {
-    inline ADT::Runtime::Object Calculate(
+    inline float RadiansToDegrees(const float radians)
+    {
+        return static_cast<float>(radians * (180 / M_PI));
+    }
+
+    inline float RadiansToDegrees(const int radians)
+    {
+        return RadiansToDegrees(static_cast<float>(radians));
+    }
+
+    inline ADT::Runtime::Object CalculateDegrees(
         ADT::List::Object &args,
         ADT::Lang::AST *trace,
         float (*func)(float)
@@ -34,24 +44,20 @@ namespace Typed::Support::Math
         if (target.type == ADT::Runtime::ObjectType::Float)
         {
             auto &val = Runtime::GetFloatObj(target);
-            return {
-                ADT::Runtime::ObjectType::Float,
-                func(val)
-            };
+
+            // Convert to degrees
+            val = RadiansToDegrees(val);
         }
 
         if (target.type == ADT::Runtime::ObjectType::Integer)
         {
             auto &val = Runtime::GetIntObj(target);
-            return {
-                ADT::Runtime::ObjectType::Float,
-                func(static_cast<float>(val))
-            };
+
+            // Convert to degrees
+            args[0].type = ADT::Runtime::ObjectType::Float;
+            args[0].value = RadiansToDegrees(val);
         }
 
-        throw ADT::Exception::MismatchedType(
-            trace->line,
-            trace->column
-        );
+        return Calculate(args, trace, func);
     }
 }

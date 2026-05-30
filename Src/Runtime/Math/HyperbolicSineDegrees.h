@@ -24,5 +24,5 @@
 
 namespace Typed::Runtime::Math
 {
-    ADT::Runtime::Object HyperbolicCosine(ADT::List::Object &, ADT::Lang::AST *);
+    ADT::Runtime::Object HyperbolicSineDegrees(ADT::List::Object &, ADT::Lang::AST *);
 }

@@ -17,12 +17,20 @@
 // Created by Rodrigo on 5/27/26.
 //
 
-#pragma once
-#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
-#include "ADT/Runtime/Object.h"
 
-namespace Typed::Runtime::Math
+#include "HyperbolicSineRadians.h"
+
+#include "Support/Math/Calculate.h"
+
+using namespace Typed;
+using namespace Typed::Runtime;
+using namespace Typed::Runtime::Math;
+
+ADT::Runtime::Object Math::HyperbolicSineRadians(
+    ADT::List::Object &args,
+    ADT::Lang::AST *trace
+)
 {
-    ADT::Runtime::Object Cosine(ADT::List::Object &, ADT::Lang::AST *);
+    return Support::Math::Calculate(args, trace, std::sinhf);
 }
