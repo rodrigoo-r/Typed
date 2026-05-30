@@ -334,11 +334,22 @@ Begin
     Call
         Print_Line
     With
-        "Sine of 180: $F",
+        "Sine (Radians) of 180: $F",
         Call
-            Sine
+            Sine_Radians
         With
             180
+        End_Call
+    End_Call;
+
+    Call
+        Print_Line
+    With
+        "Sine (Degrees) of 180: $F",
+        Call
+            Sine_Degrees
+        With
+            180.0
         End_Call
     End_Call;
 
