@@ -21,6 +21,7 @@
 #include <Celery/Except/Base.h>
 
 #include "ADT/Core/Traceable.h"
+#include "Support/Strconv/ParseFloat.h"
 
 namespace Typed::ADT::Exception
 {
