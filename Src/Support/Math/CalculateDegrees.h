@@ -26,7 +26,7 @@ namespace Typed::Support::Math
 {
     inline float RadiansToDegrees(const float radians)
     {
-        return static_cast<float>(radians * (180 / M_PI));
+        return static_cast<float>(radians * (M_PI / 180.0));
     }
 
     inline float RadiansToDegrees(const int radians)
