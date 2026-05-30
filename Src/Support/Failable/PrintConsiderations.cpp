@@ -19,7 +19,6 @@
 
 #include <Celery/Misc/Ansi.h>
 
-#include "ADT/Exception/Traceable.h"
 #include "Failable.h"
 #include "Support/Printer/ASTPrinter.h"
 
@@ -34,7 +33,7 @@ void Failable::Failable::PrintConsiderations()
         Celery::Misc::Ansi::Bold::Bright::Magenta,
         "note: ",
         Celery::Misc::Ansi::Reset,
-        "if you believe this is an error, please open an issue at:"
+        "if you believe this is a mistake, please open an issue at:"
     );
 
     Celery::Io::Println(
