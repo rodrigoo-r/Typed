@@ -27,6 +27,7 @@ namespace Typed::Support::Failable
     {
         ADT::Stream::File &contents;
 
+        void PrintMessage(const char *message);
         void Fail(ADT::Exception::Traceable &traceable);
         void Fail(std::exception &except);
 
