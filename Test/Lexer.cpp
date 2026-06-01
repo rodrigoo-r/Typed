@@ -42,15 +42,9 @@ namespace
         Celery::Trait::VeryLarge column;
     };
 
-    Typed::ADT::Stream::File MakeInput(std::string_view source)
+    Typed::ADT::Stream::FileView MakeInput(std::string_view source)
     {
-        Typed::ADT::Stream::File input;
-        for (auto c : source)
-        {
-            input.PushBack(c);
-        }
-
-        return input;
+        return {source.data(), source.size()};
     }
 
     std::string TokenValue(const Celery::Str::External &value)
