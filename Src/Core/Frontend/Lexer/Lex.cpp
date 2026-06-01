@@ -60,6 +60,15 @@ Machine::StreamRef Machine::Lex()
 
         if (c == '"')
         {
+            if (state.IsEscape())
+            {
+                state.AddColumn();
+                state.AddSize();
+                state.ToggleEscape();
+
+                continue;
+            }
+
             if (state.IsStringLiteral())
             {
                 Flush();
@@ -73,6 +82,12 @@ Machine::StreamRef Machine::Lex()
                 state.ResetSize();
             }
 
+            continue;
+        }
+
+        if (c == '\\' && state.IsStringLiteral())
+        {
+            state.ToggleEscape();
             continue;
         }
 
@@ -154,13 +169,24 @@ Machine::StreamRef Machine::Lex()
         if (
             state.GetSize() == 0 &&
             (
-                (c >= 'a' && c <= 'z') ||
-                c == '_' ||
-                (c >= 'A' && c <= 'Z')
+                std::isalpha(c) ||
+                c == '_'
             )
         )
         {
             state.ToggleIdentifier();
+        }
+
+        else if (
+            state.IsIdentifier() &&
+            !std::isalnum(c) &&
+            c != '_'
+        )
+        {
+            throw ADT::Exception::UnknownToken(
+                state.GetLine(),
+                state.GetColumn()
+            );
         }
 
         else if (
