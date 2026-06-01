@@ -19,10 +19,17 @@
 
 #pragma once
 
+#include <Celery/Array/External.h>
 #include <Celery/Array/Stream.h>
 
 namespace Typed::ADT::Stream
 {
+    using FileView =
+        Celery::Array::Pmr::Stream<
+            char,
+            Celery::Array::External<char>
+        >;
+
     using File =
         Celery::Array::Stream<char>;
 }

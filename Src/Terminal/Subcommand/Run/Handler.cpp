@@ -39,7 +39,8 @@ void Subcommand::Run(const std::string &input)
     auto contents = reader.Read();
     Support::Failable::Failable failable(contents);
 
-    Core::Frontend::Lexer::Machine lexer(contents);
+    ADT::Stream::FileView view(contents.Ptr(), contents.Size());
+    Core::Frontend::Lexer::Machine lexer(view);
     auto &tokens = failable.Try(
         &Core::Frontend::Lexer::Machine::Lex,
         lexer
