@@ -19,20 +19,27 @@
 
 #pragma once
 
-namespace Typed::Core::Frontend::Lexer
+#include <Celery/Trait/Default.h>
+
+#include "EscapeType.h"
+
+namespace Typed::ADT::Lang
 {
-    class State
+    class LexerState
     {
         bool string_literal = false;
         bool number_literal = false;
         bool float_literal = false;
         bool identifier = false;
+        bool escape = false;
+        Celery::Trait::VeryLarge escape_size = 0;
         Celery::Trait::VeryLarge start = 0;
         Celery::Trait::VeryLarge line = 1;
         Celery::Trait::VeryLarge column = 1;
         Celery::Trait::VeryLarge size = 0;
         Celery::Trait::VeryLarge token_line = 1;
         Celery::Trait::VeryLarge token_column = 1;
+        EscapeType escape_type = EscapeType::NoEscape;
 
     public:
         void Reset()
@@ -41,6 +48,8 @@ namespace Typed::Core::Frontend::Lexer
             number_literal = false;
             float_literal = false;
             identifier = false;
+            escape_type = EscapeType::NoEscape;
+            escape_size = 0;
             size = 0;
         }
 
@@ -64,9 +73,20 @@ namespace Typed::Core::Frontend::Lexer
             return identifier;
         }
 
+        [[nodiscard]] bool IsEscape() const
+        {
+            return escape;
+        }
+
         void ToggleIdentifier()
         {
             identifier = !identifier;
+        }
+
+        void ToggleEscape()
+        {
+            escape = !escape;
+            escape_size = 0;
         }
 
         void ToggleStringLiteral()
@@ -89,6 +109,16 @@ namespace Typed::Core::Frontend::Lexer
             this->start = start;
         }
 
+        void SetEscapeType(const EscapeType &type)
+        {
+            escape_type = type;
+        }
+
+        [[nodiscard]] EscapeType GetEscapeType() const
+        {
+            return escape_type;
+        }
+
         [[nodiscard]] Celery::Trait::VeryLarge GetStart() const
         {
             return start;
@@ -109,6 +139,11 @@ namespace Typed::Core::Frontend::Lexer
             return size;
         }
 
+        [[nodiscard]] Celery::Trait::VeryLarge GetEscapeSize() const
+        {
+            return escape_size;
+        }
+
         void AddLine()
         {
             line++;
@@ -125,9 +160,9 @@ namespace Typed::Core::Frontend::Lexer
             size++;
         }
 
-        void ResetSize()
+        void AddEscapeSize()
         {
-            size = 0;
+            escape_size++;
         }
         
         void SetTokenPosition(
