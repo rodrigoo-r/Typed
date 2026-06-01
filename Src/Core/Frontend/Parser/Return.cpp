@@ -28,8 +28,7 @@ using namespace Typed::Core::Frontend::Parser;
 void Machine::Return(TreePtr parent)
 {
     // Allocate the return node
-    auto node = AllocateBase(
-        Support::Stream::SafePeek(tokens),
+    auto node = Allocate(
         ADT::Lang::ASTType::Return
     );
 
