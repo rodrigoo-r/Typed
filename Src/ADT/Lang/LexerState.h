@@ -144,6 +144,12 @@ namespace Typed::ADT::Lang
             return escape_size;
         }
 
+        void ResetSize()
+        {
+            size = 0;
+            escape_size = 0;
+        }
+
         void AddLine()
         {
             line++;
@@ -164,7 +170,7 @@ namespace Typed::ADT::Lang
         {
             escape_size++;
         }
-        
+
         void SetTokenPosition(
             const Celery::Trait::VeryLarge& line,
             const Celery::Trait::VeryLarge& column

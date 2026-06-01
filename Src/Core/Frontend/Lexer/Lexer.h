@@ -19,9 +19,9 @@
 
 #pragma once
 
+#include "ADT/Lang/LexerState.h"
 #include "ADT/Stream/File.h"
 #include "ADT/Stream/Token.h"
-#include "State.h"
 
 namespace Typed::Core::Frontend::Lexer
 {
@@ -29,7 +29,7 @@ namespace Typed::Core::Frontend::Lexer
     {
     protected:
         ADT::Stream::Token tokens;
-        State state;
+        ADT::Lang::LexerState state;
 
         void Flush();
         void Comment();

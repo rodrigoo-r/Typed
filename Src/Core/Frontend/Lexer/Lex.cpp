@@ -20,6 +20,7 @@
 #include "ADT/Exception/UnknownToken.h"
 #include "ADT/Exception/UnterminatedString.h"
 #include "Lexer.h"
+#include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed::Core;
 using namespace Typed::Core::Frontend;
@@ -34,6 +35,15 @@ Machine::StreamRef Machine::Lex()
     while (contents.HasNext())
     {
         auto c = contents.Next();
+
+        if (c == '\\' && state.IsStringLiteral())
+        {
+            state.ToggleEscape();
+            state.AddColumn();
+            state.AddSize();
+            continue;
+        }
+
         if (state.IsStringLiteral() && c != '"')
         {
             if (c == '\n')
@@ -58,17 +68,65 @@ Machine::StreamRef Machine::Lex()
             );
         }
 
-        if (c == '"')
+        if (state.IsEscape())
         {
-            if (state.IsEscape())
+            auto escape_type = state.GetEscapeType();
+            auto allowed_digits = -1;
+            if (
+                escape_type == ADT::Lang::EscapeType::NoEscape &&
+                state.GetEscapeSize() == 0
+            )
             {
+                if (c == 'x')
+                {
+                    state.SetEscapeType(ADT::Lang::EscapeType::Hex);
+                }
+                else if (c == 'u')
+                {
+                    state.SetEscapeType(ADT::Lang::EscapeType::LowerUnicode);
+                }
+                else if (c == 'U')
+                {
+                    state.SetEscapeType(ADT::Lang::EscapeType::UpperUnicode);
+                }
+                else
+                {
+                    allowed_digits = 2;
+                    state.ToggleEscape();
+                }
+            }
+            else if (escape_type == ADT::Lang::EscapeType::Hex)
+            {
+                state.AddEscapeSize();
+                allowed_digits = 2;
+            }
+            else if (escape_type == ADT::Lang::EscapeType::LowerUnicode)
+            {
+                state.AddEscapeSize();
+                allowed_digits = 4;
+            }
+            else if (escape_type == ADT::Lang::EscapeType::UpperUnicode)
+            {
+                state.AddEscapeSize();
+                allowed_digits = 8;
+            }
+
+            if (state.GetEscapeSize() >= allowed_digits)
+            {
+                state.ToggleEscape();
                 state.AddColumn();
                 state.AddSize();
-                state.ToggleEscape();
-
                 continue;
             }
 
+            // Normal escape sequence
+            state.AddColumn();
+            state.AddSize();
+            continue;
+        }
+
+        if (c == '"')
+        {
             if (state.IsStringLiteral())
             {
                 Flush();
@@ -82,12 +140,6 @@ Machine::StreamRef Machine::Lex()
                 state.ResetSize();
             }
 
-            continue;
-        }
-
-        if (c == '\\' && state.IsStringLiteral())
-        {
-            state.ToggleEscape();
             continue;
         }
 
