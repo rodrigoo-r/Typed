@@ -19,13 +19,13 @@
 
 #pragma once
 
+#include "ADT/Stream/File.h"
 #include "ADT/Stream/Token.h"
 #include "State.h"
 
 namespace Typed::Core::Frontend::Lexer
 {
-    class Machine :
-        public ADT::Core::Traceable
+    class Machine
     {
     protected:
         ADT::Stream::Token tokens;
@@ -36,7 +36,7 @@ namespace Typed::Core::Frontend::Lexer
 
     public:
         using EntryRef =
-            Celery::Array::Stream<char> &;
+            ADT::Stream::FileView &;
 
         using StreamRef =
             ADT::Stream::Token&;
