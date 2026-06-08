@@ -35,6 +35,7 @@
 #include "Trim.h"
 #include "TrimLeft.h"
 #include "TrimRight.h"
+#include "Unescape.h"
 
 namespace Typed::Runtime::Strings
 {
@@ -230,6 +231,18 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::String,
                 true,
                 Format
+            }
+        },
+        {
+            "String_Unescape",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                true,
+                Unescape
             }
         }
     };
