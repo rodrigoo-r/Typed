@@ -58,9 +58,14 @@ ADT::Runtime::Object Strings::Unescape(
         {
             std::string_view hex(str.Ptr() + i + 2, 2);
             int val;
-            auto [_, ec] = std::from_chars(hex.data(), hex.data() + hex.size(), val);
+            auto [_, ec] = std::from_chars(
+                hex.data(),
+                hex.data() + hex.size(),
+                val,
+                16
+            );
 
-            if (ec == std::errc{})
+            if (ec != std::errc())
             {
                 throw ADT::Exception::UnknownFormat(
                     trace->line,
