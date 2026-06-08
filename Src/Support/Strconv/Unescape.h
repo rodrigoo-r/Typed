@@ -23,7 +23,10 @@ namespace Typed::Support::Strconv
         return -1;
     }
 
-    Celery::Str::String Unescape(auto &str)
+    Celery::Str::String Unescape(
+        auto &str,
+        ADT::Lang::AST *trace
+    )
     {
         auto size = str.Size();
 
@@ -75,6 +78,14 @@ namespace Typed::Support::Strconv
 
             if (ptr + 1 >= end)
             {
+                if (trace != nullptr)
+                {
+                    throw ADT::Exception::TracedUnknownFormat(
+                        trace->line,
+                        trace->column
+                    );
+                }
+
                 throw ADT::Exception::UnknownFormat();
             }
 
@@ -91,6 +102,14 @@ namespace Typed::Support::Strconv
 
                 if (hi < 0 || lo < 0)
                 {
+                    if (trace != nullptr)
+                    {
+                        throw ADT::Exception::TracedUnknownFormat(
+                            trace->line,
+                            trace->column
+                        );
+                    }
+
                     throw ADT::Exception::UnknownFormat();
                 }
 
@@ -139,6 +158,14 @@ namespace Typed::Support::Strconv
                     break;
 
                 default:
+                    if (trace != nullptr)
+                    {
+                        throw ADT::Exception::TracedUnknownFormat(
+                            trace->line,
+                            trace->column
+                        );
+                    }
+
                     throw ADT::Exception::UnknownFormat();
             }
 

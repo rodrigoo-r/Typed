@@ -31,4 +31,16 @@ namespace Typed::ADT::Exception
             Exception("Unknown format")
         {}
     };
+
+    class TracedUnknownFormat :
+        public Traceable
+    {
+    public:
+        TracedUnknownFormat(
+            Celery::Trait::VeryLarge line,
+            Celery::Trait::VeryLarge column
+        ) :
+            Traceable("Unknown format", line, column)
+        {}
+    };
 }

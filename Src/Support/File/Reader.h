@@ -42,7 +42,7 @@ namespace Typed::Support::File
         [[nodiscard]] ADT::Stream::File Read() const
         {
             auto file = Celery::File::Read(path);
-            auto unescaped = Strconv::Unescape(file);
+            auto unescaped = Strconv::Unescape(file, nullptr);
 
             // Convert to a stream
             ADT::Stream::File result;
