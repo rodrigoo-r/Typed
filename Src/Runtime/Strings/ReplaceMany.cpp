@@ -23,6 +23,7 @@
 #include "FindIndex.h"
 #include "FindIndexes.h"
 #include "Support/Runtime/AccessString.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -30,7 +31,7 @@ using namespace Typed::Runtime::Strings;
 
 ADT::Runtime::Object Strings::ReplaceMany(
     ADT::List::Object &args,
-    ADT::Lang::AST *_
+    ADT::Lang::AST *trace
 )
 {
     ADT::List::Object find_indexes_arg;
@@ -38,15 +39,18 @@ ADT::Runtime::Object Strings::ReplaceMany(
     find_indexes_arg.EmplaceBack(args[1]);
     find_indexes_arg.EmplaceBack(args[3]);
 
-    auto res = FindIndexes(find_indexes_arg, _);
+    auto res = FindIndexes(find_indexes_arg, trace);
 
     auto &obj = args[0];
     auto &find_obj = args[1];
     auto &replacement_obj = args[2];
 
-    auto str = Support::Runtime::AccessString(obj);
-    auto find = Support::Runtime::AccessString(find_obj);
-    auto replacement = Support::Runtime::AccessString(replacement_obj);
+    auto str_normal = Support::Runtime::NormalizeObject(obj, trace);
+    auto str = Support::Runtime::AccessString(str_normal);
+    auto find_normal = Support::Runtime::NormalizeObject(find_obj, trace);
+    auto find = Support::Runtime::AccessString(find_normal);
+    auto replacement_normal = Support::Runtime::NormalizeObject(replacement_obj, trace);
+    auto replacement = Support::Runtime::AccessString(replacement_normal);
 
     auto &indexes = Support::Runtime::GetListObj(res);
 
@@ -93,7 +97,7 @@ ADT::Runtime::Object Strings::ReplaceMany(
     );
 
     return {
-        ADT::Runtime::ObjectType::OwnedString,
+        ADT::Runtime::ObjectType::String,
         std::move(result)
     };
 }

@@ -29,4 +29,12 @@ namespace Typed::Support::Stream
 
         return peek;
     }
+
+    auto &SafeNext(auto &adapter, auto &trace)
+    {
+        auto &peek = SafePeek(adapter, trace);
+        adapter.Next();
+
+        return peek;
+    }
 }

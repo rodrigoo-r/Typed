@@ -23,6 +23,7 @@
 
 #include "ADT/Exception/MismatchedType.h"
 #include "Support/Printer/ASTPrinter.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -52,7 +53,7 @@ ADT::Runtime::Object Lists::Add(
             );
         }
 
-        list->PushBack(arg);
+        list->PushBack(Support::Runtime::NormalizeObject(arg, trace));
     }
 
     return {};

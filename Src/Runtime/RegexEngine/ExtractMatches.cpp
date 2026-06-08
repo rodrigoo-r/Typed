@@ -23,6 +23,7 @@
 #include "Support/Runtime/AccessString.h"
 #include "Support/Runtime/ConvertToString.h"
 #include "Support/Runtime/GetObjValue.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -30,11 +31,12 @@ using namespace Typed::Runtime::RegexEngine;
 
 ADT::Runtime::Object RegexEngine::ExtractMatches(
     ADT::List::Object &args,
-    ADT::Lang::AST *_
+    ADT::Lang::AST *trace
 )
 {
     auto &regex_ref = Support::Runtime::GetRegexObj(args[0]);
-    auto source = Support::Runtime::AccessString(args[1]);
+    auto src_normalized = Support::Runtime::NormalizeObject(args[1], trace);
+    auto source = Support::Runtime::AccessString(src_normalized);
     auto &regex = regex_ref.GetPattern();
 
     auto std_view = std::string_view(source.Ptr(), source.Size());
@@ -44,7 +46,7 @@ ADT::Runtime::Object RegexEngine::ExtractMatches(
     while (RE2::FindAndConsume(&std_view, *regex, &match))
     {
         result->EmplaceBack(
-            ADT::Runtime::ObjectType::OwnedString,
+            ADT::Runtime::ObjectType::String,
             Celery::Str::String{match.data(), match.size()}
         );
     }

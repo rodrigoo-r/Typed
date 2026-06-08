@@ -48,10 +48,10 @@ ADT::Runtime::Object Strings::Access(
     }
 
     // Return an owned string if the original is owned
-    if (obj.type == ADT::Runtime::ObjectType::OwnedString)
+    if (obj.type == ADT::Runtime::ObjectType::String)
     {
         return {
-            ADT::Runtime::ObjectType::OwnedString,
+            ADT::Runtime::ObjectType::String,
             Celery::Str::String(
                 ptr + idx,
                 1

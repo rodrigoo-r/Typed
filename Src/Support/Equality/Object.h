@@ -38,11 +38,11 @@ namespace Typed::Support::Equality
         )
         {
             if (
-                lhs.type == ADT::Runtime::ObjectType::OwnedString
+                std::holds_alternative<Celery::Str::String>(lhs.value)
             )
             {
                 // Account for special cases
-                if (rhs.type == ADT::Runtime::ObjectType::OwnedString)
+                if (std::holds_alternative<Celery::Str::String>(rhs.value))
                 {
                     auto &left_str = Runtime::GetOwnedStrObj(lhs);
                     auto &right_str = Runtime::GetOwnedStrObj(rhs);
@@ -59,7 +59,7 @@ namespace Typed::Support::Equality
             )
             {
                 // Account for special cases
-                if (rhs.type == ADT::Runtime::ObjectType::OwnedString)
+                if (std::holds_alternative<Celery::Str::String>(rhs.value))
                 {
                     auto &left_str = Runtime::GetStrObj(lhs);
                     auto &right_str = Runtime::GetOwnedStrObj(rhs);

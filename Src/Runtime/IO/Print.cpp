@@ -24,6 +24,7 @@
 #include "Support/Format/Format.h"
 #include "Support/Printer/ASTPrinter.h"
 #include "Support/Runtime/AccessString.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -36,15 +37,14 @@ ADT::Runtime::Object IO::Print(
     ADT::Lang::AST *trace
 )
 {
-    auto &obj = args[0];
+    auto obj = Support::Runtime::NormalizeObject(args[0], trace);
     auto fmt = Support::Runtime::AccessString(obj);
 
     Support::Format::Format(
         fmt,
         args,
         out,
-        trace->line,
-        trace->column
+        trace
     );
 
     return {};

@@ -58,7 +58,7 @@ namespace Typed::Runtime::IO
             {
                 {},
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ReadLine
             },

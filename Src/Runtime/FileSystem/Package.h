@@ -63,7 +63,7 @@ namespace Typed::Runtime::FileSystem
             {
                 {},
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 Cwd
             }
@@ -159,7 +159,7 @@ namespace Typed::Runtime::FileSystem
                     {"p", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ReadFile
             }
@@ -171,7 +171,7 @@ namespace Typed::Runtime::FileSystem
                     {"p", ADT::Runtime::ObjectType::List}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ToAbsolute
             }

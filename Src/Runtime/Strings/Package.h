@@ -59,7 +59,7 @@ namespace Typed::Runtime::Strings
                     {"i", ADT::Runtime::ObjectType::Integer}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 Access
             }
@@ -72,7 +72,7 @@ namespace Typed::Runtime::Strings
                     {"s", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 Add
             }
@@ -84,7 +84,7 @@ namespace Typed::Runtime::Strings
                     {"s", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 TrimLeft
             }
@@ -96,7 +96,7 @@ namespace Typed::Runtime::Strings
                     {"s", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 TrimRight
             }
@@ -108,7 +108,7 @@ namespace Typed::Runtime::Strings
                     {"s", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 Trim
             }
@@ -162,7 +162,7 @@ namespace Typed::Runtime::Strings
                     {"t", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ReplaceOne
             }
@@ -177,7 +177,7 @@ namespace Typed::Runtime::Strings
                     {"m", ADT::Runtime::ObjectType::Integer}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ReplaceMany
             }
@@ -191,7 +191,7 @@ namespace Typed::Runtime::Strings
                     {"t", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ReplaceAll
             }
@@ -203,7 +203,7 @@ namespace Typed::Runtime::Strings
                     {"s", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ToLower
             }
@@ -215,7 +215,7 @@ namespace Typed::Runtime::Strings
                     {"s", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ToUpper
             }
@@ -227,7 +227,7 @@ namespace Typed::Runtime::Strings
                     {"s", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 true,
                 Format
             }

@@ -31,28 +31,31 @@
 #include "Integer.h"
 #include "List.h"
 #include "String.h"
+#include "Support/Runtime/NormalizeObject.h"
 #include "Support/Runtime/TypeChecker.h"
 
 using namespace Typed;
 using namespace Typed::Support;
 using namespace Typed::Support::Format;
 
-ADT::Runtime::Object &GetArg(
+ADT::Runtime::Object GetArg(
     ADT::List::Object &args,
     Celery::Trait::VeryLarge &idx,
-    Celery::Trait::VeryLarge &line,
-    Celery::Trait::VeryLarge &col
+    ADT::Lang::AST *trace
 )
 {
     // Make sure there are enough arguments
     if (args.Size() <= idx)
     {
-        throw ADT::Exception::MismatchedArgCount(line, col);
+        throw ADT::Exception::MismatchedArgCount(
+            trace->line,
+            trace->column
+        );
     }
 
     auto &obj = args[idx];
     idx++;
-    return obj;
+    return Support::Runtime::NormalizeObject(obj, trace);
 }
 
 template <typename Adapter>
@@ -60,8 +63,7 @@ void Format::Format(
     Celery::Str::External &fmt,
     ADT::List::Object &args,
     Adapter &adapter,
-    Celery::Trait::VeryLarge line,
-    Celery::Trait::VeryLarge col
+    ADT::Lang::AST *trace
 )
 {
     Celery::Trait::VeryLarge pos = 1;
@@ -81,8 +83,13 @@ void Format::Format(
             {
                 case 'S':
                 {
-                    auto &arg = GetArg(args, pos, line, col);
-                    Runtime::TypeCheck(ADT::Runtime::ObjectType::String, arg.type, line, col);
+                    auto arg = GetArg(args, pos, trace);
+                    Runtime::TypeCheck(
+                        ADT::Runtime::ObjectType::String,
+                        arg.type,
+                        trace->line,
+                        trace->column
+                    );
 
                     can_continue = false;
                     String(arg, adapter);
@@ -91,8 +98,13 @@ void Format::Format(
 
                 case 'F':
                 {
-                    auto &arg = GetArg(args, pos, line, col);
-                    Runtime::TypeCheck(ADT::Runtime::ObjectType::Float, arg.type, line, col);
+                    auto arg = GetArg(args, pos, trace);
+                    Runtime::TypeCheck(
+                        ADT::Runtime::ObjectType::Float,
+                        arg.type,
+                        trace->line,
+                        trace->column
+                    );
 
                     can_continue = false;
                     Float(arg, adapter);
@@ -101,8 +113,13 @@ void Format::Format(
 
                 case 'I':
                 {
-                    auto &arg = GetArg(args, pos, line, col);
-                    Runtime::TypeCheck(ADT::Runtime::ObjectType::Integer, arg.type, line, col);
+                    auto arg = GetArg(args, pos, trace);
+                    Runtime::TypeCheck(
+                        ADT::Runtime::ObjectType::Integer,
+                        arg.type,
+                        trace->line,
+                        trace->column
+                    );
 
                     can_continue = false;
                     Integer(arg, adapter);
@@ -111,8 +128,13 @@ void Format::Format(
 
                 case 'B':
                 {
-                    auto &arg = GetArg(args, pos, line, col);
-                    Runtime::TypeCheck(ADT::Runtime::ObjectType::Boolean, arg.type, line, col);
+                    auto arg = GetArg(args, pos, trace);
+                    Runtime::TypeCheck(
+                        ADT::Runtime::ObjectType::Boolean,
+                        arg.type,
+                        trace->line,
+                        trace->column
+                    );
 
                     can_continue = false;
                     Boolean(arg, adapter);
@@ -121,8 +143,13 @@ void Format::Format(
 
                 case 'L':
                 {
-                    auto &arg = GetArg(args, pos, line, col);
-                    Runtime::TypeCheck(ADT::Runtime::ObjectType::List, arg.type, line, col);
+                    auto arg = GetArg(args, pos, trace);
+                    Runtime::TypeCheck(
+                        ADT::Runtime::ObjectType::List,
+                        arg.type,
+                        trace->line,
+                        trace->column
+                    );
 
                     can_continue = false;
                     List(arg, adapter);
@@ -131,8 +158,13 @@ void Format::Format(
 
                 case 'D':
                 {
-                    auto &arg = GetArg(args, pos, line, col);
-                    Runtime::TypeCheck(ADT::Runtime::ObjectType::Dictionary, arg.type, line, col);
+                    auto arg = GetArg(args, pos, trace);
+                    Runtime::TypeCheck(
+                        ADT::Runtime::ObjectType::Dictionary,
+                        arg.type,
+                        trace->line,
+                        trace->column
+                    );
 
                     can_continue = false;
                     Dictionary(arg, adapter);
@@ -161,8 +193,7 @@ void Format::Format(
     Celery::Str::External &fmt,
     ADT::List::Object &args,
     Celery::Str::String &adapter,
-    Celery::Trait::VeryLarge line,
-    Celery::Trait::VeryLarge col
+    ADT::Lang::AST *trace
 );
 
 template
@@ -170,6 +201,5 @@ void Format::Format(
     Celery::Str::External &fmt,
     ADT::List::Object &args,
     ADT::Stdout::Wrapper &adapter,
-    Celery::Trait::VeryLarge line,
-    Celery::Trait::VeryLarge col
+    ADT::Lang::AST *trace
 );

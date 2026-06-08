@@ -77,7 +77,7 @@ namespace Typed::Runtime::RegexEngine
                     {"t", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ReplaceAll
             }
@@ -91,7 +91,7 @@ namespace Typed::Runtime::RegexEngine
                     {"t", ADT::Runtime::ObjectType::String}
                 },
                 nullptr,
-                ADT::Runtime::ObjectType::OwnedString,
+                ADT::Runtime::ObjectType::String,
                 false,
                 ReplaceOne
             }

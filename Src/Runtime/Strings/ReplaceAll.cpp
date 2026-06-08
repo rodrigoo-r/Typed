@@ -23,6 +23,7 @@
 #include "FindIndex.h"
 #include "ReplaceMany.h"
 #include "Support/Runtime/AccessString.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -30,14 +31,15 @@ using namespace Typed::Runtime::Strings;
 
 ADT::Runtime::Object Strings::ReplaceAll(
     ADT::List::Object &args,
-    ADT::Lang::AST *_
+    ADT::Lang::AST *trace
 )
 {
-    auto str = Support::Runtime::AccessString(args[0]);
+    auto str_normal = Support::Runtime::NormalizeObject(args[0], trace);
+    auto str = Support::Runtime::AccessString(str_normal);
     args.EmplaceBack(
         ADT::Runtime::ObjectType::Integer,
         (int)str.Size()
     );
 
-    return ReplaceMany(args, _);
+    return ReplaceMany(args, trace);
 }

@@ -26,7 +26,7 @@ namespace Typed::Support::Runtime
 {
     inline Celery::Str::External AccessString(ADT::Runtime::Object &obj)
     {
-        if (obj.type == ADT::Runtime::ObjectType::String)
+        if (std::holds_alternative<Celery::Str::External>(obj.value))
             return GetStrObj(obj);
 
         auto &str = GetOwnedStrObj(obj);

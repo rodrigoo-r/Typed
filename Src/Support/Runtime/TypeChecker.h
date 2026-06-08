@@ -15,15 +15,6 @@ namespace Typed::Support::Runtime
         Celery::Trait::VeryLarge column
     )
     {
-        // Special case for strings and owned strings
-        if (
-            expected == ADT::Runtime::ObjectType::String &&
-            (
-                actual == ADT::Runtime::ObjectType::String ||
-                actual == ADT::Runtime::ObjectType::OwnedString
-            )
-        ) return;
-
         // Find the expected type
         if (
             expected != actual &&

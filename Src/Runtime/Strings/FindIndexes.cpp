@@ -22,6 +22,7 @@
 #include "FindIndexes.h"
 
 #include "Support/Runtime/AccessString.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -29,11 +30,11 @@ using namespace Typed::Runtime::Strings;
 
 ADT::Runtime::Object Strings::FindIndexes(
     ADT::List::Object &args,
-    ADT::Lang::AST *_
+    ADT::Lang::AST *trace
 )
 {
     auto &obj = args[0];
-    auto &target_obj = args[1];
+    auto target_obj = Support::Runtime::NormalizeObject(args[1], trace);
     auto &max_match_obj = args[2];
 
     auto str = Support::Runtime::AccessString(obj);

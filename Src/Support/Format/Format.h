@@ -18,8 +18,8 @@
 //
 
 #pragma once
-#include <Celery/String/String.h>
 
+#include "ADT/Lang/AST.h"
 #include "ADT/List/Object.h"
 
 namespace Typed::Support::Format
@@ -29,7 +29,6 @@ namespace Typed::Support::Format
         Celery::Str::External &fmt,
         ADT::List::Object &args,
         Adapter &adapter,
-        Celery::Trait::VeryLarge line,
-        Celery::Trait::VeryLarge col
+        ADT::Lang::AST *trace
     );
 }

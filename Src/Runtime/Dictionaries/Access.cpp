@@ -22,6 +22,7 @@
 #include "ADT/Exception/UnknownElement.h"
 #include "ADT/Lang/AST.h"
 #include "ADT/Runtime/Object.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -44,5 +45,5 @@ ADT::Runtime::Object Dictionaries::Access(
         );
     }
 
-    return it->second;
+    return Support::Runtime::NormalizeObject(it->second, trace);
 }

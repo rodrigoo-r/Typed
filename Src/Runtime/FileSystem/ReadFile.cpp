@@ -61,7 +61,7 @@ ADT::Runtime::Object FileSystem::ReadFile(
     file.close();
 
     return {
-        ADT::Runtime::ObjectType::OwnedString,
+        ADT::Runtime::ObjectType::String,
         std::move(result)
     };
 }

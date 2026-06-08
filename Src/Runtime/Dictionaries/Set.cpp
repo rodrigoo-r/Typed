@@ -21,6 +21,8 @@
 
 #include "ADT/Lang/AST.h"
 #include "ADT/Runtime/Object.h"
+#include "Runtime/Strings/Unescape.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -35,6 +37,10 @@ ADT::Runtime::Object Dictionaries::Set(
     auto &key = args[1];
     auto &val = args[2];
 
-    dict->emplace(key, val);
+    dict->emplace(
+        Support::Runtime::NormalizeObject(key, trace),
+        val
+    );
+
     return {};
 }

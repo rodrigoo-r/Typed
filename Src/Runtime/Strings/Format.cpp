@@ -40,12 +40,11 @@ ADT::Runtime::Object Strings::Format(
         str,
         args,
         result,
-        trace->line,
-        trace->column
+        trace
     );
 
     return {
-        ADT::Runtime::ObjectType::OwnedString,
+        ADT::Runtime::ObjectType::String,
         std::move(result)
     };
 }

@@ -22,6 +22,7 @@
 
 #include "FindIndex.h"
 #include "Support/Runtime/AccessString.h"
+#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -29,10 +30,10 @@ using namespace Typed::Runtime::Strings;
 
 ADT::Runtime::Object Strings::ToLower(
     ADT::List::Object &args,
-    ADT::Lang::AST *_
+    ADT::Lang::AST *trace
 )
 {
-    auto &obj = args[0];
+    auto obj = Support::Runtime::NormalizeObject(args[0], trace);
     auto str = Support::Runtime::AccessString(obj);
     Celery::Str::String result;
 
@@ -47,7 +48,7 @@ ADT::Runtime::Object Strings::ToLower(
     }
 
     return {
-        ADT::Runtime::ObjectType::OwnedString,
+        ADT::Runtime::ObjectType::String,
         std::move(result)
     };
 }

@@ -14,34 +14,28 @@
 */
 
 //
-// Created by Rodrigo on 5/27/26.
+// Created by Rodrigo on 5/18/26.
 //
 
-#include "Cwd.h"
+#pragma once
 
-#include <filesystem>
+#include "Traceable.h"
 
-#include "ADT/Exception/CouldNotOpenFile.h"
-#include "Support/Runtime/AccessString.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::FileSystem;
-
-ADT::Runtime::Object FileSystem::Cwd(
-    ADT::List::Object &_,
-    ADT::Lang::AST *__
-)
+namespace Typed::ADT::Exception
 {
-    auto cwd = std::filesystem::current_path();;
-    auto str = cwd.string();
-
-    return {
-        ADT::Runtime::ObjectType::String,
-        Celery::Str::String(
-            str.data(),
-            str.size()
-        )
+    class UnknownFormat :
+        public Traceable
+    {
+    public:
+        UnknownFormat(
+            Celery::Trait::VeryLarge line,
+            Celery::Trait::VeryLarge column
+        ) :
+            Traceable(
+                "Unknown format",
+                line,
+                column
+            )
+        {}
     };
-
 }

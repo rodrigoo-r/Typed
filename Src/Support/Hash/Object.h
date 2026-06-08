@@ -50,7 +50,13 @@ namespace Typed::Support::Hash
 
                 case ADT::Runtime::ObjectType::String:
                 {
-                    auto &str_val = std::get<Celery::Str::External>(obj.value);
+                    if (std::holds_alternative<Celery::Str::External>(obj.value))
+                    {
+                        auto &str_val = std::get<Celery::Str::External>(obj.value);
+                        return XXH3_64bits(str_val.Ptr(), str_val.Size());
+                    }
+
+                    auto &str_val = std::get<Celery::Str::String>(obj.value);
                     return XXH3_64bits(str_val.Ptr(), str_val.Size());
                 }
 
@@ -59,13 +65,6 @@ namespace Typed::Support::Hash
                     auto &bool_val = std::get<bool>(obj.value);
                     return XXH3_64bits(&bool_val, sizeof(bool));
                 }
-
-                case ADT::Runtime::ObjectType::OwnedString:
-                {
-                    auto &str_val = std::get<Celery::Str::String>(obj.value);
-                    return XXH3_64bits(str_val.Ptr(), str_val.Size());
-                }
-
                 default:
                 {
                     return XXH3_64bits(

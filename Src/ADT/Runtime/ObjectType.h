@@ -26,7 +26,6 @@ namespace Typed::ADT::Runtime
         // Reserved for native types
         Void,
         Any,
-        OwnedString,
 
         String,
         Float,

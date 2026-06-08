@@ -38,9 +38,8 @@ ADT::Runtime::Object Strings::Add(
     char *ptr = target.Ptr();
     Celery::Trait::VeryLarge size = target.Size();
 
-    if (obj.type != ADT::Runtime::ObjectType::OwnedString)
+    if (!std::holds_alternative<Celery::Str::String>(obj.value))
     {
-        obj.type = ADT::Runtime::ObjectType::OwnedString;
         obj.value = Celery::Str::String(ptr, size);
     }
 

@@ -73,7 +73,7 @@ ADT::Runtime::Object Strings::TrimRight(
 
     // Otherwise, return an owned string
     return {
-        ADT::Runtime::ObjectType::OwnedString,
+        ADT::Runtime::ObjectType::String,
         Celery::Str::String(ptr, end + 1)
     };
 }

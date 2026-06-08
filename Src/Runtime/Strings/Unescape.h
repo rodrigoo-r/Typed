@@ -14,34 +14,15 @@
 */
 
 //
-// Created by Rodrigo on 5/27/26.
+// Created by Rodrigo on 6/1/26.
 //
 
-#include "Cwd.h"
+#pragma once
+#include "ADT/Lang/AST.h"
+#include "ADT/Runtime/Object.h"
 
-#include <filesystem>
-
-#include "ADT/Exception/CouldNotOpenFile.h"
-#include "Support/Runtime/AccessString.h"
-
-using namespace Typed;
-using namespace Typed::Runtime;
-using namespace Typed::Runtime::FileSystem;
-
-ADT::Runtime::Object FileSystem::Cwd(
-    ADT::List::Object &_,
-    ADT::Lang::AST *__
-)
+namespace Typed::Runtime::Strings
 {
-    auto cwd = std::filesystem::current_path();;
-    auto str = cwd.string();
-
-    return {
-        ADT::Runtime::ObjectType::String,
-        Celery::Str::String(
-            str.data(),
-            str.size()
-        )
-    };
-
+    ADT::Runtime::Object Unescape(ADT::List::Object &, ADT::Lang::AST *);
+    ADT::Runtime::Object Unescape(ADT::Runtime::Object &, ADT::Lang::AST *);
 }

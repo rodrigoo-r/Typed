@@ -43,7 +43,7 @@ ADT::Runtime::Object IO::ReadLine(
     str.Write(line.data(), line.size());
 
     return {
-        ADT::Runtime::ObjectType::OwnedString,
+        ADT::Runtime::ObjectType::String,
         std::move(str)
     };
 }
