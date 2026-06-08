@@ -44,30 +44,6 @@ Machine::StreamRef Machine::Lex()
             continue;
         }
 
-        if (state.IsStringLiteral() && c != '"')
-        {
-            if (c == '\n')
-            {
-                throw ADT::Exception::UnterminatedString(
-                    state.GetLine(),
-                    state.GetColumn()
-                );
-            }
-
-            state.AddColumn();
-            state.AddSize();
-            continue;
-        }
-
-        if (state.GetSize() == 0)
-        {
-            state.SetStart(contents.Pos() - 1);
-            state.SetTokenPosition(
-                state.GetLine(),
-                state.GetColumn()
-            );
-        }
-
         if (state.IsEscape())
         {
             auto escape_type = state.GetEscapeType();
@@ -123,6 +99,30 @@ Machine::StreamRef Machine::Lex()
             state.AddColumn();
             state.AddSize();
             continue;
+        }
+
+        if (state.IsStringLiteral() && c != '"')
+        {
+            if (c == '\n')
+            {
+                throw ADT::Exception::UnterminatedString(
+                    state.GetLine(),
+                    state.GetColumn()
+                );
+            }
+
+            state.AddColumn();
+            state.AddSize();
+            continue;
+        }
+
+        if (state.GetSize() == 0)
+        {
+            state.SetStart(contents.Pos() - 1);
+            state.SetTokenPosition(
+                state.GetLine(),
+                state.GetColumn()
+            );
         }
 
         if (c == '"')
