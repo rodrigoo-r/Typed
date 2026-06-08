@@ -23,7 +23,6 @@
 #include "FindIndex.h"
 #include "ReplaceMany.h"
 #include "Support/Runtime/AccessString.h"
-#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -34,8 +33,7 @@ ADT::Runtime::Object Strings::ReplaceAll(
     ADT::Lang::AST *trace
 )
 {
-    auto str_normal = Support::Runtime::NormalizeObject(args[0], trace);
-    auto str = Support::Runtime::AccessString(str_normal);
+    auto str = Support::Runtime::AccessString(args[0]);
     args.EmplaceBack(
         ADT::Runtime::ObjectType::Integer,
         (int)str.Size()

@@ -21,7 +21,6 @@
 #include "TrimLeft.h"
 
 #include "Support/Runtime/AccessString.h"
-#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -32,7 +31,7 @@ ADT::Runtime::Object Strings::TrimLeft(
     ADT::Lang::AST *trace
 )
 {
-    auto obj = Support::Runtime::NormalizeObject(args[0], trace);
+    auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
     char *ptr = str.Ptr();
     Celery::Trait::VeryLarge size = str.Size();

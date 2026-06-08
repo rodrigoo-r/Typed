@@ -22,7 +22,6 @@
 
 #include "ADT/Exception/MismatchedType.h"
 #include "ADT/Exception/OutOfBounds.h"
-#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -35,7 +34,7 @@ ADT::Runtime::Object Lists::Set(
 {
     auto &list = Support::Runtime::GetListObj(args[0]);
     auto &idx = Support::Runtime::GetIntObj(args[1]);
-    auto obj = Support::Runtime::NormalizeObject(args[2], trace);
+    auto &obj = args[2];
 
     // Make sure the element is within bounds
     if (idx >= list->Size())

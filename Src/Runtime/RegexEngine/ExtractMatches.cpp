@@ -23,7 +23,6 @@
 #include "Support/Runtime/AccessString.h"
 #include "Support/Runtime/ConvertToString.h"
 #include "Support/Runtime/GetObjValue.h"
-#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -35,8 +34,7 @@ ADT::Runtime::Object RegexEngine::ExtractMatches(
 )
 {
     auto &regex_ref = Support::Runtime::GetRegexObj(args[0]);
-    auto src_normalized = Support::Runtime::NormalizeObject(args[1], trace);
-    auto source = Support::Runtime::AccessString(src_normalized);
+    auto source = Support::Runtime::AccessString(args[1]);
     auto &regex = regex_ref.GetPattern();
 
     auto std_view = std::string_view(source.Ptr(), source.Size());

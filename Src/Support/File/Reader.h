@@ -24,6 +24,7 @@
 #include <fstream>
 
 #include "ADT/Stream/File.h"
+#include "Support/Strconv/Unescape.h"
 
 namespace Typed::Support::File
 {
@@ -41,15 +42,16 @@ namespace Typed::Support::File
         [[nodiscard]] ADT::Stream::File Read() const
         {
             auto file = Celery::File::Read(path);
+            auto unescaped = Strconv::Unescape(file);
 
             // Convert to a stream
             ADT::Stream::File result;
-            result.Resize(file.Size());
+            result.Resize(unescaped.Size());
 
             // Write the file contents to the stream
-            for (size_t i = 0; i < file.Size(); ++i)
+            for (size_t i = 0; i < unescaped.Size(); ++i)
             {
-                result.PushBack(file[i]);
+                result.PushBack(unescaped[i]);
             }
 
             return result;

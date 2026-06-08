@@ -23,7 +23,6 @@
 #include "FindIndex.h"
 #include "FindIndexes.h"
 #include "Support/Runtime/AccessString.h"
-#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -45,12 +44,9 @@ ADT::Runtime::Object Strings::ReplaceMany(
     auto &find_obj = args[1];
     auto &replacement_obj = args[2];
 
-    auto str_normal = Support::Runtime::NormalizeObject(obj, trace);
-    auto str = Support::Runtime::AccessString(str_normal);
-    auto find_normal = Support::Runtime::NormalizeObject(find_obj, trace);
-    auto find = Support::Runtime::AccessString(find_normal);
-    auto replacement_normal = Support::Runtime::NormalizeObject(replacement_obj, trace);
-    auto replacement = Support::Runtime::AccessString(replacement_normal);
+    auto str = Support::Runtime::AccessString(obj);
+    auto find = Support::Runtime::AccessString(find_obj);
+    auto replacement = Support::Runtime::AccessString(replacement_obj);
 
     auto &indexes = Support::Runtime::GetListObj(res);
 

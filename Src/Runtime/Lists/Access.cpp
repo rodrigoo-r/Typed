@@ -21,7 +21,6 @@
 #include "Access.h"
 
 #include "ADT/Exception/OutOfBounds.h"
-#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -43,8 +42,5 @@ ADT::Runtime::Object Lists::Access(
         );
     }
 
-    return Support::Runtime::NormalizeObject(
-        (*list)[idx],
-        trace
-    );
+    return (*list)[idx];
 }

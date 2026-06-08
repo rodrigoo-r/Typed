@@ -19,10 +19,8 @@
 
 #include "Remove.h"
 
-#include "ADT/Exception/UnknownElement.h"
 #include "ADT/Lang/AST.h"
 #include "ADT/Runtime/Object.h"
-#include "Support/Runtime/NormalizeObject.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -36,7 +34,7 @@ ADT::Runtime::Object Dictionaries::Remove(
     auto &dict = Support::Runtime::GetDictionaryObj(args[0]);
     auto &key = args[1];
 
-    dict->erase(Support::Runtime::NormalizeObject(key, trace));
+    dict->erase(key);
 
     return {};
 }

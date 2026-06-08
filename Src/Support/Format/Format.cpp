@@ -31,7 +31,6 @@
 #include "Integer.h"
 #include "List.h"
 #include "String.h"
-#include "Support/Runtime/NormalizeObject.h"
 #include "Support/Runtime/TypeChecker.h"
 
 using namespace Typed;
@@ -55,7 +54,7 @@ ADT::Runtime::Object GetArg(
 
     auto &obj = args[idx];
     idx++;
-    return Support::Runtime::NormalizeObject(obj, trace);
+    return obj;
 }
 
 template <typename Adapter>
