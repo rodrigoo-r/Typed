@@ -54,6 +54,8 @@ void Machine::Expression(
         auto [expr, parent] = queue.Back();
         queue.PopBack();
 
+        if (expr.Empty()) continue;
+
         // Create the expression AST
         auto ast = AllocateBase(
             Support::Stream::SafePeek(expr),
