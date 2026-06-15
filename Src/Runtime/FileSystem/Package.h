@@ -23,6 +23,7 @@
 #include "CreateFile.h"
 #include "Cwd.h"
 #include "FileExists.h"
+#include "FileName.h"
 #include "IsAbsolute.h"
 #include "IsDirectory.h"
 #include "IsFile.h"
@@ -79,6 +80,18 @@ namespace Typed::Runtime::FileSystem
                 ADT::Runtime::ObjectType::Boolean,
                 false,
                 FileExists
+            }
+        },
+        {
+            "File_Name",
+            {
+                {
+                    {"p", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                false,
+                FileName
             }
         },
         {
