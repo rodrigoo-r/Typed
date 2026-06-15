@@ -59,6 +59,22 @@ void ProcessArg(
         stack.Emplace(expected.name, std::move(arg));
 }
 
+void DoArgTypeChecking(
+    size_t args_size,
+    ADT::List::Object &args,
+    Walker::ProcedureRef procedure,
+    size_t line,
+    size_t column,
+    Walker::VariableStack &stack
+)
+{
+    // Do type checking in the remaining args
+    for (auto i = 0; i < args_size; ++i)
+    {
+        ProcessArg(args, procedure, line, column, i, stack);
+    }
+}
+
 ADT::Runtime::Object Walker::Procedure(
     ProcedureRef procedure,
     ADT::List::Object &args,
@@ -88,6 +104,7 @@ ADT::Runtime::Object Walker::Procedure(
 
     // Push all args to the stack
     Celery::Trait::SignedVeryLarge args_size = args.Size();
+
     if (procedure.variadic)
     {
         if (args.Empty())
@@ -111,7 +128,7 @@ ADT::Runtime::Object Walker::Procedure(
             last = arg.type;
         }
 
-        // Do tye checking until the idx where it changes
+        // Do type checking until the idx where it changes
         args_size = change;
 
         // Make sure all other args are the same type
@@ -127,11 +144,25 @@ ADT::Runtime::Object Walker::Procedure(
                 column
             );
         }
-    }
 
-    for (auto i = 0; i < args_size; ++i)
+        DoArgTypeChecking(
+            change,
+            args,
+            procedure,
+            line,
+            column,
+            stack
+        );
+    } else
     {
-        ProcessArg(args, procedure, line, column, i, stack);
+        DoArgTypeChecking(
+            args_size,
+            args,
+            procedure,
+            line,
+            column,
+            stack
+        );
     }
 
     // Execute the procedure directly if it's native
