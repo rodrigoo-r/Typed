@@ -19,6 +19,7 @@
 
 #include "ADT/Exception/ExpectedReturn.h"
 #include "ADT/Exception/MismatchedArgCount.h"
+#include "Support/Failable/Failable.h"
 #include "Support/Runtime/TypeChecker.h"
 #include "Walker.h"
 
@@ -72,7 +73,7 @@ ADT::Runtime::Object Walker::Procedure(
         trace == nullptr ?
             1 : trace->column;
 
-    // Make sure there's the same amount of args
+    // Make sure there's the same number of args
     // as expected
     if (procedure.arguments.Size() != args.Size() && !procedure.variadic)
     {
@@ -136,7 +137,12 @@ ADT::Runtime::Object Walker::Procedure(
     // Execute the procedure directly if it's native
     if (procedure.native != nullptr)
     {
-        return procedure.native(args, trace);
+        return Support::Failable::Failable::TryAlwaysTraceable(
+            trace,
+            procedure.native,
+            args,
+            trace
+        );
     }
 
     auto ret = Body(procedure, procedure.body, stack);
