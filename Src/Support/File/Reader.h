@@ -39,13 +39,14 @@ namespace Typed::Support::File
             return *this;
         }
 
-        [[nodiscard]] ADT::Stream::File Read() const
+        ADT::Stream::File Read()
         {
-            auto file = Celery::File::Read(path);
-            auto unescaped = Strconv::Unescape(file, nullptr);
-
             // Convert to a stream
             ADT::Stream::File result;
+
+            auto file = Celery::File::Read(path);
+            auto unescaped = Strconv::Unescape(file, nullptr, &result);
+
             result.Resize(unescaped.Size());
 
             // Write the file contents to the stream

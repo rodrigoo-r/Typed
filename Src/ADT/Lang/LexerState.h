@@ -32,8 +32,6 @@ namespace Typed::ADT::Lang
         bool number_literal = false;
         bool float_literal = false;
         bool identifier = false;
-        bool escape = false;
-        Celery::Trait::VeryLarge escape_size = 0;
         Celery::Trait::VeryLarge start = 0;
         Celery::Trait::VeryLarge line = 1;
         Celery::Trait::VeryLarge column = 1;
@@ -51,7 +49,6 @@ namespace Typed::ADT::Lang
             identifier = false;
             multi_line_string_literal = false;
             escape_type = EscapeType::NoEscape;
-            escape_size = 0;
             size = 0;
         }
 
@@ -75,11 +72,6 @@ namespace Typed::ADT::Lang
             return identifier;
         }
 
-        [[nodiscard]] bool IsEscape() const
-        {
-            return escape;
-        }
-
         [[nodiscard]] bool IsMultiLineStringLiteral() const
         {
             return multi_line_string_literal;
@@ -88,12 +80,6 @@ namespace Typed::ADT::Lang
         void ToggleIdentifier()
         {
             identifier = !identifier;
-        }
-
-        void ToggleEscape()
-        {
-            escape = !escape;
-            escape_size = 0;
         }
 
         void ToggleStringLiteral()
@@ -151,15 +137,9 @@ namespace Typed::ADT::Lang
             return size;
         }
 
-        [[nodiscard]] Celery::Trait::VeryLarge GetEscapeSize() const
-        {
-            return escape_size;
-        }
-
         void ResetSize()
         {
             size = 0;
-            escape_size = 0;
         }
 
         void AddLine()
@@ -176,11 +156,6 @@ namespace Typed::ADT::Lang
         void AddSize()
         {
             size++;
-        }
-
-        void AddEscapeSize()
-        {
-            escape_size++;
         }
 
         void SetTokenPosition(

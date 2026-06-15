@@ -36,7 +36,7 @@ namespace Typed::Core::Frontend::Lexer
 
     public:
         using EntryRef =
-            ADT::Stream::FileView &;
+            ADT::Stream::File &;
 
         using StreamRef =
             ADT::Stream::Token&;

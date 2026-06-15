@@ -37,69 +37,17 @@ Machine::StreamRef Machine::Lex()
     {
         auto c = contents.Next();
 
-        if (
-            c == '\\' &&
-            (
-                state.IsStringLiteral() ||
-                state.IsMultiLineStringLiteral()
-            )
-        )
+        if (contents.IsEscape(contents.Pos()))
         {
-            state.ToggleEscape();
-            state.AddColumn();
-            state.AddSize();
-            continue;
-        }
-
-        if (state.IsEscape())
-        {
-            auto escape_type = state.GetEscapeType();
-            auto allowed_digits = -1;
             if (
-                escape_type == ADT::Lang::EscapeType::NoEscape &&
-                state.GetEscapeSize() == 0
+                !state.IsStringLiteral() &&
+                !state.IsMultiLineStringLiteral()
             )
             {
-                if (c == 'x')
-                {
-                    state.SetEscapeType(ADT::Lang::EscapeType::Hex);
-                }
-                else if (c == 'u')
-                {
-                    state.SetEscapeType(ADT::Lang::EscapeType::LowerUnicode);
-                }
-                else if (c == 'U')
-                {
-                    state.SetEscapeType(ADT::Lang::EscapeType::UpperUnicode);
-                }
-                else
-                {
-                    allowed_digits = 2;
-                    state.ToggleEscape();
-                }
-            }
-            else if (escape_type == ADT::Lang::EscapeType::Hex)
-            {
-                state.AddEscapeSize();
-                allowed_digits = 2;
-            }
-            else if (escape_type == ADT::Lang::EscapeType::LowerUnicode)
-            {
-                state.AddEscapeSize();
-                allowed_digits = 4;
-            }
-            else if (escape_type == ADT::Lang::EscapeType::UpperUnicode)
-            {
-                state.AddEscapeSize();
-                allowed_digits = 8;
-            }
-
-            if (state.GetEscapeSize() >= allowed_digits)
-            {
-                state.ToggleEscape();
-                state.AddColumn();
-                state.AddSize();
-                continue;
+                throw ADT::Exception::UnexpectedToken(
+                    state.GetLine(),
+                    state.GetColumn()
+                );
             }
 
             // Normal escape sequence
