@@ -133,7 +133,7 @@ namespace Typed::Support::Strconv
                     if (file != nullptr)
                     {
                         auto idx = ptr - str.Ptr();
-                        file->AddEscapeIdx(idx + 1);
+                        file->AddEscapeIdx(result.Size());
                     }
 
                     result.PushBack(next);
@@ -183,6 +183,6 @@ namespace Typed::Support::Strconv
             ptr += 2;
         }
 
-        return std::move(result);
+        return result;
     }
 }
