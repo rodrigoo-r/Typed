@@ -37,30 +37,30 @@ void Subcommand::Run(const std::string &input)
     reader.SetPath({input.data(), input.size()});
 
     auto contents = reader.Read();
-    Support::Failable::Failable failable(contents);
-
     ADT::Stream::FileView view(contents.Ptr(), contents.Size());
+    Support::Failable::Failable::Setup(contents);
+
     Core::Frontend::Lexer::Machine lexer(view);
-    auto &tokens = failable.Try(
+    auto &tokens = Support::Failable::Failable::Try(
         &Core::Frontend::Lexer::Machine::Lex,
         lexer
     );
 
     Core::Frontend::Parser::Machine parser(tokens);
-    auto root = failable.Try(
+    auto root = Support::Failable::Failable::Try(
         &Core::Frontend::Parser::Machine::Parse,
         parser
     );
 
     Core::MiddleEnd::PreWalker pre_walker(root);
-    auto &file = failable.Try(
+    auto &file = Support::Failable::Failable::Try(
         &Core::MiddleEnd::PreWalker::Process,
         pre_walker
     );
 
     // Run the code
     Core::Backend::Walker walker(file);
-    failable.Try(
+    Support::Failable::Failable::Try(
         &Core::Backend::Walker::Walk,
         walker
     );
