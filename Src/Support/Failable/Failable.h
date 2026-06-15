@@ -26,16 +26,18 @@ namespace Typed::Support::Failable
 {
     class Failable
     {
-        ADT::Stream::File &contents;
+        static ADT::Stream::File &contents;
 
-        void PrintMessage(const char *message);
-        void PrintConsiderations();
-        void Fail(ADT::Exception::Traceable &traceable);
-        void Fail(std::exception &except);
+        static void PrintMessage(const char *message);
+        static void PrintConsiderations();
+        static void Fail(ADT::Exception::Traceable &traceable);
+        static void Fail(std::exception &except);
 
     public:
-        Failable(ADT::Stream::File &contents) :
-            contents(contents) {}
+        static void Setup(ADT::Stream::File &file)
+        {
+            contents = file;
+        }
 
         template <
             typename Obj,
@@ -43,7 +45,7 @@ namespace Typed::Support::Failable
             typename... Args,
             typename... CallArgs
         >
-        decltype(auto) Try(Ret (Obj::*method)(Args...), Obj& obj, CallArgs&&... args)
+        static decltype(auto) Try(Ret (Obj::*method)(Args...), Obj& obj, CallArgs&&... args)
         {
             try
             {
@@ -55,6 +57,36 @@ namespace Typed::Support::Failable
             } catch (std::exception &except)
             {
                 Fail(except);
+                exit(1);
+            }
+        }
+
+        template <
+            typename Function,
+            typename... Args
+        >
+        static decltype(auto) TryAlwaysTraceable(
+            auto *trace,
+            Function &function,
+            Args&&... args
+        )
+        {
+            try
+            {
+                return function(std::forward<Args>(args)...);
+            } catch (ADT::Exception::Traceable &traceable)
+            {
+                Fail(traceable);
+                exit(1);
+            } catch (std::exception &except)
+            {
+                ADT::Exception::Traceable traceable(
+                    except.what(),
+                    trace->line,
+                    trace->column
+                );
+
+                Fail(traceable);
                 exit(1);
             }
         }
