@@ -26,7 +26,7 @@ namespace Typed::Support::Failable
 {
     class Failable
     {
-        static inline ADT::Stream::File contents;
+        static inline ADT::Stream::FileView contents;
 
         static void PrintMessage(const char *message);
         static void PrintConsiderations();
@@ -36,7 +36,7 @@ namespace Typed::Support::Failable
     public:
         static void Setup(ADT::Stream::File &file)
         {
-            contents = std::move(file);
+            contents = ADT::Stream::FileView{file.Ptr(), file.Size()};
         }
 
         template <
