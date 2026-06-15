@@ -29,6 +29,7 @@
 #include "IsRelative.h"
 #include "IsSymLink.h"
 #include "ReadFile.h"
+#include "ScanDirectory.h"
 #include "ToAbsolute.h"
 
 namespace Typed::Runtime::FileSystem
@@ -162,6 +163,18 @@ namespace Typed::Runtime::FileSystem
                 ADT::Runtime::ObjectType::String,
                 false,
                 ReadFile
+            }
+        },
+        {
+            "Scan_Directory",
+            {
+                {
+                    {"p", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::List,
+                false,
+                ScanDirectory
             }
         },
         {
