@@ -37,7 +37,7 @@ Machine::StreamRef Machine::Lex()
     {
         auto c = contents.Next();
 
-        if (contents.IsEscape(contents.Pos()))
+        if (contents.IsEscape(contents.Pos() - 1))
         {
             if (
                 !state.IsStringLiteral() &&
