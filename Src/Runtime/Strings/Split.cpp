@@ -63,8 +63,10 @@ ADT::Runtime::Object Strings::Split(
         {
             result->EmplaceBack(
                 ADT::Runtime::ObjectType::String,
-                std::move(result)
+                std::move(current)
             );
+
+            i += delimiter.Size();
         }
         else
         {
@@ -75,11 +77,11 @@ ADT::Runtime::Object Strings::Split(
 
     result->EmplaceBack(
         ADT::Runtime::ObjectType::String,
-        std::move(result)
+        std::move(current)
     );
 
     return {
-        ADT::Runtime::ObjectType::String,
+        ADT::Runtime::ObjectType::List,
         std::move(result)
     };
 }
