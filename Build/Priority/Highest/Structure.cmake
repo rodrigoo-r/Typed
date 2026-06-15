@@ -29,3 +29,5 @@ add_library(${PROJECT_NAME} ${Src_Files} ${Header_Files})
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 add_executable(${APP_TARGET_NAME} ${App_Src_Files})
 add_executable(${TEST_TARGET_NAME} ${Test_Src_Files})
+
+set_target_properties(${APP_TARGET_NAME} PROPERTIES OUTPUT_NAME "typed")
