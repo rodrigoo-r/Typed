@@ -17,6 +17,7 @@
 // Created by Rodrigo on 5/18/26.
 //
 
+#include "ADT/Exception/UnexpectedToken.h"
 #include "ADT/Exception/UnknownToken.h"
 #include "ADT/Exception/UnterminatedString.h"
 #include "Lexer.h"
@@ -36,7 +37,13 @@ Machine::StreamRef Machine::Lex()
     {
         auto c = contents.Next();
 
-        if (c == '\\' && state.IsStringLiteral())
+        if (
+            c == '\\' &&
+            (
+                state.IsStringLiteral() ||
+                state.IsMultiLineStringLiteral()
+            )
+        )
         {
             state.ToggleEscape();
             state.AddColumn();
@@ -116,6 +123,22 @@ Machine::StreamRef Machine::Lex()
             continue;
         }
 
+        if (state.IsMultiLineStringLiteral() && c != '`')
+        {
+            if (c == '\n')
+            {
+                Flush();
+                state.AddLine();
+
+                continue;
+            }
+
+            state.AddColumn();
+            state.AddSize();
+
+            continue;
+        }
+
         if (state.GetSize() == 0)
         {
             state.SetStart(contents.Pos() - 1);
@@ -125,19 +148,45 @@ Machine::StreamRef Machine::Lex()
             );
         }
 
-        if (c == '"')
+        if (
+            c == '"' || c == '`'
+        )
         {
-            if (state.IsStringLiteral())
+            if (
+                (
+                    c == '"' &&
+                    state.IsStringLiteral()
+                ) || (
+                    c == '`' &&
+                    state.IsMultiLineStringLiteral()
+                )
+            )
             {
                 Flush();
                 state.AddColumn();
+                state.ResetSize();
+            } else if (
+                (
+                    c == '"' &&
+                    !state.IsStringLiteral()
+                ) || (
+                    c == '`' &&
+                    !state.IsMultiLineStringLiteral()
+                )
+            )
+            {
+                Flush();
+                state.AddColumn();
+
+                if (c == '`')
+                    state.ToggleMultiLineStringLiteral();
+                else
+                    state.ToggleStringLiteral();
+
                 state.ResetSize();
             } else
             {
-                Flush();
-                state.AddColumn();
-                state.ToggleStringLiteral();
-                state.ResetSize();
+                throw ADT::Exception::UnexpectedToken(state.GetLine(), state.GetColumn());
             }
 
             continue;

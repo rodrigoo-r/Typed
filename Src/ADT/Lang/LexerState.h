@@ -28,6 +28,7 @@ namespace Typed::ADT::Lang
     class LexerState
     {
         bool string_literal = false;
+        bool multi_line_string_literal = false;
         bool number_literal = false;
         bool float_literal = false;
         bool identifier = false;
@@ -48,6 +49,7 @@ namespace Typed::ADT::Lang
             number_literal = false;
             float_literal = false;
             identifier = false;
+            multi_line_string_literal = false;
             escape_type = EscapeType::NoEscape;
             escape_size = 0;
             size = 0;
@@ -78,6 +80,11 @@ namespace Typed::ADT::Lang
             return escape;
         }
 
+        [[nodiscard]] bool IsMultiLineStringLiteral() const
+        {
+            return multi_line_string_literal;
+        }
+
         void ToggleIdentifier()
         {
             identifier = !identifier;
@@ -92,6 +99,11 @@ namespace Typed::ADT::Lang
         void ToggleStringLiteral()
         {
             string_literal = !string_literal;
+        }
+
+        void ToggleMultiLineStringLiteral()
+        {
+            multi_line_string_literal = !multi_line_string_literal;
         }
 
         void ToggleNumberLiteral()

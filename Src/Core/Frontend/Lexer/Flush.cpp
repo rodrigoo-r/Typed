@@ -46,7 +46,7 @@ void Machine::Flush()
         return;
     }
 
-    if (state.IsStringLiteral())
+    if (state.IsStringLiteral() || state.IsMultiLineStringLiteral())
     {
         token.type = ADT::Lang::TokenType::StringLiteral;
     } else if (state.IsFloatLiteral())
