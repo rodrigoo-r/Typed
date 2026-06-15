@@ -111,37 +111,42 @@ void Walker::For(
     stack.PushScope();
     stack.Emplace(decl_name, std::move(from_obj));
 
-    // Execute the loop
-    while (true)
+    auto var_it = stack.Get(decl_name);
+    auto &var = var_it.it->second;
+    if (from_obj.type == ADT::Runtime::ObjectType::Integer)
     {
-        auto var_it = stack.Get(decl_name);
-        auto &var = var_it.it->second;
+        auto &to_int = Support::Runtime::GetIntObj(to_obj);
+        auto &step_int = Support::Runtime::GetIntObj(step_obj);
+        auto &var_int = Support::Runtime::GetIntObj(var);
+        auto max = to_int - step_int;
 
-        // Execute the body
-        Body(procedure, loop_body, stack, false);
-
-        if (from_obj.type == ADT::Runtime::ObjectType::Integer)
+        // Execute the loop
+        while (true)
         {
-            auto &from_int = Support::Runtime::GetIntObj(from_obj);
-            auto &to_int = Support::Runtime::GetIntObj(to_obj);
-            auto &step_int = Support::Runtime::GetIntObj(step_obj);
-            auto &var_int = Support::Runtime::GetIntObj(var);
-
-            if (var_int >= to_int)
-                break;
-
+            // Execute the body
+            Body(procedure, loop_body, stack, false);
             var_int += step_int;
-        } else
-        {
-            auto &from_float = Support::Runtime::GetFloatObj(from_obj);
-            auto &to_float = Support::Runtime::GetFloatObj(to_obj);
-            auto &step_float = Support::Runtime::GetFloatObj(step_obj);
-            auto &var_float = Support::Runtime::GetFloatObj(var);
 
-            if (var_float >= to_float)
+            if (var_int >= max)
                 break;
+        }
+    } else
+    {
+        auto &to_float = Support::Runtime::GetFloatObj(to_obj);
+        auto &step_float = Support::Runtime::GetFloatObj(step_obj);
+        auto &var_float = Support::Runtime::GetFloatObj(var);
+        auto max_float = to_float - step_float;
+
+        // Execute the loop
+        while (true)
+        {
+            // Execute the body
+            Body(procedure, loop_body, stack, false);
 
             var_float += step_float;
+
+            if (var_float >= max_float)
+                break;
         }
     }
 
