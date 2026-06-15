@@ -36,11 +36,11 @@ void Subcommand::Run(const std::string &input)
     Support::File::Reader reader;
     reader.SetPath({input.data(), input.size()});
 
-    auto contents = reader.Read();
-        /*Support::Failable::Failable::Try(
+    auto contents =
+        Support::Failable::Failable::Try(
             &Support::File::Reader::Read,
             reader
-        );*/
+        );
 
     Support::Failable::Failable::Setup(contents);
 
