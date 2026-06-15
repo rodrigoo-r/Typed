@@ -21,11 +21,7 @@
 #include "ADT/List/Object.h"
 #include "Support/Strconv/Unescape.h"
 
-#include <charconv>
-
-#include "ADT/Exception/UnknownFormat.h"
 #include "ADT/Lang/AST.h"
-#include "ADT/Stream/External.h"
 #include "Support/Runtime/AccessString.h"
 
 using namespace Typed;
@@ -41,7 +37,7 @@ ADT::Runtime::Object Strings::Unescape(
 
     return {
         ADT::Runtime::ObjectType::String,
-        Support::Strconv::Unescape(str, trace)
+        Support::Strconv::Unescape(str, trace, nullptr)
     };
 }
 

@@ -6,6 +6,7 @@
 #include <Celery/String/String.h>
 
 #include "ADT/Exception/UnknownFormat.h"
+#include "ADT/Stream/File.h"
 
 namespace Typed::Support::Strconv
 {
@@ -25,7 +26,8 @@ namespace Typed::Support::Strconv
 
     Celery::Str::String Unescape(
         auto &str,
-        ADT::Lang::AST *trace
+        ADT::Lang::AST *trace,
+        ADT::Stream::File *file
     )
     {
         auto size = str.Size();
@@ -123,11 +125,20 @@ namespace Typed::Support::Strconv
 
             switch (next)
             {
+                case '`':
                 case '"':
                 case '\'':
                 case '\\':
+                {
+                    if (file != nullptr)
+                    {
+                        auto idx = ptr - str.Ptr();
+                        file->AddEscapeIdx(idx + 1);
+                    }
+
                     result.PushBack(next);
                     break;
+                }
 
                 case 'a':
                     result.PushBack('\a');
