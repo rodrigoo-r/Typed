@@ -30,6 +30,7 @@
 #include "ReplaceMany.h"
 #include "ReplaceOne.h"
 #include "Size.h"
+#include "Split.h"
 #include "ToLower.h"
 #include "ToUpper.h"
 #include "Trim.h"
@@ -50,6 +51,19 @@ namespace Typed::Runtime::Strings
                 ADT::Runtime::ObjectType::Integer,
                 false,
                 Size
+            }
+        },
+        {
+            "String_Split",
+            {
+                {
+                    {"s", ADT::Runtime::ObjectType::String},
+                    {"d", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::List,
+                false,
+                Split
             }
         },
         {
