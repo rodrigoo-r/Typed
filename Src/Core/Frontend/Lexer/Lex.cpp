@@ -127,7 +127,6 @@ Machine::StreamRef Machine::Lex()
         {
             if (c == '\n')
             {
-                Flush();
                 state.AddLine();
 
                 continue;
