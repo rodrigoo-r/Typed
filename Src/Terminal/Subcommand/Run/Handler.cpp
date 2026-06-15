@@ -37,20 +37,30 @@ void Subcommand::Run(const std::string &input)
     reader.SetPath({input.data(), input.size()});
 
     auto contents = reader.Read();
-    ADT::Stream::FileView view(contents.Ptr(), contents.Size());
+        /*Support::Failable::Failable::Try(
+            &Support::File::Reader::Read,
+            reader
+        );*/
+
     Support::Failable::Failable::Setup(contents);
 
-    Core::Frontend::Lexer::Machine lexer(view);
+    Core::Frontend::Lexer::Machine lexer(contents);
+
     auto &tokens = Support::Failable::Failable::Try(
         &Core::Frontend::Lexer::Machine::Lex,
         lexer
     );
+
+    contents.ClearEscapeIdx();
 
     Core::Frontend::Parser::Machine parser(tokens);
     auto root = Support::Failable::Failable::Try(
         &Core::Frontend::Parser::Machine::Parse,
         parser
     );
+
+    // Deallocate tokens' memory, freeing contents
+    tokens.Reset();
 
     Core::MiddleEnd::PreWalker pre_walker(root);
     auto &file = Support::Failable::Failable::Try(
