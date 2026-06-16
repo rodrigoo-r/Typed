@@ -127,7 +127,7 @@ void Walker::For(
             Body(procedure, loop_body, stack, false);
             var_int += step_int;
 
-            if (var_int >= max)
+            if (var_int > max)
                 break;
         }
     } else
@@ -145,7 +145,7 @@ void Walker::For(
 
             var_float += step_float;
 
-            if (var_float >= max_float)
+            if (var_float > max_float)
                 break;
         }
     }
