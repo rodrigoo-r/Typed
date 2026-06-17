@@ -22,6 +22,7 @@
 #include "ADT/Map/Procedure.h"
 #include "Access.h"
 #include "Add.h"
+#include "Join.h"
 #include "Pop.h"
 #include "Set.h"
 #include "Size.h"
@@ -40,6 +41,19 @@ namespace Typed::Runtime::Lists
                 ADT::Runtime::ObjectType::Void,
                 true,
                 Add
+            }
+        },
+        {
+            "List_Join",
+            {
+                {
+                    {"l", ADT::Runtime::ObjectType::List},
+                    {"d", ADT::Runtime::ObjectType::String},
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::String,
+                true,
+                Join
             }
         },
         {
