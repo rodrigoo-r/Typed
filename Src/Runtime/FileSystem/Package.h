@@ -32,6 +32,7 @@
 #include "ReadFile.h"
 #include "ScanDirectory.h"
 #include "ToAbsolute.h"
+#include "WriteFile.h"
 
 namespace Typed::Runtime::FileSystem
 {
@@ -200,6 +201,19 @@ namespace Typed::Runtime::FileSystem
                 ADT::Runtime::ObjectType::String,
                 false,
                 ToAbsolute
+            }
+        },
+        {
+            "Write_File",
+            {
+                {
+                    {"p", ADT::Runtime::ObjectType::String},
+                    {"c", ADT::Runtime::ObjectType::String}
+                },
+                nullptr,
+                ADT::Runtime::ObjectType::Void,
+                false,
+                WriteFile
             }
         }
     };
