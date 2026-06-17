@@ -50,5 +50,5 @@ ADT::Runtime::Object Strings::Add(
     auto &str = Support::Runtime::GetOwnedStrObj(obj);
     str.Write(ptr, size);
 
-    return {};
+    return obj;
 }
