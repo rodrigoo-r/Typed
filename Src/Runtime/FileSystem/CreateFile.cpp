@@ -37,8 +37,9 @@ ADT::Runtime::Object FileSystem::CreateFile(
     auto &path_obj = args[0];
     auto path_ext = Support::Runtime::AccessString(path_obj);
     auto path = Support::Runtime::ConvertToString(path_ext);
+    std::string std_path{path.Ptr(), path.Size()};
 
-    std::ofstream my_file(path.CStr());
+    std::ofstream my_file(std_path);
     if (my_file.is_open())
     {
         my_file.close();

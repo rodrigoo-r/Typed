@@ -39,8 +39,9 @@ ADT::Runtime::Object FileSystem::WriteFile(
     auto path = Support::Runtime::ConvertToString(ext);
     auto content = Support::Runtime::AccessString(args[1]);
     auto content_str = Support::Runtime::ConvertToString(content);
+    std::string std_path{path.Ptr(), path.Size()};
 
-    std::ofstream file(path.CStr());
+    std::ofstream file(std_path);
 
     if (!file.is_open())
     {

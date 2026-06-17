@@ -38,7 +38,8 @@ ADT::Runtime::Object FileSystem::ScanDirectory(
     auto path_ext = Support::Runtime::AccessString(path_obj);
     auto path = Support::Runtime::ConvertToString(path_ext);
 
-    auto res = std::filesystem::directory_iterator(path.CStr());
+    std::string path_str{path.Ptr(), path.Size()};
+    auto res = std::filesystem::directory_iterator(path_str);
     auto res_list = ADT::List::DynamicObject::Make();
 
     for (auto &entry : res)

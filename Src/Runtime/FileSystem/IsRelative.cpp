@@ -36,7 +36,8 @@ ADT::Runtime::Object FileSystem::IsRelative(
 {
     auto str = Support::Runtime::AccessString(args[0]);
     auto path_str = Support::Runtime::ConvertToString(str);
-    auto path = std::filesystem::path(path_str.CStr());
+    std::string std_path{path_str.Ptr(), path_str.Size()};
+    auto path = std::filesystem::path(std_path);
 
     return {
         ADT::Runtime::ObjectType::Boolean,

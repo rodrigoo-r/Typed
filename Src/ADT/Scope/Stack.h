@@ -82,8 +82,9 @@ namespace Typed::ADT::Scope
 
         void PopScope()
         {
-            Allocator::Deallocate(top);
+            auto tmp = top;
             top = top->parent;
+            Allocator::Deallocate(tmp);
         }
 
         FakeIterator Get(const Key &key)

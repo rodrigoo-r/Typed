@@ -44,7 +44,8 @@ namespace Typed::ADT::Regex
 
         void Build(Celery::Str::String &p)
         {
-            pattern = PatternRef::Make(p.CStr());
+            std::string std_pattern{p.Ptr(), p.Size()};
+            pattern = PatternRef::Make(std_pattern);
         }
 
         auto &GetPattern()

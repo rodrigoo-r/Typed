@@ -36,9 +36,10 @@ ADT::Runtime::Object FileSystem::FileExists(
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
     auto path = Support::Runtime::ConvertToString(str);
+    std::string std_path{path.Ptr(), path.Size()};
 
     return {
         ADT::Runtime::ObjectType::Boolean,
-        std::filesystem::exists(path.CStr())
+        std::filesystem::exists(std_path)
     };
 }

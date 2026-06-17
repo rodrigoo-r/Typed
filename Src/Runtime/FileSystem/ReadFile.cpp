@@ -37,8 +37,9 @@ ADT::Runtime::Object FileSystem::ReadFile(
     auto &path_obj = args[0];
     auto ext = Support::Runtime::AccessString(path_obj);
     auto path = Support::Runtime::ConvertToString(ext);
+    std::string std_path{path.Ptr(), path.Size()};
 
-    std::ifstream file(path.CStr());
+    std::ifstream file(std_path);
 
     if (!file.is_open())
     {

@@ -52,13 +52,15 @@ namespace Typed::Support::Path
             if (elem.type == ADT::Runtime::ObjectType::String)
             {
                 auto &str = Runtime::GetStrObj(elem);
-                Celery::Str::String owned{str.Ptr(), str.Size()};
+                std::string owned{str.Ptr(), str.Size()};
 
-                path /= owned.CStr();
+                path /= owned;
             } else
             {
                 auto &str = Runtime::GetOwnedStrObj(elem);
-                path /= str.CStr();
+                std::string owned{str.Ptr(), str.Size()};
+
+                path /= owned;
             }
         }
 

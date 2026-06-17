@@ -36,9 +36,10 @@ ADT::Runtime::Object FileSystem::IsFile(
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
     auto path = Support::Runtime::ConvertToString(str);
+    std::string std_path{path.Ptr(), path.Size()};
 
     return {
         ADT::Runtime::ObjectType::Boolean,
-        std::filesystem::is_regular_file(path.CStr())
+        std::filesystem::is_regular_file(std_path)
     };
 }
