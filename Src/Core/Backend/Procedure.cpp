@@ -155,6 +155,7 @@ ADT::Runtime::Object Walker::Procedure(
         );
     } else
     {
+        stack.PushScope();
         DoArgTypeChecking(
             args_size,
             args,
