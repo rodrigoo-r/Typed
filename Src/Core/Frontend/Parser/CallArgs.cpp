@@ -63,6 +63,15 @@ Machine::TreePtr Machine::CallArgs(
                 size
             };
 
+            // Make sure the input isn't empty
+            if (view.Empty())
+            {
+                throw ADT::Exception::UnexpectedToken(
+                    input.Curr().line,
+                    input.Curr().column
+                );
+            }
+
             queue.EmplaceBack(view, arg);
             start = input.Pos();
             size = 0;
