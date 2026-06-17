@@ -101,6 +101,15 @@ Machine::TreePtr Machine::CallArgs(
         }
     }
 
+    // Make sure the last element wasn't empty
+    if (size == 0)
+    {
+        throw ADT::Exception::UnexpectedToken(
+            input.Curr().line,
+            input.Curr().column
+        );
+    }
+
     // Make sure the nest size is 0 at the end
     if (call_nest != 0)
     {
