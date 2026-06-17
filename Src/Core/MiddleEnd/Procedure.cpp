@@ -66,6 +66,18 @@ void PreWalker::Procedure(TreePtr ast)
                     break;
                 }
 
+                case ADT::Lang::ASTType::List:
+                {
+                    runtime_type = ADT::Runtime::ObjectType::List;
+                    break;
+                }
+
+                case ADT::Lang::ASTType::Dictionary:
+                {
+                    runtime_type = ADT::Runtime::ObjectType::Dictionary;
+                    break;
+                }
+
                 default: break;
             }
 
