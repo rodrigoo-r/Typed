@@ -1,0 +1,214 @@
+COMMENT = _{
+    "#" ~ (!"\n" ~ ANY)*
+}
+
+WHITESPACE = _{
+    " "
+    | "\t"
+    | "\r"
+    | "\n"
+    | COMMENT
+}
+
+Program = {
+	SOI ~ TopLevel* ~ EOI
+}
+
+TopLevel = _{
+	Use | Procedure
+}
+
+Use  = {
+	"Use" ~ Identifier ~ ";"
+}
+
+Identifier = @{
+    ('a'..'z' | 'A'..'Z' | "_")
+    ~ (ASCII_ALPHANUMERIC | "_")*
+}
+
+Procedure = {
+	"Procedure"
+    ~ Identifier
+    ~ Procedure_Arguments?
+    ~ Body
+    ~ "End_Procedure"
+}
+
+Procedure_Arguments = {
+    "With"
+    ~ "Arguments"
+    ~ (
+    	Declaration_Data ~
+        ("," ~ Declaration_Data)*
+    )?
+}
+
+Declaration_Data = {
+	Identifier ~ "as" ~ Type
+}
+
+Type = {
+	"Integer" |
+    "String" |
+    "Float" |
+    "Boolean" |
+    "List" |
+    "Dictionary"
+}
+
+Body = {
+	"Begin" ~
+	(
+      (Expression ~ ";") |
+      For |
+      Condition_Group |
+      While |
+      Declare
+	)*
+}
+
+For = {
+	"For"
+    ~ Declaration_Data
+    ~ "In"
+    ~ Expression
+    ~ "To"
+    ~ Expression
+    ~ "Step"
+    ~ Expression
+    ~ "Do"
+    ~ Body
+    ~ "End_For"
+}
+
+While = {
+	"While" ~
+    Expression ~
+    "Do" ~
+    Body ~
+    "End_While"
+}
+
+Declare = {
+	"Declare" ~
+    Declaration_Data ~
+    (
+    	"With" ~
+        Expression
+	)? ~
+    ";"
+}
+
+If = {
+	"If" ~
+    Expression ~
+    "Then" ~
+    Body ~
+    "End_If"
+}
+
+Else_If = {
+	"Else_If" ~
+    Expression ~
+    "Then" ~
+    Body ~
+    "End_Else_If"
+}
+
+Else = {
+	"Else" ~
+    Body ~
+    "End_Else"
+}
+
+Condition_Group = {
+	If ~ Else_If* ~ Else?
+}
+
+Expression = {
+	Call |
+    Add |
+    Subtract |
+    Multiply |
+    Divide |
+    Float_Literal |
+    Integer_Literal |
+    Boolean_Literal |
+    String_Literal |
+    Identifier
+}
+
+Call = {
+	"Call" ~
+    Identifier ~
+    Call_Arguments? ~
+    "End_Call"
+}
+
+Call_Arguments = {
+    "With"
+    ~ Expression
+    ~ ("," ~ Expression)*
+}
+
+Add = {
+	"Add" ~ Expression ~ "To" ~ Identifier
+}
+
+Subtract = {
+	"Subtract" ~ Expression ~ "From" ~ Identifier
+}
+
+Multiply = {
+	"Multiply" ~ Expression ~ "By" ~ Identifier
+}
+
+Divide = {
+	"Divide" ~ Expression ~ "By" ~ Identifier
+}
+
+Integer_Literal = {
+    ASCII_DIGIT+
+}
+
+Float_Literal = {
+    ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT+
+}
+
+Boolean_Literal = {
+	"True" |
+    "False"
+}
+
+String_Literal = ${
+    ("\"" ~ Single_Line_String_Char* ~ "\"") |
+    (
+    	"`" ~ Multi_Line_String_Char* ~ "`"
+	)
+}
+
+Single_Line_String_Char = _{
+    Escape_Sequence
+    | !("\"" | "\n" | "\r") ~ ANY
+}
+
+Multi_Line_String_Char = _{
+    Escape_Sequence
+    | !("`") ~ ANY
+}
+
+Escape_Sequence = _{
+    "\\"
+    ~ (
+          "\""
+        | "\\"
+        | "`"
+        | "n"
+        | "r"
+        | "t"
+        | "0"
+        | ("x" ~ ASCII_HEX_DIGIT ~ ASCII_HEX_DIGIT)
+        | ("X" ~ ASCII_HEX_DIGIT ~ ASCII_HEX_DIGIT)
+    )
+}

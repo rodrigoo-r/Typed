@@ -1,1 +1,0 @@
-Shows Typed's version information.
