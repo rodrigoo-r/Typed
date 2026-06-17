@@ -29,13 +29,13 @@ void Machine::Flush()
 {
     auto start = state.GetStart();
     auto size = state.GetSize();
-    auto ptr = contents.Ptr() + start;
+    auto ptr = contents.data() + start;
     ADT::Lang::Token token{
         {
             state.GetTokenLine(),
             state.GetTokenColumn()
         },
-        Celery::Str::External{ptr, size},
+        std::string_view{ptr, size},
         ADT::Lang::TokenType::Add
     };
 
@@ -64,7 +64,7 @@ void Machine::Flush()
         {
             found = true;
             token.type = it->second;
-            token.value = Celery::Str::External{"", 0};
+            token.value = std::string_view{};
         }
         else
         {
@@ -81,7 +81,7 @@ void Machine::Flush()
         }
     }
 
-    tokens.PushBack(std::move(token));
+    tokens.push_back(std::move(token));
     state.Reset();
     start = contents.Pos();
 }

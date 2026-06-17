@@ -36,10 +36,9 @@ ADT::Runtime::Object FileSystem::IsSymLink(
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
     auto path = Support::Runtime::ConvertToString(str);
-    std::string std_path{path.Ptr(), path.Size()};
 
     return {
         ADT::Runtime::ObjectType::Boolean,
-        std::filesystem::is_symlink(std_path)
+        std::filesystem::is_symlink(path)
     };
 }

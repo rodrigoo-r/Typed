@@ -37,14 +37,13 @@ ADT::Runtime::Object FileSystem::FileName(
     auto &path_obj = args[0];
     auto path_ext = Support::Runtime::AccessString(path_obj);
     auto path_str = Support::Runtime::ConvertToString(path_ext);
-    std::string std_path{path_str.Ptr(), path_str.Size()};
 
-    auto path = std::filesystem::path(std_path);
+    auto path = std::filesystem::path(path_str);
     auto res = path.stem();
     auto res_str = res.string();
 
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::String(res_str.data(), res_str.size())
+        std::move(res_str)
     };
 }

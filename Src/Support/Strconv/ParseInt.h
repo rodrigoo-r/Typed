@@ -18,16 +18,15 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
-
 
 #include <climits>
+#include <string_view>
 
 namespace Typed::Support::Strconv
 {
-    inline int ParseInt(Celery::Str::External &str)
+    inline int ParseInt(std::string_view &str)
     {
-        auto size = str.Size();
+        auto size = str.size();
         size_t i = 0;
 
         // Skip leading whitespace

@@ -18,16 +18,16 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
+#include "Base.h"
 
 namespace Typed::ADT::Exception
 {
     class UnknownEntryPoint :
-        public Celery::Except::Exception
+        public Base
     {
     public:
         UnknownEntryPoint() :
-            Exception("Unknown entry point")
+            Base("Unknown entry point")
         {}
     };
 }

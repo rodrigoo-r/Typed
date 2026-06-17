@@ -35,20 +35,20 @@ ADT::Runtime::Object Strings::Add(
     auto target = Support::Runtime::AccessString(obj);
     auto &str_obj = args[1];
     auto request_str = Support::Runtime::AccessString(str_obj);
-    char *ptr = target.Ptr();
-    Celery::Trait::VeryLarge size = target.Size();
+    const char *ptr = target.data();
+    size_t size = target.size();
 
-    if (!std::holds_alternative<Celery::Str::String>(obj.value))
+    if (!std::holds_alternative<std::string>(obj.value))
     {
-        obj.value = Celery::Str::String(ptr, size);
+        obj.value = std::string(ptr, size);
     }
 
-    ptr = request_str.Ptr();
-    size = request_str.Size();
+    ptr = request_str.data();
+    size = request_str.size();
 
     // Add the value to the string
     auto &str = Support::Runtime::GetOwnedStrObj(obj);
-    str.Write(ptr, size);
+    str.append(ptr, size);
 
     return obj;
 }

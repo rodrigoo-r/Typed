@@ -37,7 +37,7 @@ ADT::Runtime::Object Lists::Set(
     auto &obj = args[2];
 
     // Make sure the element is within bounds
-    if (idx >= list->Size())
+    if (idx >= list->size())
     {
         throw ADT::Exception::OutOfBounds(
             trace->line,

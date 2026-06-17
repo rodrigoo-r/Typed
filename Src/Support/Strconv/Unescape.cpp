@@ -19,6 +19,7 @@
 
 #include "Unescape.h"
 
+#include "ADT/Exception/UnknownFormat.h"
 #include "ADT/Lang/AST.h"
 
 using namespace Typed;
@@ -41,39 +42,39 @@ int HexDigit(char c)
 
 void AddEscapeIdx(
     ADT::Stream::File *file,
-    Celery::Str::String &result
+    std::string &result
 )
 {
     if (file != nullptr)
     {
-        file->AddEscapeIdx(result.Size());
+        file->AddEscapeIdx(result.size());
     }
 }
 
-Celery::Str::String Strconv::Unescape(
+std::string Strconv::Unescape(
     auto &str,
     ADT::Lang::AST *trace,
     ADT::Stream::File *file
 )
 {
-    auto size = str.Size();
+    auto size = str.size();
 
-    if (memchr(str.Ptr(), '\\', size) == nullptr)
+    if (memchr(str.data(), '\\', size) == nullptr)
     {
-        if constexpr (std::is_same_v<std::decay_t<decltype(str)>, Celery::Str::String>)
+        if constexpr (std::is_same_v<std::decay_t<decltype(str)>, std::string>)
         {
             return std::move(str);
         }
         else
         {
-            return {str.Ptr(), size};
+            return {str.data(), size};
         }
     }
 
-    Celery::Str::String result;
-    result.Resize(size);
+    std::string result;
+    result.reserve(size);
 
-    const char *ptr = str.Ptr();
+    const char *ptr = str.data();
     const char *end = ptr + size;
 
     while (ptr < end)
@@ -82,13 +83,13 @@ Celery::Str::String Strconv::Unescape(
 
         if (slash == nullptr)
         {
-            result.Write(ptr, static_cast<size_t>(end - ptr));
+            result.append(ptr, static_cast<size_t>(end - ptr));
 
             break;
         }
 
         // Copy plain text block.
-        result.Write(ptr, static_cast<size_t>(slash - ptr));
+        result.append(ptr, static_cast<size_t>(slash - ptr));
 
         ptr = slash;
 
@@ -120,7 +121,7 @@ Celery::Str::String Strconv::Unescape(
                 throw ADT::Exception::UnknownFormat();
             }
 
-            result.PushBack(static_cast<char>((hi << 4) | lo));
+            result.push_back(static_cast<char>((hi << 4) | lo));
 
             ptr += 4;
             continue;
@@ -134,35 +135,35 @@ Celery::Str::String Strconv::Unescape(
             case '"':
             case '\'':
             case '\\':
-                result.PushBack(next);
+                result.push_back(next);
                 break;
 
             case 'a':
-                result.PushBack('\a');
+                result.push_back('\a');
                 break;
 
             case 'b':
-                result.PushBack('\b');
+                result.push_back('\b');
                 break;
 
             case 'f':
-                result.PushBack('\f');
+                result.push_back('\f');
                 break;
 
             case 'n':
-                result.PushBack('\n');
+                result.push_back('\n');
                 break;
 
             case 'r':
-                result.PushBack('\r');
+                result.push_back('\r');
                 break;
 
             case 't':
-                result.PushBack('\t');
+                result.push_back('\t');
                 break;
 
             case 'v':
-                result.PushBack('\v');
+                result.push_back('\v');
                 break;
 
             default:
@@ -181,17 +182,17 @@ Celery::Str::String Strconv::Unescape(
 }
 
 template
-Celery::Str::String
-Strconv::Unescape<Celery::Str::String>(
-    Celery::Str::String&,
+std::string
+Strconv::Unescape<std::string>(
+    std::string&,
     ADT::Lang::AST*,
     ADT::Stream::File*
 );
 
 template
-Celery::Str::String
-Strconv::Unescape<Celery::Str::External>(
-    Celery::Str::External&,
+std::string
+Strconv::Unescape<std::string_view>(
+    std::string_view&,
     ADT::Lang::AST*,
     ADT::Stream::File*
 );

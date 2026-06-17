@@ -34,9 +34,9 @@ ADT::Runtime::Object Strings::ReplaceAll(
 )
 {
     auto str = Support::Runtime::AccessString(args[0]);
-    args.EmplaceBack(
+    args.emplace_back(
         ADT::Runtime::ObjectType::Integer,
-        (int)str.Size()
+        (int)str.size()
     );
 
     return ReplaceMany(args, trace);

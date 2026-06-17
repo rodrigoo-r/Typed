@@ -18,18 +18,17 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
 
 #include "ADT/Runtime/Object.h"
 
 namespace Typed::Support::Runtime
 {
-    inline Celery::Str::External AccessString(ADT::Runtime::Object &obj)
+    inline std::string_view AccessString(ADT::Runtime::Object &obj)
     {
-        if (std::holds_alternative<Celery::Str::External>(obj.value))
+        if (std::holds_alternative<std::string_view>(obj.value))
             return GetStrObj(obj);
 
         auto &str = GetOwnedStrObj(obj);
-        return {str.Ptr(), str.Size()};
+        return {str.data(), str.size()};
     }
 }

@@ -84,7 +84,7 @@ void Format::Object(
 template
 void Format::Object(
     ADT::Runtime::Object &obj,
-    Celery::Str::String &adapter
+    std::string &adapter
 );
 
 template

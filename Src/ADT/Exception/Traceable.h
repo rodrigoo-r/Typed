@@ -18,25 +18,32 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
 
+#include <exception>
 #include "ADT/Core/Traceable.h"
-#include "Support/Strconv/ParseFloat.h"
 
 namespace Typed::ADT::Exception
 {
     class Traceable :
-        public Celery::Except::Exception,
+        public std::exception,
         public Core::Traceable
     {
+        const char *msg = nullptr;
+
     public:
         Traceable(
             const char *msg,
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            size_t line,
+            size_t column
         ) :
-            Exception(msg),
             Core::Traceable{line, column}
-        {}
+        {
+            this->msg = msg;
+        }
+
+        [[nodiscard]] const char *what() const noexcept
+        {
+            return msg;
+        }
     };
 }

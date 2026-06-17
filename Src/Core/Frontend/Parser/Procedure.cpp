@@ -36,14 +36,14 @@ void Machine::Procedure()
     Expect(ADT::Lang::TokenType::Identifier);
 
     auto node = AllocateBase(identifier, ADT::Lang::ASTType::Procedure);
-    root->children.PushBack(node);
+    root->children.push_back(node);
 
     // Case: The procedure has arguments
     auto peek = Support::Stream::SafePeek(tokens);
     if (peek.type == ADT::Lang::TokenType::With)
     {
         auto args = Allocate(ADT::Lang::ASTType::Arguments);
-        node->children.PushBack(args);
+        node->children.push_back(args);
 
         Expect(ADT::Lang::TokenType::Arguments);
         peek = Support::Stream::SafePeek(tokens);
@@ -61,10 +61,10 @@ void Machine::Procedure()
 
             // Build the AST
             auto arg = AllocateBase(peek, ADT::Lang::ASTType::Argument);
-            arg->children.PushBack(AllocateBase(peek, ADT::Lang::ASTType::Identifier));
-            arg->children.PushBack(type);
+            arg->children.push_back(AllocateBase(peek, ADT::Lang::ASTType::Identifier));
+            arg->children.push_back(type);
 
-            args->children.PushBack(arg);
+            args->children.push_back(arg);
             peek = Support::Stream::SafePeek(tokens);
 
             // Make sure there is a comma if there's more arguments
@@ -81,8 +81,8 @@ void Machine::Procedure()
     if (peek.type == ADT::Lang::TokenType::Returns)
     {
         auto type = Allocate(ADT::Lang::ASTType::ReturnType);
-        node->children.PushBack(type);
-        type->children.PushBack(type);
+        node->children.push_back(type);
+        type->children.push_back(type);
     }
 
     Expect(ADT::Lang::TokenType::Begin);
@@ -90,7 +90,7 @@ void Machine::Procedure()
 
     // Now parse the body
     auto body = AllocateBase(peek, ADT::Lang::ASTType::Body);
-    node->children.PushBack(body);
+    node->children.push_back(body);
 
     BodyQueue body_queue = {
         {

@@ -37,9 +37,8 @@ ADT::Runtime::Object FileSystem::CreateDirectory(
     auto &path_obj = args[0];
     auto path_ext = Support::Runtime::AccessString(path_obj);
     auto path = Support::Runtime::ConvertToString(path_ext);
-    std::string std_path{path.Ptr(), path.Size()};
 
-    auto res = std::filesystem::create_directories(std_path);
+    auto res = std::filesystem::create_directories(path);
     if (!res)
     {
         throw ADT::Exception::CouldNotCreateDirectory(

@@ -27,8 +27,8 @@ namespace Typed::ADT::Exception
     {
     public:
         MismatchedType(
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            size_t line,
+            size_t column
         ) :
             Traceable(
                 "Mismatched types",

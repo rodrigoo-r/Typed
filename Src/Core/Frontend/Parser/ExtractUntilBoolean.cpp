@@ -31,8 +31,8 @@ Machine::TokenStreamView Machine::ExtractUntilBoolean(
 )
 {
     // Collect tokens until we find a delimiter
-    Celery::Trait::VeryLarge start = input.Pos();
-    Celery::Trait::VeryLarge size = 0;
+    size_t start = input.Pos();
+    size_t size = 0;
     auto found_delim = false;
 
     while (input.HasNext())
@@ -63,7 +63,7 @@ Machine::TokenStreamView Machine::ExtractUntilBoolean(
 
     // Construct the view
     return {
-        input.Ptr() + start,
+        input.data() + start,
         size
     };
 }

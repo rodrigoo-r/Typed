@@ -18,7 +18,7 @@
 //
 
 #pragma once
-#include <Celery/Array/SmallVector.h>
+#include <vector>
 
 #include "ADT/Memory/HeapRef.h"
 
@@ -31,14 +31,10 @@ namespace Typed::ADT::Runtime
 namespace Typed::ADT::List
 {
     using Object =
-        Celery::Array::SmallVector<
-            Runtime::Object
-        >;
+        std::vector<Runtime::Object>;
 
     using DynamicObject =
         Memory::HeapRef<
-            Celery::Array::Vector<
-                Runtime::Object
-            >
+            std::vector<Runtime::Object>
         >;
 }

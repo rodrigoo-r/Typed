@@ -46,12 +46,12 @@ void Machine::If(
         Support::Equality::TokenType
     >(tokens, ADT::Lang::TokenType::Then);
 
-    parent->children.PushBack(ast);
+    parent->children.push_back(ast);
     Expect(ADT::Lang::TokenType::Begin);
 
     // Parse the expression
     Expression(ast, condition_stream);
-    ast->children.PushBack(body);
+    ast->children.push_back(body);
 
     // Add the body to the queue
     body_queue.emplace_front(

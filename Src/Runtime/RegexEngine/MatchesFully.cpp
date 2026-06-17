@@ -36,10 +36,9 @@ ADT::Runtime::Object RegexEngine::MatchesFully(
     auto &str_obj = args[1];
     auto &regex = regex_ref.GetPattern();
     auto view = Support::Runtime::AccessString(str_obj);
-    auto std_view = std::string_view(view.Ptr(), view.Size());
 
     return {
         ADT::Runtime::ObjectType::Boolean,
-        RE2::FullMatch(std_view, *regex)
+        RE2::FullMatch(view, *regex)
     };
 }

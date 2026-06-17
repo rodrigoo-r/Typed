@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <Celery/Trait/Default.h>
+#include <cstddef>
 
 #include "EscapeType.h"
 
@@ -32,12 +32,12 @@ namespace Typed::ADT::Lang
         bool number_literal = false;
         bool float_literal = false;
         bool identifier = false;
-        Celery::Trait::VeryLarge start = 0;
-        Celery::Trait::VeryLarge line = 1;
-        Celery::Trait::VeryLarge column = 1;
-        Celery::Trait::VeryLarge size = 0;
-        Celery::Trait::VeryLarge token_line = 1;
-        Celery::Trait::VeryLarge token_column = 1;
+        size_t start = 0;
+        size_t line = 1;
+        size_t column = 1;
+        size_t size = 0;
+        size_t token_line = 1;
+        size_t token_column = 1;
         EscapeType escape_type = EscapeType::NoEscape;
 
     public:
@@ -102,7 +102,7 @@ namespace Typed::ADT::Lang
             float_literal = !float_literal;
         }
 
-        void SetStart(const Celery::Trait::VeryLarge &start)
+        void SetStart(const size_t &start)
         {
             this->start = start;
         }
@@ -117,22 +117,22 @@ namespace Typed::ADT::Lang
             return escape_type;
         }
 
-        [[nodiscard]] Celery::Trait::VeryLarge GetStart() const
+        [[nodiscard]] size_t GetStart() const
         {
             return start;
         }
 
-        [[nodiscard]] Celery::Trait::VeryLarge GetLine() const
+        [[nodiscard]] size_t GetLine() const
         {
             return line;
         }
 
-        [[nodiscard]] Celery::Trait::VeryLarge GetColumn() const
+        [[nodiscard]] size_t GetColumn() const
         {
             return column;
         }
 
-        [[nodiscard]] Celery::Trait::VeryLarge GetSize() const
+        [[nodiscard]] size_t GetSize() const
         {
             return size;
         }
@@ -159,20 +159,20 @@ namespace Typed::ADT::Lang
         }
 
         void SetTokenPosition(
-            const Celery::Trait::VeryLarge& line,
-            const Celery::Trait::VeryLarge& column
+            const size_t& line,
+            const size_t& column
         )
         {
             token_line = line;
             token_column = column;
         }
 
-        [[nodiscard]] Celery::Trait::VeryLarge GetTokenLine() const
+        [[nodiscard]] size_t GetTokenLine() const
         {
             return token_line;
         }
 
-        [[nodiscard]] Celery::Trait::VeryLarge GetTokenColumn() const
+        [[nodiscard]] size_t GetTokenColumn() const
         {
             return token_column;
         }

@@ -42,8 +42,8 @@ Machine::TreePtr Machine::ArithmeticBase(
         // Create the AST and return it
         auto lhs = ArithmeticLHS(input);
         auto ast = AllocateBase(name, ADT::Lang::ASTType::Add);
-        ast->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
-        ast->children.PushBack(lhs);
+        ast->children.push_back(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+        ast->children.push_back(lhs);
 
         return ast;
     }
@@ -56,8 +56,8 @@ Machine::TreePtr Machine::ArithmeticBase(
 
     // Create the AST and return it
     auto ast = AllocateBase(name, ADT::Lang::ASTType::Add);
-    ast->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
-    ast->children.PushBack(lhs);
+    ast->children.push_back(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+    ast->children.push_back(lhs);
 
     return ast;
 }

@@ -36,7 +36,7 @@ ADT::Runtime::Object Lists::Add(
     auto &list = Support::Runtime::GetListObj(args[0]);
 
     // Push all args to the list
-    for (auto i = 1; i < args.Size(); i++)
+    for (auto i = 1; i < args.size(); i++)
     {
         auto &arg = args[i];
 
@@ -52,7 +52,7 @@ ADT::Runtime::Object Lists::Add(
             );
         }
 
-        list->PushBack(arg);
+        list->push_back(arg);
     }
 
     return {};

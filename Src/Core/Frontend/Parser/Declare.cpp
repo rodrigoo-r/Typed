@@ -29,7 +29,7 @@ void Machine::Declare(TreePtr parent)
     // Syntax:
     // Declare <Identifier> As <Type> With <Expression>
     auto decl = Allocate(ADT::Lang::ASTType::Declare);    // Consume the Declare token
-    parent->children.PushBack(decl);
+    parent->children.push_back(decl);
 
     auto &name = Support::Stream::SafePeek(tokens);
     Expect(ADT::Lang::TokenType::Identifier);
@@ -38,8 +38,8 @@ void Machine::Declare(TreePtr parent)
     auto type = Type();
 
     // Build the AST structure
-    decl->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
-    decl->children.PushBack(type);
+    decl->children.push_back(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+    decl->children.push_back(type);
 
     // Allow variables with no initial value
     if (

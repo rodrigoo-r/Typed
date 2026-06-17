@@ -30,7 +30,7 @@ using namespace Typed::Core::Frontend::Lexer;
 Machine::StreamRef Machine::Lex()
 {
     // Clear the token stream
-    tokens.Clear();
+    tokens.clear();
 
     // Iterate over the contents
     while (contents.HasNext())

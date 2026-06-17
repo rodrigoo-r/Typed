@@ -36,6 +36,6 @@ ADT::Runtime::Object Strings::Size(
 
     return {
         ADT::Runtime::ObjectType::Integer,
-        (int)str.Size()
+        (int)str.size()
     };
 }

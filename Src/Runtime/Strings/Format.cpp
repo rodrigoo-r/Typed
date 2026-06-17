@@ -34,7 +34,7 @@ ADT::Runtime::Object Strings::Format(
 {
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
-    Celery::Str::String result;
+    std::string result;
 
     Support::Format::Format(
         str,

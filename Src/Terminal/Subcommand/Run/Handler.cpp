@@ -19,8 +19,6 @@
 
 #include "Handler.h"
 
-#include <Celery/Io/Io.h>
-
 #include "Core/Backend/Walker.h"
 #include "Core/Frontend/Lexer/Lexer.h"
 #include "Core/Frontend/Parser/Parser.h"
@@ -60,7 +58,8 @@ void Subcommand::Run(const std::string &input)
     );
 
     // Deallocate tokens' memory, freeing contents
-    tokens.Reset();
+    tokens.clear();
+    tokens.shrink_to_fit();
 
     Core::MiddleEnd::PreWalker pre_walker(root);
     auto &file = Support::Failable::Failable::Try(

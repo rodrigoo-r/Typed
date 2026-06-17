@@ -19,8 +19,6 @@
 
 #include "Dictionary.h"
 
-#include <Celery/Io/Stream.h>
-
 #include "ADT/Runtime/Object.h"
 #include "ADT/Stdout/Wrapper.h"
 #include "Object.h"
@@ -37,26 +35,26 @@ void Format::Dictionary(
 {
     auto &val = Runtime::GetDictionaryObj(obj);
 
-    adapter.Write("Dictionary(", 11);
+    adapter.append("Dictionary(", 11);
 
     auto last = val->size() - 1;
-    Celery::Trait::VeryLarge i = 0;
+    size_t i = 0;
 
     for (auto &pair : *val)
     {
         Object(pair.first, adapter);
-        adapter.Write(" : ", 3);
+        adapter.append(" : ", 3);
         Object(pair.second, adapter);
 
         if (i != last)
         {
-            adapter.Write(", ", 2);
+            adapter.append(", ", 2);
         }
 
         i++;
     }
 
-    adapter.Write(')');
+    adapter.append(")", 1);
 }
 
 template
@@ -68,5 +66,5 @@ void Format::Dictionary(
 template
 void Format::Dictionary(
     ADT::Runtime::Object &,
-    Celery::Str::String &
+    std::string &
 );

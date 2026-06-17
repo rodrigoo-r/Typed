@@ -28,8 +28,8 @@ namespace Typed::ADT::Exception
     {
     public:
         MismatchedArgCount(
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            size_t line,
+            size_t column
         ) :
             Traceable(
                 "Mismatched argument count",

@@ -26,8 +26,8 @@ using namespace Typed::Core::Frontend::Lexer;
 
 void Machine::Comment()
 {
-    auto ptr = contents.Ptr() + contents.Pos();
-    auto end = ptr + contents.Size();
+    auto ptr = contents.data() + contents.Pos();
+    auto end = ptr + contents.size();
 
     // Find the next newline
     auto newline = std::find(ptr, end, '\n');
@@ -38,8 +38,8 @@ void Machine::Comment()
     }
     else
     {
-        // Move the contents position to the end of the stream
-        contents.SetPos(contents.Size());
+        // Move the content position to the end of the stream
+        contents.SetPos(contents.size());
     }
 
     state.AddLine();

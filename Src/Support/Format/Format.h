@@ -26,7 +26,7 @@ namespace Typed::Support::Format
 {
     template <typename Adapter>
     void Format(
-        Celery::Str::External &fmt,
+        std::string_view &fmt,
         ADT::List::Object &args,
         Adapter &adapter,
         ADT::Lang::AST *trace

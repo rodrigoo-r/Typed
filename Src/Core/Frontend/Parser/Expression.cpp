@@ -47,21 +47,21 @@ void Machine::Expression(
 )
 {
     ExprQueue queue;
-    queue.EmplaceBack(input, body);
+    queue.emplace_back(input, body);
 
-    while (!queue.Empty())
+    while (!queue.empty())
     {
-        auto [expr, parent] = queue.Back();
-        queue.PopBack();
+        auto [expr, parent] = queue.back();
+        queue.pop_back();
 
-        if (expr.Empty()) continue;
+        if (expr.empty()) continue;
 
         // Create the expression AST
         auto ast = AllocateBase(
             Support::Stream::SafePeek(expr),
             ADT::Lang::ASTType::Expression
         );
-        parent->children.PushBack(ast);
+        parent->children.push_back(ast);
 
         // Get the candidate to determine the expression type
         auto &candidate = Support::Stream::SafeNext(expr);
@@ -180,6 +180,6 @@ void Machine::Expression(
             );
         }
 
-        ast->children.PushBack(result);
+        ast->children.push_back(result);
     }
 }

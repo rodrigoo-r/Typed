@@ -38,7 +38,7 @@ ADT::Runtime::Object FileSystem::ScanDirectory(
     auto path_ext = Support::Runtime::AccessString(path_obj);
     auto path = Support::Runtime::ConvertToString(path_ext);
 
-    std::string path_str{path.Ptr(), path.Size()};
+    std::string path_str{path.data(), path.size()};
     auto res = std::filesystem::directory_iterator(path_str);
     auto res_list = ADT::List::DynamicObject::Make();
 
@@ -46,11 +46,11 @@ ADT::Runtime::Object FileSystem::ScanDirectory(
     {
         auto &entry_path = entry.path();
         auto entry_path_str = entry_path.string();
-        Celery::Str::String entry_path_obj;
+        std::string entry_path_obj;
 
-        entry_path_obj.Resize(entry_path_str.size());
-        entry_path_obj.Write(entry_path_str.data(), entry_path_str.size());
-        res_list->PushBack({
+        entry_path_obj.reserve(entry_path_str.size());
+        entry_path_obj.append(entry_path_str.data(), entry_path_str.size());
+        res_list->push_back({
             ADT::Runtime::ObjectType::String,
             std::move(entry_path_obj)
         });

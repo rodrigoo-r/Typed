@@ -19,10 +19,6 @@
 
 #pragma once
 
-#include <Celery/Misc/Hash.h>
-#include <Celery/String/External.h>
-
-
 #include "ADT/PreWalker/Procedure.h"
 #include "Dense.h"
 
@@ -30,8 +26,7 @@ namespace Typed::ADT::Map
 {
     using Procedure =
         Dense<
-            Celery::Str::External,
-            PreWalker::Procedure,
-            Celery::Misc::Hash
+            std::string_view,
+            PreWalker::Procedure
         >;
 }

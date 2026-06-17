@@ -42,7 +42,7 @@ ADT::Runtime::Object Strings::FindIndexes(
 
     auto result = ADT::List::DynamicObject::Make();
 
-    if (str.Empty() || target.Empty())
+    if (str.empty() || target.empty())
     {
         return {
             ADT::Runtime::ObjectType::List,
@@ -50,11 +50,11 @@ ADT::Runtime::Object Strings::FindIndexes(
         };
     }
 
-    for (size_t i = 0; i + target.Size() <= str.Size(); ++i)
+    for (size_t i = 0; i + target.size() <= str.size(); ++i)
     {
         bool matched = true;
 
-        for (size_t j = 0; j < target.Size(); ++j)
+        for (size_t j = 0; j < target.size(); ++j)
         {
             if (str[i + j] != target[j])
             {
@@ -65,19 +65,19 @@ ADT::Runtime::Object Strings::FindIndexes(
 
         if (matched)
         {
-            result->EmplaceBack(
+            result->emplace_back(
                 ADT::Runtime::ObjectType::Integer,
                 static_cast<int>(i)
             );
 
             if (max_matches > 0 &&
-                result->Size() >= static_cast<size_t>(max_matches))
+                result->size() >= static_cast<size_t>(max_matches))
             {
                 break;
             }
 
             // Skip over the matched substring to avoid overlaps
-            i += target.Size() - 1;
+            i += target.size() - 1;
         }
     }
 

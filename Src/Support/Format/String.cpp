@@ -35,7 +35,7 @@ void Format::String(
 )
 {
     auto val = Runtime::AccessString(obj);
-    adapter.Write(val.Ptr(), val.Size());
+    adapter.append(val.data(), val.size());
 }
 
 template
@@ -47,5 +47,5 @@ void Format::String(
 template
 void Format::String(
     ADT::Runtime::Object &,
-    Celery::Str::String &
+    std::string &
 );

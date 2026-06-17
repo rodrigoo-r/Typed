@@ -11,8 +11,8 @@ namespace Typed::Support::Runtime
     inline void TypeCheck(
         ADT::Runtime::ObjectType expected,
         ADT::Runtime::ObjectType actual,
-        Celery::Trait::VeryLarge line,
-        Celery::Trait::VeryLarge column
+        size_t line,
+        size_t column
     )
     {
         // Find the expected type

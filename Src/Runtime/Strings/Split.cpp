@@ -36,16 +36,16 @@ ADT::Runtime::Object Strings::Split(
     auto delimiter = Support::Runtime::AccessString(args[1]);
 
     auto result = ADT::List::DynamicObject::Make();
-    Celery::Str::String current;
+    std::string current;
     size_t i = 0;
 
-    while (i < str.Size())
+    while (i < str.size())
     {
         bool match = true;
 
-        if (i + delimiter.Size() <= str.Size())
+        if (i + delimiter.size() <= str.size())
         {
-            for (auto j = 0; j < delimiter.Size(); ++j)
+            for (auto j = 0; j < delimiter.size(); ++j)
             {
                 if (str[i + j] != delimiter[j])
                 {
@@ -61,21 +61,21 @@ ADT::Runtime::Object Strings::Split(
 
         if (match)
         {
-            result->EmplaceBack(
+            result->emplace_back(
                 ADT::Runtime::ObjectType::String,
                 std::move(current)
             );
 
-            i += delimiter.Size();
+            i += delimiter.size();
         }
         else
         {
-            current.PushBack(str[i]);
+            current.push_back(str[i]);
             ++i;
         }
     }
 
-    result->EmplaceBack(
+    result->emplace_back(
         ADT::Runtime::ObjectType::String,
         std::move(current)
     );

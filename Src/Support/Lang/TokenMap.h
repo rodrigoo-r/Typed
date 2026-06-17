@@ -18,9 +18,6 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
-#include <Celery/Misc/Hash.h>
-
 
 #include "ADT/Lang/TokenType.h"
 #include "ADT/Map/Dense.h"
@@ -28,9 +25,8 @@
 namespace Typed::Support::Lang
 {
     inline ADT::Map::Dense<
-        Celery::Str::External,
-        ADT::Lang::TokenType,
-        Celery::Misc::Hash
+        std::string_view,
+        ADT::Lang::TokenType
     > TokenMap = {
         {"Use", ADT::Lang::TokenType::Use},
 

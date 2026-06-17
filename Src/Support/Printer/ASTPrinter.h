@@ -18,7 +18,6 @@
 //
 
 #pragma once
-#include <Celery/Io/Io.h>
 #include <magic_enum/magic_enum.hpp>
 
 #include "ADT/Lang/AST.h"
@@ -31,17 +30,16 @@ namespace Typed::Support::Printer
 
         void DoPrint(ADT::Lang::AST *node, int indent = 0)
         {
-            auto raw_view = magic_enum::enum_name(node->type);
-            Celery::Str::External view{raw_view.data(), raw_view.size()};
+            auto view = magic_enum::enum_name(node->type);
 
             for (int i = 0; i < indent; i++)
-                Celery::Io::Print("  ");
+                std::cout << "  ";
 
-            Celery::Io::Println(
-                view,
-                node->value.Empty() ? "" : " : ",
-                node->value
-            );
+            std::cout
+                << view
+                << (node->value.empty() ? "" : " : ")
+                << node->value
+            ;
 
             for (auto &child : node->children)
             {

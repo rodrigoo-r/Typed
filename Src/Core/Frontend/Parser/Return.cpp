@@ -32,7 +32,7 @@ void Machine::Return(TreePtr parent)
         ADT::Lang::ASTType::Return
     );
 
-    parent->children.PushBack(node);
+    parent->children.push_back(node);
 
     // Parse the expression
     Expression(node);

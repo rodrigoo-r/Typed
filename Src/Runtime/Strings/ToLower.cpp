@@ -29,20 +29,19 @@ using namespace Typed::Runtime::Strings;
 
 ADT::Runtime::Object Strings::ToLower(
     ADT::List::Object &args,
-    ADT::Lang::AST *trace
+    ADT::Lang::AST *_
 )
 {
     auto str = Support::Runtime::AccessString(args[0]);
-    Celery::Str::String result;
+    std::string result;
 
     // Resize the result
-    result.ResizeFill(str.Size(), ' ');
+    result.reserve(str.size());
 
     // Write the string
-    for (auto i = 0; i < str.Size(); i++)
+    for (char c : str)
     {
-        auto c = str[i];
-        result[i] = std::tolower(c);
+        result.push_back(std::tolower(c));
     }
 
     return {

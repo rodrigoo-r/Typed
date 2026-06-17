@@ -38,5 +38,5 @@ void Machine::Use()
     // Consume the semicolon
     Expect(ADT::Lang::TokenType::Semicolon);
 
-    root->children.PushBack(node);
+    root->children.push_back(node);
 }

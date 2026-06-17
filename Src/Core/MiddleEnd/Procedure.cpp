@@ -82,7 +82,7 @@ void PreWalker::Procedure(TreePtr ast)
             }
 
             // Push the argument
-            proc.arguments.EmplaceBack(
+            proc.arguments.emplace_back(
                 arg_name,
                 runtime_type
             );

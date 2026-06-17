@@ -33,9 +33,9 @@ ADT::Runtime::Object Strings::TrimLeft(
 {
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
-    char *ptr = str.Ptr();
-    Celery::Trait::VeryLarge size = str.Size();
-    Celery::Trait::VeryLarge start = 0;
+    const char *ptr = str.data();
+    size_t size = str.size();
+    size_t start = 0;
 
     // Remove all empty characters
     while (
@@ -60,7 +60,7 @@ ADT::Runtime::Object Strings::TrimLeft(
         {
             return {
                 ADT::Runtime::ObjectType::String,
-                Celery::Str::External("", 0)
+                std::string_view{}
             };
         }
 
@@ -72,13 +72,13 @@ ADT::Runtime::Object Strings::TrimLeft(
     {
         return {
             ADT::Runtime::ObjectType::String,
-            Celery::Str::External(ptr + start, size - start)
+            std::string_view(ptr + start, size - start)
         };
     }
 
     // Otherwise, return an owned string
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::String(ptr + start, size - start)
+        std::string_view(ptr + start, size - start)
     };
 }

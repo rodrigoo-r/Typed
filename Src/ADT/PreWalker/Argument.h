@@ -14,7 +14,6 @@
 */
 
 #pragma once
-#include <Celery/String/External.h>
 
 #include "ADT/Runtime/ObjectType.h"
 
@@ -22,7 +21,7 @@ namespace Typed::ADT::PreWalker
 {
     struct Argument
     {
-        Celery::Str::External name;
+        std::string_view name;
         Runtime::ObjectType type;
     };
 }

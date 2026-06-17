@@ -86,9 +86,9 @@ Machine::TreePtr Machine::BooleanOperator(
         if (current_precedence <= last_precedence)
         {
             // Just wrap in a new binary operator
-            op->children.PushBack(result);
-            op->children.PushBack(expr);
-            queue.EmplaceBack(stream, expr);
+            op->children.push_back(result);
+            op->children.push_back(expr);
+            queue.emplace_back(stream, expr);
 
             result = op;
             last_op = op_token.type;
@@ -96,16 +96,17 @@ Machine::TreePtr Machine::BooleanOperator(
         else
         {
             // Take the current RHS of the lower-precedence operator
-            auto last_rhs = result->children.PopBackMove();
+            auto last_rhs = result->children.back();
+            result->children.pop_back();
 
             // Build the higher-precedence subtree
-            op->children.PushBack(last_rhs);
-            op->children.PushBack(expr);
+            op->children.push_back(last_rhs);
+            op->children.push_back(expr);
 
-            queue.EmplaceBack(stream, expr);
+            queue.emplace_back(stream, expr);
 
             // Reattach it as the RHS of the existing operator
-            result->children.PushBack(op);
+            result->children.push_back(op);
         }
     }
 

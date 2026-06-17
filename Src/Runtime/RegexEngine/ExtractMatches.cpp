@@ -37,15 +37,14 @@ ADT::Runtime::Object RegexEngine::ExtractMatches(
     auto source = Support::Runtime::AccessString(args[1]);
     auto &regex = regex_ref.GetPattern();
 
-    auto std_view = std::string_view(source.Ptr(), source.Size());
     std::string match;
     auto result = ADT::List::DynamicObject::Make();
 
-    while (RE2::FindAndConsume(&std_view, *regex, &match))
+    while (RE2::FindAndConsume(&source, *regex, &match))
     {
-        result->EmplaceBack(
+        result->emplace_back(
             ADT::Runtime::ObjectType::String,
-            Celery::Str::String{match.data(), match.size()}
+            std::move(match)
         );
     }
 

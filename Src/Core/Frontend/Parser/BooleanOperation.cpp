@@ -42,13 +42,13 @@ Machine::TreePtr Machine::BooleanOperation(
 
     // Wrap the result inside an expression
     auto lhs_expr = AllocateBase(op_token, ADT::Lang::ASTType::Expression);
-    lhs_expr->children.PushBack(result);
-    op->children.PushBack(lhs_expr);
+    lhs_expr->children.push_back(result);
+    op->children.push_back(lhs_expr);
 
     auto stream = ExtractUntilBoolean(input, false);
     auto expr = AllocateBase(op_token, ADT::Lang::ASTType::Expression);
-    queue.EmplaceBack(stream, expr);
-    op->children.PushBack(expr);
+    queue.emplace_back(stream, expr);
+    op->children.push_back(expr);
 
     switch (op_token.type)
     {

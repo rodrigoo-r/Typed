@@ -26,8 +26,8 @@ namespace Typed::ADT::Exception
     {
     public:
         UnterminatedString(
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            size_t line,
+            size_t column
         ) :
             Traceable(
                 "Unterminated string literal",

@@ -34,7 +34,7 @@ ADT::Runtime::Object Lists::Access(
     auto &list = Support::Runtime::GetListObj(args[0]);
     auto &idx = Support::Runtime::GetIntObj(args[1]);
 
-    if (idx >= list->Size())
+    if (idx >= list->size())
     {
         throw ADT::Exception::OutOfBounds(
             trace->line,

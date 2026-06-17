@@ -35,8 +35,8 @@ ADT::Runtime::Object Strings::Access(
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
     auto &idx = Support::Runtime::GetIntObj(args[1]);
-    char *ptr = str.Ptr();
-    Celery::Trait::VeryLarge size = str.Size();
+    const char *ptr = str.data();
+    size_t size = str.size();
 
     // Make sure that the index is within bounds
     if (idx >= size)
@@ -48,11 +48,13 @@ ADT::Runtime::Object Strings::Access(
     }
 
     // Return an owned string if the original is owned
-    if (obj.type == ADT::Runtime::ObjectType::String)
+    if (
+        std::holds_alternative<std::string>(obj.value)
+    )
     {
         return {
             ADT::Runtime::ObjectType::String,
-            Celery::Str::String(
+            std::string(
                 ptr + idx,
                 1
             )
@@ -62,7 +64,7 @@ ADT::Runtime::Object Strings::Access(
     // Otherwise, return a view
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::External(
+        std::string_view(
             ptr + idx,
             1
         )

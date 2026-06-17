@@ -18,7 +18,6 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
 
 #include "ADT/Core/Traceable.h"
 #include "TokenType.h"
@@ -28,7 +27,7 @@ namespace Typed::ADT::Lang
     struct Token :
         Core::Traceable
     {
-        Celery::Str::External value;
+        std::string_view value;
         TokenType type;
     };
 }

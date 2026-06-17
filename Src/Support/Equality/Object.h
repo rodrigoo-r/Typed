@@ -18,8 +18,6 @@
 //
 
 #pragma once
-#include <Celery/Misc/StringEqual.h>
-
 
 #include "ADT/Runtime/ObjectType.h"
 #include "Support/Runtime/GetObjValue.h"
@@ -38,20 +36,20 @@ namespace Typed::Support::Equality
         )
         {
             if (
-                std::holds_alternative<Celery::Str::String>(lhs.value)
+                std::holds_alternative<std::string>(lhs.value)
             )
             {
                 // Account for special cases
-                if (std::holds_alternative<Celery::Str::String>(rhs.value))
+                if (std::holds_alternative<std::string>(rhs.value))
                 {
                     auto &left_str = Runtime::GetOwnedStrObj(lhs);
                     auto &right_str = Runtime::GetOwnedStrObj(rhs);
-                    return Celery::Misc::StringEquality::Cmp(left_str, right_str);
+                    return left_str == right_str;
                 }
 
                 auto &left_str = Runtime::GetOwnedStrObj(lhs);
                 auto &right_str = Runtime::GetStrObj(rhs);
-                return Celery::Misc::StringEquality::Cmp(left_str, right_str);
+                return left_str == right_str;
             }
 
             if (
@@ -59,16 +57,16 @@ namespace Typed::Support::Equality
             )
             {
                 // Account for special cases
-                if (std::holds_alternative<Celery::Str::String>(rhs.value))
+                if (std::holds_alternative<std::string>(rhs.value))
                 {
                     auto &left_str = Runtime::GetStrObj(lhs);
                     auto &right_str = Runtime::GetOwnedStrObj(rhs);
-                    return Celery::Misc::StringEquality::Cmp(left_str, right_str);
+                    return left_str == right_str;
                 }
 
                 auto &left_str = Runtime::GetStrObj(lhs);
                 auto &right_str = Runtime::GetStrObj(rhs);
-                return Celery::Misc::StringEquality::Cmp(left_str, right_str);
+                return left_str == right_str;
             }
 
             if (lhs.type == ADT::Runtime::ObjectType::Boolean)

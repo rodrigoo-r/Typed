@@ -18,10 +18,10 @@
 //
 
 #pragma once
-#include <Celery/String/String.h>
 #include <re2/re2.h>
 
 #include "ADT/Memory/HeapRef.h"
+#include "absl/strings/cord.h"
 
 namespace Typed::ADT::Regex
 {
@@ -42,10 +42,9 @@ namespace Typed::ADT::Regex
             : pattern(nullptr)
         {}
 
-        void Build(Celery::Str::String &p)
+        void Build(std::string_view &p)
         {
-            std::string std_pattern{p.Ptr(), p.Size()};
-            pattern = PatternRef::Make(std_pattern);
+            pattern = PatternRef::Make(p);
         }
 
         auto &GetPattern()

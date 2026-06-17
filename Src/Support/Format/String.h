@@ -18,7 +18,6 @@
 //
 
 #pragma once
-#include <Celery/String/String.h>
 
 #include "ADT/List/Object.h"
 

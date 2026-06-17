@@ -20,7 +20,6 @@
 #include "PrintLine.h"
 
 #include "Print.h"
-#include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed;
 using namespace Typed::Runtime;
@@ -32,7 +31,7 @@ ADT::Runtime::Object IO::PrintLine(
 )
 {
     Print(args, trace);
-    Celery::Io::Println();
+    std::cout << std::endl;
 
     return {};
 }

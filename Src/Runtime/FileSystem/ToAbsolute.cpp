@@ -40,6 +40,6 @@ ADT::Runtime::Object FileSystem::ToAbsolute(
 
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::String{result_str.data(), result_str.size()}
+        std::move(result_str)
     };
 }

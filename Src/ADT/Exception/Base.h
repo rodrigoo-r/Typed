@@ -14,33 +14,29 @@
 */
 
 //
-// Created by Rodrigo on 5/19/26.
+// Created by Rodrigo on 5/30/26.
 //
 
 #pragma once
-#include "ADT/Lang/AST.h"
-#include "ADT/List/Object.h"
-#include "Argument.h"
 
-namespace Typed::ADT::PreWalker
+#include <exception>
+
+namespace Typed::ADT::Exception
 {
-    struct Procedure
+    class Base :
+        public std::exception
     {
-        using Tree =
-            Lang::AST;
+        const char *msg = nullptr;
 
-        using TreePtr =
-            Tree *;
+    public:
+        Base(const char *msg)
+        {
+            this->msg = msg;
+        }
 
-        using ArgumentList =
-            std::vector<Argument>;
-
-        ArgumentList arguments;
-        TreePtr body;
-        Runtime::ObjectType return_type = Runtime::ObjectType::Void;
-        bool variadic = false;
-
-        // Used for runtime-provided functions
-        Runtime::Object (*native)(List::Object &, TreePtr) = nullptr;
+        [[nodiscard]] const char *what() const noexcept override
+        {
+            return msg;
+        }
     };
 }

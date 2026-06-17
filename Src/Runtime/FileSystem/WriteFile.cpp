@@ -39,9 +39,8 @@ ADT::Runtime::Object FileSystem::WriteFile(
     auto path = Support::Runtime::ConvertToString(ext);
     auto content = Support::Runtime::AccessString(args[1]);
     auto content_str = Support::Runtime::ConvertToString(content);
-    std::string std_path{path.Ptr(), path.Size()};
 
-    std::ofstream file(std_path);
+    std::ofstream file(path);
 
     if (!file.is_open())
     {
@@ -51,14 +50,8 @@ ADT::Runtime::Object FileSystem::WriteFile(
         );
     }
 
-    // Read the file
-    std::string std_content(
-        content_str.Ptr(),
-        content_str.Size()
-    );
-
     // Write to the file
-    file << std_content;
+    file << content_str;
 
     // Close the file
     file.close();

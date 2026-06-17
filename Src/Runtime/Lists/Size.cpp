@@ -33,6 +33,6 @@ ADT::Runtime::Object Lists::Size(
 
     return {
         ADT::Runtime::ObjectType::Integer,
-        (int)list->Size()
+        (int)list->size()
     };
 }

@@ -37,15 +37,15 @@ Machine::TreePtr Machine::CallArgs(
     );
 
     auto start = input.Pos();
-    Celery::Trait::VeryLarge size = 0;
-    Celery::Trait::VeryLarge call_nest = 1;
+    size_t size = 0;
+    size_t call_nest = 1;
 
     // Create the argument AST
     auto arg = AllocateBase(
         Support::Stream::SafePeek(input),
         ADT::Lang::ASTType::Argument
     );
-    args->children.PushBack(arg);
+    args->children.push_back(arg);
 
     while (input.HasNext())
     {
@@ -59,12 +59,12 @@ Machine::TreePtr Machine::CallArgs(
         {
             // Create the view and push it
             TokenStreamView view{
-                input.Ptr() + start,
+                input.data() + start,
                 size
             };
 
             // Make sure the input isn't empty
-            if (view.Empty())
+            if (view.empty())
             {
                 throw ADT::Exception::UnexpectedToken(
                     input.Curr().line,
@@ -72,7 +72,7 @@ Machine::TreePtr Machine::CallArgs(
                 );
             }
 
-            queue.EmplaceBack(view, arg);
+            queue.emplace_back(view, arg);
             start = input.Pos();
             size = 0;
 
@@ -81,7 +81,7 @@ Machine::TreePtr Machine::CallArgs(
                 ADT::Lang::ASTType::Argument
             );
 
-            args->children.PushBack(arg);
+            args->children.push_back(arg);
         }
         else if (token.type == ADT::Lang::TokenType::Call)
         {
@@ -123,11 +123,11 @@ Machine::TreePtr Machine::CallArgs(
     if (size == 0) return args;
 
     TokenStreamView view{
-        input.Ptr() + start,
+        input.data() + start,
         size
     };
 
-    queue.EmplaceBack(view, arg);
+    queue.emplace_back(view, arg);
 
     return args;
 }

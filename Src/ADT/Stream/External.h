@@ -18,16 +18,17 @@
 //
 
 #pragma once
+#include <span>
 
-#include <Celery/Array/External.h>
-#include <Celery/Array/Stream.h>
+
+#include "ADT/Array/Stream.h"
 
 namespace Typed::ADT::Stream
 {
     template<typename T>
     using External =
-        Celery::Array::Pmr::Stream<
+        Array::Pmr::Stream<
             T,
-            Celery::Array::External<T>
+            std::span<T>
         >;
 }

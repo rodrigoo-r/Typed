@@ -19,8 +19,6 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
-#include <Celery/String/String.h>
 
 #include "ADT/List/Object.h"
 #include "ADT/Map/Dense.h"
@@ -64,22 +62,22 @@ namespace Typed::Support::Runtime
 
     auto &GetStrObj(auto &obj)
     {
-        return GetObjValue<Celery::Str::External>(obj);
+        return GetObjValue<std::string_view>(obj);
     }
 
     const auto &GetStrObj(const auto &obj)
     {
-        return GetObjValue<Celery::Str::External>(obj);
+        return GetObjValue<std::string_view>(obj);
     }
 
     auto &GetOwnedStrObj(auto &obj)
     {
-        return GetObjValue<Celery::Str::String>(obj);
+        return GetObjValue<std::string>(obj);
     }
 
     const auto &GetOwnedStrObj(const auto &obj)
     {
-        return GetObjValue<Celery::Str::String>(obj);
+        return GetObjValue<std::string>(obj);
     }
 
     auto &GetFloatObj(auto &obj)

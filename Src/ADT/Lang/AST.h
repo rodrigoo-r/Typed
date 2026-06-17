@@ -18,8 +18,8 @@
 //
 
 #pragma once
-#include <Celery/Array/Vector.h>
-#include <Celery/String/External.h>
+
+#include <vector>
 
 
 #include "ADT/Core/Traceable.h"
@@ -31,7 +31,7 @@ namespace Typed::ADT::Lang
         Core::Traceable
     {
         ASTType type;
-        Celery::Str::External value;
-        Celery::Array::Vector<AST *> children;
+        std::string_view value;
+        std::vector<AST *> children;
     };
 }

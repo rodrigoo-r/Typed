@@ -33,9 +33,9 @@ ADT::Runtime::Object Strings::TrimRight(
 {
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
-    char *ptr = str.Ptr();
-    Celery::Trait::VeryLarge size = str.Size();
-    Celery::Trait::VeryLarge end = size - 1;
+    const char *ptr = str.data();
+    size_t size = str.size();
+    size_t end = size - 1;
 
     // Remove all empty characters
     while (
@@ -58,22 +58,24 @@ ADT::Runtime::Object Strings::TrimRight(
     {
         return {
             ADT::Runtime::ObjectType::String,
-            Celery::Str::External("", 0)
+            std::string_view{}
         };
     }
 
     // If the string is a view, return a view
-    if (obj.type == ADT::Runtime::ObjectType::String)
+    if (
+        std::holds_alternative<std::string_view>(obj.value)
+    )
     {
         return {
             ADT::Runtime::ObjectType::String,
-            Celery::Str::External(ptr, end + 1)
+            std::string_view(ptr, end + 1)
         };
     }
 
     // Otherwise, return an owned string
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::String(ptr, end + 1)
+        std::string(ptr, end + 1)
     };
 }

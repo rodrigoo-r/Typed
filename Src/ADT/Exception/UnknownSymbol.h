@@ -18,7 +18,6 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
 
 #include "ADT/Core/Traceable.h"
 #include "Traceable.h"
@@ -30,8 +29,8 @@ namespace Typed::ADT::Exception
     {
     public:
         UnknownSymbol(
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            size_t line,
+            size_t column
         ) :
             Traceable(
                 "Unknown symbol",

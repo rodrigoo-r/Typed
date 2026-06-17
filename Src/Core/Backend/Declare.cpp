@@ -35,7 +35,7 @@ void Walker::Declare(
     // Note: redefining variables is allowed in Typed
     auto &name = body->children[0]->value;
     auto &type = body->children[1]->type;
-    bool has_init = body->children.Size() > 2;
+    bool has_init = body->children.size() > 2;
 
     if (
         type != ADT::Lang::ASTType::List &&
@@ -83,9 +83,8 @@ void Walker::Declare(
 
         ADT::Regex::Ref regex;
         auto str = Support::Runtime::AccessString(obj);
-        Celery::Str::String pattern{str.Ptr(), str.Size()};
 
-        regex.Build(pattern);
+        regex.Build(str);
         stack.Emplace(
             name,
             ADT::Runtime::ObjectType::Regex,

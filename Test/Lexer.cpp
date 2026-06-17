@@ -38,8 +38,8 @@ namespace
     {
         TokenType type;
         std::string value;
-        Celery::Trait::VeryLarge line;
-        Celery::Trait::VeryLarge column;
+        size_t line;
+        size_t column;
     };
 
     Typed::ADT::Stream::FileView MakeInput(std::string_view source)
@@ -47,11 +47,11 @@ namespace
         return {source.data(), source.size()};
     }
 
-    std::string TokenValue(const Celery::Str::External &value)
+    std::string TokenValue(const std::string_view &value)
     {
         return {
-            value.Ptr(),
-            value.Len()
+            value.data(),
+            value.size()
         };
     }
 
@@ -62,9 +62,9 @@ namespace
         auto &tokens = lexer.Lex();
 
         std::vector<ObservedToken> observed;
-        observed.reserve(tokens.Size());
+        observed.reserve(tokens.size());
 
-        for (auto i = 0u; i < tokens.Size(); i++)
+        for (auto i = 0u; i < tokens.size(); i++)
         {
             auto &token = tokens[i];
             observed.push_back(

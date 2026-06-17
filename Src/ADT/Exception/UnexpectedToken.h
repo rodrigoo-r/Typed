@@ -18,6 +18,7 @@
 //
 
 #pragma once
+#include <cstddef>
 
 #include "ADT/Exception/Traceable.h"
 
@@ -28,8 +29,8 @@ namespace Typed::ADT::Exception
     {
     public:
         UnexpectedToken(
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            size_t line,
+            size_t column
         ) :
             Traceable(
                 "Unexpected token",

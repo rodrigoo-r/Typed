@@ -18,16 +18,15 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
 
-#include <cmath>
 #include <limits>
+#include <string_view>
 
 namespace Typed::Support::Strconv
 {
-    inline float ParseFloat(Celery::Str::External &str)
+    inline float ParseFloat(std::string_view str)
     {
-        auto size = str.Size();
+        auto size = str.size();
         size_t i = 0;
 
         // Skip leading whitespace

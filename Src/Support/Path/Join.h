@@ -35,7 +35,7 @@ namespace Typed::Support::Path
         auto &obj = args[0];
         auto &list = Support::Runtime::GetListObj(obj);
 
-        if (list->Empty()) return {};
+        if (list->empty()) return {};
 
         std::filesystem::path path;
 
@@ -44,7 +44,7 @@ namespace Typed::Support::Path
         {
             Runtime::TypeCheck(
                 ADT::Runtime::ObjectType::String,
-                list->Front().type,
+                list->front().type,
                 trace->line,
                 trace->column
             );
@@ -52,13 +52,13 @@ namespace Typed::Support::Path
             if (elem.type == ADT::Runtime::ObjectType::String)
             {
                 auto &str = Runtime::GetStrObj(elem);
-                std::string owned{str.Ptr(), str.Size()};
+                std::string owned{str.data(), str.size()};
 
                 path /= owned;
             } else
             {
                 auto &str = Runtime::GetOwnedStrObj(elem);
-                std::string owned{str.Ptr(), str.Size()};
+                std::string owned{str.data(), str.size()};
 
                 path /= owned;
             }

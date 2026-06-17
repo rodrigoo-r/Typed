@@ -19,8 +19,6 @@
 
 #include "Format.h"
 
-#include <Celery/Io/Stream.h>
-
 #include "ADT/Exception/MismatchedArgCount.h"
 #include "ADT/List/Object.h"
 #include "ADT/Runtime/Object.h"
@@ -39,12 +37,12 @@ using namespace Typed::Support::Format;
 
 ADT::Runtime::Object GetArg(
     ADT::List::Object &args,
-    Celery::Trait::VeryLarge &idx,
+    size_t &idx,
     ADT::Lang::AST *trace
 )
 {
     // Make sure there are enough arguments
-    if (args.Size() <= idx)
+    if (args.size() <= idx)
     {
         throw ADT::Exception::MismatchedArgCount(
             trace->line,
@@ -59,21 +57,21 @@ ADT::Runtime::Object GetArg(
 
 template <typename Adapter>
 void Format::Format(
-    Celery::Str::External &fmt,
+    std::string_view &fmt,
     ADT::List::Object &args,
     Adapter &adapter,
     ADT::Lang::AST *trace
 )
 {
-    Celery::Trait::VeryLarge pos = 1;
+    size_t pos = 1;
 
     // Print the string character by character
-    for (auto i = 0; i < fmt.Size(); i++)
+    for (auto i = 0; i < fmt.size(); i++)
     {
         auto c = fmt[i];
 
         // Match formats
-        if (c == '$' && fmt.Size() > i + 1)
+        if (c == '$' && fmt.size() > i + 1)
         {
             auto f = fmt[i + 1];
             auto can_continue = true;
@@ -182,22 +180,22 @@ void Format::Format(
             }
         }
 
-        adapter.Write(c);
+        adapter.append(1, c);
     }
 }
 
 // Initialize template specialization
 template
 void Format::Format(
-    Celery::Str::External &fmt,
+    std::string_view &fmt,
     ADT::List::Object &args,
-    Celery::Str::String &adapter,
+    std::string &adapter,
     ADT::Lang::AST *trace
 );
 
 template
 void Format::Format(
-    Celery::Str::External &fmt,
+    std::string_view &fmt,
     ADT::List::Object &args,
     ADT::Stdout::Wrapper &adapter,
     ADT::Lang::AST *trace

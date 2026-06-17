@@ -18,13 +18,13 @@
 //
 
 #pragma once
-#include <Celery/Trait/Default.h>
+#include <cstddef>
 
 namespace Typed::ADT::Core
 {
     struct Traceable
     {
-        Celery::Trait::VeryLarge line;
-        Celery::Trait::VeryLarge column;
+        size_t line;
+        size_t column;
     };
 }

@@ -33,5 +33,5 @@ void Machine::ElseIf(
     auto last = ConditionGroup(parent, body_queue);
 
     If(last, body_queue);
-    last->children.Back()->type = ADT::Lang::ASTType::ElseIf;
+    last->children.back()->type = ADT::Lang::ASTType::ElseIf;
 }

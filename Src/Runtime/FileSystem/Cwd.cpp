@@ -38,7 +38,7 @@ ADT::Runtime::Object FileSystem::Cwd(
 
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::String(
+        std::string(
             str.data(),
             str.size()
         )

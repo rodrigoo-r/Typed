@@ -44,9 +44,8 @@ namespace Typed::Core::Backend
 
         using VariableStack =
             ADT::Scope::Stack<
-                Celery::Str::External,
-                ADT::Runtime::Object,
-                Celery::Misc::Hash
+                std::string_view,
+                ADT::Runtime::Object
             >;
 
     protected:

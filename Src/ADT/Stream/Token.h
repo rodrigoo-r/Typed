@@ -19,12 +19,10 @@
 
 #pragma once
 
-#include <Celery/Array/Stream.h>
-
 #include "ADT/Lang/Token.h"
 
 namespace Typed::ADT::Stream
 {
     using Token =
-        Celery::Array::Stream<Lang::Token>;
+        Array::Stream<Lang::Token>;
 }

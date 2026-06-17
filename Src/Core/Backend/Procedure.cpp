@@ -30,14 +30,14 @@ using namespace Typed::Core::Backend;
 void ProcessArg(
     ADT::List::Object &args,
     Walker::ProcedureRef procedure,
-    Celery::Trait::VeryLarge line,
-    Celery::Trait::VeryLarge column,
-    Celery::Trait::VeryLarge i,
+    size_t line,
+    size_t column,
+    size_t i,
     Walker::VariableStack &stack
 )
 {
     // Make sure the procedure has enough arguments
-    if (procedure.arguments.Size() <= i)
+    if (procedure.arguments.size() <= i)
     {
         throw ADT::Exception::MismatchedArgCount(
             line,
@@ -91,7 +91,7 @@ ADT::Runtime::Object Walker::Procedure(
 
     // Make sure there's the same number of args
     // as expected
-    if (procedure.arguments.Size() != args.Size() && !procedure.variadic)
+    if (procedure.arguments.size() != args.size() && !procedure.variadic)
     {
         throw ADT::Exception::MismatchedArgCount(
             line,
@@ -103,20 +103,20 @@ ADT::Runtime::Object Walker::Procedure(
     VariableStack stack;
 
     // Push all args to the stack
-    Celery::Trait::SignedVeryLarge args_size = args.Size();
+    long args_size = args.size();
 
     if (procedure.variadic)
     {
-        if (args.Empty())
+        if (args.empty())
         {
             throw ADT::Exception::MismatchedArgCount(line, column);
         }
 
         // Get the index where the arg type changes
         auto last = args[0].type;
-        Celery::Trait::SignedVeryLarge change = -1;
+        long change = -1;
 
-        for (auto i = 0; i < args.Size(); ++i)
+        for (auto i = 0; i < args.size(); ++i)
         {
             auto &arg = args[i];
             if (last != arg.type)
@@ -133,12 +133,12 @@ ADT::Runtime::Object Walker::Procedure(
 
         // Make sure all other args are the same type
         if (change == -1) change = 0;
-        for (auto i = change; i < args.Size(); ++i)
+        for (auto i = change; i < args.size(); ++i)
         {
             auto &arg = args[i];
 
             Support::Runtime::TypeCheck(
-                procedure.arguments[procedure.arguments.Size() - 1].type,
+                procedure.arguments[procedure.arguments.size() - 1].type,
                 arg.type,
                 line,
                 column

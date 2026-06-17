@@ -18,9 +18,6 @@
 //
 
 #pragma once
-#include <Celery/Misc/Hash.h>
-#include <Celery/String/External.h>
-
 
 #include "ADT/Map/Dense.h"
 #include "Runtime/Dictionaries/Package.h"
@@ -34,9 +31,8 @@
 namespace Typed::Support::Runtime
 {
     inline ADT::Map::Dense<
-        Celery::Str::External,
-        ADT::Map::Procedure,
-        Celery::Misc::Hash
+        std::string_view,
+        ADT::Map::Procedure
     > LibraryMap = {
         {"IO", Typed::Runtime::IO::Package},
         {"Lists", Typed::Runtime::Lists::Package},

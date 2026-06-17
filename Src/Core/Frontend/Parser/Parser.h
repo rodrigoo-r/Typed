@@ -61,7 +61,7 @@ namespace Typed::Core::Frontend::Parser
         };
 
         using ExprQueue =
-            Celery::Array::Vector<ExpressionQueueElement>;
+            std::vector<ExpressionQueueElement>;
 
         using BodyQueue =
             std::deque<BodyQueueElement>;

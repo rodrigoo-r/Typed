@@ -17,8 +17,6 @@
 // Created by Rodrigo on 5/23/26.
 //
 
-#include <Celery/Misc/StringEqual.h>
-
 #include "Support/Equality/Object.h"
 #include "Support/Runtime/GetObjValue.h"
 #include "Support/Runtime/TypeChecker.h"

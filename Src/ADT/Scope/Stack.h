@@ -91,7 +91,7 @@ namespace Typed::ADT::Scope
         {
             if (top == nullptr)
             {
-                throw Celery::Except::OutOfRange();
+                throw std::out_of_range("Out of range");
             }
 
             auto scope = top;

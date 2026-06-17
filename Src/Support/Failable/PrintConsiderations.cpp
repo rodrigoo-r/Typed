@@ -17,28 +17,25 @@
 // Created by Rodrigo on 5/30/26.
 //
 
-#include <Celery/Misc/Ansi.h>
 
 #include "Failable.h"
-#include "Support/Printer/ASTPrinter.h"
+#include "Support/Ansi/Ansi.h"
 
 using namespace Typed;
 using namespace Typed::Support;
 
 void Failable::Failable::PrintConsiderations()
 {
-    Celery::Io::Println();
+    std::cout << std::endl;
 
-    Celery::Io::Println(
-        Celery::Misc::Ansi::Bold::Bright::Magenta,
-        "note: ",
-        Celery::Misc::Ansi::Reset,
-        "if you believe this is a mistake, please open an issue at:"
-    );
-
-    Celery::Io::Println(
-        Celery::Misc::Ansi::Bold::Bright::Cyan,
-        "  https://github.com/rodrigoo-r/Typed/issues",
-        Celery::Misc::Ansi::Reset
-    );
+    std::cout
+        << Ansi::Bold::Bright::Magenta
+        << "note: "
+        << Ansi::Reset
+        << "if you believe this is a mistake, please open an issue at:"
+    << std::endl
+        << Ansi::Bold::Bright::Cyan
+        << "  https://github.com/rodrigoo-r/Typed/issues"
+        << Ansi::Reset
+    << std::endl;
 }

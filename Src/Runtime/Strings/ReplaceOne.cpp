@@ -32,7 +32,7 @@ ADT::Runtime::Object Strings::ReplaceOne(
     ADT::Lang::AST *_
 )
 {
-    args.EmplaceBack(
+    args.emplace_back(
         ADT::Runtime::ObjectType::Integer,
         1
     );

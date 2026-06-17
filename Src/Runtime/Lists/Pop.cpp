@@ -30,7 +30,7 @@ ADT::Runtime::Object Lists::Pop(
 )
 {
     auto &list = Support::Runtime::GetListObj(args[0]);
-    list->PopBack();
+    list->pop_back();
 
     return {};
 }

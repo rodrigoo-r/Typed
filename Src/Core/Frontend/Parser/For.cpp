@@ -30,7 +30,7 @@ void Machine::For(TreePtr parent, BodyQueue &body_queue)
 {
     auto &for_token = Support::Stream::SafePeek(tokens);
     auto ast = Allocate(ADT::Lang::ASTType::For);
-    parent->children.PushBack(ast);
+    parent->children.push_back(ast);
 
     auto &var_name = Support::Stream::SafePeek(tokens);
     Expect(ADT::Lang::TokenType::Identifier);
@@ -59,12 +59,12 @@ void Machine::For(TreePtr parent, BodyQueue &body_queue)
     body_queue.emplace_front(body, for_token);
 
     auto decl = AllocateBase(var_name, ADT::Lang::ASTType::Declare);
-    decl->children.PushBack(AllocateBase(var_name, ADT::Lang::ASTType::Identifier));
-    decl->children.PushBack(type);
+    decl->children.push_back(AllocateBase(var_name, ADT::Lang::ASTType::Identifier));
+    decl->children.push_back(type);
 
-    ast->children.PushBack(decl);
+    ast->children.push_back(decl);
     Expression(ast, from);
     Expression(ast, to);
     Expression(ast, step);
-    ast->children.PushBack(body);
+    ast->children.push_back(body);
 }

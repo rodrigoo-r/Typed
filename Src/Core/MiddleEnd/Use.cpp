@@ -26,5 +26,5 @@ using namespace Typed::Core::MiddleEnd;
 void PreWalker::Use(TreePtr ast)
 {
     // Push the imported lib to the import list directly
-    result.imports.PushBack(ast->value);
+    result.imports.push_back(ast->value);
 }

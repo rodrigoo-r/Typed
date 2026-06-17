@@ -39,6 +39,6 @@ ADT::Runtime::Object FileSystem::JoinPath(
     auto result_str = path.string();
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::String{result_str.data(), result_str.size()}
+        std::string{result_str.data(), result_str.size()}
     };
 }

@@ -39,12 +39,11 @@ ADT::Runtime::Object RegexEngine::ReplaceOne(
     auto target = Support::Runtime::AccessString(target_normal);
     auto &regex = regex_ref.GetPattern();
 
-    auto std_string = std::string(source.Ptr(), source.Size());
-    auto std_view = std::string_view(target.Ptr(), target.Size());
-    RE2::Replace(&std_string, *regex, std_view);
+    auto std_string = std::string(source.data(), source.size());
+    RE2::Replace(&std_string, *regex, target);
 
     return {
         ADT::Runtime::ObjectType::Boolean,
-        Celery::Str::String(std_string.data(), std_string.size())
+        std::move(std_string)
     };
 }

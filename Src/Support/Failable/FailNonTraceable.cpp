@@ -17,9 +17,9 @@
 // Created by Rodrigo on 5/30/26.
 //
 
-#include <Celery/Misc/Ansi.h>
-
+#include <iostream>
 #include "Failable.h"
+#include "Support/Ansi/Ansi.h"
 #include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed;
@@ -31,11 +31,11 @@ void Failable::Failable::Fail(
 {
     PrintMessage(traceable.what());
 
-    Celery::Io::Println(
-        Celery::Misc::Ansi::White,
-        "└── this exception is not traceable",
-        Celery::Misc::Ansi::Reset
-    );
+    std::cout
+        << Ansi::White
+        << "└── this exception is not traceable"
+        << Ansi::Reset
+    << std::endl;
 
     PrintConsiderations();
 }

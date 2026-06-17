@@ -32,7 +32,7 @@ ADT::Runtime::Object Strings::FindIndex(
     ADT::Lang::AST *_
 )
 {
-    args.EmplaceBack(
+    args.emplace_back(
         ADT::Runtime::ObjectType::Integer,
         1
     );
@@ -40,10 +40,10 @@ ADT::Runtime::Object Strings::FindIndex(
     auto obj = FindIndexes(args, _);
     auto &indexes = Support::Runtime::GetListObj(obj);
 
-    if (indexes->Empty()) return {
+    if (indexes->empty()) return {
         ADT::Runtime::ObjectType::Integer,
         -1
     };
 
-    return indexes->Front();
+    return indexes->front();
 }

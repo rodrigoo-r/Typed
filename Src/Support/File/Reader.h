@@ -18,11 +18,10 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
-#include <Celery/File/Read.h>
 
 #include <fstream>
 
+#include "ADT/Exception/CouldNotOpenFile.h"
 #include "ADT/Stream/File.h"
 #include "Support/Strconv/Unescape.h"
 
@@ -30,10 +29,10 @@ namespace Typed::Support::File
 {
     class Reader
     {
-        Celery::Str::External path;
+        std::string_view path;
 
     public:
-        Reader &SetPath(const Celery::Str::External &path)
+        Reader &SetPath(const std::string_view &path)
         {
             this->path = path;
             return *this;
@@ -44,15 +43,23 @@ namespace Typed::Support::File
             // Convert to a stream
             ADT::Stream::File result;
 
-            auto file = Celery::File::Read(path);
+            std::ifstream file_stream(path.data());
+            if (!file_stream.is_open()) throw std::filesystem::filesystem_error("Could not open file", std::error_code());
+
+            std::stringstream stream;
+            stream << file_stream.rdbuf();
+
+            auto file = stream.str();
+            file_stream.close();
             auto unescaped = Strconv::Unescape(file, nullptr, &result);
 
-            result.Resize(unescaped.Size());
+            result.reserve(unescaped.size());
+            result.shrink_to_fit();
 
             // Write the file contents to the stream
-            for (size_t i = 0; i < unescaped.Size(); ++i)
+            for (char i : unescaped)
             {
-                result.PushBack(unescaped[i]);
+                result.push_back(i);
             }
 
             return result;

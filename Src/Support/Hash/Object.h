@@ -18,9 +18,8 @@
 //
 
 #pragma once
-#include <Celery/String/String.h>
-#include <Celery/Trait/Default.h>
 #include <xxhash.h>
+#include <utility>
 
 #include "ADT/Runtime/ObjectType.h"
 
@@ -32,7 +31,7 @@ namespace Typed::Support::Hash
         using is_avalanching = void;
         using is_transparent = void;
 
-        Celery::Trait::VeryLarge operator()(const T &obj) const
+        size_t operator()(const T &obj) const
         {
             switch (obj.type)
             {
@@ -50,14 +49,14 @@ namespace Typed::Support::Hash
 
                 case ADT::Runtime::ObjectType::String:
                 {
-                    if (std::holds_alternative<Celery::Str::External>(obj.value))
+                    if (std::holds_alternative<std::string_view>(obj.value))
                     {
-                        auto &str_val = std::get<Celery::Str::External>(obj.value);
-                        return XXH3_64bits(str_val.Ptr(), str_val.Size());
+                        auto &str_val = std::get<std::string_view>(obj.value);
+                        return XXH3_64bits(str_val.data(), str_val.size());
                     }
 
-                    auto &str_val = std::get<Celery::Str::String>(obj.value);
-                    return XXH3_64bits(str_val.Ptr(), str_val.Size());
+                    auto &str_val = std::get<std::string>(obj.value);
+                    return XXH3_64bits(str_val.data(), str_val.size());
                 }
 
                 case ADT::Runtime::ObjectType::Boolean:

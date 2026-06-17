@@ -1,5 +1,5 @@
 /*
- * #-----------------------------------------------------# *
+* #-----------------------------------------------------# *
  * #                                                     # *
  * #                           Typed                     # *
  * #                   A text formatting DSL             # *
@@ -18,11 +18,50 @@
 //
 
 #pragma once
-#include <Celery/Memory/Monotonic.h>
+
+#include <list>
+#include <memory_resource>
 
 namespace Typed::Support::Allocator
 {
     template <typename Value>
-    using Monotonic =
-        Celery::Pmr::MonotonicAllocator<Value>;
+    class Monotonic
+    {
+        inline static std::pmr::monotonic_buffer_resource resource;
+        inline static std::pmr::list<Value *> freed{&resource};
+
+    public:
+        template <typename... Args>
+        static Value *Allocate(Args &&... args)
+        {
+            // Check the free list
+            Value *ptr = nullptr;
+
+            if (!freed.empty())
+            {
+                ptr = freed.back();
+                ptr->~Value();
+                freed.pop_back();
+            } else
+            {
+                ptr = (Value *)resource.allocate(
+                    sizeof(Value),
+                    alignof(Value)
+                );
+            }
+
+            return new (ptr) Value(std::forward<Args>(args)...);
+        }
+
+        static inline void Deallocate(Value *ptr)
+        {
+            freed.push_back(ptr);
+        }
+
+        ~Monotonic()
+        {
+            freed.clear();
+            resource.release();
+        }
+    };
 }

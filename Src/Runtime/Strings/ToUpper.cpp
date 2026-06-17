@@ -34,16 +34,15 @@ ADT::Runtime::Object Strings::ToUpper(
 {
     auto &obj = args[0];
     auto str = Support::Runtime::AccessString(obj);
-    Celery::Str::String result;
+    std::string result;
 
     // Resize the result
-    result.ResizeFill(str.Size(), ' ');
+    result.reserve(str.size());
 
     // Write the string
-    for (auto i = 0; i < str.Size(); i++)
+    for (char c : str)
     {
-        auto c = str[i];
-        result[i] = std::toupper(c);
+        result.push_back(std::toupper(c));
     }
 
     return {

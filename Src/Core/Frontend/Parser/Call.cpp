@@ -35,7 +35,7 @@ Machine::TreePtr Machine::Call(
 
     // Allocate the call node
     auto call = AllocateBase(name, ADT::Lang::ASTType::Call);
-    call->children.PushBack(AllocateBase(name, ADT::Lang::ASTType::Identifier));
+    call->children.push_back(AllocateBase(name, ADT::Lang::ASTType::Identifier));
 
     // Stop parsing arguments if needed
     auto &peek = Support::Stream::SafePeek(input);
@@ -47,7 +47,7 @@ Machine::TreePtr Machine::Call(
 
     // Parse arguments if needed
     Expect(input, ADT::Lang::TokenType::With);
-    call->children.PushBack(CallArgs(input, queue));
+    call->children.push_back(CallArgs(input, queue));
 
     return call;
 }

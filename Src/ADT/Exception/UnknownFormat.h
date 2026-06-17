@@ -19,16 +19,17 @@
 
 #pragma once
 
+#include "Base.h"
 #include "Traceable.h"
 
 namespace Typed::ADT::Exception
 {
     class UnknownFormat :
-        public Celery::Except::Exception
+        public Base
     {
     public:
         UnknownFormat() :
-            Exception("Unknown format")
+            Base("Unknown format")
         {}
     };
 
@@ -37,8 +38,8 @@ namespace Typed::ADT::Exception
     {
     public:
         TracedUnknownFormat(
-            Celery::Trait::VeryLarge line,
-            Celery::Trait::VeryLarge column
+            size_t line,
+            size_t column
         ) :
             Traceable("Unknown format", line, column)
         {}

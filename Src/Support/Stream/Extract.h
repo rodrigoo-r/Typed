@@ -30,13 +30,13 @@ namespace Typed::Support::Stream
         typename Eq = ADT::Equality::Agnostic
     >
     ADT::Stream::External<T> Extract(
-        Celery::Array::Stream<T> &stream,
+        ADT::Array::Stream<T> &stream,
         auto Dest
     )
     {
         auto start = stream.Pos();
         bool met_delim = false;
-        Celery::Trait::VeryLarge size = 0;
+        size_t size = 0;
 
         // Build the stream 1 element at a time
         while (stream.HasNext())
@@ -61,7 +61,7 @@ namespace Typed::Support::Stream
 
         // Return the view
         return {
-            stream.Ptr() + start,
+            stream.data() + start,
             size
         };
     }

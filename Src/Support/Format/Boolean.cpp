@@ -35,11 +35,11 @@ void Format::Boolean(
     auto &val = Runtime::GetBoolObj(obj);
     if (val)
     {
-        adapter.Write("True", 4);
+        adapter.append("True", 4);
         return;
     }
 
-    adapter.Write("False", 5);
+    adapter.append("False", 5);
 }
 
 template
@@ -51,5 +51,5 @@ void Format::Boolean(
 template
 void Format::Boolean(
     ADT::Runtime::Object &,
-    Celery::Str::String &
+    std::string &
 );

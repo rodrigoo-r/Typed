@@ -18,15 +18,12 @@
 //
 
 #pragma once
-#include <Celery/String/String.h>
-
-#include "ADT/Exception/UnknownFormat.h"
 #include "ADT/Stream/File.h"
 #include "ADT/Lang/AST.h"
 
 namespace Typed::Support::Strconv
 {
-    Celery::Str::String Unescape(
+    std::string Unescape(
         auto &str,
         ADT::Lang::AST *trace,
         ADT::Stream::File *file

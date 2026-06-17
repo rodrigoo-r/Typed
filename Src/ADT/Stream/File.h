@@ -19,8 +19,7 @@
 
 #pragma once
 
-#include <Celery/Array/Stream.h>
-
+#include "ADT/Array/Stream.h"
 #include "Support/Runtime/GetObjValue.h"
 
 namespace Typed::ADT::Stream
@@ -29,7 +28,7 @@ namespace Typed::ADT::Stream
         ankerl::unordered_dense::set<size_t>;
 
     class File :
-        public Celery::Array::Stream<char>
+        public Array::Stream<char>
     {
     protected:
         friend class FileBase;
@@ -57,5 +56,5 @@ namespace Typed::ADT::Stream
     };
 
     using FileView =
-        Celery::Array::External<char>;
+        std::string_view;
 }

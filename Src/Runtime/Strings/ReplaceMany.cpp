@@ -34,9 +34,9 @@ ADT::Runtime::Object Strings::ReplaceMany(
 )
 {
     ADT::List::Object find_indexes_arg;
-    find_indexes_arg.EmplaceBack(args[0]);
-    find_indexes_arg.EmplaceBack(args[1]);
-    find_indexes_arg.EmplaceBack(args[3]);
+    find_indexes_arg.emplace_back(args[0]);
+    find_indexes_arg.emplace_back(args[1]);
+    find_indexes_arg.emplace_back(args[3]);
 
     auto res = FindIndexes(find_indexes_arg, trace);
 
@@ -51,45 +51,45 @@ ADT::Runtime::Object Strings::ReplaceMany(
     auto &indexes = Support::Runtime::GetListObj(res);
 
     // Nothing to replace
-    if (indexes->Empty())
+    if (indexes->empty())
     {
         return obj;
     }
 
-    Celery::Str::String result;
+    std::string result;
 
-    result.Resize(
-        str.Size()
-        - (find.Size() * indexes->Size())
-        + (replacement.Size() * indexes->Size())
+    result.reserve(
+        str.size()
+        - (find.size() * indexes->size())
+        + (replacement.size() * indexes->size())
     );
 
-    Celery::Trait::VeryLarge last_pos = 0;
+    size_t last_pos = 0;
 
     for (auto &idx_obj : *indexes)
     {
         auto idx = Support::Runtime::GetIntObj(idx_obj);
 
         // Copy text before the match
-        result.Write(
-            str.Ptr() + last_pos,
+        result.append(
+            str.data() + last_pos,
             idx - last_pos
         );
 
         // Copy replacement text
-        result.Write(
-            replacement.Ptr(),
-            replacement.Size()
+        result.append(
+            replacement.data(),
+            replacement.size()
         );
 
         // Skip over the matched text
-        last_pos = idx + find.Size();
+        last_pos = idx + find.size();
     }
 
     // Copy remaining tail
-    result.Write(
-        str.Ptr() + last_pos,
-        str.Size() - last_pos
+    result.append(
+        str.data() + last_pos,
+        str.size() - last_pos
     );
 
     return {

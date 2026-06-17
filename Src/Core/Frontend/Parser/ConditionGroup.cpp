@@ -43,7 +43,7 @@ Machine::TreePtr Machine::ConditionGroup(
     auto &parent_body = parent_el.body;
 
     // Make sure the last child is an If child
-    auto last = parent_body->children.Back();
+    auto last = parent_body->children.back();
     if (
         last->type != ADT::Lang::ASTType::If &&
         last->type != ADT::Lang::ASTType::ElseIf &&
@@ -63,8 +63,8 @@ Machine::TreePtr Machine::ConditionGroup(
             ADT::Lang::ASTType::ConditionGroup
         );
 
-        group->children.PushBack(last);
-        parent_body->children.Back() = group;
+        group->children.push_back(last);
+        parent_body->children.back() = group;
         last = group;
     }
 

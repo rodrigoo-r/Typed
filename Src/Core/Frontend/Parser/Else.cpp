@@ -44,8 +44,8 @@ void Machine::Else(
     );
 
     Expect(ADT::Lang::TokenType::Begin);
-    last->children.PushBack(ast);
-    ast->children.PushBack(body);
+    last->children.push_back(ast);
+    ast->children.push_back(body);
 
     // Add the body to the queue
     body_queue.emplace_front(

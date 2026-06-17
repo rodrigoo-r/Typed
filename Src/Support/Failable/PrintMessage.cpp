@@ -17,21 +17,18 @@
 // Created by Rodrigo on 5/30/26.
 //
 
-#include <Celery/Misc/Ansi.h>
-
-#include "ADT/Exception/Traceable.h"
 #include "Failable.h"
-#include "Support/Printer/ASTPrinter.h"
+#include "Support/Ansi/Ansi.h"
 
 using namespace Typed;
 using namespace Typed::Support;
 
 void Failable::Failable::PrintMessage(const char *message)
 {
-    Celery::Io::Println(
-        Celery::Misc::Ansi::Bold::Bright::Red,
-        "error: ",
-        Celery::Misc::Ansi::Reset,
-        message
-    );
+    std::cout
+        << Ansi::Bold::Bright::Red
+        << "error: "
+        << Ansi::Reset
+        << message
+    << std::endl;
 }

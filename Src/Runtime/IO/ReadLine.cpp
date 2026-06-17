@@ -18,7 +18,6 @@
 //
 
 #include "ReadLine.h"
-#include <Celery/Io/Io.h>
 
 #include "Print.h"
 
@@ -32,15 +31,15 @@ ADT::Runtime::Object IO::ReadLine(
 )
 {
     // Flush the stdout buffer before reading
-    Celery::Io::IStdout.Flush();
+    std::cout.flush();
 
     // Read the line
     std::string line;
     std::getline(std::cin, line);
 
     // Copy the string
-    Celery::Str::String str;
-    str.Write(line.data(), line.size());
+    std::string str;
+    str.append(line.data(), line.size());
 
     return {
         ADT::Runtime::ObjectType::String,

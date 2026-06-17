@@ -35,10 +35,9 @@ ADT::Runtime::Object RegexEngine::MatchesPartly(
     auto &regex_ref = Support::Runtime::GetRegexObj(args[0]);
     auto &regex = regex_ref.GetPattern();
     auto view = Support::Runtime::AccessString(args[1]);
-    auto std_view = std::string_view(view.Ptr(), view.Size());
 
     return {
         ADT::Runtime::ObjectType::Boolean,
-        RE2::PartialMatch(std_view, *regex)
+        RE2::PartialMatch(view, *regex)
     };
 }

@@ -18,11 +18,18 @@
 //
 
 #pragma once
-#include <Celery/Ptr/Shared.h>
+#include <memory>
 
 namespace Typed::ADT::Memory
 {
     template <typename T>
-    using HeapRef =
-        Celery::Ptr::Shared<T>;
+    class HeapRef :
+        public std::shared_ptr<T>
+    {
+    public:
+        static HeapRef Make(auto &&...args)
+        {
+            return static_cast<HeapRef>(std::make_shared<T>(std::forward<decltype(args)>(args)...));
+        }
+    };
 }

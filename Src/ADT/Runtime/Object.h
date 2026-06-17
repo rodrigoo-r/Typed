@@ -18,9 +18,6 @@
 //
 
 #pragma once
-#include <Celery/String/External.h>
-#include <Celery/String/String.h>
-
 
 #include "ADT/List/Object.h"
 #include "ADT/Map/Object.h"
@@ -38,14 +35,14 @@ namespace Typed::ADT::Runtime
                 int,
                 float,
                 bool,
-                Celery::Str::External,
+                std::string_view,
                 List::DynamicObject,
                 Map::Object,
                 Regex::Ref,
 
                 // Only runtime-provided functions can
                 // return owned memory
-                Celery::Str::String
+                std::string
             >;
 
         ObjectType type;

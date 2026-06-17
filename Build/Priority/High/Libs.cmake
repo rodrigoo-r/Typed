@@ -20,13 +20,6 @@ FetchContent_Declare(
         GIT_TAG v2.6.2
 )
 
-# Fetch Celery
-FetchContent_Declare(
-        Celery
-        GIT_REPOSITORY https://github.com/rodrigoo-r/Celery.git
-        GIT_TAG master
-)
-
 FetchContent_Declare(
         unordered_dense
         GIT_REPOSITORY https://github.com/martinus/unordered_dense
@@ -71,7 +64,6 @@ endif ()
 
 FetchContent_MakeAvailable(
         CLI11
-        Celery
         unordered_dense
         magic_enum
         absl

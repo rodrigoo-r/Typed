@@ -33,25 +33,25 @@ void Format::List(
     Adapter &adapter
 )
 {
-    adapter.Write("List(", 5);
+    adapter.append("List(", 5);
     auto &val = Runtime::GetListObj(obj);
-    if (val->Empty())
+    if (val->empty())
     {
-        adapter.Write(')');
+        adapter.append(")", 1);
         return;
     }
 
-    auto last = val->Size() - 1;
-    for (auto i = 0; i < val->Size(); i++)
+    auto last = val->size() - 1;
+    for (auto i = 0; i < val->size(); i++)
     {
         auto &el = (*val)[i];
         Object(el, adapter);
 
         if (i != last)
-            adapter.Write(", ", 2);
+            adapter.append(", ", 2);
     }
 
-    adapter.Write(')');
+    adapter.append(")", 1);
 }
 
 template
@@ -63,5 +63,5 @@ void Format::List(
 template
 void Format::List(
     ADT::Runtime::Object &,
-    Celery::Str::String &
+    std::string &
 );

@@ -40,7 +40,7 @@ ADT::Runtime::Object Walker::Call(
         throw ADT::Exception::UnknownProcedure(line, column);
     }
 
-    if (children.Size() == 1)
+    if (children.size() == 1)
     {
         ADT::List::Object args;
         return Procedure(proc->second, args, body);
@@ -53,7 +53,7 @@ ADT::Runtime::Object Walker::Call(
     for (auto &arg_node : args_node->children)
     {
         auto arg = arg_node->children[0];
-        args.PushBack(Expression(stack, arg));
+        args.push_back(Expression(stack, arg));
     }
 
     return Procedure(proc->second, args, body);

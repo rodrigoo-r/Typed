@@ -37,13 +37,13 @@ ADT::Runtime::Object RegexEngine::ReplaceAll(
     auto target = Support::Runtime::AccessString(args[2]);
     auto &regex = regex_ref.GetPattern();
 
-    auto std_string = std::string(source.Ptr(), source.Size());
-    auto std_view = std::string_view(target.Ptr(), target.Size());
+    auto std_string = std::string(source);
+    auto std_view = std::string_view(target);
 
     RE2::GlobalReplace(&std_string, *regex, std_view);
 
     return {
         ADT::Runtime::ObjectType::String,
-        Celery::Str::String(std_string.data(), std_string.size())
+        std::move(std_string)
     };
 }

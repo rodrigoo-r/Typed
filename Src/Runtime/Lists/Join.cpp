@@ -42,7 +42,7 @@ ADT::Runtime::Object Lists::Join(
 {
     auto &list = Support::Runtime::GetListObj(args[0]);
     auto delim = Support::Runtime::AccessString(args[1]);
-    Celery::Str::String result;
+    std::string result;
 
     // Transverse the list
     for (auto &item : *list)
@@ -87,13 +87,13 @@ ADT::Runtime::Object Lists::Join(
 
             default:
             {
-                result.Write("[Non_Formattable]", 17);
+                result.append("[Non_Formattable]", 17);
                 break;
             }
         }
 
         // Write the delimiter
-        result.Write(delim.Ptr(), delim.Size());
+        result.append(delim);
     }
 
     return {

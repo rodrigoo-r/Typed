@@ -18,19 +18,13 @@
 //
 
 #pragma once
-#include <Celery/String/String.h>
-
-#include "ADT/Runtime/Object.h"
 
 namespace Typed::Support::Runtime
 {
-    inline Celery::Str::String ConvertToString(
-        const Celery::Str::External &obj
+    inline std::string ConvertToString(
+        const std::string_view &obj
     )
     {
-        return {
-            obj.Ptr(),
-            obj.Size()
-        };
+        return std::string(obj);
     }
 }

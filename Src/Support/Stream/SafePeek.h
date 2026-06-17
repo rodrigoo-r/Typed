@@ -25,7 +25,7 @@ namespace Typed::Support::Stream
     auto &SafePeek(auto &adapter, auto &trace)
     {
         // Special case: Empty stream
-        if (adapter.Empty())
+        if (adapter.empty())
         {
             throw ADT::Exception::OutOfBounds(1, 1);
         }
@@ -54,7 +54,7 @@ namespace Typed::Support::Stream
 
     auto &SafePeek(auto &adapter)
     {
-        if (adapter.Empty())
+        if (adapter.empty())
         {
             throw ADT::Exception::OutOfBounds(1, 1);
         }

@@ -17,34 +17,33 @@
 // Created by Rodrigo on 5/30/26.
 //
 
-#include <Celery/Misc/Ansi.h>
-
 
 #include "ADT/Exception/Traceable.h"
 #include "Failable.h"
+#include "Support/Ansi/Ansi.h"
 #include "Support/Printer/ASTPrinter.h"
 
 using namespace Typed;
 using namespace Typed::Support;
 
 void PrintSpaces(
-    Celery::Trait::VeryLarge line,
-    Celery::Trait::VeryLarge column
+    size_t line,
+    size_t column
 )
 {
     // Print spaces for the separator
-    Celery::Io::Print("  ");
+    std::cout << "  ";
 
     // Print as many blank spaces as digits in the line
     while (line > 0)
     {
-        Celery::Io::Print(" ");
+        std::cout << " ";
         line /= 10;
     }
 
     for (auto i = 0; i < column; i++)
     {
-        Celery::Io::Print(" ");
+        std::cout << " ";
     }
 }
 
@@ -53,41 +52,41 @@ void Failable::Failable::Fail(
 )
 {
     PrintMessage(traceable.what());
-    Celery::Io::Println(
-        Celery::Misc::Ansi::White,
-        "│",
-        Celery::Misc::Ansi::Reset,
-        Celery::Misc::Ansi::Italic::White,
-        "  └─ at ",
-        Celery::Misc::Ansi::Reset,
-        Celery::Misc::Ansi::Bright::Italic::Blue,
-        traceable.line,
-        Celery::Misc::Ansi::Reset,
-        Celery::Misc::Ansi::Italic::White,
-        ":",
-        Celery::Misc::Ansi::Reset,
-        Celery::Misc::Ansi::Bright::Italic::Magenta,
-        traceable.column,
-        Celery::Misc::Ansi::Reset
-    );
+    std::cout
+        << Ansi::White
+        << "│"
+        << Ansi::Reset
+        << Ansi::Italic::White
+        << "  └─ at "
+        << Ansi::Reset
+        << Ansi::Bright::Italic::Blue
+        << traceable.line
+        << Ansi::Reset
+        << Ansi::Italic::White
+        << ":"
+        << Ansi::Reset
+        << Ansi::Bright::Italic::Magenta
+        << traceable.column
+        << Ansi::Reset
+    << std::endl;
 
-    Celery::Io::Println(
-        Celery::Misc::Ansi::White,
-        "│",
-        Celery::Misc::Ansi::Reset
-    );
+    std::cout
+        << Ansi::White
+        << "│"
+        << Ansi::Reset
+    << std::endl;
 
-    Celery::Io::Print(
-        Celery::Misc::Ansi::White,
-        traceable.line,
-        " │ ",
-        Celery::Misc::Ansi::Reset
-    );
+    std::cout
+        << Ansi::White
+        << traceable.line
+        << " │ "
+        << Ansi::Reset
+    ;
 
     // Find the exact line where the error happens
-    Celery::Trait::VeryLarge line_counter = 1;
-    auto ptr = contents.Ptr();
-    auto end = ptr + contents.Size();
+    size_t line_counter = 1;
+    auto ptr = contents.data();
+    auto end = ptr + contents.size();
 
     while (line_counter < traceable.line)
     {
@@ -107,26 +106,26 @@ void Failable::Failable::Fail(
     }
 
     // Create a string view for the line
-    Celery::Str::External line_view(ptr, end - ptr);
-    Celery::Io::Println(
-        Celery::Misc::Ansi::White,
-        line_view,
-        Celery::Misc::Ansi::Reset
-    );
+    std::string_view line_view(ptr, end - ptr);
+    std::cout <<
+        Ansi::White <<
+        line_view <<
+        Ansi::Reset
+    << std::endl;
 
     PrintSpaces(traceable.line, traceable.column);
-    Celery::Io::Println(
-        Celery::Misc::Ansi::Bright::Red,
-        "^",
-        Celery::Misc::Ansi::Reset
-    );
+    std::cout <<
+        Ansi::Bright::Red <<
+        "^" <<
+        Ansi::Reset
+    << std::endl;
 
     PrintSpaces(traceable.line, traceable.column);
-    Celery::Io::Println(
-        Celery::Misc::Ansi::Bright::Red,
-        "here!",
-        Celery::Misc::Ansi::Reset
-    );
+    std::cout <<
+        Ansi::Bright::Red <<
+        "here!" <<
+        Ansi::Reset
+    << std::endl;
 
     PrintConsiderations();
 }

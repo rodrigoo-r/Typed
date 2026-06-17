@@ -18,22 +18,28 @@
 //
 
 #pragma once
-
-#include "Support/Printer/ASTPrinter.h"
+#include <iostream>
 
 namespace Typed::ADT::Stdout
 {
     class Wrapper
     {
     public:
-        void Write(auto &&arg)
+        void append(auto &&arg)
         {
-            Celery::Io::Print(std::forward<decltype(arg)>(arg));
+            std::cout
+                << std::forward<decltype(arg)>(arg);
         }
 
-        void Write(const char *arg, Celery::Trait::VeryLarge size)
+        void append(const char *arg, size_t size)
         {
-            Celery::Io::IStdout.Batch(arg, size);
+            std::cout <<
+                std::string_view{arg, size};
+        }
+
+        void append(size_t _, const char arg)
+        {
+            std::cout << arg;
         }
     };
 }

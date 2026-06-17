@@ -18,12 +18,9 @@
 //
 
 #pragma once
-#include <Celery/Trait/Type.h>
 
-#include "ADT/Core/Traceable.h"
 #include "ADT/Equality/Agnostic.h"
 #include "ADT/Exception/UnexpectedToken.h"
-#include "ADT/Exception/UnknownToken.h"
 #include "ADT/Stream/External.h"
 #include "SafeNext.h"
 
@@ -32,11 +29,7 @@ namespace Typed::Support::Stream
     template <
         class T,
         class Stream = ADT::Stream::External<T>,
-        typename Equal = ADT::Equality::Agnostic,
-        typename = Celery::Trait::EnsureInherits<
-            T,
-            ADT::Core::Traceable
-        >
+        typename Equal = ADT::Equality::Agnostic
     >
     void Expect(Stream &stream, auto expected)
     {

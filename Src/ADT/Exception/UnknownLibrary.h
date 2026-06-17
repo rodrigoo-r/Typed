@@ -18,25 +18,24 @@
 //
 
 #pragma once
-#include <Celery/Except/Base.h>
-#include <Celery/String/External.h>
+#include <string_view>
 
 namespace Typed::ADT::Exception
 {
     class UnknownLibrary :
-        public Celery::Except::Exception
+        public Base
     {
-        Celery::Str::External &name;
+        std::string_view &name;
 
     public:
         UnknownLibrary(
-            Celery::Str::External &name
+            std::string_view &name
         ) :
-            Exception("Unknown library"),
+            Base("Unknown library"),
             name(name)
         {}
 
-        [[nodiscard]] Celery::Str::External &GetName()
+        [[nodiscard]] std::string_view &GetName()
         const {
             return name;
         }
