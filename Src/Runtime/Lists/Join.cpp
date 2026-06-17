@@ -91,6 +91,9 @@ ADT::Runtime::Object Lists::Join(
                 break;
             }
         }
+
+        // Write the delimiter
+        result.Write(delim.Ptr(), delim.Size());
     }
 
     return {
