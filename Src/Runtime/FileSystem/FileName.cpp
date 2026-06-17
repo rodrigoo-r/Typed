@@ -39,7 +39,7 @@ ADT::Runtime::Object FileSystem::FileName(
     auto path_str = Support::Runtime::ConvertToString(path_ext);
 
     auto path = std::filesystem::path(path_str.CStr());
-    auto res = path.filename();
+    auto res = path.stem();
     auto res_str = res.string();
 
     return {
