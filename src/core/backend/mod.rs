@@ -15,10 +15,11 @@
 mod procedure;
 
 use crate::adt::lang::File;
+use crate::adt::result::ExecutionResult;
 
-pub fn execute(file: File) {
+pub fn execute(file: File) -> ExecutionResult {
     // Get the main procedure
     let main = file.procedures.get("Main").unwrap();
 
-    procedure::execute(main, Vec::new());
+    procedure::execute(main, Vec::new())
 }
