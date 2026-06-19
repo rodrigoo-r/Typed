@@ -22,6 +22,7 @@ use std::env;
 use pest::Parser;
 use crate::core::*;
 use crate::core::backend::execute;
+use support::failable::{catch_non_traceable, catch_pest};
 
 fn main() {
     // Get the path from argv[0]
@@ -29,18 +30,14 @@ fn main() {
     let path = &args[1];
 
     let contents = support::file::read(path.as_str());
-    if contents.is_err() {
-        panic!("could not read file")
-    }
-
-    let contents = contents.unwrap();
+    let contents = catch_non_traceable(&contents);
     let tree = core::frontend::parser::Parser::parse(
         frontend::parser::Rule::Program,
         contents.as_str()
     );
-
-    let raw_tree = tree.unwrap();
-    let ast = frontend::parser::convert(raw_tree);
+    
+    let tree = catch_pest(&tree);
+    let ast = frontend::parser::convert(tree.clone());
     let file = middle_end::pre_walker::convert(ast);
 
     execute(file);
