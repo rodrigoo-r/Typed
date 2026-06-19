@@ -24,7 +24,7 @@ use crate::adt::lang::{ChildAST, AST};
 #[grammar = "grammar/grammar.pest"]
 pub struct Parser;
 
-pub fn convert<'a>(pairs: Pairs<'a, Rule>) -> AST<'a> {
+pub fn convert<'source>(pairs: Pairs<'source, Rule>) -> AST<'source> {
     let result = Rc::new(RefCell::new(
         AST{
             line: 0,
@@ -35,7 +35,7 @@ pub fn convert<'a>(pairs: Pairs<'a, Rule>) -> AST<'a> {
         }
     ));
 
-    let mut queue: VecDeque<(Pairs<Rule>, ChildAST<'a>)>
+    let mut queue: VecDeque<(Pairs<Rule>, ChildAST<'source>)>
         = VecDeque::new();
 
     queue.push_back((pairs, Rc::clone(&result)));
