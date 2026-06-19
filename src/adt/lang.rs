@@ -25,9 +25,10 @@ pub type ASTChildren<'a> = RefCell<Vec<ChildAST<'a>>>;
 
 pub type RuntimeArgument<'a> =
     (&'a str, Object<'a>);
-pub type RuntimeArguments<'a> = &'a Vec<RuntimeArgument<'a>>;
+pub type RuntimeArguments<'a> = Vec<RuntimeArgument<'a>>;
+pub type ProcedureArguments<'a> = &'a RuntimeArguments<'a>;
 pub type NativeProcedure<'a> =
-    fn(RuntimeArguments<'a>, &'a ChildAST<'a>) -> ExecutionResult<'a>;
+    fn(ProcedureArguments<'a>, &'a ChildAST<'a>) -> ExecutionResult<'a>;
 
 #[derive(Debug, Clone)]
 pub struct AST<'a> {
