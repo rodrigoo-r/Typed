@@ -16,10 +16,17 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
 use ordered_float::OrderedFloat;
+use crate::adt::lang::Procedure;
 
 pub type List<'a> = Vec<Object<'a>>;
-pub type Dictionary<'a> = 
+pub type Dictionary<'a> =
     HashMap<HashableObject<'a>, Object<'a>>;
+
+pub type PackageDictionary<'a> =
+    HashMap<&'a str, Procedure<'a>>;
+
+pub type GlobalPackageDictionary<'a> =
+    HashMap<&'a str, PackageDictionary<'a>>;
 
 pub type Float = OrderedFloat<f32>;
 
