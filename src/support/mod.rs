@@ -15,3 +15,4 @@
 
 pub mod file;
 pub mod lang;
+pub mod failable;
