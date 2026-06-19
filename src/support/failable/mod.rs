@@ -14,7 +14,7 @@
 */
 use std::process::exit;
 use crate::adt::error::ExecutionError;
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::{ExecutionResult, RuntimeResult};
 use colored::Colorize;
 use pest::error::Error;
 use pest::iterators::Pairs;
@@ -78,9 +78,9 @@ fn print_non_traceable_err<T: std::error::Error>(err: T) {
     print_considerations();
 }
 
-pub fn catch<'source>(
-    result: &'source ExecutionResult<'source>
-) -> &'source Object<'source> {
+pub fn catch<'source, Success>(
+    result: &'source RuntimeResult<'source, Success>
+) -> &'source Success {
     if result.is_err() {
         let result = result.as_ref();
         let err = result.err();
