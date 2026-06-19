@@ -16,6 +16,7 @@
 mod core;
 mod support;
 mod adt;
+mod runtime;
 
 use std::env;
 use pest::Parser;
