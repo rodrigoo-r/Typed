@@ -17,6 +17,12 @@ use std::collections::HashMap;
 use std::rc::Rc;
 use ordered_float::OrderedFloat;
 
+pub type List<'a> = Vec<Object<'a>>;
+pub type Dictionary<'a> = 
+    HashMap<HashableObject<'a>, Object<'a>>;
+
+pub type Float = OrderedFloat<f32>;
+
 #[derive(PartialEq, Eq, Debug)]
 pub enum StringKind<'a> {
     Static(&'a str),
@@ -28,13 +34,13 @@ pub enum HashableObject<'a> {
     String(StringKind<'a>),
     Integer(isize),
     Boolean(bool),
-    Float(OrderedFloat<f32>),
+    Float(Float),
 }
 
 #[derive(Debug)]
 pub enum NonHashableObject<'a> {
-    Dictionary(HashMap<HashableObject<'a>, Object<'a>>),
-    List(Vec<HashableObject<'a>>)
+    Dictionary(Dictionary<'a>),
+    List(List<'a>)
 }
 
 #[derive(Debug)]
