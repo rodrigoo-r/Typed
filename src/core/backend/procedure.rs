@@ -13,13 +13,14 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::Procedure;
+use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
 
 pub fn execute<'a>(
     procedure: &Procedure<'a>,
     given_args: Vec<(&'a str, Object<'a>)>
-) {
+) -> ExecutionResult<'a> {
     let mut stack = ScopedStack::new(None);
 
     // Add all arguments
@@ -38,4 +39,6 @@ pub fn execute<'a>(
             _ => {}
         }
     }
+    
+    Ok(Object::Void)
 }
