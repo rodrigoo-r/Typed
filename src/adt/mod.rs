@@ -13,3 +13,8 @@
  * #-----------------------------------------------------# *
 */
 pub mod lang;
+pub mod variable;
+pub mod runtime;
+pub mod hash;
+pub mod equality;
+pub mod variant_id;
