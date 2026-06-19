@@ -12,7 +12,6 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use std::ops::Deref;
 use crate::adt::lang::AST;
 
 pub fn print_ast<'a>(
