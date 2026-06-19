@@ -20,6 +20,7 @@ mod adt;
 use std::env;
 use pest::Parser;
 use crate::core::*;
+use crate::core::backend::execute;
 
 fn main() {
     // Get the path from argv[0]
@@ -41,5 +42,5 @@ fn main() {
     let ast = frontend::parser::convert(raw_tree);
     let file = middle_end::pre_walker::convert(ast);
 
-
+    execute(file);
 }
