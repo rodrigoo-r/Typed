@@ -30,13 +30,13 @@ pub type GlobalPackageDictionary<'a> =
 
 pub type Float = OrderedFloat<f32>;
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, Clone)]
 pub enum StringKind<'a> {
     Static(&'a str),
     Dynamic(String)
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum HashableObject<'a> {
     String(StringKind<'a>),
     Integer(isize),
@@ -44,13 +44,13 @@ pub enum HashableObject<'a> {
     Float(Float),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum NonHashableObject<'a> {
     Dictionary(Dictionary<'a>),
     List(List<'a>)
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Object<'a> {
     Hashable(HashableObject<'a>),
     NonHashable(NonHashableObject<'a>),

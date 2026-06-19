@@ -12,7 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::lang::{ChildAST, Procedure, RuntimeArguments, AST};
+use crate::adt::lang::{ChildAST, Procedure, ProcedureArguments};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
@@ -21,7 +21,7 @@ use crate::core::frontend;
 pub fn execute<'a>(
     trace: &'a ChildAST<'a>,
     procedure: &Procedure<'a>,
-    given_args: RuntimeArguments<'a>
+    given_args: ProcedureArguments<'a>
 ) -> ExecutionResult<'a> {
     let mut stack = ScopedStack::new(None);
 
@@ -29,10 +29,10 @@ pub fn execute<'a>(
     for (name, arg) in given_args.iter() {
         stack.push(name, arg);
     }
-    
+
     // Call native procedures if needed
     if procedure.native.is_some() {
-        return procedure.native.as_ref().unwrap()(given_args, trace);
+        return procedure.native.as_ref().unwrap()(&given_args, trace);
     }
 
     let body = procedure.body.as_ref();
