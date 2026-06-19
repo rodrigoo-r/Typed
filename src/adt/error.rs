@@ -14,6 +14,7 @@
 */
 use crate::adt::runtime::Object;
 
+#[derive(Debug)]
 pub enum ErrorKind {
     CouldNotFindProcedure,
     MismatchedTypes,
@@ -21,6 +22,7 @@ pub enum ErrorKind {
     OutOfBounds,
 }
 
+#[derive(Debug)]
 pub struct ExecutionError {
     pub kind : ErrorKind,
     pub message : &'static str,
