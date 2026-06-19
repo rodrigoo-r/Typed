@@ -15,7 +15,6 @@
 use std::cell::Ref;
 use std::collections::HashMap;
 use crate::adt::lang::{Argument, File, Kind, Procedure, AST};
-use crate::core::frontend;
 use crate::core::frontend::parser::Rule;
 use crate::core::frontend::parser::Rule::Procedure_Arguments;
 
@@ -90,7 +89,7 @@ fn convert_procedure<'a>(ast: &AST<'a>, result: &mut File<'a>) {
     result.procedures.insert(name, proc.unwrap());
 }
 
-pub fn convert<'a>(ast: AST<'a>) -> File<'a> {
+pub fn convert(ast: AST) -> File {
     let mut result = File{
         imports: Vec::new(),
         procedures: HashMap::new()
