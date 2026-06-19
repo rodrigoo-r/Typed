@@ -176,10 +176,13 @@ Float_Literal = {
     ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT+
 }
 
-Boolean_Literal = {
-	"True" |
-    "False"
+Boolean_Literal = _{
+	True_Literal |
+    False_Literal
 }
+
+True_Literal = { "True" }
+False_Literal = { "False" }
 
 String_Literal = ${
     ("\"" ~ Single_Line_String_Char* ~ "\"") |

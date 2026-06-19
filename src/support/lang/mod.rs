@@ -12,34 +12,27 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::ops::Deref;
+use crate::adt::lang::AST;
 
-mod core;
-mod support;
-mod adt;
-
-use std::env;
-use pest::Parser;
-use crate::core::frontend::parser::Rule;
-use crate::core::middle_end::pre_walker::convert::convert;
-use crate::support::lang::print_ast;
-
-fn main() {
-    // Get the path from argv[0]
-    let args: Vec<String> = env::args().collect();
-    let path = &args[1];
-
-    let contents = support::file::read(path.as_str());
-    if contents.is_err() {
-        panic!("could not read file")
+pub fn print_ast<'a>(
+    ast: AST<'a>,
+    depth: usize
+) {
+    let children = ast.children.borrow().clone();
+    for child in children.into_iter() {
+        for _ in 0..depth {
+            print!("  ");
+        }
+        
+        let child = child.borrow();
+        print!("{:?}", child.rule);
+        
+        if child.value.is_some() {
+            print!(": {:?}", child.value);
+        }
+        
+        println!();
+        print_ast(child.clone(), depth + 1);
     }
-
-    let contents = contents.unwrap();
-    let tree = core::frontend::parser::Parser::parse(
-        Rule::Program,
-        contents.as_str()
-    );
-
-    let raw_tree = tree.unwrap();
-    let ast = convert(raw_tree);
-    print_ast(ast, 0);
 }

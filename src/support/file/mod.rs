@@ -13,33 +13,12 @@
  * #-----------------------------------------------------# *
 */
 
-mod core;
-mod support;
-mod adt;
+use std::io::Read;
 
-use std::env;
-use pest::Parser;
-use crate::core::frontend::parser::Rule;
-use crate::core::middle_end::pre_walker::convert::convert;
-use crate::support::lang::print_ast;
+pub fn read(path: &str) -> Result<String, std::io::Error> {
+    let mut file = std::fs::File::open(path)?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
 
-fn main() {
-    // Get the path from argv[0]
-    let args: Vec<String> = env::args().collect();
-    let path = &args[1];
-
-    let contents = support::file::read(path.as_str());
-    if contents.is_err() {
-        panic!("could not read file")
-    }
-
-    let contents = contents.unwrap();
-    let tree = core::frontend::parser::Parser::parse(
-        Rule::Program,
-        contents.as_str()
-    );
-
-    let raw_tree = tree.unwrap();
-    let ast = convert(raw_tree);
-    print_ast(ast, 0);
+    Ok(contents)
 }

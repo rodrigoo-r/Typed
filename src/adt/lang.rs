@@ -12,34 +12,39 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-
-mod core;
-mod support;
-mod adt;
-
-use std::env;
-use pest::Parser;
+use std::cell::RefCell;
+use std::collections::HashMap;
+use std::rc::Rc;
 use crate::core::frontend::parser::Rule;
-use crate::core::middle_end::pre_walker::convert::convert;
-use crate::support::lang::print_ast;
 
-fn main() {
-    // Get the path from argv[0]
-    let args: Vec<String> = env::args().collect();
-    let path = &args[1];
+#[derive(Debug, Clone)]
+pub struct AST<'a> {
+    pub rule: Rule,
+    pub children: RefCell<Vec<Rc<RefCell<AST<'a>>>>>,
+    pub value: Option<&'a str>,
+    pub line: usize,
+    pub column: usize
+}
 
-    let contents = support::file::read(path.as_str());
-    if contents.is_err() {
-        panic!("could not read file")
-    }
+pub enum Kind {
+    String,
+    Integer,
+    Float,
+    Dictionary,
+    List
+}
 
-    let contents = contents.unwrap();
-    let tree = core::frontend::parser::Parser::parse(
-        Rule::Program,
-        contents.as_str()
-    );
+pub struct Argument<'a> {
+    pub name: &'a str,
+    pub kind: Kind
+}
 
-    let raw_tree = tree.unwrap();
-    let ast = convert(raw_tree);
-    print_ast(ast, 0);
+pub struct Procedure<'a> {
+    pub arguments: Vec<Argument<'a>>,
+    pub body: AST<'a>
+}
+
+pub struct File<'a> {
+    imports: Vec<String>,
+    procedures: HashMap<String, Procedure<'a>>
 }

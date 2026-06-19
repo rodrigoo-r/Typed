@@ -17,4 +17,4 @@ use pest_derive::Parser;
 
 #[derive(Parser)]
 #[grammar = "grammar/grammar.pest"]
-struct Parser;
+pub struct Parser;
