@@ -72,14 +72,18 @@ fn convert_procedure<'a>(ast: &AST<'a>, result: &mut File<'a>) {
 
         proc = Some(Procedure{
             body,
-            arguments: vec
+            arguments: vec,
+            variadic: false,
+            native: None
         });
     } else {
         let body = children[1].clone();
 
         proc = Some(Procedure{
             body,
-            arguments: Vec::new()
+            arguments: Vec::new(),
+            variadic: false,
+            native: None
         });
     }
 
@@ -98,11 +102,11 @@ pub fn convert<'a>(ast: AST<'a>) -> File<'a> {
         let child = child.borrow();
 
         match child.rule {
-            frontend::parser::Rule::Use =>
-                convert_use(&ast, &mut result),
+            Rule::Use =>
+                convert_use(&child, &mut result),
 
-            frontend::parser::Rule::Procedure =>
-                convert_procedure(&ast, &mut result),
+            Rule::Procedure =>
+                convert_procedure(&child, &mut result),
 
             // Rest of rules get ignored
             _ => {}
