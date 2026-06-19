@@ -15,6 +15,7 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
+use crate::adt::runtime::Object;
 use crate::core::frontend::parser::Rule;
 
 #[derive(Debug, Clone)]
@@ -45,7 +46,9 @@ pub struct Argument<'a> {
 #[derive(Debug)]
 pub struct Procedure<'a> {
     pub arguments: Vec<Argument<'a>>,
-    pub body: Rc<RefCell<AST<'a>>>
+    pub body: Rc<RefCell<AST<'a>>>,
+    pub variadic: bool,
+    pub native: Option<fn(Vec<Object<'a>>) -> Object<'a>>
 }
 
 #[derive(Debug)]
