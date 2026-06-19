@@ -46,6 +46,21 @@ pub fn convert<'a>(pairs: Pairs<'a, Rule>) -> AST<'a> {
         for inner in pairs.into_iter() {
             let parent = Rc::clone(&parent);
             let rule = inner.as_rule();
+
+            // Skip if the rule is EOI
+            if rule == Rule::EOI {
+                continue;
+            } else if rule == Rule::Program {
+                queue.push_back(
+                    (
+                        inner.into_inner(),
+                        Rc::clone(&parent)
+                    )
+                );
+
+                continue;
+            }
+
             let line_col = inner.as_span().start_pos().line_col();
             let val = inner.as_str();
             let mut child = Rc::new(
