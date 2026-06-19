@@ -18,7 +18,7 @@ use std::cell::RefCell;
 use std::collections::VecDeque;
 use std::rc::Rc;
 use pest::iterators::Pairs;
-use crate::adt::lang::AST;
+use crate::adt::lang::{ChildAST, AST};
 
 #[derive(Parser)]
 #[grammar = "grammar/grammar.pest"]
@@ -35,7 +35,7 @@ pub fn convert<'a>(pairs: Pairs<'a, Rule>) -> AST<'a> {
         }
     ));
 
-    let mut queue: VecDeque<(Pairs<Rule>, Rc<RefCell<AST>>)>
+    let mut queue: VecDeque<(Pairs<Rule>, ChildAST<'a>)>
         = VecDeque::new();
 
     queue.push_back((pairs, Rc::clone(&result)));
