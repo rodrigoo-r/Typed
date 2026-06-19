@@ -15,15 +15,17 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
-use crate::adt::runtime::Object;
+use crate::adt::result::ExecutionResult;
+use crate::adt::runtime::{List, Object};
 use crate::core::frontend::parser::Rule;
 
 pub type BaseChildAST<'a> = RefCell<AST<'a>>;
 pub type ChildAST<'a> = Rc<BaseChildAST<'a>>;
 pub type ASTChildren<'a> = RefCell<Vec<ChildAST<'a>>>;
 
-pub type RuntimeArguments<'a> = Vec<Object<'a>>;
-pub type NativeProcedure<'a> = fn(RuntimeArguments<'a>) -> Object<'a>;
+pub type RuntimeArguments<'a> = &'a List<'a>;
+pub type NativeProcedure<'a> =
+    fn(RuntimeArguments<'a>) -> ExecutionResult<'a>;
 
 #[derive(Debug, Clone)]
 pub struct AST<'a> {
