@@ -20,6 +20,7 @@ pub enum ErrorKind {
     MismatchedTypes,
     MismatchedArgumentCount,
     OutOfBounds,
+    CouldNotFindLibrary
 }
 
 #[derive(Debug)]
