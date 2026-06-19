@@ -29,6 +29,7 @@ pub struct AST<'a> {
 pub enum Kind {
     String,
     Integer,
+    Boolean,
     Float,
     Dictionary,
     List
@@ -41,10 +42,10 @@ pub struct Argument<'a> {
 
 pub struct Procedure<'a> {
     pub arguments: Vec<Argument<'a>>,
-    pub body: AST<'a>
+    pub body: Rc<RefCell<AST<'a>>>
 }
 
 pub struct File<'a> {
-    imports: Vec<String>,
-    procedures: HashMap<String, Procedure<'a>>
+    pub imports: Vec<String>,
+    pub procedures: HashMap<&'a str, Procedure<'a>>
 }

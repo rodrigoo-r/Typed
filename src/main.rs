@@ -19,9 +19,7 @@ mod adt;
 
 use std::env;
 use pest::Parser;
-use crate::core::frontend::parser::Rule;
-use crate::core::middle_end::pre_walker::convert::convert;
-use crate::support::lang::print_ast;
+use crate::core::*;
 
 fn main() {
     // Get the path from argv[0]
@@ -35,11 +33,13 @@ fn main() {
 
     let contents = contents.unwrap();
     let tree = core::frontend::parser::Parser::parse(
-        Rule::Program,
+        frontend::parser::Rule::Program,
         contents.as_str()
     );
 
     let raw_tree = tree.unwrap();
-    let ast = convert(raw_tree);
-    print_ast(ast, 0);
+    let ast = frontend::parser::convert(raw_tree);
+    let file = middle_end::pre_walker::convert(ast);
+
+
 }
