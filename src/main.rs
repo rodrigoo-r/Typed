@@ -23,6 +23,8 @@ use pest::Parser;
 use crate::core::*;
 use crate::core::backend::execute;
 use support::failable::{catch_non_traceable, catch_pest};
+use crate::adt::runtime::GlobalPackageDictionary;
+use crate::runtime::get_global_package;
 use crate::support::failable::catch;
 
 fn main() {
@@ -39,7 +41,10 @@ fn main() {
 
     let tree = catch_pest(&tree);
     let ast = frontend::parser::convert(tree.clone());
-    let file = middle_end::pre_walker::convert(ast);
+    let global_package = get_global_package();
+
+    let file = middle_end::pre_walker::convert(ast, &global_package);
+    let file = catch(&file);
 
     catch(&execute(file));
 }
