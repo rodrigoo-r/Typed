@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+ordered-float = "5.3.0"
 pest = "2.8.6"
 pest_derive = "2.8.6"
