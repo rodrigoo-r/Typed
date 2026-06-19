@@ -45,16 +45,23 @@ Procedure_Arguments = {
 }
 
 Declaration_Data = {
-	Identifier ~ "as" ~ Type
+	Identifier ~ "as" ~ Kind
 }
 
-Type = {
-	"Integer" |
-    "String" |
-    "Float" |
-    "Boolean" |
-    "List" |
-    "Dictionary"
+String = { "String" }
+Integer = { "Integer" }
+Float = { "Float" }
+Boolean = { "Boolean" }
+List = { "List" }
+Dictionary = { "Dictionary" }
+
+Kind = {
+	Integer |
+    String |
+    Float |
+    Boolean |
+    List |
+    Dictionary
 }
 
 Body = {
