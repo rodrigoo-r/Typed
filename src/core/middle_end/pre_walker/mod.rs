@@ -12,9 +12,13 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use std::cell::Ref;
+use std::cell::{Ref, RefCell};
 use std::collections::HashMap;
+use std::rc::Rc;
+use crate::adt::error::{ErrorKind, ExecutionError};
 use crate::adt::lang::{Argument, File, Kind, Procedure, AST};
+use crate::adt::result::RuntimeResult;
+use crate::adt::runtime::{GlobalPackageDictionary, PackageDictionary};
 use crate::core::frontend::parser::Rule;
 use crate::core::frontend::parser::Rule::Procedure_Arguments;
 
@@ -30,15 +34,34 @@ fn convert_kind(ast: Ref<AST>) -> Kind {
     }
 }
 
-fn convert_use(ast: &AST, result: &mut File) {
+fn convert_use<'a>(
+    ast: &AST,
+    global_package: &'a GlobalPackageDictionary<'a>,
+) -> RuntimeResult<'a, &'a PackageDictionary<'a>> {
     let children = ast.children.borrow();
     let literal = children[0].borrow();
     let literal = literal.value.unwrap();
 
-    result.imports.push(literal.to_string());
+    let pkg = global_package.get(literal);
+
+    match pkg {
+        None => {
+            Err(ExecutionError{
+                line: ast.line,
+                column: ast.column,
+                message: "imported library doesn't exist",
+                kind: ErrorKind::CouldNotFindLibrary
+            })
+        }
+        Some(procedures) => {
+            Ok(procedures)
+        }
+    }
 }
 
-fn convert_procedure<'a>(ast: &AST<'a>, result: &mut File<'a>) {
+fn convert_procedure<'a>(ast: &AST<'a>)
+    -> (&'a str, Procedure<'a>)
+{
     let children = ast.children.borrow();
     let name = children[0].borrow();
     let name = name.value.unwrap();
@@ -70,7 +93,7 @@ fn convert_procedure<'a>(ast: &AST<'a>, result: &mut File<'a>) {
         }
 
         proc = Some(Procedure{
-            body,
+            body: Some(body),
             arguments: vec,
             variadic: false,
             native: None
@@ -79,17 +102,20 @@ fn convert_procedure<'a>(ast: &AST<'a>, result: &mut File<'a>) {
         let body = children[1].clone();
 
         proc = Some(Procedure{
-            body,
+            body: Some(body),
             arguments: Vec::new(),
             variadic: false,
             native: None
         });
     }
 
-    result.procedures.insert(name, proc.unwrap());
+    (name, proc.unwrap())
 }
 
-pub fn convert(ast: AST) -> File {
+pub fn convert<'a>(
+    ast: AST<'a>,
+    global_package: &'a GlobalPackageDictionary<'a>
+) -> RuntimeResult<'a, File<'a>> {
     let mut result = File{
         imports: Vec::new(),
         procedures: HashMap::new()
@@ -101,16 +127,22 @@ pub fn convert(ast: AST) -> File {
         let child = child.borrow();
 
         match child.rule {
-            Rule::Use =>
-                convert_use(&child, &mut result),
+            Rule::Use => {
+                let dict = convert_use(&child, &global_package)?;
+                for (name, proc) in dict.iter() {
+                    result.procedures.insert(name, proc.clone());
+                }
+            }
 
-            Rule::Procedure =>
-                convert_procedure(&child, &mut result),
+            Rule::Procedure => {
+                let (name, proc) = convert_procedure(&child);
+                result.procedures.insert(name, proc);
+            },
 
             // Rest of rules get ignored
             _ => {}
-        }
+        };
     }
 
-    result
+    Ok(result)
 }
