@@ -24,7 +24,7 @@ pub fn evaluate<'a>(
     
     // Parse the value
     let value = value.parse::<isize>();
-    
+
     if value.is_err() {
         return Err(ExecutionError::malformed_literal(child));
     }
