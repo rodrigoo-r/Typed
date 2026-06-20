@@ -14,6 +14,7 @@
 */
 use crate::adt::lang::AST;
 
+#[warn(dead_code)]
 pub fn print_ast<'a>(
     ast: AST<'a>,
     depth: usize

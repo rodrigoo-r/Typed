@@ -31,9 +31,6 @@ fn hash_obj<H: std::hash::Hasher>(obj: &HashableObject, state: &mut H) {
         HashableObject::Integer(i) => i.hash(state),
         HashableObject::Boolean(b) => b.hash(state),
         HashableObject::Float(f) => f.to_bits().hash(state),
-
-        // Any gets ignored as it's handled by the hasher
-        _ => {}
     }
 }
 

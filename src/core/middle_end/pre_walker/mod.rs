@@ -12,9 +12,8 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use std::cell::{Ref, RefCell};
+use std::cell::Ref;
 use std::collections::HashMap;
-use std::rc::Rc;
 use crate::adt::error::{ErrorKind, ExecutionError};
 use crate::adt::lang::{Argument, File, Kind, Procedure, AST};
 use crate::adt::result::RuntimeResult;
@@ -66,7 +65,7 @@ fn convert_procedure<'a>(ast: &AST<'a>)
     let name = children[0].borrow();
     let name = name.value.unwrap();
 
-    let mut proc: Option<Procedure<'a>> = None;
+    let proc: Option<Procedure<'a>>;
     let body = children[1].borrow();
     if body.rule == Procedure_Arguments {
         let args = body;

@@ -14,11 +14,10 @@
 */
 use std::process::exit;
 use crate::adt::error::ExecutionError;
-use crate::adt::result::{ExecutionResult, RuntimeResult};
+use crate::adt::result::RuntimeResult;
 use colored::Colorize;
 use pest::error::Error;
 use pest::iterators::Pairs;
-use crate::adt::runtime::Object;
 use crate::core::frontend::parser::Rule;
 
 fn print_considerations() {

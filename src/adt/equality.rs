@@ -51,7 +51,7 @@ impl<'a> PartialEq for HashableObject<'a> {
 }
 
 impl<'a> PartialEq for NonHashableObject<'a> {
-    fn eq(&self, other: &Self) -> bool {
+    fn eq(&self, _: &Self) -> bool {
         false
     }
 }

@@ -23,8 +23,6 @@ pub type BaseChildAST<'a> = RefCell<AST<'a>>;
 pub type ChildAST<'a> = Rc<BaseChildAST<'a>>;
 pub type ASTChildren<'a> = RefCell<Vec<ChildAST<'a>>>;
 
-pub type DefinitionArguments<'a> =
-    (&'a str, Object<'a>);
 pub type RuntimeArguments<'a> = List<'a>;
 pub type NativeProcedure<'a> =
     fn(RuntimeArguments<'a>, &AST<'a>) -> ExecutionResult<'a>;
