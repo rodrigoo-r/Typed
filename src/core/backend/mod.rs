@@ -13,20 +13,43 @@
  * #-----------------------------------------------------# *
 */
 mod procedure;
+mod expression;
+mod identifier;
+mod string_literal;
+mod float_literal;
+mod integer_literal;
+mod boolean_literal;
+mod call;
 
-use crate::adt::lang::{File, ProcedureArguments, RuntimeArguments};
+use std::ops::Deref;
+use crate::adt::lang::{File, RuntimeArguments};
 use crate::adt::result::ExecutionResult;
 
 pub fn execute<'a>(
     file: &'a File<'a>,
-    empty_args: ProcedureArguments<'a>
+    empty_args: RuntimeArguments<'a>
 ) -> ExecutionResult<'a> {
     // Get the main procedure
-    let main = file.procedures.get("Main").unwrap();
+    let main = file.procedures.get("Main");
+    if main.is_none() {
+        return Err(
+            crate::adt::error::ExecutionError{
+                kind: crate::adt::error::ErrorKind::UndefinedFindProcedure,
+                message: "Could not find procedure 'Main'",
+                line: 0,
+                column: 0
+            }
+        );
+    }
+    
+    let main = main.unwrap();
+    let trace = main.body.as_ref().unwrap();
+    let trace = trace.borrow();
 
     procedure::execute(
-        main.body.as_ref().unwrap(),
+        file,
+        trace.deref(),
         main,
-        &empty_args
+        empty_args
     )
 }
