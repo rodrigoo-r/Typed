@@ -185,11 +185,11 @@ Divide = {
 	"Divide" ~ Expression ~ "By" ~ Identifier
 }
 
-Integer_Literal = {
+Integer_Literal = @{
     ASCII_DIGIT+
 }
 
-Float_Literal = {
+Float_Literal = @{
     ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT+
 }
 
