@@ -12,17 +12,19 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::ops::Deref;
 use crate::adt::error::{ErrorKind, ExecutionError};
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
-use crate::adt::variable::ScopedStack;
+use crate::adt::variable::NestedStack;
 
-pub fn evaluate<'a, 'stack>(
+pub fn evaluate<'a>(
     id: &AST<'a>,
-    stack: &'stack ScopedStack<'a, 'stack>
+    stack: &NestedStack<'a>
 ) -> ExecutionResult<'a> {
     let name = id.value.unwrap();
-    let value = stack.search(name);
+    let deref_stack = stack.borrow();
+    let value = deref_stack.search(name);
     
     if value.is_none() {
         return Err(
@@ -35,5 +37,5 @@ pub fn evaluate<'a, 'stack>(
         );
     }
     
-    Ok(value.unwrap().clone())
+    Ok(value.unwrap().deref().borrow().clone())
 }
