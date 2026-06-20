@@ -15,6 +15,7 @@
 use crate::adt::lang::{RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
+use crate::runtime::strings::format;
 use crate::support::runtime::object::{*};
 
 pub fn println<'a>(
@@ -23,10 +24,9 @@ pub fn println<'a>(
 )
     -> ExecutionResult<'a>
 {
-    let fmt = args.get(0);
-    let fmt = fmt.unwrap();
-    let fmt = get_string(&fmt, trace)?;
-    println!("{}", fmt);
+    let res = format::format_str(args, trace)?;
+    let str = get_string(&res, trace)?;
+    println!("{}", str);
 
     Ok(Object::Void)
 }
