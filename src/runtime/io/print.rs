@@ -15,7 +15,7 @@
 use crate::adt::lang::{RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
-use crate::support::runtime::{*};
+use crate::support::runtime::object::{*};
 
 pub fn println<'a>(
     args: RuntimeArguments<'a>,

@@ -19,7 +19,7 @@ use crate::adt::runtime::{Object, HashableObject};
 use crate::adt::variable::NestedStack;
 use crate::core::backend::expression;
 use crate::core::frontend::parser::Rule;
-use crate::support::runtime::{get_float, get_integer};
+use crate::support::runtime::object::{get_float, get_integer};
 
 fn perform_op<
     T:
