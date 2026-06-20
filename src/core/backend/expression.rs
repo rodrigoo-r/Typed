@@ -42,20 +42,11 @@ pub fn evaluate<'a>(
             return call::evaluate(file, &child, stack);
         }
 
+        parser::Rule::Subtract |
+        parser::Rule::Multiply |
+        parser::Rule::Divide |
         parser::Rule::Add => {
             return arithmetic::evaluate(file, &child, stack);
-        }
-
-        parser::Rule::Subtract => {
-
-        }
-
-        parser::Rule::Multiply => {
-
-        }
-
-        parser::Rule::Divide => {
-
         }
         
         // Literals
