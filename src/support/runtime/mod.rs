@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::error::{ErrorKind, ExecutionError};
-use crate::adt::lang::{ChildAST, AST};
+use crate::adt::lang::AST;
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, StringKind};
 use crate::adt::runtime::Object::NonHashable;
