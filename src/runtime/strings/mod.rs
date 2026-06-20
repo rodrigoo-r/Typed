@@ -20,7 +20,7 @@ use crate::adt::runtime::PackageDictionary;
 pub fn get_package<'a>() -> PackageDictionary<'a> {
     let mut dict = PackageDictionary::new();
     dict.insert(
-        "Format",
+        "String_Format",
         Procedure{
             variadic: true,
             body: None,
