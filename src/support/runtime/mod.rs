@@ -53,25 +53,25 @@ pub fn get_string<'obj, 'data>(
 }
 
 pub fn get_integer<'source>(
-    obj: &'source Object<'source>,
+    obj: &Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, &'source isize>
+) -> RuntimeResult<'source, isize>
 {
     unwrap_obj!(
         obj,
-        Object::Hashable(HashableObject::Integer(s)) => s,
+        Object::Hashable(HashableObject::Integer(s)) => s.clone(),
         trace
     )
 }
 
 pub fn get_float<'source>(
-    obj: &'source Object<'source>,
+    obj: &Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, &'source Float>
+) -> RuntimeResult<'source, Float>
 {
     unwrap_obj!(
         obj,
-        Object::Hashable(HashableObject::Float(s)) => s,
+        Object::Hashable(HashableObject::Float(s)) => s.clone(),
         trace
     )
 }
@@ -79,11 +79,11 @@ pub fn get_float<'source>(
 pub fn get_boolean<'source>(
     obj: &'source Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, &'source bool>
+) -> RuntimeResult<'source, bool>
 {
     unwrap_obj!(
         obj,
-        Object::Hashable(HashableObject::Boolean(s)) => s,
+        Object::Hashable(HashableObject::Boolean(s)) => s.clone(),
         trace
     )
 }
