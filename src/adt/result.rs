@@ -15,10 +15,10 @@
 use crate::adt::error::ExecutionError;
 use crate::adt::runtime::Object;
 
-pub type RuntimeResult<'a, Success> = Result<
+pub type RuntimeResult<Success> = Result<
     Success,
     ExecutionError
 >;
 
 pub type ExecutionResult<'a> =
-    RuntimeResult<'a, Object<'a>>;
+    RuntimeResult<Object<'a>>;
