@@ -16,7 +16,7 @@ use std::collections::HashMap;
 use crate::adt::runtime::Object;
 
 pub struct ScopedStack<'a, 'parent> {
-    inner: HashMap<&'a str, &'parent Object<'a>>,
+    inner: HashMap<&'a str, Object<'a>>,
     parent: Option<&'parent ScopedStack<'a, 'parent>>,
 }
 
@@ -33,10 +33,10 @@ impl <'a, 'parent> ScopedStack<'a, 'parent> {
     }
     
     pub fn push(&mut self, name: &'a str, value: &'parent Object<'a>) {
-        self.inner.insert(name, value);
+        self.inner.insert(name, value.clone());
     }
     
-    pub fn search(&self, name: &str) -> Option<&&'parent Object<'a>> {
+    pub fn search(&self, name: &str) -> Option<&Object<'a>> {
         let mut queue = vec![self];
         
         while !queue.is_empty() {
