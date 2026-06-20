@@ -12,45 +12,59 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::cell::RefCell;
 use std::collections::HashMap;
+use std::rc::Rc;
 use crate::adt::runtime::Object;
 
-pub struct ScopedStack<'a, 'parent> {
-    inner: HashMap<&'a str, Object<'a>>,
-    parent: Option<&'parent ScopedStack<'a, 'parent>>,
+pub type NestedStack<'a> =
+    Rc<RefCell<ScopedStack<'a>>>;
+
+pub type Variable<'a> =
+    Rc<RefCell<Object<'a>>>;
+
+pub struct ScopedStack<'a> {
+    inner: HashMap<&'a str, Variable<'a>>,
+    parent: Option<NestedStack<'a>>,
 }
 
-impl <'a, 'parent> ScopedStack<'a, 'parent> {
-    pub fn new(parent: Option<&'parent ScopedStack<'a, 'parent>>) -> Self {
-        Self {
-            inner: HashMap::new(),
-            parent,
+impl <'a> ScopedStack<'a> {
+    pub fn new(parent: Option<NestedStack<'a>>) -> NestedStack<'a> {
+        NestedStack::new(
+            RefCell::new(
+                Self {
+                    inner: HashMap::new(),
+                    parent,
+                }
+            )
+        )
+    }
+    
+    pub fn nest(parent: &NestedStack<'a>) -> NestedStack<'a> {
+        ScopedStack::new(Some(parent.clone()))
+    }
+    
+    pub fn push(&mut self, name: &'a str, value: &Object<'a>) {
+        self.inner.insert(name, Variable::new(RefCell::new(value.clone())));
+    }
+
+    pub fn search(&self, name: &str) -> Option<Variable<'a>> {
+        let mut current = self.parent.clone();
+
+        if let Some(var) = self.inner.get(name) {
+            return Some(var.clone());
         }
-    }
-    
-    pub fn nest(&'parent self) -> ScopedStack<'a, 'parent> {
-        ScopedStack::new(Some(self))
-    }
-    
-    pub fn push(&mut self, name: &'a str, value: &'parent Object<'a>) {
-        self.inner.insert(name, value.clone());
-    }
-    
-    pub fn search(&self, name: &str) -> Option<&Object<'a>> {
-        let mut queue = vec![self];
-        
-        while !queue.is_empty() {
-            let stack = queue.pop().unwrap();
-            
-            if stack.inner.contains_key(name) {
-                return stack.inner.get(name);
+
+        while let Some(scope) = current {
+            let scope_ref = scope.borrow();
+
+            if let Some(var) = scope_ref.inner.get(name) {
+                return Some(var.clone());
             }
-            
-            if let Some(parent) = &stack.parent {
-                queue.push(parent);
-            }
+
+            current = scope_ref.parent.clone();
         }
-        
+
         None
     }
 }
