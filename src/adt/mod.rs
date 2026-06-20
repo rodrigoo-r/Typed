@@ -17,6 +17,6 @@ pub mod variable;
 pub mod runtime;
 pub mod hash;
 pub mod equality;
-pub mod variant_id;
 pub mod error;
 pub mod result;
+pub mod variant_id;
