@@ -77,12 +77,25 @@ pub fn evaluate<'a>(
 
     let target = target.unwrap();
     let target = target.deref();
-    let target_borrow = target.borrow();
 
-    // Do type checking
-    check_obj_kind(&target.borrow(), &expr_result, &expr)?;
+    {
+        // Do type checking
+        check_obj_kind(&target.borrow(), &expr_result, &expr)?;
+    }
 
-    if let Object::Hashable(HashableObject::Integer(_)) = *target_borrow {
+    let mut is_integer = false;
+    let mut is_float = false;
+
+    {
+        let target_borrow = target.borrow();
+        if let Object::Hashable(HashableObject::Integer(_)) = *target_borrow {
+            is_integer = true;
+        } else if let Object::Hashable(HashableObject::Float(_)) = *target_borrow {
+            is_float = true;
+        }
+    }
+
+    if is_integer {
         let mut mut_ref = target.borrow_mut();
         let mut_ref = mut_ref.deref_mut();
         let
@@ -92,7 +105,7 @@ pub fn evaluate<'a>(
         let source = get_integer(&expr_result, &expr)?;
 
         perform_op(i, &expr, source);
-    } else if let Object::Hashable(HashableObject::Float(_)) = *target_borrow {
+    } else if is_float {
         let mut mut_ref = target.borrow_mut();
         let mut_ref = mut_ref.deref_mut();
         let

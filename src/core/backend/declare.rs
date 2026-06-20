@@ -34,6 +34,8 @@ pub fn evaluate<'a>(
     let data_children = data.children.borrow();
     let name = data_children.get(0).unwrap().borrow();
     let kind = data_children.get(1).unwrap().borrow();
+    let kind = kind.children.borrow();
+    let kind = kind.get(0).unwrap().borrow();
     let initial;
 
     // Determine if the declaration has an initializer
