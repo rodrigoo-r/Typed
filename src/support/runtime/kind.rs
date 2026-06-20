@@ -17,57 +17,63 @@ use crate::adt::lang::{Kind, AST};
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object};
 
+pub fn check_kinds(
+    expected: Kind,
+    actual: Kind,
+    trace: &AST
+) -> RuntimeResult<()> {
+    if expected != actual {
+        return Err(ExecutionError::mismatched_types(trace));
+    }
+    
+    Ok(())
+}
+
 pub fn check_kind<'a>(
     expected: Kind,
     actual: &Object<'a>,
     trace: &AST
-) -> RuntimeResult<'a, ()> {
-    match expected {
-        Kind::String => {
-            if let Object::Hashable(HashableObject::String(_)) = *actual {
-                return Ok(());
-            }
+) -> RuntimeResult<()> {
+    match actual {
+        Object::Hashable(HashableObject::Integer(_)) => {
+            check_kinds(expected, Kind::Integer, trace)
         }
 
-        Kind::Integer => {
-            if let Object::Hashable(HashableObject::Integer(_)) = *actual {
-                return Ok(());
-            }
+        Object::Hashable(HashableObject::Float(_)) => {
+            check_kinds(expected, Kind::Float, trace)
         }
-
-        Kind::Boolean => {
-            if let Object::Hashable(HashableObject::Boolean(_)) = *actual {
-                return Ok(());
-            }
+        
+        Object::Hashable(HashableObject::Boolean(_)) => {
+            check_kinds(expected, Kind::Boolean, trace)
         }
-
-        Kind::Float => {
-            if let Object::Hashable(HashableObject::Float(_)) = *actual {
-                return Ok(());
-            }
+        
+        Object::Hashable(HashableObject::String(_)) => {
+            check_kinds(expected, Kind::String, trace)
         }
-
-        Kind::Dictionary => {
-            if let Object::NonHashable(NonHashableObject::Dictionary(_)) = *actual {
-                return Ok(());
-            }
+        
+        Object::NonHashable(NonHashableObject::List(_)) => {
+            check_kinds(expected, Kind::List, trace)
         }
-
-        Kind::List => {
-            if let Object::NonHashable(NonHashableObject::List(_)) = *actual {
-                return Ok(());
-            }
+        
+        Object::NonHashable(NonHashableObject::Dictionary(_)) => {
+            check_kinds(expected, Kind::Dictionary, trace)
+        }
+        
+        Object::Void => {
+            Err(ExecutionError::mismatched_types(trace))
+        }
+        
+        Object::Any(_) => {
+            Ok(())
         }
     }
-
-    Err(ExecutionError::mismatched_types(trace))
 }
 
 pub fn check_obj_kind<'a>(
     expected: &Object<'a>,
     actual: &Object<'a>,
     trace: &AST
-) -> RuntimeResult<'a, ()> {
+) -> RuntimeResult<()> {
     match expected {
         Object::Hashable(HashableObject::Integer(_)) => {
             check_kind(Kind::Integer, actual, trace)
