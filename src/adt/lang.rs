@@ -16,7 +16,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{List, Object};
+use crate::adt::runtime::List;
 use crate::core::frontend::parser::Rule;
 
 pub type BaseChildAST<'a> = RefCell<AST<'a>>;
@@ -62,6 +62,5 @@ pub struct Procedure<'a> {
 
 #[derive(Debug)]
 pub struct File<'a> {
-    pub imports: Vec<String>,
     pub procedures: HashMap<&'a str, Procedure<'a>>
 }
