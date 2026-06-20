@@ -116,7 +116,6 @@ pub fn convert<'a>(
     global_package: &'a GlobalPackageDictionary<'a>
 ) -> RuntimeResult<'a, File<'a>> {
     let mut result = File{
-        imports: Vec::new(),
         procedures: HashMap::new()
     };
 

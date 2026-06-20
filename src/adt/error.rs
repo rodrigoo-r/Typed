@@ -32,6 +32,3 @@ pub struct ExecutionError {
     pub line: usize,
     pub column: usize
 }
-
-type ExecutionResult<'a> =
-    Result<Object<'a>, ExecutionError>;
