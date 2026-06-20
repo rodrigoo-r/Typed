@@ -175,15 +175,15 @@ pub fn format_str<'a>(
             },
 
             b'I' => {
-                format_obj(&arg, Kind::String, trace, &mut result)?;
+                format_obj(&arg, Kind::Integer, trace, &mut result)?;
             },
 
             b'B' => {
-                format_obj(&arg, Kind::String, trace, &mut result)?;
+                format_obj(&arg, Kind::Boolean, trace, &mut result)?;
             },
 
             b'F' => {
-                format_obj(&arg, Kind::String, trace, &mut result)?;
+                format_obj(&arg, Kind::Float, trace, &mut result)?;
             },
 
             _ => {
