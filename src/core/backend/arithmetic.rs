@@ -62,9 +62,9 @@ pub fn evaluate<'a>(
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
     let children = expr.children.borrow();
-    let expr = children.get(0).unwrap();
-    let expr = expr.borrow();
-    let expr_result = expression::evaluate(file, &expr, stack)?;
+    let target = children.get(0).unwrap();
+    let target = target.borrow();
+    let expr_result = expression::evaluate(file, &target, stack)?;
     let target = children.get(1).unwrap();
     let target = target.borrow();
     let target = target.value.unwrap();
