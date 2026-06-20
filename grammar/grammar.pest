@@ -201,7 +201,7 @@ Boolean_Literal = _{
 True_Literal = { "True" }
 False_Literal = { "False" }
 
-String_Literal = ${
+String_Literal = {
     ("\"" ~ Single_Line_String_Char* ~ "\"") |
     (
     	"`" ~ Multi_Line_String_Char* ~ "`"
