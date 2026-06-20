@@ -17,6 +17,7 @@ use crate::adt::lang::{File, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::variable::NestedStack;
 use crate::core::backend::{expression, procedure};
+use crate::support::runtime::kind::check_kind;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
@@ -41,12 +42,18 @@ pub fn evaluate<'a>(
     if children.len() > 1 {
         let ast_args = children.get(1).unwrap();
         let ast_args = ast_args.borrow();
+        let children = ast_args.children.borrow();
 
-        for arg in ast_args.children.borrow().iter() {
+        for i in 0..children.len() {
+            let arg = children.get(i).unwrap();
             let arg = arg.borrow();
-            args.push(
-                expression::evaluate(file, &arg, stack)?
-            );
+            let expected = &procedure.arguments[i];
+            let kind = expected.kind.clone();
+            let arg = expression::evaluate(file, &arg, stack)?;
+
+            check_kind(kind, &arg, child)?;
+
+            args.push(arg);
         }
     }
 

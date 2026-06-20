@@ -12,13 +12,14 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::lang::{File, AST};
+use crate::adt::lang::{File, Kind, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, StringKind};
 use crate::adt::runtime::Object::NonHashable;
 use crate::adt::variable::NestedStack;
 use crate::core::backend::expression;
 use crate::core::frontend::parser;
+use crate::support::runtime::kind::check_kind;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
@@ -38,6 +39,22 @@ pub fn evaluate<'a>(
     if children.len() > 1 {
         let init = children.get(1).unwrap().borrow();
         initial = expression::evaluate(file, &init, stack)?;
+
+        check_kind(
+            match kind.rule {
+                parser::Rule::Integer => Kind::Integer,
+                parser::Rule::Float => Kind::Float,
+                parser::Rule::String => Kind::String,
+                parser::Rule::Boolean => Kind::Boolean,
+                parser::Rule::Dictionary => Kind::Dictionary,
+                parser::Rule::List => Kind::List,
+
+                _ => { unreachable!() }
+            },
+            &initial,
+            expr
+        )?;
+
     } else {
         match kind.rule {
             parser::Rule::Integer => {
