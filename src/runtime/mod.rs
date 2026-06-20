@@ -15,10 +15,12 @@
 use crate::adt::runtime::GlobalPackageDictionary;
 
 pub mod io;
+pub mod strings;
 
 pub fn get_global_package<'a>() -> GlobalPackageDictionary<'a> {
     let mut result = GlobalPackageDictionary::new();
     result.insert("IO", io::get_package());
+    result.insert("Strings", strings::get_package());
     
     result
 }
