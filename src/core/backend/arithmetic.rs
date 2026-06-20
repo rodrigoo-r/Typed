@@ -19,6 +19,7 @@ use crate::adt::runtime::{Object, HashableObject};
 use crate::adt::variable::NestedStack;
 use crate::core::backend::expression;
 use crate::core::frontend::parser::Rule;
+use crate::support::runtime::kind::check_obj_kind;
 use crate::support::runtime::object::{get_float, get_integer};
 
 fn perform_op<
@@ -71,6 +72,9 @@ pub fn evaluate<'a>(
     let target = deref_stack.search(target).unwrap();
     let target = target.deref();
     let target_borrow = target.borrow();
+
+    // Do type checking
+    check_obj_kind(&target.borrow(), &expr_result, &expr)?;
 
     if let Object::Hashable(HashableObject::Integer(_)) = *target_borrow {
         let mut mut_ref = target.borrow_mut();
