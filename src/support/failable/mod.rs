@@ -77,9 +77,9 @@ fn print_non_traceable_err<T: std::error::Error>(err: T) {
     print_considerations();
 }
 
-pub fn catch<'source, Success>(
-    result: &'source RuntimeResult<'source, Success>
-) -> &'source Success {
+pub fn catch<Success>(
+    result: &RuntimeResult<Success>
+) -> &Success {
     if result.is_err() {
         let result = result.as_ref();
         let err = result.err();

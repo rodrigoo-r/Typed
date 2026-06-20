@@ -36,7 +36,7 @@ fn convert_kind(ast: Ref<AST>) -> Kind {
 fn convert_use<'a>(
     ast: &AST,
     global_package: &'a GlobalPackageDictionary<'a>,
-) -> RuntimeResult<'a, &'a PackageDictionary<'a>> {
+) -> RuntimeResult<&'a PackageDictionary<'a>> {
     let children = ast.children.borrow();
     let literal = children[0].borrow();
     let literal = literal.value.unwrap();
@@ -109,7 +109,7 @@ fn convert_procedure<'a>(ast: &AST<'a>)
 pub fn convert<'a>(
     ast: AST<'a>,
     global_package: &'a GlobalPackageDictionary<'a>
-) -> RuntimeResult<'a, File<'a>> {
+) -> RuntimeResult<File<'a>> {
     let mut result = File{
         procedures: HashMap::new()
     };

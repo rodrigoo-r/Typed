@@ -32,7 +32,7 @@ macro_rules! unwrap_obj {
 pub fn get_string<'obj, 'data>(
     obj: &'obj Object<'data>,
     trace: &AST<'data>,
-) -> RuntimeResult<'data, &'obj str>
+) -> RuntimeResult<&'obj str>
 {
     let kind = unwrap_obj!(
         obj,
@@ -49,7 +49,7 @@ pub fn get_string<'obj, 'data>(
 pub fn get_integer<'source>(
     obj: &Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, isize>
+) -> RuntimeResult<isize>
 {
     unwrap_obj!(
         obj,
@@ -61,7 +61,7 @@ pub fn get_integer<'source>(
 pub fn get_float<'source>(
     obj: &Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, Float>
+) -> RuntimeResult<Float>
 {
     unwrap_obj!(
         obj,
@@ -71,9 +71,9 @@ pub fn get_float<'source>(
 }
 
 pub fn get_boolean<'source>(
-    obj: &'source Object<'source>,
+    obj: &Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, bool>
+) -> RuntimeResult<bool>
 {
     unwrap_obj!(
         obj,
@@ -83,9 +83,9 @@ pub fn get_boolean<'source>(
 }
 
 pub fn get_list<'source>(
-    obj: Object<'source>,
+    obj: &'source Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, List<'source>>
+) -> RuntimeResult<&'source List<'source>>
 {
     unwrap_obj!(
         obj,
@@ -97,7 +97,7 @@ pub fn get_list<'source>(
 pub fn get_dictionary<'source>(
     obj: &'source Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<'source, &'source Dictionary<'source>>
+) -> RuntimeResult<&'source Dictionary<'source>>
 {
     unwrap_obj!(
         obj,
