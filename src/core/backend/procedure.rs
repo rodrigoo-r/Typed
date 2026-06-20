@@ -27,6 +27,11 @@ pub fn execute<'a>(
     procedure: &Procedure<'a>,
     given_args: RuntimeArguments<'a>
 ) -> ExecutionResult<'a> {
+    // Call native procedures if needed
+    if procedure.native.is_some() {
+        return procedure.native.as_ref().unwrap()(given_args, trace);
+    }
+
     let stack = ScopedStack::new(None);
     let deref_stack = stack.deref();
     let mut deref_stack = deref_stack.borrow_mut();
@@ -36,11 +41,6 @@ pub fn execute<'a>(
         let name = procedure.arguments[i].name;
         let arg = given_args.get(i).unwrap();
         deref_stack.push(name, arg);
-    }
-
-    // Call native procedures if needed
-    if procedure.native.is_some() {
-        return procedure.native.as_ref().unwrap()(given_args, trace);
     }
 
     let body = procedure.body.as_ref();
