@@ -12,9 +12,10 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::cell::RefCell;
 use crate::adt::lang::{File, Kind, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, StringKind};
+use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, RuntimeDictionary, RuntimeList, StringKind};
 use crate::adt::runtime::Object::NonHashable;
 use crate::adt::variable::NestedStack;
 use crate::core::backend::expression;
@@ -86,7 +87,7 @@ pub fn evaluate<'a>(
             parser::Rule::Dictionary => {
                 initial = NonHashable(
                     NonHashableObject::Dictionary(
-                        Dictionary::new()
+                        RuntimeDictionary::new(RefCell::new(Dictionary::new()))
                     )
                 );
             }
@@ -94,7 +95,7 @@ pub fn evaluate<'a>(
             parser::Rule::List => {
                 initial = NonHashable(
                     NonHashableObject::List(
-                        List::new()
+                        RuntimeList::new(RefCell::new(List::new()))
                     )
                 );
             }

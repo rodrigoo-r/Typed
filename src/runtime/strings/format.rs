@@ -18,7 +18,7 @@ use crate::adt::lang::{Kind, RuntimeArguments, AST};
 use crate::adt::result::{ExecutionResult, RuntimeResult};
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object, StringKind};
 use crate::support::runtime::kind::{check_kind, check_kinds};
-use crate::support::runtime::object::{get_boolean, get_float, get_integer, get_string};
+use crate::support::runtime::object::get_string;
 
 fn format_hashable_object(
     obj: &HashableObject,
@@ -86,6 +86,7 @@ fn format_obj<'a>(
         ) => {
             result.push_str("List(");
 
+            let list = list.borrow();
             for (idx, item) in list.iter().enumerate() {
                 if idx != 0 {
                     result.push_str(", ");
@@ -102,6 +103,7 @@ fn format_obj<'a>(
         ) => {
             result.push_str("Dictionary(");
             let mut idx: usize = 1;
+            let dict = dict.borrow();
             let size = dict.len();
 
             for (key, value) in dict.iter() {

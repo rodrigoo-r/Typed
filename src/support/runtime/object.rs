@@ -16,7 +16,7 @@
 use crate::adt::error::ExecutionError;
 use crate::adt::lang::AST;
 use crate::adt::result::RuntimeResult;
-use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, StringKind};
+use crate::adt::runtime::{Float, HashableObject, NonHashableObject, Object, RuntimeDictionary, RuntimeList, StringKind};
 use crate::adt::runtime::Object::NonHashable;
 
 macro_rules! unwrap_obj {
@@ -83,25 +83,25 @@ pub fn get_boolean<'source>(
 }
 
 pub fn get_list<'source>(
-    obj: &'source Object<'source>,
+    obj: &Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<&'source List<'source>>
+) -> RuntimeResult<RuntimeList<'source>>
 {
     unwrap_obj!(
         obj,
-        NonHashable(NonHashableObject::List(s)) => s,
+        NonHashable(NonHashableObject::List(s)) => s.clone(),
         trace
     )
 }
 
 pub fn get_dictionary<'source>(
-    obj: &'source Object<'source>,
+    obj: &Object<'source>,
     trace: &AST<'source>
-) -> RuntimeResult<&'source Dictionary<'source>>
+) -> RuntimeResult<RuntimeDictionary<'source>>
 {
     unwrap_obj!(
         obj,
-        NonHashable(NonHashableObject::Dictionary(s)) => s,
+        NonHashable(NonHashableObject::Dictionary(s)) => s.clone(),
         trace
     )
 }

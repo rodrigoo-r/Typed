@@ -22,6 +22,12 @@ pub type List<'a> = Vec<Object<'a>>;
 pub type Dictionary<'a> =
     HashMap<HashableObject<'a>, Object<'a>>;
 
+pub type RuntimeList<'a> =
+    Rc<RefCell<List<'a>>>;
+
+pub type RuntimeDictionary<'a> =
+    Rc<RefCell<Dictionary<'a>>>;
+
 pub type PackageDictionary<'a> =
     HashMap<&'a str, Procedure<'a>>;
 
@@ -46,8 +52,8 @@ pub enum HashableObject<'a> {
 
 #[derive(Debug, Clone)]
 pub enum NonHashableObject<'a> {
-    Dictionary(Dictionary<'a>),
-    List(List<'a>)
+    Dictionary(RuntimeDictionary<'a>),
+    List(RuntimeList<'a>)
 }
 
 #[derive(Debug, Clone)]
