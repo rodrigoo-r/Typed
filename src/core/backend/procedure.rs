@@ -12,6 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::ops::Deref;
 use crate::adt::lang::{File, Procedure, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
@@ -25,13 +26,15 @@ pub fn execute<'a>(
     procedure: &Procedure<'a>,
     given_args: RuntimeArguments<'a>
 ) -> ExecutionResult<'a> {
-    let mut stack = ScopedStack::new(None);
+    let stack = ScopedStack::new(None);
+    let deref_stack = stack.deref();
+    let mut deref_stack = deref_stack.borrow_mut();
 
     // Add all arguments
     for i in 0..procedure.arguments.len() {
         let name = procedure.arguments[i].name;
         let arg = given_args.get(i).unwrap();
-        stack.push(name, arg);
+        deref_stack.push(name, arg);
     }
 
     // Call native procedures if needed
