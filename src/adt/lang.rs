@@ -36,7 +36,7 @@ pub struct AST<'a> {
     pub column: usize
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub enum Kind {
     String,
     Integer,
