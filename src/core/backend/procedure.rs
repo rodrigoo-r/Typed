@@ -17,7 +17,8 @@ use crate::adt::lang::{File, Procedure, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
-use crate::core::backend::expression::evaluate;
+use crate::core::backend::expression;
+use crate::core::backend::declare;
 use crate::core::frontend;
 
 pub fn execute<'a>(
@@ -51,7 +52,7 @@ pub fn execute<'a>(
 
         match statement.rule {
             frontend::parser::Rule::Expression => {
-                evaluate(file, &statement, &stack)?;
+                expression::evaluate(file, &statement, &stack)?;
             }
 
             frontend::parser::Rule::For => {
@@ -63,7 +64,7 @@ pub fn execute<'a>(
             }
 
             frontend::parser::Rule::Declare => {
-
+                declare::evaluate(file, &statement, &stack)?;
             }
 
             frontend::parser::Rule::Condition_Group => {

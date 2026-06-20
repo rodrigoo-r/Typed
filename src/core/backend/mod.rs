@@ -21,6 +21,7 @@ mod integer_literal;
 mod boolean_literal;
 mod call;
 mod arithmetic;
+mod declare;
 
 use std::ops::Deref;
 use crate::adt::lang::File;
