@@ -47,6 +47,5 @@ fn main() {
     let file = middle_end::pre_walker::convert(ast, &global_package);
     let file = catch(&file);
 
-    let empty_args = RuntimeArguments::new();
-    catch(&execute(file, &empty_args));
+    catch(&execute(file));
 }

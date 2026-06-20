@@ -22,12 +22,11 @@ mod boolean_literal;
 mod call;
 
 use std::ops::Deref;
-use crate::adt::lang::{File, RuntimeArguments};
+use crate::adt::lang::File;
 use crate::adt::result::ExecutionResult;
 
 pub fn execute<'a>(
-    file: &'a File<'a>,
-    empty_args: RuntimeArguments<'a>
+    file: &'a File<'a>
 ) -> ExecutionResult<'a> {
     // Get the main procedure
     let main = file.procedures.get("Main");
@@ -50,6 +49,6 @@ pub fn execute<'a>(
         file,
         trace.deref(),
         main,
-        empty_args
+        Vec::new()
     )
 }
