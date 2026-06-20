@@ -12,27 +12,31 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::lang::{ChildAST, Procedure, ProcedureArguments};
+use crate::adt::lang::{File, Procedure, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
+use crate::core::backend::expression::evaluate;
 use crate::core::frontend;
 
 pub fn execute<'a>(
-    trace: &'a ChildAST<'a>,
+    file: &'a File<'a>,
+    trace: &AST<'a>,
     procedure: &Procedure<'a>,
-    given_args: ProcedureArguments<'a>
+    given_args: RuntimeArguments<'a>
 ) -> ExecutionResult<'a> {
     let mut stack = ScopedStack::new(None);
 
     // Add all arguments
-    for (name, arg) in given_args.iter() {
+    for i in 0..procedure.arguments.len() {
+        let name = procedure.arguments[i].name;
+        let arg = given_args.get(i).unwrap();
         stack.push(name, arg);
     }
 
     // Call native procedures if needed
     if procedure.native.is_some() {
-        return procedure.native.as_ref().unwrap()(&given_args, trace);
+        return procedure.native.as_ref().unwrap()(given_args, trace);
     }
 
     let body = procedure.body.as_ref();
@@ -44,7 +48,7 @@ pub fn execute<'a>(
 
         match statement.rule {
             frontend::parser::Rule::Expression => {
-
+                evaluate(file, &statement, &stack)?;
             }
 
             frontend::parser::Rule::For => {
