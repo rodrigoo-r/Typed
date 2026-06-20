@@ -16,11 +16,13 @@ use crate::adt::runtime::Object;
 
 #[derive(Debug)]
 pub enum ErrorKind {
-    CouldNotFindProcedure,
+    UndefinedFindProcedure,
     MismatchedTypes,
     MismatchedArgumentCount,
     OutOfBounds,
-    CouldNotFindLibrary
+    CouldNotFindLibrary,
+    MisformedLiteral,
+    UndefinedSymbol
 }
 
 #[derive(Debug)]
