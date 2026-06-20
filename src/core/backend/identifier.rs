@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use std::ops::Deref;
-use crate::adt::error::{ErrorKind, ExecutionError};
+use crate::adt::error::ExecutionError;
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
 use crate::adt::variable::NestedStack;
@@ -27,14 +27,7 @@ pub fn evaluate<'a>(
     let value = deref_stack.search(name);
     
     if value.is_none() {
-        return Err(
-            ExecutionError{
-                kind: ErrorKind::UndefinedSymbol,
-                message: "Undefined symbol",
-                line: id.line,
-                column: id.column
-            }
-        );
+        return Err(ExecutionError::undefined_symbol(id));
     }
     
     Ok(value.unwrap().deref().borrow().clone())

@@ -12,6 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use crate::adt::lang::AST;
 
 #[derive(Debug)]
 pub enum ErrorKind {
@@ -20,7 +21,7 @@ pub enum ErrorKind {
     MismatchedArgumentCount,
     OutOfBounds,
     CouldNotFindLibrary,
-    MisformedLiteral,
+    MalformedLiteral,
     UndefinedSymbol
 }
 
@@ -30,4 +31,76 @@ pub struct ExecutionError {
     pub message : &'static str,
     pub line: usize,
     pub column: usize
+}
+
+impl ExecutionError {
+    fn create(
+        trace: &AST,
+        kind: ErrorKind,
+        message: &'static str
+    ) -> Self {
+        ExecutionError{
+            kind,
+            message,
+            line: trace.line,
+            column: trace.column
+        }
+    }
+
+    pub fn undefined_procedure(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::UndefinedFindProcedure,
+            "Undefined procedure"
+        )
+    }
+
+    pub fn mismatched_types(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::MismatchedTypes,
+            "Mismatched types"
+        )
+    }
+
+    pub fn mismatched_argument_count(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::MismatchedArgumentCount,
+            "Mismatched argument count"
+        )
+    }
+
+    pub fn out_of_bounds(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::OutOfBounds,
+            "Out of bounds"
+        )
+    }
+
+    pub fn could_not_find_library(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::CouldNotFindLibrary,
+            "Could not find library"
+        )
+    }
+
+    pub fn malformed_literal(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::MalformedLiteral,
+            "Malformed literal"
+        )
+    }
+
+    pub fn undefined_symbol(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::UndefinedSymbol,
+            "Undefined symbol"
+        )
+    }
+
 }

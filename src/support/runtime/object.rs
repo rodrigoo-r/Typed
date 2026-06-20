@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 
-use crate::adt::error::{ErrorKind, ExecutionError};
+use crate::adt::error::ExecutionError;
 use crate::adt::lang::AST;
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, StringKind};
@@ -24,14 +24,7 @@ macro_rules! unwrap_obj {
         if let $pattern = $obj {
             Ok($result)
         } else {
-            let err = ExecutionError{
-                kind: ErrorKind::MismatchedTypes,
-                message: "mismatched types",
-                line: $trace.line,
-                column: $trace.column,
-            };
-
-            Err(err)
+            Err(ExecutionError::mismatched_types($trace))
         }
     }}
 }

@@ -12,7 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::error::{ErrorKind, ExecutionError};
+use crate::adt::error::ExecutionError;
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object};
@@ -31,11 +31,5 @@ pub fn evaluate<'a>(
     }
 
     Err(
-        ExecutionError{
-            kind: ErrorKind::MisformedLiteral,
-            message: "Invalid boolean literal",
-            line: child.line,
-            column: child.column
-        }
-    )
+ExecutionError::malformed_literal(child), )
 }

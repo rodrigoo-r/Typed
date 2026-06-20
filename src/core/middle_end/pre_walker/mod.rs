@@ -14,7 +14,7 @@
 */
 use std::cell::Ref;
 use std::collections::HashMap;
-use crate::adt::error::{ErrorKind, ExecutionError};
+use crate::adt::error::ExecutionError;
 use crate::adt::lang::{Argument, File, Kind, Procedure, AST};
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{GlobalPackageDictionary, PackageDictionary};
@@ -45,12 +45,7 @@ fn convert_use<'a>(
 
     match pkg {
         None => {
-            Err(ExecutionError{
-                line: ast.line,
-                column: ast.column,
-                message: "imported library doesn't exist",
-                kind: ErrorKind::CouldNotFindLibrary
-            })
+            Err(ExecutionError::could_not_find_library(ast))
         }
         Some(procedures) => {
             Ok(procedures)
