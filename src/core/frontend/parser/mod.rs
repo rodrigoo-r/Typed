@@ -63,7 +63,7 @@ pub fn convert<'source>(pairs: Pairs<'source, Rule>) -> AST<'source> {
 
             let line_col = inner.as_span().start_pos().line_col();
             let val = inner.as_str();
-            let mut child = Rc::new(
+            let child = Rc::new(
                 RefCell::new(
                     AST{
                         value: None,
@@ -78,9 +78,14 @@ pub fn convert<'source>(pairs: Pairs<'source, Rule>) -> AST<'source> {
             match rule {
                 Rule::Identifier |
                 Rule::Float_Literal |
-                Rule::Integer_Literal |
-                Rule::String_Literal =>
+                Rule::Integer_Literal =>
                     child.borrow_mut().value = Some(val),
+
+                Rule::String_Literal => {
+                    // Remove the quotes
+                    let s = &val[1..val.len()-1];
+                    child.borrow_mut().value = Some(s);
+                },
 
                 // Ignore boolean literals
                 Rule::True_Literal |
