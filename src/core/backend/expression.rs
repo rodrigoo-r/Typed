@@ -12,18 +12,19 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::cell::RefMut;
 use crate::core::frontend::parser;
 use crate::adt::lang::{File, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
-use crate::adt::variable::NestedStack;
+use crate::adt::variable::ScopedStack;
 use crate::core::backend::{arithmetic, boolean_literal, call, float_literal, identifier, integer_literal};
 use crate::core::backend::string_literal;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
     expr: &AST<'a>,
-    stack: &NestedStack<'a>
+    stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
     let children = expr.children.borrow();
     let child = children.get(0).unwrap();

@@ -12,17 +12,18 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::cell::RefMut;
 use crate::adt::error::ExecutionError;
 use crate::adt::lang::{File, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::variable::NestedStack;
+use crate::adt::variable::ScopedStack;
 use crate::core::backend::{expression, procedure};
 use crate::support::runtime::kind::check_kind;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
     child: &AST<'a>,
-    stack: &NestedStack<'a>
+    stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
     let children = child.children.borrow();
     let name = children.get(0).unwrap();

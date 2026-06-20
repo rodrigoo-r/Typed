@@ -12,12 +12,12 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use std::cell::RefCell;
+use std::cell::{RefCell, RefMut};
 use crate::adt::lang::{File, Kind, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, RuntimeDictionary, RuntimeList, StringKind};
 use crate::adt::runtime::Object::NonHashable;
-use crate::adt::variable::NestedStack;
+use crate::adt::variable::ScopedStack;
 use crate::core::backend::expression;
 use crate::core::frontend::parser;
 use crate::support::runtime::kind::check_kind;
@@ -25,7 +25,7 @@ use crate::support::runtime::kind::check_kind;
 pub fn evaluate<'a>(
     file: &'a File<'a>,
     expr: &AST<'a>,
-    stack: &NestedStack<'a>
+    stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
     let children = expr.children.borrow();
 
@@ -105,7 +105,6 @@ pub fn evaluate<'a>(
     }
 
     // Insert the variable into the stack
-    let mut stack = stack.borrow_mut();
     stack.push(name.value.unwrap(), &initial);
 
     Ok(Object::Void)

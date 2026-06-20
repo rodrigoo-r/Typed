@@ -12,11 +12,12 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::cell::RefMut;
 use std::ops::{Deref, DerefMut};
 use crate::adt::lang::{File, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{Object, HashableObject};
-use crate::adt::variable::NestedStack;
+use crate::adt::variable::ScopedStack;
 use crate::core::backend::expression;
 use crate::core::frontend::parser::Rule;
 use crate::support::runtime::kind::check_obj_kind;
@@ -57,9 +58,8 @@ fn perform_op<
 pub fn evaluate<'a>(
     file: &'a File<'a>,
     expr: &AST<'a>,
-    stack: &NestedStack<'a>
+    stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
-    let deref_stack = stack.borrow();
     let children = expr.children.borrow();
     let expr = children.get(0).unwrap();
     let expr = expr.borrow();
@@ -69,7 +69,7 @@ pub fn evaluate<'a>(
     let target = target.value.unwrap();
 
     // Get the target value
-    let target = deref_stack.search(target).unwrap();
+    let target = stack.search(target).unwrap();
     let target = target.deref();
     let target_borrow = target.borrow();
 

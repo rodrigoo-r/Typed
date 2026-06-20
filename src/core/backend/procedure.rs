@@ -52,7 +52,7 @@ pub fn execute<'a>(
 
         match statement.rule {
             frontend::parser::Rule::Expression => {
-                expression::evaluate(file, &statement, &stack)?;
+                expression::evaluate(file, &statement, &mut deref_stack)?;
             }
 
             frontend::parser::Rule::For => {
@@ -64,7 +64,7 @@ pub fn execute<'a>(
             }
 
             frontend::parser::Rule::Declare => {
-                declare::evaluate(file, &statement, &stack)?;
+                declare::evaluate(file, &statement, &mut deref_stack)?;
             }
 
             frontend::parser::Rule::Condition_Group => {

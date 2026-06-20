@@ -12,19 +12,19 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::cell::RefMut;
 use std::ops::Deref;
 use crate::adt::error::ExecutionError;
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
-use crate::adt::variable::NestedStack;
+use crate::adt::variable::ScopedStack;
 
 pub fn evaluate<'a>(
     id: &AST<'a>,
-    stack: &NestedStack<'a>
+    stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
     let name = id.value.unwrap();
-    let deref_stack = stack.borrow();
-    let value = deref_stack.search(name);
+    let value = stack.search(name);
     
     if value.is_none() {
         return Err(ExecutionError::undefined_symbol(id));
