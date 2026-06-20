@@ -20,7 +20,7 @@ mod float_literal;
 mod integer_literal;
 mod boolean_literal;
 mod call;
-mod add;
+mod arithmetic;
 
 use std::ops::Deref;
 use crate::adt::lang::File;

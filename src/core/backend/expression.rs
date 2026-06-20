@@ -17,7 +17,7 @@ use crate::adt::lang::{File, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::NestedStack;
-use crate::core::backend::{add, boolean_literal, call, float_literal, identifier, integer_literal};
+use crate::core::backend::{arithmetic, boolean_literal, call, float_literal, identifier, integer_literal};
 use crate::core::backend::string_literal;
 
 pub fn evaluate<'a>(
@@ -43,7 +43,7 @@ pub fn evaluate<'a>(
         }
 
         parser::Rule::Add => {
-            return add::evaluate(file, &child, stack);
+            return arithmetic::evaluate(file, &child, stack);
         }
 
         parser::Rule::Subtract => {

@@ -18,7 +18,40 @@ use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{Object, HashableObject};
 use crate::adt::variable::NestedStack;
 use crate::core::backend::expression;
+use crate::core::frontend::parser::Rule;
 use crate::support::runtime::{get_float, get_integer};
+
+fn perform_op<
+    T:
+        std::ops::AddAssign +
+        std::ops::SubAssign +
+        std::ops::MulAssign +
+        std::ops::DivAssign
+>(
+    i: &mut T,
+    expr: &AST,
+    source: T
+) {
+    match expr.rule {
+        Rule::Add => {
+            *i += source;
+        }
+
+        Rule::Subtract => {
+            *i -= source;
+        }
+
+        Rule::Multiply => {
+            *i *= source;
+        }
+
+        Rule::Divide => {
+            *i /= source;
+        }
+
+        _ => {}
+    }
+}
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
@@ -38,27 +71,26 @@ pub fn evaluate<'a>(
     let target = deref_stack.search(target).unwrap();
     let target = target.deref();
     let target_borrow = target.borrow();
-    
+
     if let Object::Hashable(HashableObject::Integer(_)) = *target_borrow {
         let mut mut_ref = target.borrow_mut();
         let mut_ref = mut_ref.deref_mut();
-        let 
+        let
             Object::Hashable(HashableObject::Integer(i))
         = mut_ref else { unreachable!() };
-        
+
         let source = get_integer(&expr_result, &expr)?;
 
-        *i += source;
+        perform_op(i, &expr, source);
     } else if let Object::Hashable(HashableObject::Float(_)) = *target_borrow {
         let mut mut_ref = target.borrow_mut();
         let mut_ref = mut_ref.deref_mut();
-        let 
-            Object::Hashable(HashableObject::Float(f)) 
+        let
+            Object::Hashable(HashableObject::Float(f))
         = mut_ref else { unreachable!() };
-        
+
         let source = get_float(&expr_result, &expr)?;
-        
-        *f += source;
+        perform_op(f, &expr, source);
     }
     
     Ok(Object::Void)
