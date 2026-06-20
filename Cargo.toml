@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 colored = "3.1.1"
+memchr = "2.8.2"
 ordered-float = "5.3.0"
 pest = "2.8.6"
 pest_derive = "2.8.6"

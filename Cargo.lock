@@ -7,6 +7,7 @@ name = "Typed"
 version = "0.1.0"
 dependencies = [
  "colored",
+ "memchr",
  "ordered-float",
  "pest",
  "pest_derive",
