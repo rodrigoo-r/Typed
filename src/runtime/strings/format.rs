@@ -59,7 +59,7 @@ fn format_hashable_object(
             result.push_str(&b);
         }
     }
-    
+
     Ok(())
 }
 
@@ -70,30 +70,30 @@ fn format_obj<'a>(
     result: &mut String
 ) -> RuntimeResult<()> {
     check_kind(expected.clone(), obj, trace)?;
-    
+
     match obj {
         Object::Hashable(hashable) => {
             format_hashable_object(
-                hashable, 
-                expected.clone(), 
-                trace, 
+                hashable,
+                expected.clone(),
+                trace,
                 result
             )?;
         }
-        
+
         Object::NonHashable(
             NonHashableObject::List(list)
         ) => {
             result.push_str("List(");
-            
+
             for (idx, item) in list.iter().enumerate() {
                 if idx != 0 {
                     result.push_str(", ");
                 }
-                
+
                 format_obj(item, expected.clone(), trace, result)?;
             }
-            
+
             result.push_str(")");
         }
 
@@ -103,32 +103,32 @@ fn format_obj<'a>(
             result.push_str("Dictionary(");
             let mut idx: usize = 1;
             let size = dict.len();
-            
+
             for (key, value) in dict.iter() {
                 if idx != size {
                     result.push_str(", ");
                 }
-                
+
                 format_hashable_object(key, expected.clone(), trace, result)?;
                 result.push_str(": ");
                 format_obj(value, expected.clone(), trace, result)?;
-                
+
                 idx += 1;
             }
 
             result.push_str(")");
         }
-        
+
         Object::Void => {
             result.push_str("Void");
         }
-        
+
         Object::Any(any) => {
             let any = any.borrow();
             format_obj(&any, expected, trace, result)?;
         }
     }
-    
+
     Ok(())
 }
 
@@ -170,26 +170,18 @@ pub fn format_str<'a>(
         match *fmt_type {
             b'S' => {
                 format_obj(&arg, Kind::String, trace, &mut result)?;
-                let arg = get_string(&arg, trace)?;
-                result.push_str(arg);
             },
 
             b'I' => {
                 format_obj(&arg, Kind::String, trace, &mut result)?;
-                let arg = get_integer(&arg, trace)?;
-                result.push_str(&arg.to_string());
             },
 
             b'B' => {
                 format_obj(&arg, Kind::String, trace, &mut result)?;
-                let arg = get_boolean(&arg, trace)?;
-                result.push_str(&arg.to_string());
             },
 
             b'F' => {
                 format_obj(&arg, Kind::String, trace, &mut result)?;
-                let arg = get_float(&arg, trace)?;
-                result.push_str(&arg.to_string());
             },
 
             _ => {
