@@ -39,11 +39,11 @@ impl <'a> ScopedStack<'a> {
             )
         )
     }
-    
+
     pub fn nest(parent: &NestedStack<'a>) -> NestedStack<'a> {
         ScopedStack::new(Some(parent.clone()))
     }
-    
+
     pub fn push(&mut self, name: &'a str, value: &Object<'a>) {
         self.inner.insert(name, Variable::new(RefCell::new(value.clone())));
     }
