@@ -44,7 +44,21 @@ pub fn evaluate<'a>(
         let ast_args = ast_args.borrow();
         let children = ast_args.children.borrow();
 
-        for i in 0..children.len() {
+        // Handle mismatched arguments
+        if
+            (
+                procedure.arguments.len() != children.len() &&
+                !procedure.variadic
+            ) ||
+            (
+                procedure.variadic &&
+                procedure.arguments.len() > children.len()
+            )
+        {
+            return Err(ExecutionError::mismatched_argument_count(child));
+        }
+
+        for i in 0..procedure.arguments.len() {
             let arg = children.get(i).unwrap();
             let arg = arg.borrow();
             let expected = &procedure.arguments[i];
@@ -54,6 +68,17 @@ pub fn evaluate<'a>(
             check_kind(kind, &arg, child)?;
 
             args.push(arg);
+        }
+
+        // Handle variadic arguments
+        if procedure.variadic {
+            for i in procedure.arguments.len()..children.len() {
+                let arg = children.get(i).unwrap();
+                let arg = arg.borrow();
+                let arg = expression::evaluate(file, &arg, stack)?;
+
+                args.push(arg);
+            }
         }
     }
 
