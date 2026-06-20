@@ -14,6 +14,7 @@
 */
 use std::cell::RefMut;
 use std::ops::{Deref, DerefMut};
+use crate::adt::error::ExecutionError;
 use crate::adt::lang::{File, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{Object, HashableObject};
@@ -69,7 +70,12 @@ pub fn evaluate<'a>(
     let target = target.value.unwrap();
 
     // Get the target value
-    let target = stack.search(target).unwrap();
+    let target = stack.search(target);
+    if target.is_none() {
+        return Err(ExecutionError::undefined_symbol(&expr));
+    }
+
+    let target = target.unwrap();
     let target = target.deref();
     let target_borrow = target.borrow();
 
