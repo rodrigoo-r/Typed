@@ -41,6 +41,7 @@ pub enum RuntimeErrorKind {
     CouldNotRead,
     UnexpectedReturn,
     KeyNotFound,
+    CouldNotWrite
 }
 
 #[derive(Debug)]
@@ -160,6 +161,14 @@ impl RuntimeError {
             "Key not found"
         )
     }
+    
+    pub fn could_not_write(trace: &AST) -> Self {
+        RuntimeError::create(
+            trace,
+            RuntimeErrorKind::CouldNotWrite,
+            "Could not write to stream"
+        )
+    }   
 }
 
 impl ParseError {
