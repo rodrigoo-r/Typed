@@ -13,6 +13,7 @@
  * #-----------------------------------------------------# *
 */
 pub mod format;
+pub mod access;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -36,6 +37,33 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(format::format_str)
+        }
+    );
+
+    dict.insert(
+        "String_Access",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+
+                args.push(
+                    Argument{
+                        name: "idx",
+                        kind: Kind::Integer
+                    }
+                );
+
+                args
+            },
+            native: Some(access::access_str)
         }
     );
 
