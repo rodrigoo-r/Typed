@@ -24,7 +24,8 @@ pub enum ErrorKind {
     MalformedLiteral,
     UndefinedSymbol,
     InvalidLoopVariable,
-    InvalidLoopStep
+    InvalidLoopStep,
+    CouldNotRead
 }
 
 #[derive(Debug)]
@@ -118,6 +119,14 @@ impl ExecutionError {
             trace,
             ErrorKind::InvalidLoopStep,
             "Invalid loop step"
+        )
+    }
+
+    pub fn could_not_read(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::CouldNotRead,
+            "Could not read from stream"
         )
     }
 }
