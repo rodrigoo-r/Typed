@@ -12,19 +12,23 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::runtime::GlobalPackageDictionary;
+use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::result::ExecutionResult;
+use crate::adt::runtime::Object;
+use crate::support::runtime::object::get_list;
 
-pub mod io;
-pub mod strings;
-pub mod dictionaries;
-pub mod lists;
+pub fn add<'a>(
+    args: RuntimeArguments<'a>,
+    trace: &AST<'a>
+)
+    -> ExecutionResult<'a>
+{
+    let list = args.get(0).unwrap();
+    let target = args.get(1).unwrap();
 
-pub fn get_global_package<'a>() -> GlobalPackageDictionary<'a> {
-    let mut result = GlobalPackageDictionary::new();
-    result.insert("IO", io::get_package());
-    result.insert("Strings", strings::get_package());
-    result.insert("Dictionaries", dictionaries::get_package());
-    result.insert("Lists", lists::get_package());
+    let list = get_list(list, trace)?;
+    let mut list = list.borrow_mut();
 
-    result
+    list.push(target.clone());
+    Ok(Object::Void)
 }
