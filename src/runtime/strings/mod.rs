@@ -17,6 +17,7 @@ pub mod access;
 pub mod add;
 pub mod size;
 pub mod split;
+pub mod trim_left;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -39,7 +40,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
-            native: Some(format::format_str)
+            native: Some(format::format)
         }
     );
 
@@ -66,7 +67,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
-            native: Some(access::access_str)
+            native: Some(access::access)
         }
     );
 
@@ -93,7 +94,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
-            native: Some(add::add_str)
+            native: Some(add::add)
         }
     );
 
@@ -113,7 +114,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
-            native: Some(size::str_size)
+            native: Some(size::size)
         }
     );
     
@@ -140,7 +141,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
-            native: Some(split::split_str)
+            native: Some(split::split)
         }
     );
 

@@ -1,10 +1,32 @@
 Use IO;
+Use Strings;
 
 Procedure Main
 Begin
     Call
         Print_Line
     With
-        "Hello, world!"
+        "Enter your name:"
     End_Call;
+
+    Declare
+        Name as String
+    With
+        Call
+            Read_Line
+        End_Call
+    ;
+
+    Call
+        Print_Line
+    With
+        "Hello, $S",
+        Call
+            String_Access
+        With
+            "Hello, world",
+            1
+        End_Call
+    End_Call;
+
 End_Procedure

@@ -17,7 +17,7 @@ use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object};
 use crate::support::runtime::object::get_string;
 
-pub fn str_size<'a>(
+pub fn size<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )

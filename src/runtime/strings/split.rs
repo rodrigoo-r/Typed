@@ -18,7 +18,7 @@ use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object, RuntimeList, StringKind};
 use crate::support::runtime::object::get_string;
 
-pub fn split_str<'a>(
+pub fn split<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )

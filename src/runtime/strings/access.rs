@@ -18,7 +18,7 @@ use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object, StringKind};
 use crate::support::runtime::object::{get_integer, get_string};
 
-pub fn access_str<'a>(
+pub fn access<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )

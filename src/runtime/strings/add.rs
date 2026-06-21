@@ -17,7 +17,7 @@ use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object, StringKind};
 use crate::support::runtime::object::get_string;
 
-pub fn add_str<'a>(
+pub fn add<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )

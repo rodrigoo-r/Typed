@@ -24,7 +24,7 @@ pub fn print<'a>(
 )
     -> ExecutionResult<'a>
 {
-    let res = format::format_str(args, trace)?;
+    let res = format::format(args, trace)?;
     let str = get_string(&res, trace)?;
     print!("{}", str);
 

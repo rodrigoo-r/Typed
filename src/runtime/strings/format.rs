@@ -134,7 +134,7 @@ fn format_obj<'a>(
     Ok(())
 }
 
-pub fn format_str<'a>(
+pub fn format<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
