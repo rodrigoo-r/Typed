@@ -16,9 +16,9 @@
 #[macro_export]
 macro_rules! execute_or_return {
     ($expr:expr) => {{
-        let res = $expr;
-
-        if res != crate::adt::runtime::Object::Void {
+        let res = $expr?;
+        
+        if !matches!(res, crate::adt::runtime::Object::Void) {
             return Ok(res);
         }
     }}
