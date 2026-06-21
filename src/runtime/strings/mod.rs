@@ -16,6 +16,7 @@ pub mod format;
 pub mod access;
 pub mod add;
 pub mod size;
+pub mod split;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -113,6 +114,33 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(size::str_size)
+        }
+    );
+    
+    dict.insert(
+        "String_Split",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+                
+                args.push(
+                    Argument{
+                        name: "delim",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(split::split_str)
         }
     );
 
