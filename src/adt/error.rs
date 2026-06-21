@@ -15,38 +15,14 @@
 use crate::adt::lang::AST;
 
 #[derive(Debug)]
-pub enum ParseErrorKind {
-    MalformedEscapeSequence,
-}
-
-#[derive(Debug)]
 pub struct ParseError {
-    pub kind : ParseErrorKind,
     pub message : &'static str,
     pub line: usize,
     pub column: usize
 }
 
 #[derive(Debug)]
-pub enum RuntimeErrorKind {
-    UndefinedFindProcedure,
-    MismatchedTypes,
-    MismatchedArgumentCount,
-    OutOfBounds,
-    CouldNotFindLibrary,
-    MalformedLiteral,
-    UndefinedSymbol,
-    InvalidLoopVariable,
-    InvalidLoopStep,
-    CouldNotRead,
-    UnexpectedReturn,
-    KeyNotFound,
-    CouldNotWrite
-}
-
-#[derive(Debug)]
 pub struct RuntimeError {
-    pub kind : RuntimeErrorKind,
     pub message : &'static str,
     pub line: usize,
     pub column: usize
@@ -55,11 +31,9 @@ pub struct RuntimeError {
 impl RuntimeError {
     fn create(
         trace: &AST,
-        kind: RuntimeErrorKind,
         message: &'static str
     ) -> Self {
         RuntimeError{
-            kind,
             message,
             line: trace.line,
             column: trace.column
@@ -69,7 +43,6 @@ impl RuntimeError {
     pub fn undefined_procedure(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::UndefinedFindProcedure,
             "Undefined procedure"
         )
     }
@@ -77,15 +50,6 @@ impl RuntimeError {
     pub fn mismatched_types(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::MismatchedTypes,
-            "Mismatched types"
-        )
-    }
-
-    pub fn mismatched_argument_count(trace: &AST) -> Self {
-        RuntimeError::create(
-            trace,
-            RuntimeErrorKind::MismatchedArgumentCount,
             "Mismatched argument count"
         )
     }
@@ -93,7 +57,6 @@ impl RuntimeError {
     pub fn out_of_bounds(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::OutOfBounds,
             "Out of bounds"
         )
     }
@@ -101,7 +64,6 @@ impl RuntimeError {
     pub fn could_not_find_library(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::CouldNotFindLibrary,
             "Could not find library"
         )
     }
@@ -109,15 +71,20 @@ impl RuntimeError {
     pub fn malformed_literal(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::MalformedLiteral,
             "Malformed literal"
+        )
+    }
+
+    pub fn mismatched_argument_count(trace: &AST) -> Self {
+        RuntimeError::create(
+            trace,
+            "Mismatched argument count"
         )
     }
 
     pub fn undefined_symbol(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::UndefinedSymbol,
             "Undefined symbol"
         )
     }
@@ -125,7 +92,6 @@ impl RuntimeError {
     pub fn invalid_loop_variable(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::InvalidLoopVariable,
             "Invalid loop variable type, expected Integer or Float"
         )
     }
@@ -133,7 +99,6 @@ impl RuntimeError {
     pub fn invalid_loop_step(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::InvalidLoopStep,
             "Invalid loop step"
         )
     }
@@ -141,7 +106,6 @@ impl RuntimeError {
     pub fn could_not_read(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::CouldNotRead,
             "Could not read from stream"
         )
     }
@@ -149,7 +113,6 @@ impl RuntimeError {
     pub fn unexpected_return(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::UnexpectedReturn,
             "Unexpected return"
         )
     }
@@ -157,29 +120,25 @@ impl RuntimeError {
     pub fn key_not_found(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::KeyNotFound,
             "Key not found"
         )
     }
-    
+
     pub fn could_not_write(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            RuntimeErrorKind::CouldNotWrite,
             "Could not write to stream"
         )
-    }   
+    }
 }
 
 impl ParseError {
     fn create(
         line: usize,
         column: usize,
-        kind: ParseErrorKind,
         message: &'static str
     ) -> Self {
         ParseError{
-            kind,
             message,
             line,
             column
@@ -190,7 +149,6 @@ impl ParseError {
         ParseError::create(
             line,
             column,
-            ParseErrorKind::MalformedEscapeSequence,
             "Invalid escape sequence"
         )
     }
