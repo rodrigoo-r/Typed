@@ -63,7 +63,7 @@ fn format_hashable_object(
     Ok(())
 }
 
-fn format_obj<'a>(
+pub fn format_obj<'a>(
     obj: &Object,
     expected: Kind,
     trace: &AST,
