@@ -25,6 +25,7 @@ mod declare;
 mod for_loop;
 mod body;
 mod while_loop;
+mod return_smt;
 
 use std::ops::Deref;
 use crate::adt::lang::File;

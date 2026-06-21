@@ -18,7 +18,7 @@ use crate::adt::lang::{File, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
-use crate::core::backend::{declare, expression, for_loop, while_loop};
+use crate::core::backend::{declare, expression, for_loop, return_smt, while_loop};
 use crate::execute_or_return;
 
 pub fn evaluate<'a>(
@@ -46,6 +46,10 @@ pub fn evaluate<'a>(
 
             parser::Rule::Declare => {
                 declare::evaluate(file, &statement, stack)?;
+            }
+
+            parser::Rule::Return => {
+                return return_smt::evaluate(file, &statement, stack);
             }
 
             parser::Rule::Condition_Group => {
