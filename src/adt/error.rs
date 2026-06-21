@@ -39,6 +39,7 @@ pub enum RuntimeErrorKind {
     InvalidLoopVariable,
     InvalidLoopStep,
     CouldNotRead,
+    UnexpectedReturn
 }
 
 #[derive(Debug)]
@@ -140,6 +141,14 @@ impl RuntimeError {
             trace,
             RuntimeErrorKind::CouldNotRead,
             "Could not read from stream"
+        )
+    }
+    
+    pub fn unexpected_return(trace: &AST) -> Self {
+        RuntimeError::create(
+            trace,
+            RuntimeErrorKind::UnexpectedReturn,
+            "Unexpected return"
         )
     }
 }

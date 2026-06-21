@@ -60,7 +60,8 @@ pub struct Procedure<'a> {
     pub arguments: Vec<Argument<'a>>,
     pub body: Option<ChildAST<'a>>,
     pub variadic: bool,
-    pub native: Option<NativeProcedure<'a>>
+    pub native: Option<NativeProcedure<'a>>,
+    pub ret: Option<Kind>
 }
 
 #[derive(Debug)]
