@@ -39,7 +39,8 @@ pub enum RuntimeErrorKind {
     InvalidLoopVariable,
     InvalidLoopStep,
     CouldNotRead,
-    UnexpectedReturn
+    UnexpectedReturn,
+    KeyNotFound,
 }
 
 #[derive(Debug)]
@@ -149,6 +150,14 @@ impl RuntimeError {
             trace,
             RuntimeErrorKind::UnexpectedReturn,
             "Unexpected return"
+        )
+    }
+
+    pub fn key_not_found(trace: &AST) -> Self {
+        RuntimeError::create(
+            trace,
+            RuntimeErrorKind::KeyNotFound,
+            "Key not found"
         )
     }
 }

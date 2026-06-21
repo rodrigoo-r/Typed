@@ -87,6 +87,8 @@ pub fn evaluate<'a>(
                     )
                 );
             }
+            
+            _ => unreachable!()
         }
     }
 
