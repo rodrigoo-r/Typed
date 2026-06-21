@@ -66,7 +66,7 @@ pub fn evaluate<'a>(
     stack.push(name, &initial);
 
     if kind == Kind::Integer {
-        let initial = get_integer(&initial, expr)?;
+        let mut initial = get_integer(&initial, expr)?;
         let end = get_integer(&end, expr)?;
         let step = get_integer(&step, expr)?;
         let max = end - step;
@@ -76,19 +76,21 @@ pub fn evaluate<'a>(
         }
 
         while initial <= max {
+            execute_or_return!(body::evaluate(file, &body, &mut stack));
+
             let var = stack.search(name).unwrap();
             let mut var = var.borrow_mut();
             let var = var.deref_mut();
 
             let
                 Object::Hashable(HashableObject::Integer(var))
-            = var else { unreachable!() };
+                = var else { unreachable!() };
 
-            execute_or_return!(body::evaluate(file, &body, &mut stack)?);
             *var += step;
+            initial = *var;
         }
     } else {
-        let initial = get_float(&initial, expr)?;
+        let mut initial = get_float(&initial, expr)?;
         let end = get_float(&end, expr)?;
         let step = get_float(&step, expr)?;
         let max = end - step;
@@ -98,6 +100,8 @@ pub fn evaluate<'a>(
         }
 
         while initial <= max {
+            execute_or_return!(body::evaluate(file, &body, &mut stack));
+
             let var = stack.search(name).unwrap();
             let mut var = var.borrow_mut();
             let var = var.deref_mut();
@@ -106,9 +110,8 @@ pub fn evaluate<'a>(
                 Object::Hashable(HashableObject::Float(var))
             = var else { unreachable!() };
 
-            execute_or_return!(body::evaluate(file, &body, &mut stack)?);
-
             *var += step;
+            initial = *var;
         }
     }
 

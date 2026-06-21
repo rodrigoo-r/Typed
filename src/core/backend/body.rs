@@ -37,7 +37,7 @@ pub fn evaluate<'a>(
             }
 
             parser::Rule::For => {
-                execute_or_return!(for_loop::evaluate(file, &statement, stack)?);
+                execute_or_return!(for_loop::evaluate(file, &statement, stack));
             }
 
             parser::Rule::While => {
