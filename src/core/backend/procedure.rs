@@ -15,11 +15,8 @@
 use std::ops::Deref;
 use crate::adt::lang::{File, Procedure, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
-use crate::core::backend::{body, expression, for_loop};
-use crate::core::backend::declare;
-use crate::core::frontend;
+use crate::core::backend::body;
 
 pub fn execute<'a>(
     file: &'a File<'a>,
