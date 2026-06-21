@@ -14,10 +14,11 @@
 */
 use std::process::exit;
 use crate::adt::error::RuntimeError;
-use crate::adt::result::RuntimeResult;
+use crate::adt::result::{ParseResult, RuntimeResult};
 use colored::Colorize;
 use pest::error::Error;
 use pest::iterators::Pairs;
+use crate::adt::lang::ASTValue;
 use crate::core::frontend::parser::Rule;
 
 fn print_considerations() {
@@ -57,6 +58,13 @@ fn print_err_base(
     );
 }
 
+fn print_non_traceable_detail() {
+    println!(
+        "{}",
+        "└── this exception is not traceable".bright_black()
+    );
+}
+
 fn print_traceable_err(err: &RuntimeError) {
     print_err_base(&err.message, &err.line, &err.column);
 
@@ -69,11 +77,7 @@ fn print_traceable_err(err: &RuntimeError) {
 fn print_non_traceable_err<T: std::error::Error>(err: T) {
     print_err_msg(err.to_string().as_str());
 
-    println!(
-        "{}",
-        "└── this exception is not traceable".bright_black()
-    );
-
+    print_non_traceable_detail();
     print_considerations();
 }
 
@@ -85,6 +89,23 @@ pub fn catch<Success>(
         let err = result.err();
 
         print_traceable_err(err.unwrap());
+        exit(1)
+    }
+
+    result.as_ref().unwrap()
+}
+
+pub fn catch_parse<'a, 'r>(
+    result: &'r ParseResult<'a>
+) -> &'r ASTValue<'a> {
+    if result.is_err() {
+        let result = result.as_ref();
+        let err = result.err();
+        let err = err.unwrap();
+
+        print_err_base(err.message, &err.line, &err.column);
+        print_considerations();
+
         exit(1)
     }
 

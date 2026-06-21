@@ -14,9 +14,9 @@
 */
 use memchr::memchr;
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::{Kind, RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, Kind, RuntimeArguments, AST};
 use crate::adt::result::{ExecutionResult, RuntimeResult};
-use crate::adt::runtime::{HashableObject, NonHashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, NonHashableObject, Object};
 use crate::support::runtime::kind::{check_kind, check_kinds};
 use crate::support::runtime::object::get_string;
 
@@ -28,14 +28,14 @@ fn format_hashable_object(
 ) -> RuntimeResult<()> {
     match obj {
         HashableObject::String(
-            StringKind::Static(s)
+            ASTValue::Borrowed(s)
         ) => {
             check_kinds(expected, Kind::String, trace)?;
             result.push_str(s);
         }
 
         HashableObject::String(
-            StringKind::Dynamic(s)
+            ASTValue::Owned(s)
         ) => {
             check_kinds(expected, Kind::String, trace)?;
             result.push_str(s);
@@ -146,15 +146,13 @@ pub fn format<'a>(
     let mut result = String::new();
 
     // Format the string
-    let mut last_idx: usize = 0;
     let mut last_arg_idx: usize = 1;
     while let Some(pos) = memchr(b'$', fmt.as_bytes()) {
         // Get the slice of the string before the $
-        let slice = &fmt[last_idx..pos];
-        let fmt_type = &fmt[pos + 1..];
+        let slice = &fmt[0..pos];
+        let fmt_type = &fmt[pos + 1 .. pos + 2];
         let fmt_type = fmt_type.as_bytes();
         let fmt_type = fmt_type.first().unwrap();
-        last_idx = pos + 1;
         fmt = &fmt[(pos + 2)..];
 
         // Write the slice to the result
@@ -199,7 +197,7 @@ pub fn format<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Dynamic(result)
+                ASTValue::Owned(result)
             )
         )
     )

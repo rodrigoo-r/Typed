@@ -27,7 +27,8 @@ pub fn evaluate<'a>(
 ) -> ExecutionResult<'a> {
     let children = child.children.borrow();
     let name = children.get(0).unwrap();
-    let name = name.borrow().value.unwrap();
+    let name = name.borrow();
+    let name = name.value.as_ref().unwrap();
 
     // Find the procedure
     let procedure = file.procedures.get(name);

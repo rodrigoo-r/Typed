@@ -14,7 +14,7 @@
 */
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 
 pub fn evaluate<'a>(
     child: &AST<'a>
@@ -22,9 +22,7 @@ pub fn evaluate<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Static(
-                    child.value.unwrap()
-                )
+                child.value.as_ref().unwrap().clone()
             )
         )
     )

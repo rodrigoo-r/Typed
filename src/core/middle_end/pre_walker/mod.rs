@@ -15,7 +15,7 @@
 use std::cell::Ref;
 use std::collections::HashMap;
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::{Argument, File, Kind, Procedure, AST};
+use crate::adt::lang::{ASTValue, Argument, File, Kind, Procedure, AST};
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{GlobalPackageDictionary, PackageDictionary};
 use crate::core::frontend::parser::Rule;
@@ -39,7 +39,8 @@ fn convert_use<'a>(
 ) -> RuntimeResult<&'a PackageDictionary<'a>> {
     let children = ast.children.borrow();
     let literal = children[0].borrow();
-    let literal = literal.value.unwrap();
+    let literal = literal.value.as_ref().unwrap();
+    let literal = literal.as_ref();
 
     let pkg = global_package.get(literal);
 
@@ -54,11 +55,11 @@ fn convert_use<'a>(
 }
 
 fn convert_procedure<'a>(ast: &AST<'a>)
-    -> (&'a str, Procedure<'a>)
+    -> (ASTValue<'a>, Procedure<'a>)
 {
     let children = ast.children.borrow();
     let name = children[0].borrow();
-    let name = name.value.unwrap();
+    let name = name.value.as_ref().unwrap();
 
     let proc: Option<Procedure<'a>>;
     let body = children[1].borrow();
@@ -73,14 +74,14 @@ fn convert_procedure<'a>(ast: &AST<'a>)
             let arg_children = arg.children.borrow();
 
             let name = arg_children[0].borrow();
-            let name = name.value.unwrap();
+            let name = name.value.as_ref().unwrap();
 
             let kind = arg_children[1].borrow();
 
             // Insert the argument into the procedure
             vec.push(
                 Argument{
-                    name,
+                    name: name.clone(),
                     kind: convert_kind(kind)
                 }
             );
@@ -103,7 +104,7 @@ fn convert_procedure<'a>(ast: &AST<'a>)
         });
     }
 
-    (name, proc.unwrap())
+    (name.clone(), proc.unwrap())
 }
 
 pub fn convert<'a>(
@@ -123,7 +124,10 @@ pub fn convert<'a>(
             Rule::Use => {
                 let dict = convert_use(&child, &global_package)?;
                 for (name, proc) in dict.iter() {
-                    result.procedures.insert(name, proc.clone());
+                    result.procedures.insert(
+                        ASTValue::Borrowed(name), 
+                        proc.clone()
+                    );
                 }
             }
 

@@ -13,9 +13,9 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 use crate::support::runtime::object::{get_integer, get_string};
 
 pub fn replace_many<'a>(
@@ -42,7 +42,7 @@ pub fn replace_many<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Dynamic(
+                ASTValue::Owned(
                     origin.replacen(needle, replacement, count as usize)
                 )
             )

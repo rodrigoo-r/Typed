@@ -15,6 +15,7 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
+use crate::adt::lang::ASTValue;
 use crate::adt::runtime::Object;
 
 pub type NestedStack<'a> =
@@ -25,7 +26,7 @@ pub type Variable<'a> =
 
 #[derive(Clone)]
 pub struct ScopedStack<'a> {
-    inner: HashMap<&'a str, Variable<'a>>,
+    inner: HashMap<ASTValue<'a>, Variable<'a>>,
     parent: Option<NestedStack<'a>>,
 }
 
@@ -53,11 +54,11 @@ impl <'a> ScopedStack<'a> {
         )
     }
 
-    pub fn push(&mut self, name: &'a str, value: &Object<'a>) {
+    pub fn push(&mut self, name: ASTValue<'a>, value: &Object<'a>) {
         self.inner.insert(name, Variable::new(RefCell::new(value.clone())));
     }
 
-    pub fn search(&self, name: &str) -> Option<Variable<'a>> {
+    pub fn search(&self, name: &ASTValue<'a>) -> Option<Variable<'a>> {
         let mut current = self.parent.clone();
 
         if let Some(var) = self.inner.get(name) {

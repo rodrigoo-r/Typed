@@ -15,6 +15,19 @@
 use crate::adt::lang::AST;
 
 #[derive(Debug)]
+pub enum ParseErrorKind {
+    MalformedEscapeSequence,
+}
+
+#[derive(Debug)]
+pub struct ParseError {
+    pub kind : ParseErrorKind,
+    pub message : &'static str,
+    pub line: usize,
+    pub column: usize
+}
+
+#[derive(Debug)]
 pub enum RuntimeErrorKind {
     UndefinedFindProcedure,
     MismatchedTypes,
@@ -127,6 +140,31 @@ impl RuntimeError {
             trace,
             RuntimeErrorKind::CouldNotRead,
             "Could not read from stream"
+        )
+    }
+}
+
+impl ParseError {
+    fn create(
+        line: usize,
+        column: usize,
+        kind: ParseErrorKind,
+        message: &'static str
+    ) -> Self {
+        ParseError{
+            kind,
+            message,
+            line,
+            column
+        }
+    }
+    
+    pub fn invalid_escape_sequence(line: usize, column: usize) -> Self {
+        ParseError::create(
+            line,
+            column,
+            ParseErrorKind::MalformedEscapeSequence,
+            "Invalid escape sequence"
         )
     }
 }

@@ -14,16 +14,17 @@
 */
 use std::hash::Hash;
 use std::ops::Deref;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::lang::ASTValue;
+use crate::adt::runtime::{HashableObject, Object};
 
 fn hash_obj<H: std::hash::Hasher>(obj: &HashableObject, state: &mut H) {
     match obj {
         HashableObject::String(s) => {
             match s {
-                StringKind::Static(s) => {
+                ASTValue::Borrowed(s) => {
                     s.hash(state)
                 }
-                StringKind::Dynamic(d) => {
+                ASTValue::Owned(d) => {
                     d.hash(state)
                 }
             }

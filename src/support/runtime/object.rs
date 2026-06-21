@@ -14,9 +14,9 @@
 */
 
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::AST;
+use crate::adt::lang::{ASTValue, AST};
 use crate::adt::result::RuntimeResult;
-use crate::adt::runtime::{Float, HashableObject, NonHashableObject, Object, RuntimeDictionary, RuntimeList, StringKind};
+use crate::adt::runtime::{Float, HashableObject, NonHashableObject, Object, RuntimeDictionary, RuntimeList};
 use crate::adt::runtime::Object::NonHashable;
 
 macro_rules! unwrap_obj {
@@ -41,8 +41,8 @@ pub fn get_string<'obj, 'data>(
     )?;
 
     match kind {
-        StringKind::Static(s) => Ok(s),
-        StringKind::Dynamic(s) => Ok(s.as_str()),
+        ASTValue::Borrowed(s) => Ok(s),
+        ASTValue::Owned(s) => Ok(s.as_str()),
     }
 }
 

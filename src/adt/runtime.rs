@@ -16,7 +16,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
 use ordered_float::OrderedFloat;
-use crate::adt::lang::Procedure;
+use crate::adt::lang::{ASTValue, Procedure};
 
 pub type List<'a> = Vec<Object<'a>>;
 pub type Dictionary<'a> =
@@ -36,15 +36,9 @@ pub type GlobalPackageDictionary<'a> =
 
 pub type Float = OrderedFloat<f32>;
 
-#[derive(PartialEq, Eq, Debug, Clone)]
-pub enum StringKind<'a> {
-    Static(&'a str),
-    Dynamic(String)
-}
-
 #[derive(Debug, Clone)]
 pub enum HashableObject<'a> {
-    String(StringKind<'a>),
+    String(ASTValue<'a>),
     Integer(isize),
     Boolean(bool),
     Float(Float),

@@ -27,7 +27,7 @@ pub mod replace_all;
 pub mod to_lower;
 pub mod to_upper;
 
-use crate::adt::lang::{Argument, Kind, Procedure};
+use crate::adt::lang::{ASTValue, Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
 
 pub fn get_package<'a>() -> PackageDictionary<'a> {
@@ -41,7 +41,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "fmt",
+                        name: ASTValue::Borrowed("fmt"),
                         kind: Kind::String
                     }
                 );
@@ -61,14 +61,14 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
 
                 args.push(
                     Argument{
-                        name: "idx",
+                        name: ASTValue::Borrowed("idx"),
                         kind: Kind::Integer
                     }
                 );
@@ -88,14 +88,14 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
 
                 args.push(
                     Argument{
-                        name: "s2",
+                        name: ASTValue::Borrowed("s2"),
                         kind: Kind::String
                     }
                 );
@@ -115,7 +115,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
@@ -135,14 +135,14 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
 
                 args.push(
                     Argument{
-                        name: "delim",
+                        name: ASTValue::Borrowed("delim"),
                         kind: Kind::String
                     }
                 );
@@ -162,7 +162,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
@@ -182,7 +182,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
@@ -202,7 +202,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
@@ -222,14 +222,14 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
                 
                 args.push(
                     Argument{
-                        name: "needle",
+                        name: ASTValue::Borrowed("needle"),
                         kind: Kind::String
                     }
                 );
@@ -249,21 +249,21 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
                 
                 args.push(
                     Argument{
-                        name: "needle",
+                        name: ASTValue::Borrowed("needle"),
                         kind: Kind::String
                     }
                 );
                 
                 args.push(
                     Argument{
-                        name: "replacement",
+                        name: ASTValue::Borrowed("replacement"),
                         kind: Kind::String
                     }
                 );
@@ -283,27 +283,27 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
                 args.push(
                     Argument{
-                        name: "needle",
-                        kind: Kind::String
-                    }
-                );
-                
-                args.push(
-                    Argument{
-                        name: "replacement",
+                        name: ASTValue::Borrowed("needle"),
                         kind: Kind::String
                     }
                 );
                 
                 args.push(
                     Argument{
-                        name: "count",
+                        name: ASTValue::Borrowed("replacement"),
+                        kind: Kind::String
+                    }
+                );
+                
+                args.push(
+                    Argument{
+                        name: ASTValue::Borrowed("count"),
                         kind: Kind::Integer
                     }
                 );
@@ -323,13 +323,13 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
                 args.push(
                     Argument{
-                        name: "needle",
+                        name: ASTValue::Borrowed("needle"),
                         kind: Kind::String
                     }
                 );
@@ -349,7 +349,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );
@@ -369,7 +369,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "s",
+                        name: ASTValue::Borrowed("s"),
                         kind: Kind::String
                     }
                 );

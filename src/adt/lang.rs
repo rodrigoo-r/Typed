@@ -12,6 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use std::borrow::Cow;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
@@ -27,11 +28,13 @@ pub type RuntimeArguments<'a> = List<'a>;
 pub type NativeProcedure<'a> =
     fn(RuntimeArguments<'a>, &AST<'a>) -> ExecutionResult<'a>;
 
+pub type ASTValue<'a> = Cow<'a, str>;
+
 #[derive(Debug, Clone)]
 pub struct AST<'a> {
     pub rule: Rule,
     pub children: ASTChildren<'a>,
-    pub value: Option<&'a str>,
+    pub value: Option<ASTValue<'a>>,
     pub line: usize,
     pub column: usize
 }
@@ -48,7 +51,7 @@ pub enum Kind {
 
 #[derive(Debug, Clone)]
 pub struct Argument<'a> {
-    pub name: &'a str,
+    pub name: ASTValue<'a>,
     pub kind: Kind
 }
 
@@ -62,5 +65,5 @@ pub struct Procedure<'a> {
 
 #[derive(Debug)]
 pub struct File<'a> {
-    pub procedures: HashMap<&'a str, Procedure<'a>>
+    pub procedures: HashMap<ASTValue<'a>, Procedure<'a>>
 }

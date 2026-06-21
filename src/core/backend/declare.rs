@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::{RefCell, RefMut};
-use crate::adt::lang::{File, Kind, AST};
+use crate::adt::lang::{ASTValue, File, Kind, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{*};
 use crate::adt::runtime::Object::NonHashable;
@@ -61,7 +61,7 @@ pub fn evaluate<'a>(
             Kind::String => {
                 initial = Object::Hashable(
                     HashableObject::String(
-                        StringKind::Static("")
+                        ASTValue::Borrowed("")
                     )
                 );
             }

@@ -12,9 +12,9 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 use crate::support::runtime::object::get_string;
 
 pub fn to_lower<'a>(
@@ -29,7 +29,7 @@ pub fn to_lower<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Dynamic(
+                ASTValue::Owned(
                     origin.to_lowercase()
                 )
             )

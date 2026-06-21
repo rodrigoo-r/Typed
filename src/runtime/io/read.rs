@@ -14,9 +14,9 @@
 */
 use std::io;
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 
 pub fn read<'a>(
     _: RuntimeArguments<'a>,
@@ -42,7 +42,7 @@ pub fn read<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Dynamic(input)
+                ASTValue::Owned(input)
             )
         )
     )

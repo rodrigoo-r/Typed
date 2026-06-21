@@ -12,9 +12,9 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 use crate::support::runtime::object::get_string;
 
 pub fn add<'a>(
@@ -34,7 +34,7 @@ pub fn add<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Dynamic(result)
+                ASTValue::Owned(result)
             )
         )
     )

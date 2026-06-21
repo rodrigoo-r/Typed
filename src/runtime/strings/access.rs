@@ -13,9 +13,9 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 use crate::support::runtime::object::{get_integer, get_string};
 
 pub fn access<'a>(
@@ -44,13 +44,13 @@ pub fn access<'a>(
     }
 
     // If the original string is static, we can just return the character
-    if let Object::Hashable(HashableObject::String(StringKind::Static(s))) = str_obj {
+    if let Object::Hashable(HashableObject::String(ASTValue::Borrowed(s))) = str_obj {
         let slice = &s[idx-1..idx];
 
         return Ok(
             Object::Hashable(
                 HashableObject::String(
-                    StringKind::Static(slice)
+                    ASTValue::Borrowed(slice)
                 )
             )
         );
@@ -61,7 +61,9 @@ pub fn access<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Dynamic(String::from(result))
+                ASTValue::Owned(
+                    String::from(result)
+                )
             )
         )
     )

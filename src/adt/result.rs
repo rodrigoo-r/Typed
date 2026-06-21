@@ -12,13 +12,21 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::error::RuntimeError;
+use crate::adt::error::{ParseError, RuntimeError};
+use crate::adt::lang::ASTValue;
 use crate::adt::runtime::Object;
 
-pub type RuntimeResult<Success> = Result<
-    Success,
-    RuntimeError
->;
+pub type RuntimeResult<Success> =
+    Result<
+        Success,
+        RuntimeError
+    >;
+
+pub type ParseResult<'a> =
+    Result<
+        ASTValue<'a>,
+        ParseError
+    >;
 
 pub type ExecutionResult<'a> =
     RuntimeResult<Object<'a>>;

@@ -67,7 +67,7 @@ pub fn evaluate<'a>(
     let expr_result = expression::evaluate(file, &target, stack)?;
     let target = children.get(1).unwrap();
     let target = target.borrow();
-    let target = target.value.unwrap();
+    let target = target.value.as_ref().unwrap();
 
     // Get the target value
     let target = stack.search(target);

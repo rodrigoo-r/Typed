@@ -35,7 +35,7 @@ fn main() {
     let contents = catch_non_traceable(&contents);
     let tree = core::frontend::parser::Parser::parse(
         frontend::parser::Rule::Program,
-        contents.as_str()
+        contents.as_ref()
     );
 
     let tree = catch_pest(&tree);

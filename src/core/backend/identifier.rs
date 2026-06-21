@@ -23,7 +23,7 @@ pub fn evaluate<'a>(
     id: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
-    let name = id.value.unwrap();
+    let name = id.value.as_ref().unwrap();
     let value = stack.search(name);
     
     if value.is_none() {

@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::{Kind, AST};
+use crate::adt::lang::{ASTValue, Kind, AST};
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object};
 
@@ -110,18 +110,18 @@ pub fn check_obj_kind<'a>(
 }
 
 pub fn convert_kind<'a>(decl: &AST<'a>)
-    -> (&'a str, Kind)
+    -> (ASTValue<'a>, Kind)
 {
     let children = decl.children.borrow();
     let name = children.get(0).unwrap().borrow();
-    let name = name.value.unwrap();
+    let name = name.value.as_ref().unwrap();
 
     let kind = children.get(1).unwrap().borrow();
     let kind = kind.children.borrow();
     let kind = kind.get(0).unwrap().borrow();
 
     (
-        name,
+        name.clone(),
         match kind.rule {
             crate::core::frontend::parser::Rule::Integer =>
                 Kind::Integer,

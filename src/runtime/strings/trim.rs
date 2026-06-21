@@ -12,9 +12,9 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 use crate::support::runtime::object::get_string;
 
 pub fn trim<'a>(
@@ -29,14 +29,14 @@ pub fn trim<'a>(
     // If the string is static, we can trim it without allocating
     if let Object::Hashable(
         HashableObject::String(
-            StringKind::Static(s)
+            ASTValue::Borrowed(s)
         )
     ) = origin_obj {
         let trimmed = s.trim();
         return Ok(
             Object::Hashable(
                 HashableObject::String(
-                    StringKind::Static(trimmed)
+                    ASTValue::Borrowed(trimmed)
                 )
             )
         );
@@ -48,7 +48,7 @@ pub fn trim<'a>(
     Ok(
         Object::Hashable(
             HashableObject::String(
-                StringKind::Dynamic(trimmed)
+                ASTValue::Owned(trimmed)
             )
         )
     )

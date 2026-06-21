@@ -20,7 +20,7 @@ use crate::adt::runtime::{HashableObject, Object};
 pub fn evaluate<'a>(
     child: &AST<'a>
 ) -> ExecutionResult<'a> {
-    let value = child.value.unwrap();
+    let value = child.value.as_ref().unwrap();
     
     // Parse the value
     let value = value.parse::<isize>();

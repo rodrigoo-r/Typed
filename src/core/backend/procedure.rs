@@ -35,9 +35,9 @@ pub fn execute<'a>(
 
     // Add all arguments
     for i in 0..procedure.arguments.len() {
-        let name = procedure.arguments[i].name;
+        let name = &procedure.arguments[i].name;
         let arg = given_args.get(i).unwrap();
-        deref_stack.push(name, arg);
+        deref_stack.push(name.clone(), arg);
     }
 
     let body = procedure.body.as_ref();

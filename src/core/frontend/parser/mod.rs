@@ -12,13 +12,15 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-
+use std::borrow::Cow;
 use pest_derive::Parser;
 use std::cell::RefCell;
 use std::collections::VecDeque;
 use std::rc::Rc;
 use pest::iterators::Pairs;
 use crate::adt::lang::{ChildAST, AST};
+use crate::support::failable::catch_parse;
+use crate::support::str_conv::escape::unescape;
 
 #[derive(Parser)]
 #[grammar = "grammar/grammar.pest"]
@@ -79,12 +81,15 @@ pub fn convert<'source>(pairs: Pairs<'source, Rule>) -> AST<'source> {
                 Rule::Identifier |
                 Rule::Float_Literal |
                 Rule::Integer_Literal =>
-                    child.borrow_mut().value = Some(val),
+                    child.borrow_mut().value = Some(Cow::Borrowed(val)),
 
                 Rule::String_Literal => {
                     // Remove the quotes
                     let s = &val[1..val.len()-1];
-                    child.borrow_mut().value = Some(s);
+                    let s = unescape(&s, line_col.0, line_col.1);
+                    let s = catch_parse(&s);
+
+                    child.borrow_mut().value = Some(s.clone());
                 },
 
                 // Ignore boolean literals

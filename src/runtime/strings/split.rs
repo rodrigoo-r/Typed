@@ -13,9 +13,9 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefCell;
-use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, NonHashableObject, Object, RuntimeList, StringKind};
+use crate::adt::runtime::{HashableObject, NonHashableObject, Object, RuntimeList};
 use crate::support::runtime::object::get_string;
 
 pub fn split<'a>(
@@ -30,7 +30,7 @@ pub fn split<'a>(
     let origin = get_string(origin, trace)?;
     let delim = get_string(delim, trace)?;
 
-    let mut result: RuntimeList = RuntimeList::new(RefCell::new(vec![]));
+    let result: RuntimeList = RuntimeList::new(RefCell::new(vec![]));
     let mut current = String::new();
     let mut idx: usize = 0;
 
@@ -56,7 +56,7 @@ pub fn split<'a>(
             result.push(
                 Object::Hashable(
                     HashableObject::String(
-                        StringKind::Dynamic(
+                        ASTValue::Owned(
                             current.clone()
                         )
                     )

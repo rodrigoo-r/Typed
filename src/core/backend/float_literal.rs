@@ -14,17 +14,24 @@
 */
 use std::str::FromStr;
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::AST;
+use crate::adt::lang::{ASTValue, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{Float, HashableObject, Object};
 
 pub fn evaluate<'a>(
     child: &AST<'a>
 ) -> ExecutionResult<'a> {
-    let value = child.value.unwrap();
+    let value = child.value.as_ref().unwrap();
     
     // Parse the value
-    let value = Float::from_str(value);
+    let value = match value {
+        ASTValue::Borrowed(s) => {
+            Float::from_str(s)
+        }
+        ASTValue::Owned(s) => {
+            Float::from_str(&s)
+        }
+    };
     
     if value.is_err() {
         return Err(RuntimeError::malformed_literal(child));

@@ -12,7 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::lang::{Argument, Kind, Procedure};
+use crate::adt::lang::{ASTValue, Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
 
 pub mod print;
@@ -30,7 +30,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "fmt",
+                        name: ASTValue::Borrowed("fmt"),
                         kind: Kind::String
                     }
                 );
@@ -50,7 +50,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 let mut args = vec![];
                 args.push(
                     Argument{
-                        name: "fmt",
+                        name: ASTValue::Borrowed("fmt"),
                         kind: Kind::String
                     }
                 );

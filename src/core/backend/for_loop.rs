@@ -63,7 +63,7 @@ pub fn evaluate<'a>(
     check_kind(kind.clone(), &step, expr)?;
 
     // Insert the variable into the stack
-    stack.push(name, &initial);
+    stack.push(name.clone(), &initial);
 
     if kind == Kind::Integer {
         let mut initial = get_integer(&initial, expr)?;
@@ -78,7 +78,7 @@ pub fn evaluate<'a>(
         while initial <= max {
             execute_or_return!(body::evaluate(file, &body, &mut stack));
 
-            let var = stack.search(name).unwrap();
+            let var = stack.search(&name).unwrap();
             let mut var = var.borrow_mut();
             let var = var.deref_mut();
 
@@ -102,7 +102,8 @@ pub fn evaluate<'a>(
         while initial <= max {
             execute_or_return!(body::evaluate(file, &body, &mut stack));
 
-            let var = stack.search(name).unwrap();
+            let var = stack.search(&name);
+            let var = var.unwrap();
             let mut var = var.borrow_mut();
             let var = var.deref_mut();
 

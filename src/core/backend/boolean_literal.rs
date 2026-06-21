@@ -20,16 +20,15 @@ use crate::adt::runtime::{HashableObject, Object};
 pub fn evaluate<'a>(
     child: &AST<'a>
 ) -> ExecutionResult<'a> {
-    let value = child.value.unwrap();
-
-    if value.eq("True") {
-        return Ok(Object::Hashable(HashableObject::Boolean(true)));
+    match child.rule {
+        crate::core::frontend::parser::Rule::True_Literal => {
+            Ok(Object::Hashable(HashableObject::Boolean(true)))
+        }
+        crate::core::frontend::parser::Rule::False_Literal => {
+            Ok(Object::Hashable(HashableObject::Boolean(false)))
+        }
+        _ => {
+            Err(RuntimeError::malformed_literal(child))
+        }
     }
-
-    if value.eq("False") {
-        return Ok(Object::Hashable(HashableObject::Boolean(false)));
-    }
-
-    Err(
-RuntimeError::malformed_literal(child), )
 }
