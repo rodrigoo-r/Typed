@@ -17,7 +17,7 @@ use crate::adt::lang::{File, Procedure, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
-use crate::core::backend::expression;
+use crate::core::backend::{body, expression, for_loop};
 use crate::core::backend::declare;
 use crate::core::frontend;
 
@@ -45,35 +45,6 @@ pub fn execute<'a>(
 
     let body = procedure.body.as_ref();
     let body = body.unwrap().borrow();
-    let children = body.children.borrow();
 
-    for statement in children.iter() {
-        let statement = statement.borrow();
-
-        match statement.rule {
-            frontend::parser::Rule::Expression => {
-                expression::evaluate(file, &statement, &mut deref_stack)?;
-            }
-
-            frontend::parser::Rule::For => {
-
-            }
-
-            frontend::parser::Rule::While => {
-
-            }
-
-            frontend::parser::Rule::Declare => {
-                declare::evaluate(file, &statement, &mut deref_stack)?;
-            }
-
-            frontend::parser::Rule::Condition_Group => {
-
-            }
-
-            _ => {}
-        }
-    }
-
-    Ok(Object::Void)
+    body::evaluate(file, &body, &mut deref_stack)
 }
