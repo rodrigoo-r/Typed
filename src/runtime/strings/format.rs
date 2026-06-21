@@ -179,6 +179,14 @@ pub fn format<'a>(
                 format_obj(&arg, Kind::Float, trace, &mut result)?;
             },
 
+            b'L' => {
+                format_obj(&arg, Kind::List, trace, &mut result)?;
+            }
+
+            b'D' => {
+                format_obj(&arg, Kind::Dictionary, trace, &mut result)?;
+            }
+
             _ => {
                 // Just add the character
                 result.push(*fmt_type as char);
