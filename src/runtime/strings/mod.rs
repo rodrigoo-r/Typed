@@ -15,6 +15,7 @@
 pub mod format;
 pub mod access;
 pub mod add;
+pub mod size;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -92,6 +93,26 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(add::add_str)
+        }
+    );
+
+    dict.insert(
+        "String_Size",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(size::str_size)
         }
     );
 
