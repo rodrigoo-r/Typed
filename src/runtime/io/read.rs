@@ -29,12 +29,15 @@ pub fn read<'a>(
     // Read the line
     let res = io::stdin()
         .read_line(&mut input);
-    
+
     if res.is_err() {
         return Err(
             ExecutionError::could_not_read(trace)
         )
     }
+
+    // Remove the newline character
+    input.pop();
 
     Ok(
         Object::Hashable(
