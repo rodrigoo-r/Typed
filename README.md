@@ -1,23 +1,10 @@
 <div align="center">
     <h1>Typed</h1>
-    <p>A text processing DSL</p>
+    <p>A text processing DSL with verbose, English-like syntax</p>
     <hr>
 </div>
 
-**Typed** is a statically-typed, English-like domain-specific language designed for text processing. It features a verbose, readable syntax where keywords like `Declare`, `Call`, and `Add` make programs easy to follow — even for non-programmers.
-
-Built with Rust and powered by a [PEG](https://en.wikipedia.org/wiki/Parsing_expression_grammar) parser, Typed offers procedures, control flow, arithmetic, and a growing set of standard libraries for I/O, strings, regex, math, file system operations, and more.
-
-## Features
-
-- **Readable syntax** — English-like keywords (`Declare`, `Call`, `Add … To`, `If … Then`)
-- **Static typing** — `String`, `Integer`, `Float`, `Boolean`, `List`, `Dictionary`
-- **Procedures** — with typed arguments and return values
-- **Control flow** — `If` / `Else_If` / `Else`, `For`, `While`
-- **Arithmetic** — `Add`, `Subtract`, `Multiply`, `Divide`
-- **String formatting** — format specifiers (`$S`, `$I`, `$F`) for easy interpolation
-- **Standard libraries** — `IO`, `Strings`, `Regex`, `Math`, `Lists`, `Dictionaries`, `File_System`
-- **Comments** — line comments with `#`
+**Typed** is a domain-specific language designed for text processing, built with Rust. It features a readable, keyword-driven syntax and comes with a standard library covering I/O, string manipulation, file system operations, lists, and dictionaries.
 
 ## Getting Started
 
@@ -25,38 +12,69 @@ Built with Rust and powered by a [PEG](https://en.wikipedia.org/wiki/Parsing_exp
 
 - [Rust](https://www.rust-lang.org/tools/install) (edition 2024)
 
-### Build
+### Building
 
 ```bash
 cargo build --release
 ```
 
-### Run
+### Running a Program
 
 ```bash
-cargo run -- path/to/script.typed
+cargo run -- run <file.typed>
 ```
 
-Or, after building:
+For example:
 
 ```bash
-./target/release/Typed path/to/script.typed
+cargo run -- run example/Test.typed
 ```
 
 ## Language Overview
 
-### Hello World
+### File Extension
+
+Typed source files use the `.typed` extension.
+
+### Comments
+
+Comments start with `#` and extend to the end of the line:
 
 ```
-Use IO;
+# This is a comment
+```
 
+### Data Types
+
+| Type         | Keyword      |
+|--------------|--------------|
+| String       | `String`     |
+| Integer      | `Integer`    |
+| Float        | `Float`      |
+| Boolean      | `Boolean`    |
+| List         | `List`       |
+| Dictionary   | `Dictionary` |
+
+### Procedures
+
+Programs are organized into procedures. Execution begins at `Main`:
+
+```
 Procedure Main
 Begin
-    Call
-        Print_Line
-    With
-        "Hello, World!"
-    End_Call;
+    # your code here
+End_Procedure
+```
+
+Procedures can accept arguments and return values:
+
+```
+Procedure Greet
+With Arguments
+    Name as String
+Returns String
+Begin
+    Return Name;
 End_Procedure
 ```
 
@@ -65,43 +83,76 @@ End_Procedure
 Variables are declared with `Declare`, specifying a name, type, and optional initial value:
 
 ```
-Declare
-    Name as String
-With
-    "Alice"
-;
+Declare My_Variable as String With "Hello";
+Declare Counter as Integer;
+```
 
-Declare
-    Age as Integer
+### Calling Procedures
+
+Use `Call ... End_Call` to invoke a procedure. Arguments are passed after `With`:
+
+```
+Call Print_Line With "Hello, world!" End_Call;
+```
+
+Calls can be nested:
+
+```
+Declare Name as String
 With
-    30
+    Call Read_Line End_Call
 ;
 ```
 
-### Procedures
+### String Formatting
 
-Procedures are defined with `Procedure … End_Procedure`. They can accept typed arguments and declare a return type:
+The `Print` and `Print_Line` functions accept a format string followed by arguments:
+
+- `$S` — String
+- `$I` — Integer
+- `$F` — Float
+- `$L` - List
+- `$D` - Dictionary
+- `$B` - Boolean
 
 ```
-Procedure Greet
-With Arguments
-    Name as String
-Returns String
-Begin
-    Return "Hello, $S";
-End_Procedure
+Call Print With "$S has $I items", Name, Count End_Call;
+```
+
+### String Literals
+
+Single-line strings use double quotes, multi-line strings use backticks:
+
+```
+"single line"
+`multi
+line`
+```
+
+Escape sequences: `\\`, `\"`, `` \` ``, `\n`, `\r`, `\t`, `\0`, `\xHH`
+
+### Arithmetic
+
+Arithmetic operations modify a variable in place:
+
+```
+Declare Result as Integer With 10;
+Add 5 To Result;
+Subtract 3 From Result;
+Multiply 2 By Result;
+Divide 4 By Result;
 ```
 
 ### Control Flow
 
-#### If / Else_If / Else
+**If / Else_If / Else:**
 
 ```
-If X Then
+If expression Then
 Begin
     # ...
 End_If
-Else_If Y Then
+Else_If expression Then
 Begin
     # ...
 End_Else_If
@@ -111,147 +162,118 @@ Begin
 End_Else
 ```
 
-#### For Loop
+**While loop:**
 
 ```
-For I as Integer In 0 To 10 Step 1 Do
-Begin
-    # ...
-End_For
-```
-
-#### While Loop
-
-```
-While Condition Do
+While expression Do
 Begin
     # ...
 End_While
 ```
 
-### Arithmetic
-
-Arithmetic operations modify a variable in place:
+**For loop:**
 
 ```
-Declare Result as Integer With 5;
-
-Add 15 To Result;        # Result is now 20
-Subtract 3 From Result;  # Result is now 17
-Multiply 2 By Result;    # Result is now 34
-Divide 2 By Result;      # Result is now 17
+For i as Integer In 0 To 10 Step 1 Do
+Begin
+    # ...
+End_For
 ```
 
-### Calling Procedures
+## Standard Libraries
 
-Use `Call … End_Call` to invoke a procedure, with `With` to pass arguments:
-
-```
-Call
-    Print
-With
-    "$S",
-    Name
-End_Call;
-```
-
-### String Formatting
-
-Format specifiers are used in strings passed to `Print` and `Print_Line`:
-
-| Specifier | Type      |
-|-----------|-----------|
-| `$S`      | String    |
-| `$I`      | Integer   |
-| `$F`      | Float     |
-
-### Standard Libraries
-
-Import libraries with `Use`:
+Import a library with `Use`:
 
 ```
 Use IO;
 Use Strings;
-Use Regex;
-Use Math;
-Use Lists;
-Use Dictionaries;
-Use File_System;
 ```
 
-| Library        | Description                          |
-|----------------|--------------------------------------|
-| `IO`           | Input/output (`Print`, `Print_Line`, `Read_Line`) |
-| `Strings`      | String manipulation (`String_Access`, …) |
-| `Regex`        | Regular expressions (`Regex_Replace_One`, …) |
-| `Math`         | Mathematical functions               |
-| `Lists`        | List operations                      |
-| `Dictionaries` | Dictionary operations                |
-| `File_System`  | File I/O (`Read_File`, `Write_File`, `Scan_Directory`, …) |
+### IO
 
-### Comments
+| Function      | Description                |
+|---------------|----------------------------|
+| `Print`       | Print formatted output     |
+| `Print_Line`  | Print formatted output with newline |
+| `Read_Line`   | Read a line from stdin     |
 
-Line comments start with `#`:
+### Strings
+
+| Function           | Description                          |
+|--------------------|--------------------------------------|
+| `String_Access`    | Access a character by index          |
+| `String_Add`       | Concatenate strings                  |
+| `String_Contains`  | Check if a string contains a substring |
+| `String_Format`    | Format a string                      |
+| `String_Replace_All` | Replace all occurrences            |
+| `String_Replace_Many` | Replace multiple patterns          |
+| `String_Replace_One` | Replace first occurrence           |
+| `String_Size`      | Get string length                    |
+| `String_Split`     | Split a string                       |
+| `String_To_Lower`  | Convert to lowercase                 |
+| `String_To_Upper`  | Convert to uppercase                 |
+| `String_Trim`      | Trim whitespace                      |
+| `String_Trim_Left` | Trim leading whitespace              |
+| `String_Trim_Right`| Trim trailing whitespace             |
+
+### Lists
+
+| Function       | Description                  |
+|----------------|------------------------------|
+| `List_Access`  | Access element by index      |
+| `List_Add`     | Add an element               |
+| `List_Join`    | Join elements into a string  |
+| `List_Pop`     | Remove last element          |
+| `List_Set`     | Set element at index         |
+| `List_Size`    | Get list length              |
+
+### Dictionaries
+
+| Function             | Description                  |
+|----------------------|------------------------------|
+| `Dictionary_Access`  | Access value by key          |
+| `Dictionary_Remove`  | Remove a key-value pair      |
+| `Dictionary_Set`     | Set a key-value pair         |
+| `Dictionary_Size`    | Get number of entries        |
+
+### File_System
+
+| Function              | Description                          |
+|-----------------------|--------------------------------------|
+| `Cwd`                 | Get current working directory        |
+| `Create_Directory`    | Create a directory                   |
+| `Create_File`         | Create a file                        |
+| `File_Exists`         | Check if a file exists               |
+| `File_Name`           | Get the file name from a path        |
+| `Is_Absolute_Path`    | Check if a path is absolute          |
+| `Is_Directory`        | Check if a path is a directory       |
+| `Is_File`             | Check if a path is a file            |
+| `Is_Relative_Path`    | Check if a path is relative          |
+| `Is_System_Link`      | Check if a path is a symbolic link   |
+| `Join_Path`           | Join path components                 |
+| `Read_File`           | Read file contents                   |
+| `Scan_Directory`      | List directory contents              |
+| `To_Absolute_Path`    | Convert to absolute path             |
+| `Write_File`          | Write contents to a file             |
+
+## Example
 
 ```
-# This is a comment
-Declare X as Integer With 42; # Inline comment
-```
-
-## Full Example
-
-```
-Use Regex;
 Use IO;
+Use Strings;
 
 Procedure Main
 Begin
-    Declare
-        My_Regex_Pattern as String
+    Call Print_Line With "Enter your name:" End_Call;
+
+    Declare Name as String
     With
-        "[a-zA-Z0-9]+"
+        Call Read_Line End_Call
     ;
 
-    Declare
-        My_Replaced_String as String
-    With
-        Call
-            Regex_Replace_One
-        With
-            My_Regex_Pattern,
-            "Hello, World!",
-            "Hi"
-        ;
-
-    Call
-        Print
-    With
-        "$S",
-        My_Replaced_String
-    ;
-
-    Declare
-        Result as Integer
-    With
-        5;
-
-    Add
-        15
-    To
-        Result;
-
-    Call
-        Print
-    With
-        "$I",
-        Result
-    ;
+    Call Print_Line With "Hello, $S", Name End_Call;
 End_Procedure
 ```
-
-## Contributing
-
-See the [Style Guide](Contributing/StyleGuide.md) for code conventions and contribution guidelines.
 
 ## License
 
