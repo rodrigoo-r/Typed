@@ -14,6 +14,7 @@
 */
 pub mod format;
 pub mod access;
+pub mod add;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -64,6 +65,33 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(access::access_str)
+        }
+    );
+
+    dict.insert(
+        "String_Add",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+
+                args.push(
+                    Argument{
+                        name: "s2",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(add::add_str)
         }
     );
 
