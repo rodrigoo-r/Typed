@@ -12,21 +12,31 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::runtime::GlobalPackageDictionary;
+use crate::adt::error::RuntimeError;
+use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::result::ExecutionResult;
+use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::object::get_string;
 
-pub mod io;
-pub mod strings;
-pub mod dictionaries;
-pub mod lists;
-pub mod file_system;
+pub fn file_exists<'a>(
+    args: RuntimeArguments<'a>,
+    trace: &AST<'a>
+)
+    -> ExecutionResult<'a>
+{
+    let path = args.get(0).unwrap();
+    let path = get_string(path, trace)?;
 
-pub fn get_global_package<'a>() -> GlobalPackageDictionary<'a> {
-    let mut result = GlobalPackageDictionary::new();
-    result.insert("IO", io::get_package());
-    result.insert("Strings", strings::get_package());
-    result.insert("Dictionaries", dictionaries::get_package());
-    result.insert("Lists", lists::get_package());
-    result.insert("File_System", file_system::get_package());
-
-    result
+    let res = std::fs::metadata(path);
+    if res.is_err() {
+        return Err(
+            RuntimeError::could_not_read(trace)
+        );
+    }
+    
+    Ok(
+        Object::Hashable(
+            HashableObject::Boolean(true)
+        )
+    )
 }

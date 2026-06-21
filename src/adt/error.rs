@@ -130,6 +130,13 @@ impl RuntimeError {
             "Could not write to stream"
         )
     }
+    
+    pub fn could_not_create_path(trace: &AST) -> Self {
+        RuntimeError::create(
+            trace,
+            "Could not create path"
+        )
+    }
 }
 
 impl ParseError {
