@@ -13,13 +13,12 @@
  * #-----------------------------------------------------# *
 */
 
-use crate::adt::runtime::Object;
-
+#[macro_export]
 macro_rules! execute_or_return {
-    ($expr:expr, $trace:expr) => {{
+    ($expr:expr) => {{
         let res = $expr;
 
-        if res != Object::Void {
+        if res != crate::adt::runtime::Object::Void {
             return Ok(res);
         }
     }}
