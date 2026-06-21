@@ -13,16 +13,18 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefMut;
-use crate::adt::lang::{File, Kind, AST};
+use crate::adt::lang::{File, Kind, Procedure, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::{body, expression};
+use crate::execute_or_return;
 use crate::support::runtime::kind::check_kind;
 use crate::support::runtime::object::get_boolean;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
+    procedure: &Procedure<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
@@ -45,7 +47,7 @@ pub fn evaluate<'a>(
         }
 
         // Execute the body
-        body::evaluate(file, &body, stack)?;
+        execute_or_return!(body::evaluate(file, procedure, &body, stack));
     }
 
     Ok(Object::Void)

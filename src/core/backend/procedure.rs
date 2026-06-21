@@ -43,5 +43,5 @@ pub fn execute<'a>(
     let body = procedure.body.as_ref();
     let body = body.unwrap().borrow();
 
-    body::evaluate(file, &body, &mut deref_stack)
+    body::evaluate(file, procedure, &body, &mut deref_stack)
 }

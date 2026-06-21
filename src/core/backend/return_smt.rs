@@ -13,19 +13,35 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefMut;
-use crate::adt::lang::{File, AST};
+use crate::adt::error::RuntimeError;
+use crate::adt::lang::{File, Procedure, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::expression;
+use crate::support::runtime::kind::check_kind;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
+    procedure: &Procedure<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
+    // If the expression is not supposed to return, return an error
+    if procedure.ret.is_none() {
+        return Err(RuntimeError::unexpected_return(expr));
+    }
+    
     let children = expr.children.borrow();
     let expr = children.get(0).unwrap();
     let expr = expr.borrow();
 
-    expression::evaluate(file, &expr, stack)
+    let ret = expression::evaluate(file, &expr, stack)?;
+    
+    check_kind(
+        procedure.ret.as_ref().unwrap().clone(),
+        &ret,
+        &expr
+    )?;
+    
+    Ok(ret)
 }

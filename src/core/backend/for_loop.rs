@@ -15,7 +15,7 @@
 use std::cell::RefMut;
 use std::ops::DerefMut;
 use crate::adt::error::RuntimeError;
-use crate::adt::lang::{File, Kind, AST};
+use crate::adt::lang::{File, Kind, Procedure, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object};
 use crate::adt::variable::ScopedStack;
@@ -26,6 +26,7 @@ use crate::support::runtime::object::{get_float, get_integer};
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
+    procedure: &Procedure<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
@@ -76,7 +77,7 @@ pub fn evaluate<'a>(
         }
 
         while initial <= max {
-            execute_or_return!(body::evaluate(file, &body, &mut stack));
+            execute_or_return!(body::evaluate(file, procedure, &body, &mut stack));
 
             let var = stack.search(&name).unwrap();
             let mut var = var.borrow_mut();
@@ -100,7 +101,7 @@ pub fn evaluate<'a>(
         }
 
         while initial <= max {
-            execute_or_return!(body::evaluate(file, &body, &mut stack));
+            execute_or_return!(body::evaluate(file, procedure, &body, &mut stack));
 
             let var = stack.search(&name);
             let var = var.unwrap();

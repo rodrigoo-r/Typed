@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefMut;
-use crate::adt::lang::{File, AST};
+use crate::adt::lang::{File, Procedure, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
@@ -23,6 +23,7 @@ use crate::support::runtime::object::get_boolean;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
+    procedure: &Procedure<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
@@ -44,7 +45,7 @@ pub fn evaluate<'a>(
             let condition = get_boolean(&condition_obj, &condition)?;
 
             if condition {
-                return body::evaluate(file, &body, stack);
+                return body::evaluate(file, procedure, &body, stack);
             }
         } else {
             // Execute the body directly
@@ -52,7 +53,7 @@ pub fn evaluate<'a>(
             let body = children.get(0).unwrap();
             let body = body.borrow();
 
-            return body::evaluate(file, &body, stack);
+            return body::evaluate(file, procedure, &body, stack);
         }
     }
 

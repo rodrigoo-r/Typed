@@ -14,7 +14,7 @@
 */
 use std::cell::RefMut;
 use crate::core::frontend::parser;
-use crate::adt::lang::{File, AST};
+use crate::adt::lang::{File, Procedure, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
@@ -23,6 +23,7 @@ use crate::execute_or_return;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
+    procedure: &Procedure<'a>,
     body: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
@@ -37,11 +38,11 @@ pub fn evaluate<'a>(
             }
 
             parser::Rule::For => {
-                execute_or_return!(for_loop::evaluate(file, &statement, stack));
+                execute_or_return!(for_loop::evaluate(file, procedure, &statement, stack));
             }
 
             parser::Rule::While => {
-                execute_or_return!(while_loop::evaluate(file, &statement, stack));
+                execute_or_return!(while_loop::evaluate(file, procedure, &statement, stack));
             }
 
             parser::Rule::Declare => {
@@ -49,11 +50,11 @@ pub fn evaluate<'a>(
             }
 
             parser::Rule::Return => {
-                return return_smt::evaluate(file, &statement, stack);
+                return return_smt::evaluate(file, procedure, &statement, stack);
             }
 
             parser::Rule::Condition_Group => {
-                execute_or_return!(condition_group::evaluate(file, &statement, stack));
+                execute_or_return!(condition_group::evaluate(file, procedure, &statement, stack));
             }
 
             _ => {}
