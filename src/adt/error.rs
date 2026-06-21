@@ -22,7 +22,9 @@ pub enum ErrorKind {
     OutOfBounds,
     CouldNotFindLibrary,
     MalformedLiteral,
-    UndefinedSymbol
+    UndefinedSymbol,
+    InvalidLoopVariable,
+    InvalidLoopStep
 }
 
 #[derive(Debug)]
@@ -103,4 +105,19 @@ impl ExecutionError {
         )
     }
 
+    pub fn invalid_loop_variable(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::InvalidLoopVariable,
+            "Invalid loop variable type, expected Integer or Float"
+        )
+    }
+
+    pub fn invalid_loop_step(trace: &AST) -> Self {
+        ExecutionError::create(
+            trace,
+            ErrorKind::InvalidLoopStep,
+            "Invalid loop step"
+        )
+    }
 }

@@ -15,12 +15,11 @@
 use std::cell::{RefCell, RefMut};
 use crate::adt::lang::{File, Kind, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, RuntimeDictionary, RuntimeList, StringKind};
+use crate::adt::runtime::{*};
 use crate::adt::runtime::Object::NonHashable;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::expression;
-use crate::core::frontend::parser;
-use crate::support::runtime::kind::check_kind;
+use crate::support::runtime::kind::{check_kind, convert_kind};
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
@@ -31,11 +30,7 @@ pub fn evaluate<'a>(
 
     let data = children.get(0).unwrap();
     let data = data.borrow();
-    let data_children = data.children.borrow();
-    let name = data_children.get(0).unwrap().borrow();
-    let kind = data_children.get(1).unwrap().borrow();
-    let kind = kind.children.borrow();
-    let kind = kind.get(0).unwrap().borrow();
+    let (name, kind) = convert_kind(&data);
     let initial;
 
     // Determine if the declaration has an initializer
@@ -44,27 +39,18 @@ pub fn evaluate<'a>(
         initial = expression::evaluate(file, &init, stack)?;
 
         check_kind(
-            match kind.rule {
-                parser::Rule::Integer => Kind::Integer,
-                parser::Rule::Float => Kind::Float,
-                parser::Rule::String => Kind::String,
-                parser::Rule::Boolean => Kind::Boolean,
-                parser::Rule::Dictionary => Kind::Dictionary,
-                parser::Rule::List => Kind::List,
-
-                _ => { unreachable!() }
-            },
+            kind,
             &initial,
             expr
         )?;
 
     } else {
-        match kind.rule {
-            parser::Rule::Integer => {
+        match kind {
+            Kind::Integer => {
                 initial = Object::Hashable(HashableObject::Integer(0));
             }
 
-            parser::Rule::Float => {
+            Kind::Float => {
                 initial = Object::Hashable(
                     HashableObject::Float(
                         Float::from(0.0)
@@ -72,7 +58,7 @@ pub fn evaluate<'a>(
                 );
             }
 
-            parser::Rule::String => {
+            Kind::String => {
                 initial = Object::Hashable(
                     HashableObject::String(
                         StringKind::Static("")
@@ -80,13 +66,13 @@ pub fn evaluate<'a>(
                 );
             }
 
-            parser::Rule::Boolean => {
+            Kind::Boolean => {
                 initial = Object::Hashable(
                     HashableObject::Boolean(false)
                 );
             }
 
-            parser::Rule::Dictionary => {
+            Kind::Dictionary => {
                 initial = NonHashable(
                     NonHashableObject::Dictionary(
                         RuntimeDictionary::new(RefCell::new(Dictionary::new()))
@@ -94,20 +80,18 @@ pub fn evaluate<'a>(
                 );
             }
 
-            parser::Rule::List => {
+            Kind::List => {
                 initial = NonHashable(
                     NonHashableObject::List(
                         RuntimeList::new(RefCell::new(List::new()))
                     )
                 );
             }
-
-            _ => { unreachable!() }
         }
     }
 
     // Insert the variable into the stack
-    stack.push(name.value.unwrap(), &initial);
+    stack.push(name, &initial);
 
     Ok(Object::Void)
 }
