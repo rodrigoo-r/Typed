@@ -18,6 +18,7 @@ pub mod add;
 pub mod size;
 pub mod split;
 pub mod trim_left;
+pub mod trim_right;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -117,7 +118,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
             native: Some(size::size)
         }
     );
-    
+
     dict.insert(
         "String_Split",
         Procedure{
@@ -131,7 +132,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                         kind: Kind::String
                     }
                 );
-                
+
                 args.push(
                     Argument{
                         name: "delim",
@@ -142,6 +143,46 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(split::split)
+        }
+    );
+
+    dict.insert(
+        "String_Trim_Left",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(trim_left::trim_left)
+        }
+    );
+
+    dict.insert(
+        "String_Trim_Right",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(trim_right::trim_right)
         }
     );
 
