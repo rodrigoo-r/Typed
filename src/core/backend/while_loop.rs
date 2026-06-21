@@ -13,47 +13,39 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefMut;
-use crate::core::frontend::parser;
-use crate::adt::lang::{File, AST};
+use crate::adt::lang::{File, Kind, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
-use crate::core::backend::{declare, expression, for_loop, while_loop};
-use crate::execute_or_return;
+use crate::core::backend::{body, expression};
+use crate::support::runtime::kind::check_kind;
+use crate::support::runtime::object::get_boolean;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
-    body: &AST<'a>,
+    expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
 ) -> ExecutionResult<'a> {
-    let children = body.children.borrow();
+    let children = expr.children.borrow();
+    let condition = children.get(0).unwrap();
+    let body = children.get(1).unwrap();
 
-    for statement in children.iter() {
-        let statement = statement.borrow();
+    let condition = condition.borrow();
+    let body = body.borrow();
 
-        match statement.rule {
-            parser::Rule::Expression => {
-                expression::evaluate(file, &statement, stack)?;
-            }
+    loop {
+        let condition = expression::evaluate(file, &condition, stack)?;
+        check_kind(Kind::Boolean, &condition, expr)?;
 
-            parser::Rule::For => {
-                execute_or_return!(for_loop::evaluate(file, &statement, stack));
-            }
+        let condition = get_boolean(&condition, expr)?;
 
-            parser::Rule::While => {
-                execute_or_return!(while_loop::evaluate(file, &statement, stack));
-            }
-
-            parser::Rule::Declare => {
-                declare::evaluate(file, &statement, stack)?;
-            }
-
-            parser::Rule::Condition_Group => {
-
-            }
-
-            _ => {}
+        // Break if the condition is false
+        if !condition {
+            break;
         }
+
+        // Execute the body
+        body::evaluate(file, &body, stack)?;
     }
 
     Ok(Object::Void)

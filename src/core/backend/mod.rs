@@ -23,7 +23,8 @@ mod call;
 mod arithmetic;
 mod declare;
 mod for_loop;
-pub mod body;
+mod body;
+mod while_loop;
 
 use std::ops::Deref;
 use crate::adt::lang::File;
