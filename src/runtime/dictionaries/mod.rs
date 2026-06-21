@@ -15,6 +15,7 @@
 pub mod access;
 pub mod set;
 pub mod remove;
+pub mod size;
 
 use crate::adt::lang::{ASTValue, Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -112,6 +113,28 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 vec
             },
             native: Some(remove::remove),
+            ret: None
+        }
+    );
+
+    dict.insert(
+        "Dictionary_Size",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut vec = vec![];
+
+                vec.push(
+                    Argument{
+                        name: ASTValue::Borrowed("dict"),
+                        kind: Kind::Dictionary,
+                    }
+                );
+
+                vec
+            },
+            native: Some(size::size),
             ret: None
         }
     );
