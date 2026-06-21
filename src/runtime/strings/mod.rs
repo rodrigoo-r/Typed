@@ -48,6 +48,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(format::format)
         }
     );
@@ -75,6 +76,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(access::access)
         }
     );
@@ -102,6 +104,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(add::add)
         }
     );
@@ -122,6 +125,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::Integer),
             native: Some(size::size)
         }
     );
@@ -149,6 +153,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::List),
             native: Some(split::split)
         }
     );
@@ -169,6 +174,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(trim_left::trim_left)
         }
     );
@@ -189,6 +195,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(trim_right::trim_right)
         }
     );
@@ -209,6 +216,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(trim::trim)
         }
     );
@@ -236,6 +244,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::Boolean),
             native: Some(contains::contains)
         }
     );
@@ -270,6 +279,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(replace_one::replace_one)
         }
     );
@@ -310,6 +320,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(replace_many::replace_many)
         }
     );
@@ -336,6 +347,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(replace_all::replace_all)
         }
     );
@@ -356,6 +368,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(to_lower::to_lower)
         }
     );
@@ -376,6 +389,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: Some(Kind::String),
             native: Some(to_upper::to_upper)
         }
     );

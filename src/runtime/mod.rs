@@ -16,6 +16,7 @@ use crate::adt::runtime::GlobalPackageDictionary;
 
 pub mod io;
 pub mod strings;
+pub mod dictionaries;
 
 pub fn get_global_package<'a>() -> GlobalPackageDictionary<'a> {
     let mut result = GlobalPackageDictionary::new();

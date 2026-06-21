@@ -37,6 +37,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: None,
             native: Some(print::print)
         }
     );
@@ -57,6 +58,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
+            ret: None,
             native: Some(println::println)
         }
     );
@@ -67,7 +69,8 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
             variadic: false,
             body: None,
             arguments: Vec::new(),
-            native: Some(read::read)
+            native: Some(read::read),
+            ret: None
         }
     );
 
