@@ -14,7 +14,7 @@
 */
 use crate::adt::lang::{RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
-use crate::adt::runtime::{HashableObject, Object, StringKind};
+use crate::adt::runtime::{HashableObject, Object};
 use crate::support::runtime::object::get_string;
 
 pub fn str_size<'a>(
@@ -25,7 +25,7 @@ pub fn str_size<'a>(
 {
     let origin = args.get(0).unwrap();
     let origin = get_string(origin, trace)?;
-    
+
     Ok(
         Object::Hashable(
             HashableObject::Integer(
