@@ -64,19 +64,9 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
     dict.insert(
         "Read_Line",
         Procedure{
-            variadic: true,
+            variadic: false,
             body: None,
-            arguments: {
-                let mut args = vec![];
-                args.push(
-                    Argument{
-                        name: "fmt",
-                        kind: Kind::String
-                    }
-                );
-
-                args
-            },
+            arguments: Vec::new(),
             native: Some(read::read)
         }
     );
