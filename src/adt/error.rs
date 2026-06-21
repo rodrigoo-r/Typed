@@ -15,7 +15,7 @@
 use crate::adt::lang::AST;
 
 #[derive(Debug)]
-pub enum ErrorKind {
+pub enum RuntimeErrorKind {
     UndefinedFindProcedure,
     MismatchedTypes,
     MismatchedArgumentCount,
@@ -30,7 +30,7 @@ pub enum ErrorKind {
 
 #[derive(Debug)]
 pub struct RuntimeError {
-    pub kind : ErrorKind,
+    pub kind : RuntimeErrorKind,
     pub message : &'static str,
     pub line: usize,
     pub column: usize
@@ -39,7 +39,7 @@ pub struct RuntimeError {
 impl RuntimeError {
     fn create(
         trace: &AST,
-        kind: ErrorKind,
+        kind: RuntimeErrorKind,
         message: &'static str
     ) -> Self {
         RuntimeError{
@@ -53,7 +53,7 @@ impl RuntimeError {
     pub fn undefined_procedure(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::UndefinedFindProcedure,
+            RuntimeErrorKind::UndefinedFindProcedure,
             "Undefined procedure"
         )
     }
@@ -61,7 +61,7 @@ impl RuntimeError {
     pub fn mismatched_types(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::MismatchedTypes,
+            RuntimeErrorKind::MismatchedTypes,
             "Mismatched types"
         )
     }
@@ -69,7 +69,7 @@ impl RuntimeError {
     pub fn mismatched_argument_count(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::MismatchedArgumentCount,
+            RuntimeErrorKind::MismatchedArgumentCount,
             "Mismatched argument count"
         )
     }
@@ -77,7 +77,7 @@ impl RuntimeError {
     pub fn out_of_bounds(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::OutOfBounds,
+            RuntimeErrorKind::OutOfBounds,
             "Out of bounds"
         )
     }
@@ -85,7 +85,7 @@ impl RuntimeError {
     pub fn could_not_find_library(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::CouldNotFindLibrary,
+            RuntimeErrorKind::CouldNotFindLibrary,
             "Could not find library"
         )
     }
@@ -93,7 +93,7 @@ impl RuntimeError {
     pub fn malformed_literal(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::MalformedLiteral,
+            RuntimeErrorKind::MalformedLiteral,
             "Malformed literal"
         )
     }
@@ -101,7 +101,7 @@ impl RuntimeError {
     pub fn undefined_symbol(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::UndefinedSymbol,
+            RuntimeErrorKind::UndefinedSymbol,
             "Undefined symbol"
         )
     }
@@ -109,7 +109,7 @@ impl RuntimeError {
     pub fn invalid_loop_variable(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::InvalidLoopVariable,
+            RuntimeErrorKind::InvalidLoopVariable,
             "Invalid loop variable type, expected Integer or Float"
         )
     }
@@ -117,7 +117,7 @@ impl RuntimeError {
     pub fn invalid_loop_step(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::InvalidLoopStep,
+            RuntimeErrorKind::InvalidLoopStep,
             "Invalid loop step"
         )
     }
@@ -125,7 +125,7 @@ impl RuntimeError {
     pub fn could_not_read(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            ErrorKind::CouldNotRead,
+            RuntimeErrorKind::CouldNotRead,
             "Could not read from stream"
         )
     }

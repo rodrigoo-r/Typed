@@ -32,7 +32,7 @@ use std::ops::Deref;
 use crate::adt::lang::File;
 use crate::adt::result::ExecutionResult;
 use crate::adt::error::RuntimeError;
-use crate::adt::error::ErrorKind;
+use crate::adt::error::RuntimeErrorKind;
 
 pub fn execute<'a>(
     file: &'a File<'a>
@@ -42,7 +42,7 @@ pub fn execute<'a>(
     if main.is_none() {
         return Err(
             RuntimeError{
-                kind: ErrorKind::UndefinedFindProcedure,
+                kind: RuntimeErrorKind::UndefinedFindProcedure,
                 message: "Could not find procedure 'Main'",
                 line: 0,
                 column: 0
