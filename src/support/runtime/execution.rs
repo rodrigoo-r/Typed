@@ -12,6 +12,15 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-pub mod object;
-pub mod kind;
-pub mod execution;
+
+use crate::adt::runtime::Object;
+
+macro_rules! execute_or_return {
+    ($expr:expr, $trace:expr) => {{
+        let res = $expr;
+
+        if res != Object::Void {
+            return Ok(res);
+        }
+    }}
+}
