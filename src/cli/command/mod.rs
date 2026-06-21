@@ -12,24 +12,4 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-
-pub mod core;
-pub mod support;
-pub mod adt;
-pub mod runtime;
-pub mod cli;
-
-use std::env;
-use clap::Parser;
-use crate::cli::{Cli, Commands};
-use crate::cli::command::run;
-
-fn main() {
-    let cli = Cli::parse();
-
-    match cli.command {
-        Commands::Run { file } => {
-            run::handle(&file);
-        }
-    }
-}
+pub mod run;
