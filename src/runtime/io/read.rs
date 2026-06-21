@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use std::io;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object, StringKind};
@@ -32,7 +32,7 @@ pub fn read<'a>(
 
     if res.is_err() {
         return Err(
-            ExecutionError::could_not_read(trace)
+            RuntimeError::could_not_read(trace)
         )
     }
 

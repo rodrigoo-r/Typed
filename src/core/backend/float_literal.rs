@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use std::str::FromStr;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{Float, HashableObject, Object};
@@ -27,7 +27,7 @@ pub fn evaluate<'a>(
     let value = Float::from_str(value);
     
     if value.is_err() {
-        return Err(ExecutionError::malformed_literal(child));
+        return Err(RuntimeError::malformed_literal(child));
     }
     
     Ok(

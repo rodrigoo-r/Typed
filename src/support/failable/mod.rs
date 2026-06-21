@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use std::process::exit;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::result::RuntimeResult;
 use colored::Colorize;
 use pest::error::Error;
@@ -57,7 +57,7 @@ fn print_err_base(
     );
 }
 
-fn print_traceable_err(err: &ExecutionError) {
+fn print_traceable_err(err: &RuntimeError) {
     print_err_base(&err.message, &err.line, &err.column);
 
     // Print a white line

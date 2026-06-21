@@ -12,7 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::{Kind, AST};
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object};
@@ -23,7 +23,7 @@ pub fn check_kinds(
     trace: &AST
 ) -> RuntimeResult<()> {
     if expected != actual {
-        return Err(ExecutionError::mismatched_types(trace));
+        return Err(RuntimeError::mismatched_types(trace));
     }
 
     Ok(())
@@ -60,7 +60,7 @@ pub fn check_kind<'a>(
         }
 
         Object::Void => {
-            Err(ExecutionError::mismatched_types(trace))
+            Err(RuntimeError::mismatched_types(trace))
         }
 
         Object::Any(_) => {
@@ -100,7 +100,7 @@ pub fn check_obj_kind<'a>(
         }
 
         Object::Void => {
-            Err(ExecutionError::mismatched_types(trace))
+            Err(RuntimeError::mismatched_types(trace))
         }
 
         Object::Any(_) => {

@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use memchr::memchr;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::{Kind, RuntimeArguments, AST};
 use crate::adt::result::{ExecutionResult, RuntimeResult};
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object, StringKind};
@@ -165,7 +165,7 @@ pub fn format<'a>(
         last_arg_idx += 1;
 
         if arg.is_none() {
-            return Err(ExecutionError::mismatched_argument_count(trace));
+            return Err(RuntimeError::mismatched_argument_count(trace));
         }
 
         let arg = arg.unwrap();

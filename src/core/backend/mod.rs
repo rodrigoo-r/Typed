@@ -31,7 +31,7 @@ mod condition_group;
 use std::ops::Deref;
 use crate::adt::lang::File;
 use crate::adt::result::ExecutionResult;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::error::ErrorKind;
 
 pub fn execute<'a>(
@@ -41,7 +41,7 @@ pub fn execute<'a>(
     let main = file.procedures.get("Main");
     if main.is_none() {
         return Err(
-            ExecutionError{
+            RuntimeError{
                 kind: ErrorKind::UndefinedFindProcedure,
                 message: "Could not find procedure 'Main'",
                 line: 0,

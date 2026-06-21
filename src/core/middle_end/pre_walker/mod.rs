@@ -14,7 +14,7 @@
 */
 use std::cell::Ref;
 use std::collections::HashMap;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::{Argument, File, Kind, Procedure, AST};
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{GlobalPackageDictionary, PackageDictionary};
@@ -45,7 +45,7 @@ fn convert_use<'a>(
 
     match pkg {
         None => {
-            Err(ExecutionError::could_not_find_library(ast))
+            Err(RuntimeError::could_not_find_library(ast))
         }
         Some(procedures) => {
             Ok(procedures)

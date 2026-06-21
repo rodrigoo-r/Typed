@@ -12,12 +12,12 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::runtime::Object;
 
 pub type RuntimeResult<Success> = Result<
     Success,
-    ExecutionError
+    RuntimeError
 >;
 
 pub type ExecutionResult<'a> =

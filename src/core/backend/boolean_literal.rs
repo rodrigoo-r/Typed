@@ -12,7 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object};
@@ -31,5 +31,5 @@ pub fn evaluate<'a>(
     }
 
     Err(
-ExecutionError::malformed_literal(child), )
+RuntimeError::malformed_literal(child), )
 }

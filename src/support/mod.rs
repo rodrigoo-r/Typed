@@ -17,3 +17,4 @@ pub mod file;
 pub mod lang;
 pub mod failable;
 pub mod runtime;
+pub mod str_conv;

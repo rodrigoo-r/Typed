@@ -25,24 +25,24 @@ pub enum ErrorKind {
     UndefinedSymbol,
     InvalidLoopVariable,
     InvalidLoopStep,
-    CouldNotRead
+    CouldNotRead,
 }
 
 #[derive(Debug)]
-pub struct ExecutionError {
+pub struct RuntimeError {
     pub kind : ErrorKind,
     pub message : &'static str,
     pub line: usize,
     pub column: usize
 }
 
-impl ExecutionError {
+impl RuntimeError {
     fn create(
         trace: &AST,
         kind: ErrorKind,
         message: &'static str
     ) -> Self {
-        ExecutionError{
+        RuntimeError{
             kind,
             message,
             line: trace.line,
@@ -51,7 +51,7 @@ impl ExecutionError {
     }
 
     pub fn undefined_procedure(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::UndefinedFindProcedure,
             "Undefined procedure"
@@ -59,7 +59,7 @@ impl ExecutionError {
     }
 
     pub fn mismatched_types(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::MismatchedTypes,
             "Mismatched types"
@@ -67,7 +67,7 @@ impl ExecutionError {
     }
 
     pub fn mismatched_argument_count(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::MismatchedArgumentCount,
             "Mismatched argument count"
@@ -75,7 +75,7 @@ impl ExecutionError {
     }
 
     pub fn out_of_bounds(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::OutOfBounds,
             "Out of bounds"
@@ -83,7 +83,7 @@ impl ExecutionError {
     }
 
     pub fn could_not_find_library(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::CouldNotFindLibrary,
             "Could not find library"
@@ -91,7 +91,7 @@ impl ExecutionError {
     }
 
     pub fn malformed_literal(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::MalformedLiteral,
             "Malformed literal"
@@ -99,7 +99,7 @@ impl ExecutionError {
     }
 
     pub fn undefined_symbol(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::UndefinedSymbol,
             "Undefined symbol"
@@ -107,7 +107,7 @@ impl ExecutionError {
     }
 
     pub fn invalid_loop_variable(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::InvalidLoopVariable,
             "Invalid loop variable type, expected Integer or Float"
@@ -115,7 +115,7 @@ impl ExecutionError {
     }
 
     pub fn invalid_loop_step(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::InvalidLoopStep,
             "Invalid loop step"
@@ -123,7 +123,7 @@ impl ExecutionError {
     }
 
     pub fn could_not_read(trace: &AST) -> Self {
-        ExecutionError::create(
+        RuntimeError::create(
             trace,
             ErrorKind::CouldNotRead,
             "Could not read from stream"

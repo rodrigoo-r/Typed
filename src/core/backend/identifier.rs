@@ -14,7 +14,7 @@
 */
 use std::cell::RefMut;
 use std::ops::Deref;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::AST;
 use crate::adt::result::ExecutionResult;
 use crate::adt::variable::ScopedStack;
@@ -27,7 +27,7 @@ pub fn evaluate<'a>(
     let value = stack.search(name);
     
     if value.is_none() {
-        return Err(ExecutionError::undefined_symbol(id));
+        return Err(RuntimeError::undefined_symbol(id));
     }
     
     Ok(value.unwrap().deref().borrow().clone())

@@ -12,7 +12,7 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object, StringKind};
@@ -32,14 +32,14 @@ pub fn access<'a>(
 
     if idx < 0 {
         return Err(
-            ExecutionError::out_of_bounds(trace)
+            RuntimeError::out_of_bounds(trace)
         );
     }
 
     let idx = idx as usize;
     if idx >= str.len() {
         return Err(
-            ExecutionError::out_of_bounds(trace)
+            RuntimeError::out_of_bounds(trace)
         );
     }
 

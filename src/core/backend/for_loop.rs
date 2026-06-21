@@ -14,7 +14,7 @@
 */
 use std::cell::RefMut;
 use std::ops::DerefMut;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::{File, Kind, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object};
@@ -54,7 +54,7 @@ pub fn evaluate<'a>(
         kind != Kind::Float
     {
         return Err(
-            ExecutionError::invalid_loop_variable(expr)
+            RuntimeError::invalid_loop_variable(expr)
         );
     }
 
@@ -72,7 +72,7 @@ pub fn evaluate<'a>(
         let max = end - step;
 
         if step == 0 {
-            return Err(ExecutionError::invalid_loop_step(expr));
+            return Err(RuntimeError::invalid_loop_step(expr));
         }
 
         while initial <= max {
@@ -96,7 +96,7 @@ pub fn evaluate<'a>(
         let max = end - step;
 
         if step == 0.0 {
-            return Err(ExecutionError::invalid_loop_step(expr));
+            return Err(RuntimeError::invalid_loop_step(expr));
         }
 
         while initial <= max {

@@ -13,7 +13,7 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefMut;
-use crate::adt::error::ExecutionError;
+use crate::adt::error::RuntimeError;
 use crate::adt::lang::{File, RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::variable::ScopedStack;
@@ -33,7 +33,7 @@ pub fn evaluate<'a>(
     let procedure = file.procedures.get(name);
 
     if procedure.is_none() {
-        return Err(ExecutionError::undefined_procedure(child));
+        return Err(RuntimeError::undefined_procedure(child));
     }
 
     let procedure = procedure.unwrap();
@@ -56,7 +56,7 @@ pub fn evaluate<'a>(
                 procedure.arguments.len() > children.len()
             )
         {
-            return Err(ExecutionError::mismatched_argument_count(child));
+            return Err(RuntimeError::mismatched_argument_count(child));
         }
 
         for i in 0..procedure.arguments.len() {
