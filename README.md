@@ -2,179 +2,257 @@
     <h1>Typed</h1>
     <p>A text processing DSL</p>
     <hr>
-    <h3>Welcome</h3>
-    <hr>
 </div>
 
-Typed is a C++20 interpreter for a text-processing DSL. It provides a small CLI for running `.typed` scripts, a lexer/parser pipeline, and runtime packages for common scripting tasks such as printing, regular expressions, strings, lists, dictionaries, math, and filesystem operations.
+**Typed** is a statically-typed, English-like domain-specific language designed for text processing. It features a verbose, readable syntax where keywords like `Declare`, `Call`, and `Add` make programs easy to follow — even for non-programmers.
+
+Built with Rust and powered by a [PEG](https://en.wikipedia.org/wiki/Parsing_expression_grammar) parser, Typed offers procedures, control flow, arithmetic, and a growing set of standard libraries for I/O, strings, regex, math, file system operations, and more.
 
 ## Features
 
-- Human-readable DSL syntax for procedures, variables, conditionals, loops, arithmetic, and function calls
-- Built-in runtime packages:
-    - `IO`
-    - `Regex_Engine`
-    - `Strings`
-    - `Lists`
-    - `Dictionaries`
-    - `Math`
-    - `File_System`
-- C++ frontend/middle-end/backend pipeline for lexing, parsing, preprocessing, and execution
-- CLI entry point for running Typed source files
-- Apache 2.0 licensed
+- **Readable syntax** — English-like keywords (`Declare`, `Call`, `Add … To`, `If … Then`)
+- **Static typing** — `String`, `Integer`, `Float`, `Boolean`, `List`, `Dictionary`
+- **Procedures** — with typed arguments and return values
+- **Control flow** — `If` / `Else_If` / `Else`, `For`, `While`
+- **Arithmetic** — `Add`, `Subtract`, `Multiply`, `Divide`
+- **String formatting** — format specifiers (`$S`, `$I`, `$F`) for easy interpolation
+- **Standard libraries** — `IO`, `Strings`, `Regex`, `Math`, `Lists`, `Dictionaries`, `File_System`
+- **Comments** — line comments with `#`
 
-## Example
+## Getting Started
 
-```typed
-Use IO;
-Use Strings;
+### Prerequisites
 
-Procedure Main
-With Arguments
-Begin
-    Declare
-        Name as String
-    With
-        "Typed";
+- [Rust](https://www.rust-lang.org/tools/install) (edition 2024)
 
-    Call
-        Print_Line
-    With
-        "Hello from $S!",
-        Name
-    End_Call;
+### Build
 
-    Declare
-        Message as String
-    With
-        Call
-            String_To_Upper
-        With
-            "text processing"
-        End_Call;
-
-    Call
-        Print_Line
-    With
-        "$S",
-        Message
-    End_Call;
-End_Procedure
+```bash
+cargo build --release
 ```
 
-More examples are available in [`Example/`](Example/).
+### Run
 
-## Requirements
-
-- A C++20 compiler
-- CMake 4.2 or newer
-- Git, for dependencies downloaded through CMake `FetchContent`
-- On macOS: `xxhash` installed through Homebrew
-
-```sh
-brew install xxhash
+```bash
+cargo run -- path/to/script.typed
 ```
 
-The build downloads these dependencies automatically:
+Or, after building:
 
-- [CLI11](https://github.com/CLIUtils/CLI11)
-- [Celery](https://github.com/rodrigoo-r/Celery)
-- [unordered_dense](https://github.com/martinus/unordered_dense)
-- [magic_enum](https://github.com/Neargye/magic_enum)
-- [Abseil](https://github.com/abseil/abseil-cpp)
-- [RE2](https://github.com/google/re2)
-- [xxHash](https://github.com/Cyan4973/xxHash), except on macOS where the project links the Homebrew installation
-
-## Build
-
-```sh
-cmake -S . -B build
-cmake --build build
-```
-
-The executable is built as `Typed`.
-
-## Usage
-
-Run a Typed script with the `run` subcommand:
-
-```sh
-./build/Typed run Example/Test.typed
+```bash
+./target/release/Typed path/to/script.typed
 ```
 
 ## Language Overview
 
-A Typed program is organized around procedures. The main entry point is a `Procedure Main` block.
+### Hello World
 
-```typed
+```
+Use IO;
+
 Procedure Main
-With Arguments
 Begin
-    # Program body
+    Call
+        Print_Line
+    With
+        "Hello, World!"
+    End_Call;
 End_Procedure
 ```
 
-Import runtime packages with `Use`:
+### Variables
 
-```typed
-Use IO;
-Use Regex_Engine;
-Use Lists;
+Variables are declared with `Declare`, specifying a name, type, and optional initial value:
+
 ```
-
-Declare variables with explicit types:
-
-```typed
 Declare
-    Count as Integer
+    Name as String
 With
-    5;
+    "Alice"
+;
+
+Declare
+    Age as Integer
+With
+    30
+;
 ```
 
-Call runtime procedures with `Call ... With ... End_Call`:
+### Procedures
 
-```typed
+Procedures are defined with `Procedure … End_Procedure`. They can accept typed arguments and declare a return type:
+
+```
+Procedure Greet
+With Arguments
+    Name as String
+Returns String
+Begin
+    Return "Hello, $S";
+End_Procedure
+```
+
+### Control Flow
+
+#### If / Else_If / Else
+
+```
+If X Then
+Begin
+    # ...
+End_If
+Else_If Y Then
+Begin
+    # ...
+End_Else_If
+Else
+Begin
+    # ...
+End_Else
+```
+
+#### For Loop
+
+```
+For I as Integer In 0 To 10 Step 1 Do
+Begin
+    # ...
+End_For
+```
+
+#### While Loop
+
+```
+While Condition Do
+Begin
+    # ...
+End_While
+```
+
+### Arithmetic
+
+Arithmetic operations modify a variable in place:
+
+```
+Declare Result as Integer With 5;
+
+Add 15 To Result;        # Result is now 20
+Subtract 3 From Result;  # Result is now 17
+Multiply 2 By Result;    # Result is now 34
+Divide 2 By Result;      # Result is now 17
+```
+
+### Calling Procedures
+
+Use `Call … End_Call` to invoke a procedure, with `With` to pass arguments:
+
+```
 Call
-    Print_Line
+    Print
 With
-    "Count: $I",
-    Count
+    "$S",
+    Name
 End_Call;
 ```
 
-Typed currently includes examples of:
+### String Formatting
 
-- arithmetic with `Add`, `Multiply`, and `Divide`
-- `If`, `Else_If`, and `Else`
-- `For` loops
-- `While` loops
-- list and dictionary manipulation
-- string formatting and transformations
-- regular expression matching and replacement
+Format specifiers are used in strings passed to `Print` and `Print_Line`:
 
-## Project Layout
+| Specifier | Type      |
+|-----------|-----------|
+| `$S`      | String    |
+| `$I`      | Integer   |
+| `$F`      | Float     |
 
-```text
-.
-├── BlackMagic/          # Build-time templates for generated CLI code
-├── Build/               # CMake build helpers
-├── Contributing/        # Contribution notes and style guide
-├── Example/             # Example .typed programs
-├── Src/
-│   ├── ADT/             # Core data types and exceptions
-│   ├── Core/            # Frontend, middle-end, and backend interpreter logic
-│   ├── Runtime/         # Built-in runtime packages
-│   ├── Support/         # Shared helpers
-│   ├── Terminal/        # CLI entry point and subcommands
-│   └── User/            # User-facing entry point
-├── CMakeLists.txt
-└── LICENSE
+### Standard Libraries
+
+Import libraries with `Use`:
+
+```
+Use IO;
+Use Strings;
+Use Regex;
+Use Math;
+Use Lists;
+Use Dictionaries;
+Use File_System;
+```
+
+| Library        | Description                          |
+|----------------|--------------------------------------|
+| `IO`           | Input/output (`Print`, `Print_Line`, `Read_Line`) |
+| `Strings`      | String manipulation (`String_Access`, …) |
+| `Regex`        | Regular expressions (`Regex_Replace_One`, …) |
+| `Math`         | Mathematical functions               |
+| `Lists`        | List operations                      |
+| `Dictionaries` | Dictionary operations                |
+| `File_System`  | File I/O (`Read_File`, `Write_File`, `Scan_Directory`, …) |
+
+### Comments
+
+Line comments start with `#`:
+
+```
+# This is a comment
+Declare X as Integer With 42; # Inline comment
+```
+
+## Full Example
+
+```
+Use Regex;
+Use IO;
+
+Procedure Main
+Begin
+    Declare
+        My_Regex_Pattern as String
+    With
+        "[a-zA-Z0-9]+"
+    ;
+
+    Declare
+        My_Replaced_String as String
+    With
+        Call
+            Regex_Replace_One
+        With
+            My_Regex_Pattern,
+            "Hello, World!",
+            "Hi"
+        ;
+
+    Call
+        Print
+    With
+        "$S",
+        My_Replaced_String
+    ;
+
+    Declare
+        Result as Integer
+    With
+        5;
+
+    Add
+        15
+    To
+        Result;
+
+    Call
+        Print
+    With
+        "$I",
+        Result
+    ;
+End_Procedure
 ```
 
 ## Contributing
 
-See [`Contributing/StyleGuide.md`](Contributing/StyleGuide.md) for the project style guide.
+See the [Style Guide](Contributing/StyleGuide.md) for code conventions and contribution guidelines.
 
 ## License
 
-Typed is released under the [Apache License 2.0](LICENSE).
+This project is licensed under the [Apache License 2.0](LICENSE).
