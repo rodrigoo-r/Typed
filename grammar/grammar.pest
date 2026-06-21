@@ -67,12 +67,8 @@ Kind = {
 Body = {
 	"Begin" ~
 	(
-      (
-        (
-            Expression |
-            Return
-        ) ~ ";"
-      ) |
+      (Expression ~ ";") |
+      (Return ~ ";") |
       For |
       Condition_Group |
       While |
