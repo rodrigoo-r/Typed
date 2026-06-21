@@ -46,7 +46,10 @@ pub enum Kind {
     Boolean,
     Float,
     Dictionary,
-    List
+    List,
+
+    // Only allowed for internal use
+    Any
 }
 
 #[derive(Debug, Clone)]

@@ -22,6 +22,10 @@ pub fn check_kinds(
     actual: Kind,
     trace: &AST
 ) -> RuntimeResult<()> {
+    if expected == Kind::Any {
+        return Ok(());
+    }
+
     if expected != actual {
         return Err(RuntimeError::mismatched_types(trace));
     }
