@@ -16,9 +16,30 @@ use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
 
 pub mod print;
+pub mod println;
 
 pub fn get_package<'a>() -> PackageDictionary<'a> {
     let mut dict = PackageDictionary::new();
+    dict.insert(
+        "Print",
+        Procedure{
+            variadic: true,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "fmt",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(print::print)
+        }
+    );
+
     dict.insert(
         "Print_Line",
         Procedure{
@@ -35,7 +56,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
 
                 args
             },
-            native: Some(print::println)
+            native: Some(println::println)
         }
     );
 

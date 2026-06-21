@@ -15,18 +15,17 @@
 use crate::adt::lang::{RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::Object;
-use crate::runtime::strings::format;
+use crate::runtime::io::print;
 use crate::support::runtime::object::{*};
 
-pub fn print<'a>(
+pub fn println<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
     -> ExecutionResult<'a>
 {
-    let res = format::format_str(args, trace)?;
-    let str = get_string(&res, trace)?;
-    print!("{}", str);
+    print::print(args, trace)?;
+    println!();
 
     Ok(Object::Void)
 }
