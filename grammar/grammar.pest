@@ -31,8 +31,13 @@ Procedure = {
 	"Procedure"
     ~ Identifier
     ~ Procedure_Arguments?
+    ~ Procedure_Return_Kind?
     ~ Body
     ~ "End_Procedure"
+}
+
+Procedure_Return_Kind = {
+    "Returns" ~ Kind
 }
 
 Procedure_Arguments = {
