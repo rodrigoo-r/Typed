@@ -20,6 +20,7 @@ pub mod split;
 pub mod trim_left;
 pub mod trim_right;
 pub mod trim;
+pub mod contains;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -204,6 +205,32 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(trim::trim)
+        }
+    );
+    
+    dict.insert(
+        "String_Contains",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+                args.push(
+                    Argument{
+                        name: "needle",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(contains::contains)
         }
     );
 
