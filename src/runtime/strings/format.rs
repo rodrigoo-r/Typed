@@ -124,11 +124,6 @@ fn format_obj<'a>(
         Object::Void => {
             result.push_str("Void");
         }
-
-        Object::Any(any) => {
-            let any = any.borrow();
-            format_obj(&any, expected, trace, result)?;
-        }
     }
 
     Ok(())

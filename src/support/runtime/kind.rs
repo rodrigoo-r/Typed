@@ -66,10 +66,6 @@ pub fn check_kind<'a>(
         Object::Void => {
             Err(RuntimeError::mismatched_types(trace))
         }
-
-        Object::Any(_) => {
-            Ok(())
-        }
     }
 }
 
@@ -105,10 +101,6 @@ pub fn check_obj_kind<'a>(
 
         Object::Void => {
             Err(RuntimeError::mismatched_types(trace))
-        }
-
-        Object::Any(_) => {
-            Ok(())
         }
     }
 }

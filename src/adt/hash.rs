@@ -13,7 +13,6 @@
  * #-----------------------------------------------------# *
 */
 use std::hash::Hash;
-use std::ops::Deref;
 use crate::adt::lang::ASTValue;
 use crate::adt::runtime::{HashableObject, Object};
 
@@ -49,16 +48,6 @@ impl <'a> Hash for Object<'a> {
 
         match self {
             Object::Hashable(h) => h.hash(state),
-            Object::Any(a) => {
-                let obj = a.borrow();
-                let obj = obj.deref();
-
-                if let Object::Hashable(hashable) = obj {
-                    hashable.hash(state);
-                }
-
-                panic!("Cannot hash a non-hashable object");
-            }
 
             Object::Void |
             Object::NonHashable(_) => {

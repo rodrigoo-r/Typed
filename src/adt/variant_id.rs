@@ -12,7 +12,6 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use std::ops::Deref;
 use crate::adt::runtime::{HashableObject, Object};
 
 fn get_variant_id(obj: &Object) -> u8 {
@@ -20,20 +19,12 @@ fn get_variant_id(obj: &Object) -> u8 {
         Object::Hashable(_) => 0,
         Object::NonHashable(_) => 1,
         Object::Void => 2,
-        Object::Any(_) => 3
     }
 }
 
 impl<'a> Object<'a> {
     fn variant_id(&self) -> u8 {
-        if let Object::Any(a) = self {
-            let obj = a.borrow();
-            let obj = obj.deref();
-
-            get_variant_id(obj)
-        } else {
-            get_variant_id(self)
-        }
+        get_variant_id(self)
     }
 }
 

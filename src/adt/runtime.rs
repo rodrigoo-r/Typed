@@ -55,5 +55,4 @@ pub enum Object<'a> {
     Hashable(HashableObject<'a>),
     NonHashable(NonHashableObject<'a>),
     Void,
-    Any(Rc<RefCell<Object<'a>>>)
 }

@@ -12,7 +12,6 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use std::ops::Deref;
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object};
 
 fn compare_hashable_obj(lhs: &HashableObject, rhs: &HashableObject) -> bool {
@@ -58,34 +57,7 @@ impl<'a> PartialEq for NonHashableObject<'a> {
 
 impl<'a> PartialEq for Object<'a> {
     fn eq(&self, other: &Self) -> bool {
-        if
-            let Object::Any(a) = self &&
-            let Object::Any(b) = other
-        {
-            let lhs = a.borrow();
-            let lhs = lhs.deref();
-
-            let rhs = b.borrow();
-            let rhs = rhs.deref();
-
-            compare_obj(lhs, rhs)
-        }
-        else if let Object::Any(a) = self {
-            let obj = a.borrow();
-            let obj = obj.deref();
-
-            compare_obj(obj, other)
-        }
-        else if let Object::Any(a) = other {
-            let obj = a.borrow();
-            let obj = obj.deref();
-
-            compare_obj(self, obj)
-        }
-        else {
-            compare_obj(self, other)
-        }
-
+        compare_obj(self, other)
     }
 }
 
