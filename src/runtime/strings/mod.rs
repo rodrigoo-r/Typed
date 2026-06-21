@@ -21,6 +21,9 @@ pub mod trim_left;
 pub mod trim_right;
 pub mod trim;
 pub mod contains;
+pub mod replace_many;
+pub mod replace_one;
+pub mod replace_all;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -221,6 +224,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                         kind: Kind::String
                     }
                 );
+                
                 args.push(
                     Argument{
                         name: "needle",
@@ -231,6 +235,106 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(contains::contains)
+        }
+    );
+
+    dict.insert(
+        "String_Replace_One",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+                
+                args.push(
+                    Argument{
+                        name: "needle",
+                        kind: Kind::String
+                    }
+                );
+                
+                args.push(
+                    Argument{
+                        name: "replacement",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(replace_one::replace_one)
+        }
+    );
+
+    dict.insert(
+        "String_Replace_Many",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+                args.push(
+                    Argument{
+                        name: "needle",
+                        kind: Kind::String
+                    }
+                );
+                
+                args.push(
+                    Argument{
+                        name: "replacement",
+                        kind: Kind::String
+                    }
+                );
+                
+                args.push(
+                    Argument{
+                        name: "count",
+                        kind: Kind::Integer
+                    }
+                );
+
+                args
+            },
+            native: Some(replace_many::replace_many)
+        }
+    );
+
+    dict.insert(
+        "String_Replace_All",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+                args.push(
+                    Argument{
+                        name: "needle",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(replace_all::replace_all)
         }
     );
 
