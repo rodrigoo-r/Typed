@@ -108,3 +108,33 @@ pub fn check_obj_kind<'a>(
         }
     }
 }
+
+pub fn convert_kind<'a>(decl: &AST<'a>) 
+    -> (&'a str, Kind) 
+{
+    let children = decl.children.borrow();
+    let name = children.get(0).unwrap().borrow();
+    let name = name.value.unwrap();
+    
+    let kind = children.get(1).unwrap().borrow();
+
+    (
+        name,
+        match kind.rule {
+            crate::core::frontend::parser::Rule::Integer => 
+                Kind::Integer,
+            crate::core::frontend::parser::Rule::Float => 
+                Kind::Float,
+            crate::core::frontend::parser::Rule::String => 
+                Kind::String,
+            crate::core::frontend::parser::Rule::Boolean => 
+                Kind::Boolean,
+            crate::core::frontend::parser::Rule::Dictionary => 
+                Kind::Dictionary,
+            crate::core::frontend::parser::Rule::List => 
+                Kind::List,
+            
+            _ => unreachable!(),
+        }
+    )
+}
