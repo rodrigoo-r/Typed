@@ -19,7 +19,7 @@ use crate::adt::lang::{ASTValue, Argument, File, Kind, Procedure, AST};
 use crate::adt::result::RuntimeResult;
 use crate::adt::runtime::{GlobalPackageDictionary, PackageDictionary};
 use crate::core::frontend::parser::Rule;
-use crate::core::frontend::parser::Rule::Procedure_Arguments;
+use crate::core::frontend::parser::Rule::{Procedure_Arguments, Procedure_Return_Kind};
 
 fn convert_kind(ast: Ref<AST>) -> Kind {
     match ast.rule {
@@ -61,12 +61,18 @@ fn convert_procedure<'a>(ast: &AST<'a>)
     let name = children[0].borrow();
     let name = name.value.as_ref().unwrap();
 
-    let proc: Option<Procedure<'a>>;
-    let body = children[1].borrow();
-    if body.rule == Procedure_Arguments {
+    let mut body_idx = 1;
+    let mut body = &children[body_idx];
+    let mut vec: Vec<Argument<'a>> = Vec::new();
+    let mut body_ref = body.borrow();
+    let mut ret_type = None as Option<Kind>;
+
+    if body_ref.rule == Procedure_Arguments {
         let args = body;
-        let body = children[2].clone();
-        let mut vec: Vec<Argument<'a>> = Vec::new();
+        let args = args.borrow();
+        body_idx += 1;
+        body = &children[body_idx];
+        body_ref = body.borrow();
 
         // Process the arguments
         for arg in args.children.borrow().iter() {
@@ -86,25 +92,28 @@ fn convert_procedure<'a>(ast: &AST<'a>)
                 }
             );
         }
-
-        proc = Some(Procedure{
-            body: Some(body),
-            arguments: vec,
-            variadic: false,
-            native: None
-        });
-    } else {
-        let body = children[1].clone();
-
-        proc = Some(Procedure{
-            body: Some(body),
-            arguments: Vec::new(),
-            variadic: false,
-            native: None
-        });
     }
 
-    (name.clone(), proc.unwrap())
+    if body_ref.rule == Procedure_Return_Kind {
+        let ret_type_ast = body;
+        let ret_type_ast = ret_type_ast.borrow();
+        body_idx += 1;
+        body = &children[body_idx];
+        
+        let kind = convert_kind(ret_type_ast);
+        ret_type = Some(kind);
+    }
+
+    (
+        name.clone(),
+        Procedure{
+            body: Some(body.clone()),
+            arguments: vec,
+            variadic: false,
+            native: None,
+            ret: ret_type
+        }
+    )
 }
 
 pub fn convert<'a>(
@@ -125,7 +134,7 @@ pub fn convert<'a>(
                 let dict = convert_use(&child, &global_package)?;
                 for (name, proc) in dict.iter() {
                     result.procedures.insert(
-                        ASTValue::Borrowed(name), 
+                        ASTValue::Borrowed(name),
                         proc.clone()
                     );
                 }
