@@ -19,7 +19,6 @@ pub mod adt;
 pub mod runtime;
 pub mod cli;
 
-use std::env;
 use clap::Parser;
 use crate::cli::{Cli, Commands};
 use crate::cli::command::run;
