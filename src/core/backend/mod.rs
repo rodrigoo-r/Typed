@@ -22,6 +22,8 @@ mod boolean_literal;
 mod call;
 mod arithmetic;
 mod declare;
+mod for_loop;
+pub mod body;
 
 use std::ops::Deref;
 use crate::adt::lang::File;
