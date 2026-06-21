@@ -23,6 +23,7 @@ pub type NestedStack<'a> =
 pub type Variable<'a> =
     Rc<RefCell<Object<'a>>>;
 
+#[derive(Clone)]
 pub struct ScopedStack<'a> {
     inner: HashMap<&'a str, Variable<'a>>,
     parent: Option<NestedStack<'a>>,
@@ -40,8 +41,16 @@ impl <'a> ScopedStack<'a> {
         )
     }
 
-    pub fn nest(parent: &NestedStack<'a>) -> NestedStack<'a> {
-        ScopedStack::new(Some(parent.clone()))
+    pub fn nest(&self) -> NestedStack<'a> {
+        ScopedStack::new(
+            Some(
+                Rc::new(
+                    RefCell::new(
+                        self.clone()
+                    )
+                )
+            )
+        )
     }
 
     pub fn push(&mut self, name: &'a str, value: &Object<'a>) {
