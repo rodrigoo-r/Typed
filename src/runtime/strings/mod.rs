@@ -24,6 +24,8 @@ pub mod contains;
 pub mod replace_many;
 pub mod replace_one;
 pub mod replace_all;
+pub mod to_lower;
+pub mod to_upper;
 
 use crate::adt::lang::{Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -335,6 +337,46 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 args
             },
             native: Some(replace_all::replace_all)
+        }
+    );
+
+    dict.insert(
+        "String_To_Lower",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(to_lower::to_lower)
+        }
+    );
+
+    dict.insert(
+        "String_To_Upper",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: "s",
+                        kind: Kind::String
+                    }
+                );
+
+                args
+            },
+            native: Some(to_upper::to_upper)
         }
     );
 
