@@ -12,23 +12,18 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::runtime::GlobalPackageDictionary;
+use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::result::ExecutionTupleResult;
+use crate::support::runtime::object::get_integer;
 
-pub mod io;
-pub mod strings;
-pub mod dictionaries;
-pub mod lists;
-pub mod file_system;
-pub mod process;
-
-pub fn get_global_package<'a>() -> GlobalPackageDictionary<'a> {
-    let mut result = GlobalPackageDictionary::new();
-    result.insert("IO", io::get_package());
-    result.insert("Strings", strings::get_package());
-    result.insert("Dictionaries", dictionaries::get_package());
-    result.insert("Lists", lists::get_package());
-    result.insert("File_System", file_system::get_package());
-    result.insert("Process", process::get_package());
-
-    result
+pub fn exit<'a>(
+    args: RuntimeArguments<'a>,
+    trace: &AST<'a>
+)
+    -> ExecutionTupleResult<'a>
+{
+    let code = args.get(0).unwrap();
+    let code = get_integer(code, trace)?;
+    
+    std::process::exit(code as i32)
 }

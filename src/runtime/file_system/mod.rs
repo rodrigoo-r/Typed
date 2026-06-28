@@ -14,7 +14,6 @@
 */
 pub mod create_directory;
 pub mod create_file;
-pub mod cwd;
 mod file_exists;
 pub mod file_name;
 pub mod is_absolute_path;
@@ -63,17 +62,6 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
             variadic: false,
             body: None,
             native: Some(create_file::create_file)
-        }
-    );
-
-    dict.insert(
-        "Process_Cwd",
-        Procedure{
-            ret: None,
-            arguments: vec![],
-            variadic: false,
-            body: None,
-            native: Some(cwd::cwd)
         }
     );
 
