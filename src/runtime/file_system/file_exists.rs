@@ -12,7 +12,6 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST};
 use crate::adt::result::ExecutionResult;
 use crate::adt::runtime::{HashableObject, Object};
@@ -29,9 +28,11 @@ pub fn file_exists<'a>(
 
     let res = std::fs::metadata(path);
     if res.is_err() {
-        return Err(
-            RuntimeError::could_not_read(trace)
-        );
+        return Ok(
+            Object::Hashable(
+                HashableObject::Boolean(false)
+            )
+        )
     }
     
     Ok(
