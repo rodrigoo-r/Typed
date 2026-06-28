@@ -157,6 +157,17 @@ Expression = {
     Identifier
 }
 
+Greater = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "Greater"
+    ~ "Than"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
 Call = {
 	"Call" ~
     Identifier ~
