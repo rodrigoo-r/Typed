@@ -53,6 +53,13 @@ impl RuntimeError {
             "Mismatched argument count"
         )
     }
+    
+    pub fn incomparable_types(trace: &AST) -> Self {
+        RuntimeError::create(
+            trace,
+            "Incomparable types"
+        )
+    }
 
     pub fn out_of_bounds(trace: &AST) -> Self {
         RuntimeError::create(

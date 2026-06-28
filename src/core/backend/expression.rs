@@ -18,7 +18,7 @@ use crate::adt::lang::{File, AST};
 use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
-use crate::core::backend::{arithmetic, boolean, boolean_literal, call, float_literal, identifier, integer_literal};
+use crate::core::backend::{arithmetic, boolean, boolean_literal, call, comparison, float_literal, identifier, integer_literal};
 use crate::core::backend::string_literal;
 use crate::support::runtime::execution::continue_execution;
 
@@ -55,6 +55,14 @@ pub fn evaluate<'a>(
         parser::Rule::And |
         parser::Rule::Not => {
             return boolean::evaluate(file, &child, stack);
+        }
+
+        parser::Rule::Equal |
+        parser::Rule::Greater |
+        parser::Rule::Less |
+        parser::Rule::Greater_Equal |
+        parser::Rule::Less_Equal => {
+            return comparison::evaluate(file, &child, stack);
         }
         
         // Literals

@@ -28,6 +28,7 @@ mod while_loop;
 mod return_smt;
 mod condition_group;
 mod boolean;
+mod comparison;
 
 use std::ops::Deref;
 use crate::adt::lang::File;
