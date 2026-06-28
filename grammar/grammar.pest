@@ -202,19 +202,19 @@ Boolean_Literal = _{
 True_Literal = { "True" }
 False_Literal = { "False" }
 
-String_Literal = {
+String_Literal = @{
     ("\"" ~ Single_Line_String_Char* ~ "\"") |
     (
     	"`" ~ Multi_Line_String_Char* ~ "`"
 	)
 }
 
-Single_Line_String_Char = _{
+Single_Line_String_Char = @{
     Escape_Sequence
     | !("\"" | "\n" | "\r") ~ ANY
 }
 
-Multi_Line_String_Char = _{
+Multi_Line_String_Char = @{
     Escape_Sequence
     | !("`") ~ ANY
 }
