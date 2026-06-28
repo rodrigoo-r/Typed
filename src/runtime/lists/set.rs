@@ -14,15 +14,16 @@
 */
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::{get_integer, get_list};
 
 pub fn set<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let list = args.get(0).unwrap();
     let idx = args.get(2).unwrap();
@@ -39,5 +40,5 @@ pub fn set<'a>(
     }
     
     list[idx as usize] = target.clone();
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

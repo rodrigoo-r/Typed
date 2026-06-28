@@ -13,18 +13,19 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
 use crate::runtime::io::print;
+use crate::support::runtime::execution::continue_execution;
 
 pub fn println<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     print::print(args, trace)?;
     println!();
 
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

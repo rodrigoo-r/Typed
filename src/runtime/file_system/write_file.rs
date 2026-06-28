@@ -14,15 +14,16 @@
 */
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn write_file<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let path = args.get(0).unwrap();
     let path = get_string(path, trace)?;
@@ -36,5 +37,5 @@ pub fn write_file<'a>(
         );
     }
     
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

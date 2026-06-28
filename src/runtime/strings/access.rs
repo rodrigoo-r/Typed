@@ -14,15 +14,16 @@
 */
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::{get_integer, get_string};
 
 pub fn access<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let str_obj = args.get(0).unwrap();
     let idx = args.get(1).unwrap();
@@ -47,7 +48,7 @@ pub fn access<'a>(
     if let Object::Hashable(HashableObject::String(ASTValue::Borrowed(s))) = str_obj {
         let slice = &s[idx-1..idx];
 
-        return Ok(
+        return continue_execution(
             Object::Hashable(
                 HashableObject::String(
                     ASTValue::Borrowed(slice)
@@ -58,7 +59,7 @@ pub fn access<'a>(
 
     // Create the result in an owned string to avoid memory leaks
     let result = str.chars().nth(idx).unwrap();
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(

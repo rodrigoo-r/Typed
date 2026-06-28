@@ -16,16 +16,17 @@ use std::cmp::max;
 use std::fmt::Write;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, Kind, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
 use crate::runtime::strings::format::format_obj;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::{get_list, get_string};
 
 pub fn join<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let list = args.get(0).unwrap();
     let delim = args.get(1).unwrap();
@@ -56,7 +57,7 @@ pub fn join<'a>(
         }
     }
 
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(result)

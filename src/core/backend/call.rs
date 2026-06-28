@@ -15,7 +15,7 @@
 use std::cell::RefMut;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{File, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::{expression, procedure};
 use crate::support::runtime::kind::check_kind;
@@ -24,7 +24,7 @@ pub fn evaluate<'a>(
     file: &'a File<'a>,
     child: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let children = child.children.borrow();
     let name = children.get(0).unwrap();
     let name = name.borrow();
@@ -65,7 +65,7 @@ pub fn evaluate<'a>(
             let arg = arg.borrow();
             let expected = &procedure.arguments[i];
             let kind = expected.kind.clone();
-            let arg = expression::evaluate(file, &arg, stack)?;
+            let (arg, _) = expression::evaluate(file, &arg, stack)?;
 
             check_kind(kind, &arg, child)?;
 
@@ -77,7 +77,7 @@ pub fn evaluate<'a>(
             for i in procedure.arguments.len()..children.len() {
                 let arg = children.get(i).unwrap();
                 let arg = arg.borrow();
-                let arg = expression::evaluate(file, &arg, stack)?;
+                let (arg, _) = expression::evaluate(file, &arg, stack)?;
 
                 args.push(arg);
             }

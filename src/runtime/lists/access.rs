@@ -14,14 +14,15 @@
 */
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::{get_integer, get_list};
 
 pub fn access<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let list = args.get(0).unwrap();
     let idx = args.get(1).unwrap();
@@ -44,5 +45,5 @@ pub fn access<'a>(
         )
     }
 
-    Ok(value.unwrap().clone())
+    continue_execution(value.unwrap().clone())
 }

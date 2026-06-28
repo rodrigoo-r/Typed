@@ -13,15 +13,16 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_list;
 
 pub fn pop<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let list = args.get(0).unwrap();
 
@@ -29,5 +30,5 @@ pub fn pop<'a>(
     let mut list = list.borrow_mut();
 
     list.pop();
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

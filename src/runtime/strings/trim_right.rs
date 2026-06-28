@@ -13,15 +13,16 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn trim_right<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let origin_obj = args.get(0).unwrap();
     let origin = get_string(origin_obj, trace)?;
@@ -33,7 +34,7 @@ pub fn trim_right<'a>(
         )
     ) = origin_obj {
         let trimmed = s.trim_end();
-        return Ok(
+        return continue_execution(
             Object::Hashable(
                 HashableObject::String(
                     ASTValue::Borrowed(trimmed)
@@ -45,7 +46,7 @@ pub fn trim_right<'a>(
     // Otherwise, we need to allocate a new string
     let trimmed = String::from(origin.trim_end());
     
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(trimmed)

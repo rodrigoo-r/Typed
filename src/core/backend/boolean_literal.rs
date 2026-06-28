@@ -14,18 +14,19 @@
 */
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::AST;
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 
 pub fn evaluate<'a>(
     child: &AST<'a>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     match child.rule {
         crate::core::frontend::parser::Rule::True_Literal => {
-            Ok(Object::Hashable(HashableObject::Boolean(true)))
+            continue_execution(Object::Hashable(HashableObject::Boolean(true)))
         }
         crate::core::frontend::parser::Rule::False_Literal => {
-            Ok(Object::Hashable(HashableObject::Boolean(false)))
+            continue_execution(Object::Hashable(HashableObject::Boolean(false)))
         }
         _ => {
             Err(RuntimeError::malformed_literal(child))

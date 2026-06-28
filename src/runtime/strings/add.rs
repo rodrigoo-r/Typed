@@ -13,15 +13,16 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn add<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let origin = args.get(0).unwrap();
     let addition = args.get(1).unwrap();
@@ -31,7 +32,7 @@ pub fn add<'a>(
     let mut result = String::from(origin);
     result.push_str(addition);
     
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(result)

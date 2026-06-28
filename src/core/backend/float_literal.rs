@@ -15,12 +15,13 @@
 use std::str::FromStr;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{Float, HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 
 pub fn evaluate<'a>(
     child: &AST<'a>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let value = child.value.as_ref().unwrap();
     
     // Parse the value
@@ -37,7 +38,7 @@ pub fn evaluate<'a>(
         return Err(RuntimeError::malformed_literal(child));
     }
     
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::Float(
                 value.unwrap()

@@ -14,11 +14,12 @@
 */
 use std::cell::RefMut;
 use crate::adt::lang::{File, Procedure, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::{body, expression};
 use crate::core::frontend::parser::Rule;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_boolean;
 
 pub fn evaluate<'a>(
@@ -26,7 +27,7 @@ pub fn evaluate<'a>(
     procedure: &Procedure<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let children = expr.children.borrow();
 
     for child in children.iter() {
@@ -41,7 +42,7 @@ pub fn evaluate<'a>(
             let body = body.borrow();
 
             // Evaluate condition
-            let condition_obj = expression::evaluate(file, &condition, stack)?;
+            let (condition_obj, _) = expression::evaluate(file, &condition, stack)?;
             let condition = get_boolean(&condition_obj, &condition)?;
 
             if condition {
@@ -57,5 +58,5 @@ pub fn evaluate<'a>(
         }
     }
 
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

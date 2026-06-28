@@ -15,18 +15,20 @@
 use std::cell::RefMut;
 use crate::core::frontend::parser;
 use crate::adt::lang::{File, Procedure, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::{condition_group, declare, expression, for_loop, return_smt, while_loop};
 use crate::execute_or_return;
+use crate::support::runtime::execution::continue_execution;
+use crate::support::runtime::execution::stop_execution;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
     procedure: &Procedure<'a>,
     body: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let children = body.children.borrow();
 
     for statement in children.iter() {
@@ -61,5 +63,5 @@ pub fn evaluate<'a>(
         }
     }
 
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

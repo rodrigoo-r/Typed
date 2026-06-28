@@ -13,20 +13,21 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
 use crate::runtime::strings::format;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::{*};
 
 pub fn print<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
-    let res = format::format(args, trace)?;
+    let (res, _) = format::format(args, trace)?;
     let str = get_string(&res, trace)?;
     print!("{}", str);
 
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

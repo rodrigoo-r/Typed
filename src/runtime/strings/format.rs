@@ -15,8 +15,9 @@
 use memchr::memchr;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, Kind, RuntimeArguments, AST};
-use crate::adt::result::{ExecutionResult, RuntimeResult};
+use crate::adt::result::{ExecutionTupleResult, RuntimeResult};
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::kind::{check_kind, check_kinds};
 use crate::support::runtime::object::get_string;
 
@@ -133,7 +134,7 @@ pub fn format<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let fmt = args.get(0);
     let fmt = fmt.unwrap();
@@ -197,7 +198,7 @@ pub fn format<'a>(
     // Add the last slice
     result.push_str(&fmt);
 
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(result)

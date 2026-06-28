@@ -13,13 +13,14 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::AST;
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 
 pub fn evaluate<'a>(
     child: &AST<'a>
-) -> ExecutionResult<'a> {
-    Ok(
+) -> ExecutionTupleResult<'a> {
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 child.value.as_ref().unwrap().clone()

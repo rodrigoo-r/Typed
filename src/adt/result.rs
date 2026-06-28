@@ -30,3 +30,15 @@ pub type ParseResult<'a> =
 
 pub type ExecutionResult<'a> =
     RuntimeResult<Object<'a>>;
+
+#[derive(PartialEq, Eq)]
+pub enum ExecutionInstruction {
+    Stop,
+    Continue
+}
+
+pub type SuccessTuple<'a> =
+    (Object<'a>, ExecutionInstruction);
+
+pub type ExecutionTupleResult<'a> =
+    RuntimeResult<SuccessTuple<'a>>;

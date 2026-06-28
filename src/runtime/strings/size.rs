@@ -13,20 +13,21 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn size<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let origin = args.get(0).unwrap();
     let origin = get_string(origin, trace)?;
 
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::Integer(
                 origin.len() as isize

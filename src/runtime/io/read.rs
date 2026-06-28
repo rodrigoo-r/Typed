@@ -15,14 +15,15 @@
 use std::io;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 
 pub fn read<'a>(
     _: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let mut input = String::new();
 
@@ -39,7 +40,7 @@ pub fn read<'a>(
     // Remove the newline character
     input.pop();
 
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(input)

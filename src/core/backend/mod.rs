@@ -30,12 +30,12 @@ mod condition_group;
 
 use std::ops::Deref;
 use crate::adt::lang::File;
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::error::RuntimeError;
 
 pub fn execute<'a>(
     file: &'a File<'a>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     // Get the main procedure
     let main = file.procedures.get("Main");
     if main.is_none() {

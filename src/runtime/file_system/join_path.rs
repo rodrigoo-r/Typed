@@ -14,15 +14,16 @@
 */
 use std::path::PathBuf;
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::{get_list, get_string};
 
 pub fn join_path<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let list = args.get(0).unwrap();
     let list = get_list(list, trace)?;
@@ -43,7 +44,7 @@ pub fn join_path<'a>(
     }
 
     let base = result.unwrap();
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(

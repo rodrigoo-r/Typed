@@ -14,7 +14,7 @@
 */
 use std::ops::Deref;
 use crate::adt::lang::{File, Procedure, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::body;
 
@@ -23,7 +23,7 @@ pub fn execute<'a>(
     trace: &AST<'a>,
     procedure: &Procedure<'a>,
     given_args: RuntimeArguments<'a>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     // Call native procedures if needed
     if procedure.native.is_some() {
         return procedure.native.as_ref().unwrap()(given_args, trace);

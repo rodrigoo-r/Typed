@@ -16,7 +16,7 @@ use std::borrow::Cow;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::{ExecutionTupleResult};
 use crate::adt::runtime::List;
 use crate::core::frontend::parser::Rule;
 
@@ -26,7 +26,7 @@ pub type ASTChildren<'a> = RefCell<Vec<ChildAST<'a>>>;
 
 pub type RuntimeArguments<'a> = List<'a>;
 pub type NativeProcedure<'a> =
-    fn(RuntimeArguments<'a>, &AST<'a>) -> ExecutionResult<'a>;
+    fn(RuntimeArguments<'a>, &AST<'a>) -> ExecutionTupleResult<'a>;
 
 pub type ASTValue<'a> = Cow<'a, str>;
 

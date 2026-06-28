@@ -16,20 +16,22 @@ use std::cell::RefMut;
 use std::ops::DerefMut;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{File, Kind, Procedure, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::{body, expression};
 use crate::execute_or_return;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::kind::{check_kind, convert_kind};
 use crate::support::runtime::object::{get_float, get_integer};
+use crate::support::runtime::execution::stop_execution;
 
 pub fn evaluate<'a>(
     file: &'a File<'a>,
     procedure: &Procedure<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let children = expr.children.borrow();
     let stack = stack.nest();
     let mut stack = stack.borrow_mut();
@@ -46,9 +48,9 @@ pub fn evaluate<'a>(
     let step = step.borrow();
     let body = body.borrow();
 
-    let initial = expression::evaluate(file, &initial, &mut stack)?;
-    let end = expression::evaluate(file, &end, &mut stack)?;
-    let step = expression::evaluate(file, &step, &mut stack)?;
+    let (initial, _) = expression::evaluate(file, &initial, &mut stack)?;
+    let (end, _) = expression::evaluate(file, &end, &mut stack)?;
+    let (step, _) = expression::evaluate(file, &step, &mut stack)?;
 
     if
         kind != Kind::Integer &&
@@ -117,5 +119,5 @@ pub fn evaluate<'a>(
         }
     }
 
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

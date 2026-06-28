@@ -14,15 +14,16 @@
 */
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_dictionary;
 
 pub fn set<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let dict_obj = args.get(0).unwrap();
     let key = args.get(1).unwrap();
@@ -42,5 +43,5 @@ pub fn set<'a>(
     let mut dict = dict.borrow_mut();
     dict.insert(key.clone(), value.clone());
 
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

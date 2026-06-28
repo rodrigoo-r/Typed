@@ -16,13 +16,14 @@ use std::cell::RefMut;
 use std::ops::Deref;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::AST;
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::variable::ScopedStack;
+use crate::support::runtime::execution::continue_execution;
 
 pub fn evaluate<'a>(
     id: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let name = id.value.as_ref().unwrap();
     let value = stack.search(name);
     
@@ -30,5 +31,5 @@ pub fn evaluate<'a>(
         return Err(RuntimeError::undefined_symbol(id));
     }
     
-    Ok(value.unwrap().deref().borrow().clone())
+    continue_execution(value.unwrap().deref().borrow().clone())
 }

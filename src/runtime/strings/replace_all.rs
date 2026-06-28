@@ -13,15 +13,16 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn replace_all<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let origin = args.get(0).unwrap();
     let needle = args.get(1).unwrap();
@@ -30,7 +31,7 @@ pub fn replace_all<'a>(
     let needle = get_string(needle, trace)?;
     let replacement = get_string(replacement, trace)?;
     
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(

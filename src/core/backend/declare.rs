@@ -36,7 +36,7 @@ pub fn evaluate<'a>(
     // Determine if the declaration has an initializer
     if children.len() > 1 {
         let init = children.get(1).unwrap().borrow();
-        initial = expression::evaluate(file, &init, stack)?;
+        initial = expression::evaluate(file, &init, stack)?.0;
 
         check_kind(
             kind,

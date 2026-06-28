@@ -16,15 +16,16 @@ use std::cell::RefCell;
 use std::fs;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, List, NonHashableObject, Object, RuntimeList};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn scan_directory<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let path = args.get(0).unwrap();
     let path = get_string(path, trace)?;
@@ -62,7 +63,7 @@ pub fn scan_directory<'a>(
         );
     }
 
-    Ok(
+    continue_execution(
         Object::NonHashable(
             NonHashableObject::List(
                 RuntimeList::new(

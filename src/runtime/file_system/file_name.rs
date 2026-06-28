@@ -15,15 +15,16 @@
 use std::path::Path;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn file_name<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let path = args.get(0).unwrap();
     let path = get_string(path, trace)?;
@@ -46,7 +47,7 @@ pub fn file_name<'a>(
     }
 
     let stem = stem.unwrap();
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(stem.to_string())

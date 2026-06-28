@@ -16,11 +16,12 @@ use std::cell::RefMut;
 use std::ops::{Deref, DerefMut};
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{File, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{Object, HashableObject};
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::expression;
 use crate::core::frontend::parser::Rule;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::kind::check_obj_kind;
 use crate::support::runtime::object::{get_float, get_integer};
 
@@ -60,11 +61,11 @@ pub fn evaluate<'a>(
     file: &'a File<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let children = expr.children.borrow();
     let target = children.get(0).unwrap();
     let target = target.borrow();
-    let expr_result = expression::evaluate(file, &target, stack)?;
+    let (expr_result, _) = expression::evaluate(file, &target, stack)?;
     let target = children.get(1).unwrap();
     let target = target.borrow();
     let target = target.value.as_ref().unwrap();
@@ -116,5 +117,5 @@ pub fn evaluate<'a>(
         perform_op(f, &expr, source);
     }
     
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }

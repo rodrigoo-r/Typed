@@ -12,14 +12,34 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use crate::adt::result::{ExecutionInstruction, ExecutionTupleResult};
+use crate::adt::runtime::Object;
 
 #[macro_export]
 macro_rules! execute_or_return {
     ($expr:expr) => {{
-        let res = $expr?;
+        let (res, instruction) = $expr?;
         
-        if !matches!(res, crate::adt::runtime::Object::Void) {
-            return Ok(res);
+        if instruction == crate::adt::result::ExecutionInstruction::Stop {
+            return stop_execution(res);
         }
     }}
+}
+
+pub fn stop_execution(
+    res: Object
+) -> ExecutionTupleResult {
+    Ok((
+        res,
+        ExecutionInstruction::Stop
+    ))
+}
+
+pub fn continue_execution(
+    res: Object
+) -> ExecutionTupleResult {
+    Ok((
+        res,
+        ExecutionInstruction::Continue
+    ))
 }

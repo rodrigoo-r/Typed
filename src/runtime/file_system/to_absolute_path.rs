@@ -13,15 +13,16 @@
  * #-----------------------------------------------------# *
 */
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::object::get_string;
 
 pub fn to_absolute_path<'a>(
     args: RuntimeArguments<'a>,
     trace: &AST<'a>
 )
-    -> ExecutionResult<'a>
+    -> ExecutionTupleResult<'a>
 {
     let path = args.get(0).unwrap();
     let path = get_string(path, trace)?;
@@ -37,7 +38,7 @@ pub fn to_absolute_path<'a>(
 
     let res = abs.unwrap();
 
-    Ok(
+    continue_execution(
         Object::Hashable(
             HashableObject::String(
                 ASTValue::Owned(

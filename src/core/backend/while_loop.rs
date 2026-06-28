@@ -12,13 +12,15 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use crate::support::runtime::execution::stop_execution;
 use std::cell::RefMut;
 use crate::adt::lang::{File, Kind, Procedure, AST};
-use crate::adt::result::ExecutionResult;
+use crate::adt::result::ExecutionTupleResult;
 use crate::adt::runtime::Object;
 use crate::adt::variable::ScopedStack;
 use crate::core::backend::{body, expression};
 use crate::execute_or_return;
+use crate::support::runtime::execution::continue_execution;
 use crate::support::runtime::kind::check_kind;
 use crate::support::runtime::object::get_boolean;
 
@@ -27,7 +29,7 @@ pub fn evaluate<'a>(
     procedure: &Procedure<'a>,
     expr: &AST<'a>,
     stack: &mut RefMut<ScopedStack<'a>>
-) -> ExecutionResult<'a> {
+) -> ExecutionTupleResult<'a> {
     let children = expr.children.borrow();
     let condition = children.get(0).unwrap();
     let body = children.get(1).unwrap();
@@ -36,7 +38,7 @@ pub fn evaluate<'a>(
     let body = body.borrow();
 
     loop {
-        let condition = expression::evaluate(file, &condition, stack)?;
+        let (condition, _) = expression::evaluate(file, &condition, stack)?;
         check_kind(Kind::Boolean, &condition, expr)?;
 
         let condition = get_boolean(&condition, expr)?;
@@ -50,5 +52,5 @@ pub fn evaluate<'a>(
         execute_or_return!(body::evaluate(file, procedure, &body, stack));
     }
 
-    Ok(Object::Void)
+    continue_execution(Object::Void)
 }
