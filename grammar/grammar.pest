@@ -154,15 +154,15 @@ Expression = {
     Integer_Literal |
     Boolean_Literal |
     String_Literal |
-    Identifier |
+    And |
+    Or |
+    Not |
     Greater |
     Equal |
     Less |
     Greater_Equal |
     Less_Equal |
-    And |
-    Or |
-    Not
+    Identifier
 }
 
 Greater = {
