@@ -154,15 +154,59 @@ Expression = {
     Integer_Literal |
     Boolean_Literal |
     String_Literal |
-    Identifier
+    Identifier |
+    Greater |
+    Equal |
+    Less |
+    Greater_Equal |
+    Less_Equal
 }
 
 Greater = {
     "("
     ~ Expression
     ~ ")"
-    ~ "Greater"
-    ~ "Than"
+    ~ ">"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Less = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "<"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Equal = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "="
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Greater_Equal = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ ">="
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Less_Equal = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "<="
     ~ "("
     ~ Expression
     ~ ")"
