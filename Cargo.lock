@@ -3,18 +3,6 @@
 version = 4
 
 [[package]]
-name = "Typed"
-version = "0.1.0"
-dependencies = [
- "clap",
- "colored",
- "memchr",
- "ordered-float",
- "pest",
- "pest_derive",
-]
-
-[[package]]
 name = "anstream"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -314,6 +302,18 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "typed"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "colored",
+ "memchr",
+ "ordered-float",
+ "pest",
+ "pest_derive",
 ]
 
 [[package]]
