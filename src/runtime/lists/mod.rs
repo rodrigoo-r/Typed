@@ -33,7 +33,11 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                 Argument{
                     kind: Kind::List,
                     name: ASTValue::Borrowed("list")
-                }
+                },
+                Argument{
+                    kind: Kind::Integer,
+                    name: ASTValue::Borrowed("index")
+                },
             ],
             ret: Some(Kind::Any),
             body: None,
