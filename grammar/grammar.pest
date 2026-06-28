@@ -159,7 +159,10 @@ Expression = {
     Equal |
     Less |
     Greater_Equal |
-    Less_Equal
+    Less_Equal |
+    And |
+    Or |
+    Not
 }
 
 Greater = {
@@ -207,6 +210,33 @@ Less_Equal = {
     ~ Expression
     ~ ")"
     ~ "<="
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+And = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "And"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Or = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "Or"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Not = {
+    "Not"
     ~ "("
     ~ Expression
     ~ ")"
