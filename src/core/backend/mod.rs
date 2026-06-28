@@ -27,6 +27,7 @@ mod body;
 mod while_loop;
 mod return_smt;
 mod condition_group;
+mod boolean;
 
 use std::ops::Deref;
 use crate::adt::lang::File;
