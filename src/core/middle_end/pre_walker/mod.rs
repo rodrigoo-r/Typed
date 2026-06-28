@@ -83,12 +83,15 @@ fn convert_procedure<'a>(ast: &AST<'a>)
             let name = name.value.as_ref().unwrap();
 
             let kind = arg_children[1].borrow();
+            let kind = kind.children.borrow();
+            let kind = kind[0].borrow();
+            let kind = convert_kind(kind);
 
             // Insert the argument into the procedure
             vec.push(
                 Argument{
                     name: name.clone(),
-                    kind: convert_kind(kind)
+                    kind
                 }
             );
         }
