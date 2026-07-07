@@ -345,6 +345,13 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                     }
                 );
 
+                args.push(
+                    Argument{
+                        name: ASTValue::Borrowed("replacement"),
+                        kind: Kind::String
+                    }
+                );
+
                 args
             },
             ret: Some(Kind::String),
