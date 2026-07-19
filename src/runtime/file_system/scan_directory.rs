@@ -14,6 +14,7 @@
 */
 use std::cell::RefCell;
 use std::fs;
+use std::fs::DirEntry;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, RuntimeArguments, AST};
 use crate::adt::result::ExecutionTupleResult;
@@ -38,17 +39,23 @@ pub fn scan_directory<'a>(
     }
     
     let res = res.unwrap();
-    let mut result = List::new();
+    let entries: Vec<_> = res.collect();
+    let mut res: Vec<DirEntry> = vec![];
 
-    for item in res {
+    for item in entries {
         if item.is_err() {
             return Err(
                 RuntimeError::could_not_read(trace)
-            )
+            );
         }
 
-        let item = item.unwrap();
+        res.push(item.unwrap());
+    }
 
+    res.sort_by_key(|entry| entry.file_name());
+    let mut result = List::new();
+
+    for item in res {
         let path = item.path();
         let path = path.to_str().unwrap();
 
