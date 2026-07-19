@@ -26,8 +26,8 @@ pub fn set<'a>(
     -> ExecutionTupleResult<'a>
 {
     let list = args.get(0).unwrap();
-    let idx = args.get(2).unwrap();
-    let target = args.get(1).unwrap();
+    let idx = args.get(1).unwrap();
+    let target = args.get(2).unwrap();
 
     let list = get_list(list, trace)?;
     let idx = get_integer(idx, trace)?;
