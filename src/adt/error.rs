@@ -50,7 +50,7 @@ impl RuntimeError {
     pub fn mismatched_types(trace: &AST) -> Self {
         RuntimeError::create(
             trace,
-            "Mismatched argument count"
+            "Mismatched types"
         )
     }
     
