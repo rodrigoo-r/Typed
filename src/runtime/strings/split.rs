@@ -32,40 +32,17 @@ pub fn split<'a>(
     let delim = get_string(delim, trace)?;
 
     let result: RuntimeList = RuntimeList::new(RefCell::new(vec![]));
-    let mut current = String::new();
-    let mut idx: usize = 0;
+    let parts: Vec<&str> = origin.split(delim).collect();
 
-    while idx < origin.len() {
-        let mut is_match = false;
+    for part in parts {
+        let mut result = result.borrow_mut();
+        let obj = Object::Hashable(HashableObject::String(
+            ASTValue::Owned(
+                part.to_string()
+            )
+        ));
 
-        if idx + delim.len() <= origin.len() {
-            for i in 0..delim.len() {
-                if origin.as_bytes()[idx + i] != delim.as_bytes()[i] {
-                    is_match = false;
-                    break;
-                }
-
-                is_match = true;
-            }
-        } else {
-            is_match = false;
-        }
-
-        if is_match {
-            let mut result = result.borrow_mut();
-
-            result.push(
-                Object::Hashable(
-                    HashableObject::String(
-                        ASTValue::Owned(
-                            current.clone()
-                        )
-                    )
-                )
-            );
-            current.clear();
-            idx += delim.len();
-        }
+        result.push(obj);
     }
 
     continue_execution(
