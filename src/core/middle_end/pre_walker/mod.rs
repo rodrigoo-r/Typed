@@ -100,9 +100,13 @@ fn convert_procedure<'a>(ast: &AST<'a>)
     if body_ref.rule == Procedure_Return_Kind {
         let ret_type_ast = body;
         let ret_type_ast = ret_type_ast.borrow();
+        let ret_type_ast = ret_type_ast.children.borrow();
+        let ret_type_ast = ret_type_ast[0].borrow();
+        let ret_type_ast = ret_type_ast.children.borrow();
+        let ret_type_ast = ret_type_ast[0].borrow();
         body_idx += 1;
         body = &children[body_idx];
-        
+
         let kind = convert_kind(ret_type_ast);
         ret_type = Some(kind);
     }
