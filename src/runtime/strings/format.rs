@@ -93,7 +93,7 @@ pub fn format_obj<'a>(
                     result.push_str(", ");
                 }
 
-                format_obj(item, expected.clone(), trace, result)?;
+                format_obj(item, Kind::Any, trace, result)?;
             }
 
             result.push_str(")");
@@ -112,9 +112,9 @@ pub fn format_obj<'a>(
                     result.push_str(", ");
                 }
 
-                format_hashable_object(key, expected.clone(), trace, result)?;
+                format_hashable_object(key, Kind::Any, trace, result)?;
                 result.push_str(": ");
-                format_obj(value, expected.clone(), trace, result)?;
+                format_obj(value, Kind::Any, trace, result)?;
 
                 idx += 1;
             }
