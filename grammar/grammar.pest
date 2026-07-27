@@ -255,7 +255,8 @@ Body = {
         ("|" ~ Condition_Group) |
         ("|" ~ While) |
       	("|" ~ Declare) |
-      	("|" ~ Expression)
+      	("|" ~ Expression) |
+        ("|" ~ WHITESPACE*)
     )*
 }
 

@@ -45,7 +45,7 @@ pub fn evaluate<'a>(
     let expr = expr.borrow();
 
     let (ret, _) = expression::evaluate(file, &expr, stack)?;
-    
+
     check_kind(
         procedure.ret.as_ref().unwrap().clone(),
         &ret,
