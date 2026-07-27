@@ -201,7 +201,7 @@ For = {
     "+" ~
     Expression ~
     Body ~
-    "|" ~ "<=loop"
+    "<=loop"
 }
 
 If = {
