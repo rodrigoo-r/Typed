@@ -46,7 +46,13 @@ pub fn access<'a>(
 
     // If the original string is static, we can just return the character
     if let Object::Hashable(HashableObject::String(ASTValue::Borrowed(s))) = str_obj {
-        let slice = &s[idx-1..idx];
+        // Edge case: the index is 0
+        let slice;
+        if idx == 0 {
+            slice = &s[0..1];
+        } else {
+            slice = &s[idx-1..idx];
+        }
 
         return continue_execution(
             Object::Hashable(
