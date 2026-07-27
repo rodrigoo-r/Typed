@@ -1,0 +1,320 @@
+COMMENT = _{
+    "#" ~ (!"\n" ~ ANY)*
+}
+
+WHITESPACE = _{
+    " "
+    | "\t"
+    | "\r"
+    | "\n"
+    | COMMENT
+}
+
+Program = {
+	SOI ~ Top_Level* ~ EOI
+}
+
+Top_Level = _{
+	Use | Procedure
+}
+
+Use  = {
+	"Use" ~ Identifier ~ ";"
+}
+
+Identifier = @{
+    ('a'..'z' | 'A'..'Z' | "_")
+    ~ (ASCII_ALPHANUMERIC | "_")*
+}
+
+Procedure = {
+	"Procedure"
+    ~ Identifier
+    ~ Procedure_Arguments?
+    ~ Procedure_Return_Kind?
+    ~ Body
+    ~ "End_Procedure"
+}
+
+Procedure_Return_Kind = {
+    "Returns" ~ Kind
+}
+
+Procedure_Arguments = {
+    "With"
+    ~ "Arguments"
+    ~ (
+    	Declaration_Data ~
+        ("," ~ Declaration_Data)*
+    )?
+}
+
+Declaration_Data = {
+	Identifier ~ "as" ~ Kind
+}
+
+String = { "String" }
+Integer = { "Integer" }
+Float = { "Float" }
+Boolean = { "Boolean" }
+List = { "List" }
+Dictionary = { "Dictionary" }
+
+Kind = {
+	Integer |
+    String |
+    Float |
+    Boolean |
+    List |
+    Dictionary
+}
+
+Body = {
+	"Begin" ~
+	(
+      (Return ~ ";") |
+      (Expression ~ ";") |
+      For |
+      Condition_Group |
+      While |
+      Declare
+	)*
+}
+
+Return = {
+    "Return" ~
+    Expression?
+}
+
+For = {
+	"For"
+    ~ Declaration_Data
+    ~ "In"
+    ~ Expression
+    ~ "To"
+    ~ Expression
+    ~ "Step"
+    ~ Expression
+    ~ "Do"
+    ~ Body
+    ~ "End_For"
+}
+
+While = {
+	"While" ~
+    Expression ~
+    "Do" ~
+    Body ~
+    "End_While"
+}
+
+Declare = {
+	"Declare" ~
+    Declaration_Data ~
+    (
+    	"With" ~
+        Expression
+	)? ~
+    ";"
+}
+
+If = {
+	"If" ~
+    Expression ~
+    "Then" ~
+    Body ~
+    "End_If"
+}
+
+Else_If = {
+	"Else_If" ~
+    Expression ~
+    "Then" ~
+    Body ~
+    "End_Else_If"
+}
+
+Else = {
+	"Else" ~
+    Body ~
+    "End_Else"
+}
+
+Condition_Group = {
+	If ~ Else_If* ~ Else?
+}
+
+Expression = {
+	Call |
+    Add |
+    Subtract |
+    Multiply |
+    Divide |
+    Float_Literal |
+    Integer_Literal |
+    Boolean_Literal |
+    String_Literal |
+    And |
+    Or |
+    Not |
+    Greater |
+    Equal |
+    Less |
+    Greater_Equal |
+    Less_Equal |
+    Identifier
+}
+
+Greater = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ ">"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Less = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "<"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Equal = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "="
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Greater_Equal = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ ">="
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Less_Equal = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "<="
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+And = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "And"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Or = {
+    "("
+    ~ Expression
+    ~ ")"
+    ~ "Or"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Not = {
+    "Not"
+    ~ "("
+    ~ Expression
+    ~ ")"
+}
+
+Call = {
+	"Call" ~
+    Identifier ~
+    Call_Arguments? ~
+    "End_Call"
+}
+
+Call_Arguments = {
+    "With"
+    ~ Expression
+    ~ ("," ~ Expression)*
+}
+
+Add = {
+	"Add" ~ Expression ~ "To" ~ Identifier
+}
+
+Subtract = {
+	"Subtract" ~ Expression ~ "From" ~ Identifier
+}
+
+Multiply = {
+	"Multiply" ~ Expression ~ "By" ~ Identifier
+}
+
+Divide = {
+	"Divide" ~ Expression ~ "By" ~ Identifier
+}
+
+Integer_Literal = @{
+    ASCII_DIGIT+
+}
+
+Float_Literal = @{
+    ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT+
+}
+
+Boolean_Literal = _{
+	True_Literal |
+    False_Literal
+}
+
+True_Literal = { "True" }
+False_Literal = { "False" }
+
+String_Literal = @{
+    ("\"" ~ Single_Line_String_Char* ~ "\"") |
+    (
+    	"`" ~ Multi_Line_String_Char* ~ "`"
+	)
+}
+
+Single_Line_String_Char = @{
+    Escape_Sequence
+    | !("\"" | "\n" | "\r") ~ ANY
+}
+
+Multi_Line_String_Char = @{
+    Escape_Sequence
+    | !("`") ~ ANY
+}
+
+Escape_Sequence = _{
+    "\\"
+    ~ (
+          "\""
+        | "\\"
+        | "`"
+        | "n"
+        | "r"
+        | "t"
+        | "0"
+        | ("x" ~ ASCII_HEX_DIGIT ~ ASCII_HEX_DIGIT)
+        | ("X" ~ ASCII_HEX_DIGIT ~ ASCII_HEX_DIGIT)
+    )
+}
