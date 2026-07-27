@@ -208,7 +208,6 @@ If = {
 	"if" ~
     Expression ~
     Body ~
-    "|" ~
     "<=if"
 }
 
@@ -216,35 +215,25 @@ Else_If = {
 	"elseif" ~
     Expression ~
     Body ~
-    "|" ~
     "<=elseif"
 }
 
 Else = {
 	"else" ~
     Body ~
-    "|" ~
     "<=else"
 }
 
-Empty_Line = _{
-	("/" | "\\") ~
-	WHITESPACE*
-}
-
 Condition_Group = {
-	("|" ~ If) ~
-    Empty_Line* ~
-    ("|" ~ Else_If)* ~
-	Empty_Line* ~
-    ("|" ~ Else)?
+	If ~
+	Else_If* ~
+    Else?
 }
 
 While = {
 	"while" ~
     Expression ~
     Body ~
-    "|" ~
     "<=while"
 }
 
@@ -260,12 +249,11 @@ Body = {
 	"=>" ~
 	(
     	Return |
-        ("|" ~ For) |
+        For |
         Condition_Group |
-        ("|" ~ While) |
-      	("|" ~ Declare) |
-      	("|" ~ Expression) |
-        Empty_Line
+        While |
+      	Declare |
+      	Expression
     )*
 }
 
