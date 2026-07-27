@@ -228,7 +228,8 @@ Else = {
 }
 
 Empty_Line = _{
-	"/" ~ WHITESPACE*
+	("/" | "\\") ~
+	WHITESPACE*
 }
 
 Condition_Group = {
