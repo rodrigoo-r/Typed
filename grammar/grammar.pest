@@ -227,8 +227,16 @@ Else = {
     "<=else"
 }
 
+Empty_Line = _{
+	"/" ~ WHITESPACE*
+}
+
 Condition_Group = {
-	If ~ Else_If* ~ Else?
+	("|" ~ If) ~
+    Empty_Line* ~
+    ("|" ~ Else_If)* ~
+	Empty_Line* ~
+    ("|" ~ Else)?
 }
 
 While = {
@@ -252,11 +260,11 @@ Body = {
 	(
     	Return |
         ("|" ~ For) |
-        ("|" ~ Condition_Group) |
+        Condition_Group |
         ("|" ~ While) |
       	("|" ~ Declare) |
       	("|" ~ Expression) |
-        ("|" ~ WHITESPACE*)
+        Empty_Line
     )*
 }
 
