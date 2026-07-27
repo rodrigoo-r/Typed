@@ -11,15 +11,7 @@ WHITESPACE = _{
 }
 
 Program = {
-	SOI ~ TopLevel* ~ EOI
-}
-
-TopLevel = _{
-	Use | Procedure
-}
-
-Use  = {
-	"Use" ~ Identifier ~ ";"
+	SOI ~ Top_Level* ~ EOI
 }
 
 Identifier = @{
@@ -27,38 +19,49 @@ Identifier = @{
     ~ (ASCII_ALPHANUMERIC | "_")*
 }
 
-Procedure = {
-	"Procedure"
-    ~ Identifier
-    ~ Procedure_Arguments?
-    ~ Procedure_Return_Kind?
-    ~ Body
-    ~ "End_Procedure"
+Use = {
+    "import" ~
+    "(" ~
+    Identifier ~
+    ")"
 }
 
+Top_Level = _{
+	Use | Procedure
+}
+
+Procedure = {
+	"proc" ~
+    Identifier ~
+    Procedure_Arguments? ~
+    Procedure_Return_Kind? ~
+    Body ~
+    "<=proc"
+}
+
+String = { "str" }
+Integer = { "int" }
+Float = { "real" }
+Boolean = { "bool" }
+List = { "arr" }
+Dictionary = { "dict" }
+
 Procedure_Return_Kind = {
-    "Returns" ~ Kind
+    ":" ~ Kind
 }
 
 Procedure_Arguments = {
-    "With"
-    ~ "Arguments"
+    "("
     ~ (
     	Declaration_Data ~
         ("," ~ Declaration_Data)*
     )?
+    ~ ")"
 }
 
 Declaration_Data = {
-	Identifier ~ "as" ~ Kind
+	Identifier ~ ":" ~ Kind
 }
-
-String = { "String" }
-Integer = { "Integer" }
-Float = { "Float" }
-Boolean = { "Boolean" }
-List = { "List" }
-Dictionary = { "Dictionary" }
 
 Kind = {
 	Integer |
@@ -69,79 +72,16 @@ Kind = {
     Dictionary
 }
 
-Body = {
-	"Begin" ~
-	(
-      (Return ~ ";") |
-      (Expression ~ ";") |
-      For |
-      Condition_Group |
-      While |
-      Declare
-	)*
+Call = {
+	Identifier ~
+    "(" ~
+    Call_Arguments? ~
+    ")"
 }
 
-Return = {
-    "Return" ~
-    Expression?
-}
-
-For = {
-	"For"
-    ~ Declaration_Data
-    ~ "In"
-    ~ Expression
-    ~ "To"
-    ~ Expression
-    ~ "Step"
-    ~ Expression
-    ~ "Do"
-    ~ Body
-    ~ "End_For"
-}
-
-While = {
-	"While" ~
-    Expression ~
-    "Do" ~
-    Body ~
-    "End_While"
-}
-
-Declare = {
-	"Declare" ~
-    Declaration_Data ~
-    (
-    	"With" ~
-        Expression
-	)? ~
-    ";"
-}
-
-If = {
-	"If" ~
-    Expression ~
-    "Then" ~
-    Body ~
-    "End_If"
-}
-
-Else_If = {
-	"Else_If" ~
-    Expression ~
-    "Then" ~
-    Body ~
-    "End_Else_If"
-}
-
-Else = {
-	"Else" ~
-    Body ~
-    "End_Else"
-}
-
-Condition_Group = {
-	If ~ Else_If* ~ Else?
+Call_Arguments = {
+	Expression ~
+    ("," ~ Expression)*
 }
 
 Expression = {
@@ -165,110 +105,158 @@ Expression = {
     Identifier
 }
 
-Greater = {
-    "("
-    ~ Expression
-    ~ ")"
-    ~ ">"
-    ~ "("
-    ~ Expression
-    ~ ")"
-}
-
-Less = {
-    "("
-    ~ Expression
-    ~ ")"
-    ~ "<"
-    ~ "("
-    ~ Expression
-    ~ ")"
-}
-
-Equal = {
-    "("
-    ~ Expression
-    ~ ")"
-    ~ "="
-    ~ "("
-    ~ Expression
-    ~ ")"
-}
-
-Greater_Equal = {
-    "("
-    ~ Expression
-    ~ ")"
-    ~ ">="
-    ~ "("
-    ~ Expression
-    ~ ")"
-}
-
-Less_Equal = {
-    "("
-    ~ Expression
-    ~ ")"
-    ~ "<="
-    ~ "("
-    ~ Expression
-    ~ ")"
-}
-
 And = {
-    "("
-    ~ Expression
-    ~ ")"
-    ~ "And"
-    ~ "("
-    ~ Expression
-    ~ ")"
+	"&&" ~
+    Expression ~
+    "->" ~
+    Identifier
 }
 
 Or = {
-    "("
-    ~ Expression
-    ~ ")"
-    ~ "Or"
-    ~ "("
-    ~ Expression
-    ~ ")"
+	"||" ~
+    Expression ~
+    "->" ~
+    Expression
 }
 
 Not = {
-    "Not"
-    ~ "("
-    ~ Expression
-    ~ ")"
+	"!" ~
+    Expression
 }
 
-Call = {
-	"Call" ~
-    Identifier ~
-    Call_Arguments? ~
-    "End_Call"
+Greater = {
+	">" ~
+    Expression ~
+    "->" ~
+    Expression
 }
 
-Call_Arguments = {
-    "With"
-    ~ Expression
-    ~ ("," ~ Expression)*
+Less = {
+	"<" ~
+    Expression ~
+    "->" ~
+    Expression
+}
+
+Greater_Equal = {
+	">=" ~
+    Expression ~
+    "->" ~
+    Expression
+}
+
+Less_Equal = {
+	"<=" ~
+    Expression ~
+    "->" ~
+    Expression
+}
+
+Equal = {
+	"==" ~
+    Expression ~
+    "->" ~
+    Expression
 }
 
 Add = {
-	"Add" ~ Expression ~ "To" ~ Identifier
+	"+" ~
+    Expression ~
+    "->" ~
+    Identifier
 }
 
 Subtract = {
-	"Subtract" ~ Expression ~ "From" ~ Identifier
+	"-" ~
+    Expression ~
+    "->" ~
+    Identifier
 }
 
 Multiply = {
-	"Multiply" ~ Expression ~ "By" ~ Identifier
+	"*" ~
+    Expression ~
+    "->" ~
+    Identifier
 }
 
 Divide = {
-	"Divide" ~ Expression ~ "By" ~ Identifier
+	"/" ~
+    Expression ~
+    "->" ~
+    Identifier
+}
+
+Return = {
+	">" ~ Expression
+}
+
+For = {
+	"loop" ~
+    Declaration_Data ~
+    "->" ~
+    Expression ~
+    ".." ~
+    Expression ~
+    "+" ~
+    Expression ~
+    Body ~
+    "|" ~ "<=loop"
+}
+
+If = {
+	"if" ~
+    Expression ~
+    Body ~
+    "|" ~
+    "<=if"
+}
+
+Else_If = {
+	"elseif" ~
+    Expression ~
+    Body ~
+    "|" ~
+    "<=elseif"
+}
+
+Else = {
+	"else" ~
+    Body ~
+    "|" ~
+    "<=else"
+}
+
+Condition_Group = {
+	If ~ Else_If* ~ Else?
+}
+
+While = {
+	"while" ~
+    Expression ~
+    Body ~
+    "|" ~
+    "<=while"
+}
+
+Declare = {
+	"let" ~ Declaration_Data ~
+    (
+    	"->" ~
+        Expression
+    )?
+}
+
+Body = {
+	"=>" ~
+	(
+    	Return |
+        ("|" ~ For) |
+        ("|" ~ Condition_Group) |
+        ("|" ~ While) |
+      	("|" ~ Declare) |
+      	("|" ~ Expression)
+    )*
 }
 
 Integer_Literal = @{
@@ -284,8 +272,8 @@ Boolean_Literal = _{
     False_Literal
 }
 
-True_Literal = { "True" }
-False_Literal = { "False" }
+True_Literal = { "true" }
+False_Literal = { "false" }
 
 String_Literal = @{
     ("\"" ~ Single_Line_String_Char* ~ "\"") |
