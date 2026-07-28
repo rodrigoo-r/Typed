@@ -21,7 +21,7 @@ pub mod cli;
 
 use clap::Parser;
 use crate::cli::{Cli, Commands};
-use crate::cli::command::run;
+use crate::cli::command::{format, run};
 
 fn main() {
     let cli = Cli::parse();
@@ -29,6 +29,10 @@ fn main() {
     match cli.command {
         Commands::Run(cmd) => {
             run::handle(&cmd);
+        }
+        
+        Commands::Format(cmd) => {
+            format::handle(&cmd);
         }
     }
 }
