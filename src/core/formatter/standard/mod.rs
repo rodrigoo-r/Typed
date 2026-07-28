@@ -344,21 +344,7 @@ fn fmt_expr(
 
         Rule::String_Literal => {
             let value = expr.value.as_ref().unwrap();
-            let is_multi_line = value.contains("\n");
-
-            if is_multi_line {
-                res.push_str("`");
-            } else {
-                res.push_str("\"");
-            }
-
             res.push_str(&value);
-
-            if is_multi_line {
-                res.push_str("`");
-            } else {
-                res.push_str("\"");
-            }
         }
 
         Rule::True_Literal => {
