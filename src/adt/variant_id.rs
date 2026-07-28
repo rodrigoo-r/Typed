@@ -14,6 +14,7 @@
 */
 use crate::adt::runtime::{HashableObject, Object};
 
+#[allow(dead_code)]
 fn get_variant_id(obj: &Object) -> u8 {
     match obj {
         Object::Hashable(_) => 0,
@@ -22,12 +23,14 @@ fn get_variant_id(obj: &Object) -> u8 {
     }
 }
 
+#[allow(dead_code)]
 impl<'a> Object<'a> {
     fn variant_id(&self) -> u8 {
         get_variant_id(self)
     }
 }
 
+#[allow(dead_code)]
 impl<'a> HashableObject<'a> {
     pub fn variant_id(&self) -> u8 {
         match self {

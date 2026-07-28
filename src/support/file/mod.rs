@@ -17,7 +17,8 @@ use std::io::Read;
 use pest::Parser;
 use crate::adt::lang::AST;
 use crate::core::frontend::parser::old::OldGrammarParser;
-use crate::core::frontend::parser::{old, standard};
+use crate::core::frontend::parser::{cobol_parody, old, standard};
+use crate::core::frontend::parser::cobol_parody::COBOLParodyParser;
 use crate::core::frontend::parser::standard::StandardParser;
 use crate::support::failable::catch_pest;
 
@@ -61,6 +62,14 @@ pub fn parse<'ast>(
 
         let tree = catch_pest(&tree).clone();
         ast = old::grammar::convert(tree, do_unescape);
+    } else if syntax == "cobol_parody" {
+        let tree = COBOLParodyParser::parse(
+            cobol_parody::Rule::Program,
+            contents.as_ref()
+        );
+
+        let tree = catch_pest(&tree).clone();
+        ast = cobol_parody::grammar::convert(tree, do_unescape);
     } else {
         panic!("Unknown syntax: {}", syntax);
     }

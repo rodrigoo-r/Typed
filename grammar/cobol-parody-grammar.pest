@@ -1,0 +1,319 @@
+// Yes, this is a parody of COBOL + corporate buzzwords.
+// It's funny. Don't remove it
+// It's not supposed to be used for serious programs, really.
+
+COMMENT = _{
+    "*)" ~ (!"\n" ~ ANY)*
+}
+
+WHITESPACE = _{
+    " "
+    | "\t"
+    | "\r"
+    | "\n"
+    | COMMENT
+}
+
+Identifier = @{
+    ('a'..'z' | 'A'..'Z' | "_")
+    ~ (ASCII_ALPHANUMERIC | "_")*
+}
+
+Use = {
+	"DEPENDENCY" ~ Identifier ~ "."
+}
+
+Top_Level = _{
+	Dependency_Division | Procedure
+}
+
+Program = {
+	SOI ~ Top_Level* ~ EOI
+}
+
+Declaration_Data = {
+	Identifier ~ "IS" ~ Kind
+}
+
+Kind = {
+	Integer |
+    String |
+    Float |
+    Boolean |
+    List |
+    Dictionary
+}
+
+Dependency_Division = _{
+	"DEPENDENCY-DIVISION." ~
+    Use*
+}
+
+Procedure = {
+    "ACTIONABLE" ~
+    Identifier ~
+    "IS DEFINED AS" ~
+    Procedure_Arguments? ~
+    Procedure_Return_Kind? ~
+    Body ~
+    "STOP-RUN" ~ "."
+}
+
+Procedure_Arguments = {
+	"ARGUMENT-DIVISION." ~
+	(Declaration_Data ~ ".")+
+}
+
+Procedure_Return_Kind = {
+	"WHICH" ~
+    "RETURNS" ~
+    Kind ~
+    "."
+}
+
+Call = {
+	"INVOKE-ACTION" ~
+    Identifier ~
+    Call_Arguments?
+}
+
+Call_Arguments = {
+	"PROVIDED" ~
+    "ARGUMENTS" ~
+    Expression ~
+    (
+    	"AND" ~
+    	Expression
+    )*
+}
+
+Add = {
+	"ADD" ~
+    Expression ~
+    "TO" ~
+    Identifier
+}
+
+Subtract = {
+	"SUBTRACT" ~
+    Expression ~
+    "FROM" ~
+    Identifier
+}
+
+Multiply = {
+	"MULTIPLY" ~
+    Expression ~
+    "BY" ~
+    Identifier
+}
+
+Divide = {
+	"DIVIDE" ~
+    Expression ~
+    "BY" ~
+    Identifier
+}
+
+And = {
+	"IS" ~
+    Expression ~
+    "AND" ~
+    Identifier
+}
+
+Or = {
+	"IS" ~
+    Expression ~
+    "OR" ~
+    Identifier
+}
+
+Not = {
+	"IS" ~
+    Expression ~
+    "NOT" ~ "TRUE"
+}
+
+Greater = {
+	"IS" ~
+    Expression ~
+    "GREATER" ~ "THAN" ~
+    Expression
+}
+
+Equal = {
+	"IS" ~
+    Expression ~
+    "EQUAL" ~ "TO" ~
+    Expression
+}
+
+Less = {
+	"IS" ~
+    Expression ~
+    "LESS" ~ "THAN" ~
+    Expression
+}
+
+Greater_Equal = {
+	"IS" ~
+    Expression ~
+    "GREATER" ~ "THAN" ~ "OR" ~ "EQUAL" ~ "TO" ~
+    Expression
+}
+
+Less_Equal = {
+	"IS" ~
+    Expression ~
+    "LESS" ~ "THAN" ~ "OR" ~ "EQUAL" ~ "TO" ~
+    Expression
+}
+
+Expression = {
+	Call |
+    Add |
+    Subtract |
+    Multiply |
+    Divide |
+    Float_Literal |
+    Integer_Literal |
+    Boolean_Literal |
+    String_Literal |
+    And |
+    Or |
+    Not |
+    Greater |
+    Equal |
+    Less |
+    Greater_Equal |
+    Less_Equal |
+    Identifier
+}
+
+Return = {
+	"ESCORT" ~
+    Expression ~
+    "TO" ~ "DATA-DIVISION"
+}
+
+For = {
+	"PERFORMANCE-IMPROVEMENT-PLAN" ~
+    Declaration_Data ~
+    "THAT" ~ "GOES" ~ "FROM" ~
+    Expression ~
+    "TO" ~
+    Expression ~
+    "AND" ~ "INCREMENTS" ~
+    Expression ~
+    Body ~
+    "CIRCLE-BACK." ~
+    "PERFORMANCE-IMPROVED."
+}
+
+If = {
+	"TAKE-THIS-OFFLINE" ~
+    Expression ~
+    Body ~
+    "END-TAKE-THIS-OFFLINE."
+}
+
+Else_If = {
+	"ALSO-OFFLINE" ~
+    Expression ~
+    Body ~
+    "END-ALSO-OFFLINE."
+}
+
+Else = {
+	"FORFEITED" ~
+    Body ~
+    "END-FORFEITED."
+}
+
+Condition_Group = {
+	If ~ Else_If* ~ Else
+}
+
+While = {
+	"AS" ~ "LONG" ~ "AS" ~
+    Expression ~
+    "HOLDS" ~ "DO" ~
+    Body ~
+    "CIRCLE-BACK" ~ "."
+    ~ "END-AS-LONG-AS" ~ "."
+}
+
+Declare = {
+	"DATA" ~
+    Declaration_Data ~
+    "." ~
+    ("SYNERGIZES" ~ "WITH" ~ Expression ~ ".")?
+}
+
+Body = {
+	"WHICH" ~ "EXECUTES" ~
+    (
+    	(Return ~ ".") |
+        For |
+        Condition_Group |
+        While |
+      	Declare |
+      	(Expression ~ ".")
+    )*
+}
+
+String = { "UNBOUNDED-STRING" }
+Integer = { "INTEGER" }
+Float = { "REAL" }
+Boolean = { "BOOLEAN" }
+List = { "UNBOUNDED-ARRAY" }
+Dictionary = { "UNBOUNDED-DICTIONARY" }
+
+Integer_Literal = @{
+    ASCII_DIGIT+
+}
+
+Float_Literal = @{
+    ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT+
+}
+
+Boolean_Literal = _{
+	True_Literal |
+    False_Literal
+}
+
+True_Literal = { "TRUE" }
+False_Literal = { "FALSE" }
+
+String_Literal = @{
+    ("\"" ~ Single_Line_String_Char* ~ "\"") |
+    (
+    	"`" ~ Multi_Line_String_Char* ~ "`"
+	)
+}
+
+Single_Line_String_Char = @{
+    Escape_Sequence
+    | !("\"" | "\n" | "\r") ~ ANY
+}
+
+Multi_Line_String_Char = @{
+    Escape_Sequence
+    | !("`") ~ ANY
+}
+
+Escape_Sequence = _{
+    "\\"
+    ~ (
+          "\""
+        | "\\"
+        | "`"
+        | "n"
+        | "r"
+        | "t"
+        | "0"
+        | ("x" ~ ASCII_HEX_DIGIT ~ ASCII_HEX_DIGIT)
+        | ("X" ~ ASCII_HEX_DIGIT ~ ASCII_HEX_DIGIT)
+    )
+}

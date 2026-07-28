@@ -15,7 +15,9 @@
 pub mod convert;
 pub mod standard;
 pub mod old;
+pub mod cobol_parody;
 
+#[allow(non_camel_case_types)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum Rule {
     EOI,

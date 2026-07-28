@@ -1,3 +1,18 @@
+/*
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #                           Typed                     # *
+ * #                   A text formatting DSL             # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+ * #                                                     # *
+ * #         Created by Rodrigo R. & Contributors        # *
+ * #         Released under the Apache License 2.0       # *
+ * #            Check LICENSE.MD for more info           # *
+ * #                                                     # *
+ * #-----------------------------------------------------# *
+*/
+
 use std::cmp::max;
 use crate::adt::lang::AST;
 use crate::core::frontend::parser::Rule;
@@ -11,9 +26,9 @@ fn fmt_use(
     let literal = literal.value.as_ref().unwrap();
     let literal = literal.as_ref();
 
-    res.push_str("Use ");
+    res.push_str("import(");
     res.push_str(literal);
-    res.push_str(";\n");
+    res.push_str(")\n");
 }
 
 fn fmt_kind(
@@ -25,27 +40,27 @@ fn fmt_kind(
 
     match kind.rule {
         Rule::Integer => {
-            res.push_str("Integer");
+            res.push_str("int");
         }
 
         Rule::Float => {
-            res.push_str("Float");
+            res.push_str("real");
         }
 
         Rule::Boolean => {
-            res.push_str("Boolean");
+            res.push_str("bool");
         }
 
         Rule::String => {
-            res.push_str("String");
+            res.push_str("str");
         }
 
         Rule::Dictionary => {
-            res.push_str("Dictionary");
+            res.push_str("dict");
         }
 
         Rule::List => {
-            res.push_str("List");
+            res.push_str("arr");
         }
 
         _ => {}
@@ -70,14 +85,13 @@ fn fmt_args(
             match child.rule {
                 Rule::Identifier => {
                     let value = child.value.as_ref().unwrap();
-                    res.push_str("    ");
+                    fmt_depth(1, res);
                     res.push_str(&value);
-                    res.push_str(" as ");
+                    res.push_str(": ");
                 }
 
                 Rule::Kind => {
                     fmt_kind(&child, res);
-
                     if i != max {
                         res.push_str(",");
                     }
@@ -99,35 +113,26 @@ fn fmt_depth(depth: usize, res: &mut String) {
 
 fn fmt_call_args(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    res.push_str("With\n");
-
     let children = ast.children.borrow();
     let max = children.len() - 1;
 
     for i in 0..children.len() {
         let child = children[i].borrow();
 
-        fmt_expr(&child, res, depth);
+        fmt_expr(&child, res, 0);
 
         if i != max {
-            res.push_str(",\n");
-        } else {
-            res.push_str("\n");
-            fmt_depth(depth - 1, res);
+            res.push_str(", ");
         }
     }
 }
 
 fn fmt_call(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    res.push_str("Call\n");
-
     let children = ast.children.borrow();
     let children = children.iter();
 
@@ -136,29 +141,25 @@ fn fmt_call(
 
         match child.rule {
             Rule::Identifier => {
-                fmt_depth(depth + 1, res);
                 let value = child.value.as_ref().unwrap();
                 res.push_str(&value);
-                res.push_str("\n");
-                fmt_depth(depth, res);
+                res.push_str("(");
             }
 
             Rule::Call_Arguments => {
-                fmt_call_args(&child, res, depth + 1);
+                fmt_call_args(&child, res);
             }
 
             _ => {}
         }
     }
 
-    res.push_str("End_Call");
+    res.push_str(")");
 }
 
 fn fmt_arithmetic(
     ast: &AST,
-    res: &mut String,
-    dst_keyword: &str,
-    depth: usize
+    res: &mut String
 ) {
     let children = ast.children.borrow();
     let children = children.iter();
@@ -168,17 +169,14 @@ fn fmt_arithmetic(
 
         match child.rule {
             Rule::Identifier => {
-                fmt_depth(depth, res);
-                res.push_str(dst_keyword);
-                res.push_str(" ");
+                res.push_str(" -> ");
 
                 let value = child.value.as_ref().unwrap();
                 res.push_str(&value);
             }
 
             Rule::Expression => {
-                fmt_expr(&child, res, depth + 1);
-                res.push_str("\n");
+                fmt_expr(&child, res, 0);
             }
 
             _ => {}
@@ -188,135 +186,110 @@ fn fmt_arithmetic(
 
 fn fmt_add(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    res.push_str("Add\n");
-    fmt_arithmetic(ast, res, "To", depth);
+    res.push_str("+ ");
+    fmt_arithmetic(ast, res);
 }
 
 fn fmt_sub(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    res.push_str("Subtract\n");
-    fmt_arithmetic(ast, res, "From", depth);
+    res.push_str("- ");
+    fmt_arithmetic(ast, res);
 }
 
 fn fmt_mul(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    res.push_str("Multiply\n");
-    fmt_arithmetic(ast, res, "By", depth);
+    res.push_str("* ");
+    fmt_arithmetic(ast, res);
 }
 
 fn fmt_div(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    res.push_str("Divide\n");
-    fmt_arithmetic(ast, res, "By", depth);
+    res.push_str("/ ");
+    fmt_arithmetic(ast, res);
 }
 
 fn fmt_not(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    res.push_str("Not(\n");
+    res.push_str("! ");
 
     let children = ast.children.borrow();
     let child = children[0].borrow();
-    fmt_expr(&child, res, depth + 1);
-
-    res.push_str("\n");
-    fmt_depth(depth, res);
-    res.push_str(")");
+    fmt_expr(&child, res, 0);
 }
 
 fn fmt_binary_expr(
     ast: &AST,
     res: &mut String,
-    separator: &str,
-    depth: usize
+    op: &str
 ) {
     let children = ast.children.borrow();
     let lhs = children[0].borrow();
     let rhs = children[1].borrow();
 
-    res.push_str("(\n");
-    fmt_expr(&lhs, res, depth + 1);
-    res.push_str("\n");
-    fmt_depth(depth, res);
-    res.push_str(") ");
-
-    res.push_str(separator);
-
-    res.push_str(" (\n");
-    fmt_expr(&rhs, res, depth + 1);
-    res.push_str("\n");
-    fmt_depth(depth, res);
-    res.push_str(")");
+    res.push_str(op);
+    res.push_str(" ");
+    fmt_expr(&lhs, res, 0);
+    res.push_str(" -> ");
+    fmt_expr(&rhs, res, 0);
 }
 
 fn fmt_equal(
     ast: &AST,
     res: &mut String,
-    depth: usize
 ) {
-    fmt_binary_expr(ast, res, "=", depth);
+    fmt_binary_expr(ast, res, "==");
 }
 
 fn fmt_and(
     ast: &AST,
     res: &mut String,
-    depth: usize
 ) {
-    fmt_binary_expr(ast, res, "And", depth);
+    fmt_binary_expr(ast, res, "&&");
 }
 
 fn fmt_or(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    fmt_binary_expr(ast, res, "Or", depth);
+    fmt_binary_expr(ast, res, "||");
 }
 
 fn fmt_gt(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    fmt_binary_expr(ast, res, ">", depth);
+    fmt_binary_expr(ast, res, ">");
 }
 
 fn fmt_lt(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    fmt_binary_expr(ast, res, "<", depth);
+    fmt_binary_expr(ast, res, "<");
 }
 
 fn fmt_gte(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    fmt_binary_expr(ast, res, ">=", depth);
+    fmt_binary_expr(ast, res, ">=");
 }
 
 fn fmt_lte(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
-    fmt_binary_expr(ast, res, "<=", depth);
+    fmt_binary_expr(ast, res, "<=");
 }
 
 fn fmt_expr(
@@ -331,55 +304,55 @@ fn fmt_expr(
 
     match expr.rule {
         Rule::Call => {
-            fmt_call(&expr, res, depth);
+            fmt_call(&expr, res);
         }
 
         Rule::Add => {
-            fmt_add(&expr, res, depth);
+            fmt_add(&expr, res);
         }
 
         Rule::Subtract => {
-            fmt_sub(&expr, res, depth);
+            fmt_sub(&expr, res);
         }
 
         Rule::Multiply => {
-            fmt_mul(&expr, res, depth);
+            fmt_mul(&expr, res);
         }
 
         Rule::Divide => {
-            fmt_div(&expr, res, depth);
+            fmt_div(&expr, res);
         }
 
         Rule::Not => {
-            fmt_not(&expr, res, depth);
+            fmt_not(&expr, res);
         }
 
         Rule::Equal => {
-            fmt_equal(&expr, res, depth);
+            fmt_equal(&expr, res);
         }
 
         Rule::And => {
-            fmt_and(&expr, res, depth);
+            fmt_and(&expr, res);
         }
 
         Rule::Or => {
-            fmt_or(&expr, res, depth);
+            fmt_or(&expr, res);
         }
 
         Rule::Greater => {
-            fmt_gt(&expr, res, depth);
+            fmt_gt(&expr, res);
         }
 
         Rule::Greater_Equal => {
-            fmt_gte(&expr, res, depth);
+            fmt_gte(&expr, res);
         }
 
         Rule::Less => {
-            fmt_lt(&expr, res, depth);
+            fmt_lt(&expr, res);
         }
 
         Rule::Less_Equal => {
-            fmt_lte(&expr, res, depth);
+            fmt_lte(&expr, res);
         }
 
         Rule::Identifier |
@@ -395,11 +368,11 @@ fn fmt_expr(
         }
 
         Rule::True_Literal => {
-            res.push_str("True");
+            res.push_str("true");
         }
 
         Rule::False_Literal => {
-            res.push_str("False");
+            res.push_str("false");
         }
 
         _ => {}
@@ -408,8 +381,7 @@ fn fmt_expr(
 
 fn fmt_declaration_data(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
     let children = ast.children.borrow();
     let children = children.iter();
@@ -419,14 +391,12 @@ fn fmt_declaration_data(
 
         match child.rule {
             Rule::Identifier => {
-                fmt_depth(depth + 1, res);
                 res.push_str(&child.value.as_ref().unwrap());
-                res.push_str(" as ");
+                res.push_str(": ");
             }
 
             Rule::Kind => {
                 fmt_kind(&child, res);
-                res.push_str("\n");
             }
 
             _ => {}
@@ -440,7 +410,7 @@ fn fmt_declare(
     depth: usize
 ) {
     fmt_depth(depth, res);
-    res.push_str("Declare\n");
+    res.push_str("let ");
 
     let children = ast.children.borrow();
     let children = children.iter();
@@ -450,22 +420,19 @@ fn fmt_declare(
 
         match child.rule {
             Rule::Declaration_Data => {
-                fmt_declaration_data(&child, res, depth);
+                fmt_declaration_data(&child, res);
             }
 
             Rule::Expression => {
-                fmt_depth(depth, res);
-                res.push_str("With\n");
+                res.push_str(" ->\n");
                 fmt_expr(&child, res, depth + 1);
-                res.push_str("\n");
             }
 
             _ => {}
         }
     }
 
-    fmt_depth(depth, res);
-    res.push_str(";\n");
+    res.push_str("\n");
 }
 
 fn fmt_return(
@@ -474,15 +441,13 @@ fn fmt_return(
     depth: usize
 ) {
     fmt_depth(depth, res);
-    res.push_str("Return\n");
+    res.push_str("> ");
 
     let children = ast.children.borrow();
     let expr = children[0].borrow();
 
-    fmt_expr(&expr, res, depth + 1);
+    fmt_expr(&expr, res, 0);
     res.push_str("\n");
-    fmt_depth(depth, res);
-    res.push_str(";\n");
 }
 
 fn fmt_for(
@@ -494,7 +459,7 @@ fn fmt_for(
     let children = children.iter();
 
     fmt_depth(depth, res);
-    res.push_str("For\n");
+    res.push_str("loop ");
 
     let mut has_in = false;
     let mut has_to = false;
@@ -504,31 +469,27 @@ fn fmt_for(
 
         match child.rule {
             Rule::Declaration_Data => {
-                fmt_declaration_data(&child, res, depth);
+                fmt_declaration_data(&child, res);
+                res.push_str(" -> ");
             }
 
             Rule::Expression => {
-                fmt_depth(depth, res);
                 if !has_in {
-                    res.push_str("In\n");
                     has_in = true;
                 } else if !has_to {
-                    res.push_str("To\n");
+                    res.push_str("..");
                     has_to = true;
                 } else {
-                    res.push_str("Step\n");
+                    res.push_str(" +");
                 }
 
-                fmt_expr(&child, res, depth + 1);
-                res.push_str("\n");
+                fmt_expr(&child, res, 0);
             }
 
             Rule::Body => {
-                fmt_depth(depth, res);
-                res.push_str("Do\n");
                 fmt_body(&child, res, depth + 1);
                 fmt_depth(depth, res);
-                res.push_str("End_For\n");
+                res.push_str("<=loop\n");
             }
 
             _ => {}
@@ -539,7 +500,6 @@ fn fmt_for(
 fn fmt_condition(
     ast: &AST,
     res: &mut String,
-    separator: &str,
     depth: usize
 ) {
     let children = ast.children.borrow();
@@ -550,15 +510,11 @@ fn fmt_condition(
 
         match child.rule {
             Rule::Expression => {
-                fmt_expr(&child, res, depth);
-                res.push_str("\n");
+                fmt_expr(&child, res, 0);
             }
 
             Rule::Body => {
-                fmt_depth(depth - 1, res);
-                res.push_str(separator);
-                res.push_str("\n");
-                fmt_body(&child, res, depth);
+                fmt_body(&child, res, depth + 1);
             }
 
             _ => {}
@@ -572,10 +528,10 @@ fn fmt_if(
     depth: usize
 ) {
     fmt_depth(depth, res);
-    res.push_str("If\n");
-    fmt_condition(&ast, res, "Then", depth + 1);
+    res.push_str("if ");
+    fmt_condition(&ast, res, depth);
     fmt_depth(depth, res);
-    res.push_str("End_If\n");
+    res.push_str("<=if\n");
 }
 
 fn fmt_else_if(
@@ -584,10 +540,10 @@ fn fmt_else_if(
     depth: usize
 ) {
     fmt_depth(depth, res);
-    res.push_str("Else_If\n");
-    fmt_condition(&ast, res, "Then", depth + 1);
+    res.push_str("elseif ");
+    fmt_condition(&ast, res, depth);
     fmt_depth(depth, res);
-    res.push_str("End_Else_If\n");
+    res.push_str("<=elseif\n");
 }
 
 fn fmt_else(
@@ -596,14 +552,14 @@ fn fmt_else(
     depth: usize
 ) {
     fmt_depth(depth, res);
-    res.push_str("Else Then\n");
+    res.push_str("else");
 
     let children = ast.children.borrow();
     let body = children[0].borrow();
 
     fmt_body(&body, res, depth + 1);
     fmt_depth(depth, res);
-    res.push_str("End_Else\n");
+    res.push_str("<=else\n");
 }
 
 fn fmt_condition_group(
@@ -641,10 +597,10 @@ fn fmt_while(
     depth: usize
 ) {
     fmt_depth(depth, res);
-    res.push_str("While\n");
-    fmt_condition(&ast, res, "Do", depth + 1);
+    res.push_str("while ");
+    fmt_condition(&ast, res, depth + 1);
     fmt_depth(depth, res);
-    res.push_str("End_While\n");
+    res.push_str("<=while\n");
 }
 
 fn fmt_body(
@@ -652,8 +608,7 @@ fn fmt_body(
     res: &mut String,
     depth: usize
 ) {
-    fmt_depth(depth - 1, res);
-    res.push_str("Begin\n");
+    res.push_str(" =>\n");
 
     let children = ast.children.borrow();
     let children = children.iter();
@@ -684,7 +639,7 @@ fn fmt_body(
 
             Rule::Expression => {
                 fmt_expr(&child, res, depth);
-                res.push_str(";\n");
+                res.push_str("\n");
             }
 
             _ => {}
@@ -699,7 +654,7 @@ fn fmt_proc(
     let children = ast.children.borrow();
     let children = children.iter();
 
-    res.push_str("Procedure ");
+    res.push_str("proc ");
 
     for child in children {
         let child = child.borrow();
@@ -709,21 +664,20 @@ fn fmt_proc(
             Rule::Identifier => {
                 let value = value.unwrap();
                 res.push_str(&value);
-                res.push_str("\n");
             }
 
             Rule::Procedure_Arguments => {
-                res.push_str("With Arguments\n");
+                res.push_str("(\n");
                 fmt_args(&child, res);
+                res.push_str(")");
             }
 
             Rule::Procedure_Return_Kind => {
-                res.push_str("Returns ");
+                res.push_str(": ");
                 let children = child.children.borrow();
                 let kind = children[0].borrow();
 
                 fmt_kind(&kind, res);
-                res.push_str("\n");
             }
 
             Rule::Body => {
@@ -734,7 +688,7 @@ fn fmt_proc(
         }
     }
 
-    res.push_str("End_Procedure\n");
+    res.push_str("<=proc\n");
 }
 
 pub fn format(

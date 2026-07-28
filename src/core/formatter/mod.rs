@@ -14,6 +14,7 @@
 */
 pub mod old;
 pub mod standard;
+pub mod cobol_parody;
 
 use crate::adt::lang::AST;
 
@@ -27,6 +28,8 @@ pub fn format(
         standard::format(ast, &mut result);
     } else if output_fmt == "old" {
         old::format(ast, &mut result);
+    } else if output_fmt == "cobol_parody" {
+        cobol_parody::format(ast, &mut result);
     } else {
         panic!("Unknown output format: {}", output_fmt);
     }
