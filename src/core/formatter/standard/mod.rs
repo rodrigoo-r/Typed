@@ -453,7 +453,6 @@ fn fmt_for(
             }
 
             Rule::Expression => {
-                fmt_depth(depth, res);
                 if !has_in {
                     has_in = true;
                 } else if !has_to {
