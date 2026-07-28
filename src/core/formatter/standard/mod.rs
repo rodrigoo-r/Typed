@@ -76,7 +76,7 @@ fn fmt_args(
 
                 Rule::Kind => {
                     fmt_kind(&child, res);
-                    res.push_str("\n");
+                    res.push_str(",\n");
                 }
 
                 _ => {}
