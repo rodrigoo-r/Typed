@@ -23,7 +23,7 @@ pub fn handle(cmd: &RunCommand) {
     let contents = file::read(cmd.file.as_str());
     let contents = catch_non_traceable(&contents);
     
-    let ast = file::parse(&contents, &cmd.syntax);
+    let ast = file::parse(&contents, &cmd.syntax, true);
 
     let global_package = get_global_package();
 

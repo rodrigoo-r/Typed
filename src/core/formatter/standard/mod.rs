@@ -93,8 +93,7 @@ fn fmt_depth(depth: usize, res: &mut String) {
 
 fn fmt_call_args(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
     let children = ast.children.borrow();
     let max = children.len() - 1;
@@ -102,21 +101,17 @@ fn fmt_call_args(
     for i in 0..children.len() {
         let child = children[i].borrow();
 
-        fmt_expr(&child, res, depth);
+        fmt_expr(&child, res, 0);
 
         if i != max {
-            res.push_str(",\n");
-        } else {
-            res.push_str("\n");
-            fmt_depth(depth - 1, res);
+            res.push_str(", ");
         }
     }
 }
 
 fn fmt_call(
     ast: &AST,
-    res: &mut String,
-    depth: usize
+    res: &mut String
 ) {
     let children = ast.children.borrow();
     let children = children.iter();
@@ -132,8 +127,7 @@ fn fmt_call(
             }
 
             Rule::Call_Arguments => {
-                res.push_str("\n");
-                fmt_call_args(&child, res, depth + 1);
+                fmt_call_args(&child, res);
             }
 
             _ => {}
@@ -290,7 +284,7 @@ fn fmt_expr(
 
     match expr.rule {
         Rule::Call => {
-            fmt_call(&expr, res, depth);
+            fmt_call(&expr, res);
         }
 
         Rule::Add => {
@@ -426,12 +420,13 @@ fn fmt_declare(
             Rule::Expression => {
                 res.push_str(" ->\n");
                 fmt_expr(&child, res, depth + 1);
-                res.push_str("\n");
             }
 
             _ => {}
         }
     }
+
+    res.push_str("\n");
 }
 
 fn fmt_return(
@@ -513,7 +508,7 @@ fn fmt_condition(
             }
 
             Rule::Body => {
-                fmt_body(&child, res, depth);
+                fmt_body(&child, res, depth + 1);
             }
 
             _ => {}
@@ -528,7 +523,7 @@ fn fmt_if(
 ) {
     fmt_depth(depth, res);
     res.push_str("if ");
-    fmt_condition(&ast, res, depth + 1);
+    fmt_condition(&ast, res, depth);
     fmt_depth(depth, res);
     res.push_str("<=if\n");
 }
@@ -607,8 +602,7 @@ fn fmt_body(
     res: &mut String,
     depth: usize
 ) {
-    fmt_depth(depth - 1, res);
-    res.push_str("=>\n");
+    res.push_str(" =>\n");
 
     let children = ast.children.borrow();
     let children = children.iter();

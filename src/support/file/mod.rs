@@ -40,7 +40,8 @@ pub fn write(path: &str, contents: &str) -> Result<
 
 pub fn parse<'ast>(
     contents: &'ast String,
-    syntax: &'ast str
+    syntax: &'ast str,
+    do_unescape: bool
 ) -> AST<'ast> {
     let ast;
 
@@ -51,7 +52,7 @@ pub fn parse<'ast>(
         );
 
         let tree = catch_pest(&tree).clone();
-        ast = standard::grammar::convert(tree);
+        ast = standard::grammar::convert(tree, do_unescape);
     } else if syntax == "old" {
         let tree = OldGrammarParser::parse(
             old::Rule::Program,
@@ -59,7 +60,7 @@ pub fn parse<'ast>(
         );
 
         let tree = catch_pest(&tree).clone();
-        ast = old::grammar::convert(tree);
+        ast = old::grammar::convert(tree, do_unescape);
     } else {
         panic!("Unknown syntax: {}", syntax);
     }

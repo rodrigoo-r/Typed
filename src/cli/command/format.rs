@@ -20,7 +20,7 @@ use crate::support::file;
 pub fn handle(cmd: &FormatCommand) {
     let contents = file::read(cmd.file.as_str());
     let contents = catch_non_traceable(&contents);
-    let ast = file::parse(&contents, &cmd.input_syntax);
+    let ast = file::parse(&contents, &cmd.input_syntax, false);
 
     let fmt = format(&ast, &cmd.output_syntax);
     let res = file::write(cmd.output.as_str(), &fmt);

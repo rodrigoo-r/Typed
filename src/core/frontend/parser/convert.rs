@@ -18,7 +18,10 @@ macro_rules! convert_grammar {
     (
         $edition:ident
     ) => {
-        pub fn convert<'source>(pairs: Pairs<'source, crate::core::frontend::parser::$edition::Rule>) -> AST<'source> {
+        pub fn convert<'source>(
+            pairs: Pairs<'source, crate::core::frontend::parser::$edition::Rule>,
+            do_unescape: bool
+        ) -> AST<'source> {
             let result = Rc::new(RefCell::new(
                 AST{
                     line: 0,
@@ -76,12 +79,16 @@ macro_rules! convert_grammar {
                             child.borrow_mut().value = Some(Cow::Borrowed(val)),
 
                         crate::core::frontend::parser::$edition::Rule::String_Literal => {
-                            // Remove the quotes
-                            let s = &val[1..val.len()-1];
-                            let s = unescape(&s, line_col.0, line_col.1);
-                            let s = catch_parse(&s);
-
-                            child.borrow_mut().value = Some(s.clone());
+                            if do_unescape {
+                                // Remove the quotes
+                                let s = &val[1..val.len()-1];
+                                let s = unescape(&s, line_col.0, line_col.1);
+                                let s = catch_parse(&s);
+    
+                                child.borrow_mut().value = Some(s.clone());
+                            } else {
+                                child.borrow_mut().value = Some(Cow::Borrowed(val));
+                            }
                         },
 
                         // Ignore boolean literals
