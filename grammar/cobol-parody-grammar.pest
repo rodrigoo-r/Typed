@@ -220,10 +220,10 @@ If = {
 }
 
 Else_If = {
-	"ALSO-OFFLINE" ~
+	"AS-PER-MY-LAST-EMAIL" ~
     Expression ~
     Body ~
-    "END-ALSO-OFFLINE" ~ "."
+    "END-AS-PER-MY-LAST-EMAIL" ~ "."
 }
 
 Else = {

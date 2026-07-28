@@ -580,7 +580,7 @@ fn fmt_cond_group(
 
             Rule::Else_If => {
                 fmt_conditional(
-                    "ALSO-OFFLINE",
+                    "AS-PER-MY-LAST-EMAIL",
                     &child,
                     res,
                     depth
