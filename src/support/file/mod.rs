@@ -29,6 +29,15 @@ pub fn read(path: &str) -> Result<String, std::io::Error> {
     Ok(contents)
 }
 
+pub fn write(path: &str, contents: &str) -> Result<
+    (), 
+    std::io::Error
+> {
+    std::fs::write(path, contents)?;
+
+    Ok(())
+}
+
 pub fn parse<'ast>(
     contents: &'ast String,
     syntax: &'ast str
