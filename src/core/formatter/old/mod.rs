@@ -1,3 +1,4 @@
+use std::cmp::max;
 use crate::adt::lang::AST;
 use crate::core::frontend::parser::Rule;
 
@@ -56,10 +57,10 @@ fn fmt_args(
     res: &mut String
 ) {
     let children = ast.children.borrow();
-    let children = children.iter();
+    let max = max(children.len(), 1) - 1;
 
-    for child in children {
-        let child = child.borrow();
+    for i in 0..children.len() {
+        let child = children[i].borrow();
         let children = child.children.borrow();
         let children = children.iter();
 
@@ -76,6 +77,11 @@ fn fmt_args(
 
                 Rule::Kind => {
                     fmt_kind(&child, res);
+
+                    if i != max {
+                        res.push_str(",");
+                    }
+
                     res.push_str("\n");
                 }
 
