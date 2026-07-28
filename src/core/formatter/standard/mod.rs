@@ -432,6 +432,7 @@ fn fmt_return(
     let expr = children[0].borrow();
 
     fmt_expr(&expr, res, 0);
+    res.push_str("\n");
 }
 
 fn fmt_for(
