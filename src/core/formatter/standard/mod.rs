@@ -658,7 +658,10 @@ fn fmt_proc(
 
             Rule::Procedure_Return_Kind => {
                 res.push_str(": ");
-                fmt_kind(&child, res);
+                let children = child.children.borrow();
+                let kind = children[0].borrow();
+
+                fmt_kind(&kind, res);
             }
 
             Rule::Body => {
