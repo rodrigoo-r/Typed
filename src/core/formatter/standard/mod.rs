@@ -658,7 +658,6 @@ fn fmt_proc(
             }
 
             Rule::Body => {
-                res.push_str(" ");
                 fmt_body(&child, res, 1);
             }
 
