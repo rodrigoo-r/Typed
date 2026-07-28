@@ -72,9 +72,10 @@ Procedure_Return_Kind = {
 }
 
 Call = {
-	"INVOKE-ACTION" ~
+	"ACTION" ~
     Identifier ~
-    Call_Arguments?
+    Call_Arguments? ~
+    "END-ACTION"
 }
 
 Call_Arguments = {
@@ -204,7 +205,7 @@ For = {
     Expression ~
     "TO" ~
     Expression ~
-    "AND" ~ "INCREMENTS" ~
+    "WHICH" ~ "INCREMENTS" ~
     Expression ~
     Body ~
     "CIRCLE-BACK." ~
@@ -215,24 +216,24 @@ If = {
 	"TAKE-THIS-OFFLINE" ~
     Expression ~
     Body ~
-    "END-TAKE-THIS-OFFLINE."
+    "END-TAKE-THIS-OFFLINE" ~ "."
 }
 
 Else_If = {
 	"ALSO-OFFLINE" ~
     Expression ~
     Body ~
-    "END-ALSO-OFFLINE."
+    "END-ALSO-OFFLINE" ~ "."
 }
 
 Else = {
 	"FORFEITED" ~
     Body ~
-    "END-FORFEITED."
+    "END-FORFEITED" ~ "."
 }
 
 Condition_Group = {
-	If ~ Else_If* ~ Else
+	If ~ Else_If* ~ Else?
 }
 
 While = {

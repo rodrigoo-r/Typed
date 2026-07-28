@@ -128,8 +128,10 @@ fn fmt_call_args(
         fmt_expr(&child, res, depth + 1);
 
         if i != max {
-            res.push_str(" AND\n");
+            res.push_str(" AND");
         }
+
+        res.push_str("\n");
     }
 }
 
@@ -141,12 +143,13 @@ fn fmt_call(
     let children = ast.children.borrow();
     let children = children.iter();
 
-    res.push_str("INVOKE-ACTION ");
+    res.push_str("ACTION\n");
     for child in children {
         let child = child.borrow();
 
         match child.rule {
             Rule::Identifier => {
+                fmt_depth(depth + 1, res);
                 res.push_str(child.value.as_ref().unwrap().as_ref());
             }
 
@@ -157,6 +160,9 @@ fn fmt_call(
             _ => {}
         }
     }
+
+    fmt_depth(depth, res);
+    res.push_str("END-ACTION");
 }
 
 fn fmt_arithmetic_op(
@@ -322,23 +328,23 @@ fn fmt_expr(
             }
 
             Rule::Greater => {
-                fmt_binary_op(&child, res, "GREATER", depth);
+                fmt_binary_op(&child, res, "GREATER THAN", depth);
             }
 
             Rule::Equal => {
-                fmt_binary_op(&child, res, "EQUAL", depth);
+                fmt_binary_op(&child, res, "EQUAL TO", depth);
             }
 
             Rule::Less => {
-                fmt_binary_op(&child, res, "LESS", depth);
+                fmt_binary_op(&child, res, "LESS THAN", depth);
             }
 
             Rule::Greater_Equal => {
-                fmt_binary_op(&child, res, "GREATER_EQUAL", depth);
+                fmt_binary_op(&child, res, "GREATER THAN OR EQUAL TO", depth);
             }
 
             Rule::Less_Equal => {
-                fmt_binary_op(&child, res, "LESSER_EQUAL", depth);
+                fmt_binary_op(&child, res, "LESS THAN OR EQUAL TO", depth);
             }
 
             Rule::Identifier => {
@@ -431,7 +437,7 @@ fn fmt_for(
                     res.push_str("TO\n");
                     has_end = true;
                 } else {
-                    res.push_str("AND INCREMENTS\n");
+                    res.push_str("WHICH INCREMENTS\n");
                 }
 
                 fmt_expr(&child, res, depth + 1);
@@ -497,7 +503,6 @@ fn fmt_conditional(
     let children = ast.children.borrow();
     let children = children.iter();
 
-    fmt_depth(depth, res);
     res.push_str(ins);
     res.push_str("\n");
 
