@@ -12,40 +12,20 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-pub mod command;
+use crate::cli::FormatCommand;
+use crate::core::formatter::format;
+use crate::support::failable::{catch_non_traceable};
+use crate::support::file;
 
-use clap::{Args, Parser, Subcommand};
+pub fn handle(cmd: &FormatCommand) {
+    let contents = file::read(cmd.file.as_str());
+    let contents = catch_non_traceable(&contents);
+    let ast = file::parse(&contents, &cmd.input_syntax);
 
-#[derive(Parser)]
-pub struct Cli {
-    #[command(subcommand)]
-    pub command: Commands,
-}
+    let fmt = format(&ast, &cmd.output_syntax);
+    let res = file::write(cmd.output.as_str(), &fmt);
 
-#[derive(Args, Debug)]
-pub struct RunCommand {
-    file: String,
-
-    #[arg(short, long, default_value = "standard")]
-    syntax: String
-}
-
-#[derive(Args, Debug)]
-pub struct FormatCommand {
-    file: String,
-
-    #[arg(short, long, default_value = "standard")]
-    input_syntax: String,
-
-    #[arg(short, long, default_value = "standard")]
-    output_syntax: String,
-
-    #[arg(long)]
-    output: String
-}
-
-#[derive(Subcommand)]
-pub enum Commands {
-    Run(RunCommand),
-    Format(FormatCommand)
+    if res.is_err() {
+        panic!("{}", res.err().unwrap());
+    }
 }

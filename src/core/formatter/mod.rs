@@ -12,40 +12,24 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-pub mod command;
+pub mod old;
+pub mod standard;
 
-use clap::{Args, Parser, Subcommand};
+use crate::adt::lang::AST;
 
-#[derive(Parser)]
-pub struct Cli {
-    #[command(subcommand)]
-    pub command: Commands,
-}
-
-#[derive(Args, Debug)]
-pub struct RunCommand {
-    file: String,
-
-    #[arg(short, long, default_value = "standard")]
-    syntax: String
-}
-
-#[derive(Args, Debug)]
-pub struct FormatCommand {
-    file: String,
-
-    #[arg(short, long, default_value = "standard")]
-    input_syntax: String,
-
-    #[arg(short, long, default_value = "standard")]
-    output_syntax: String,
-
-    #[arg(long)]
-    output: String
-}
-
-#[derive(Subcommand)]
-pub enum Commands {
-    Run(RunCommand),
-    Format(FormatCommand)
+pub fn format(
+    ast: &AST, 
+    output_fmt: &str
+) -> String {
+    let mut result = String::new();
+    
+    if output_fmt == "standard" {
+        standard::format(ast, &mut result);
+    } else if output_fmt == "old" {
+        old::format(ast, &mut result);
+    } else {
+        panic!("Unknown output format: {}", output_fmt);
+    }
+    
+    result
 }
