@@ -16,10 +16,7 @@ use std::process::exit;
 use crate::adt::error::RuntimeError;
 use crate::adt::result::{ParseResult, RuntimeResult};
 use colored::Colorize;
-use pest::error::Error;
-use pest::iterators::Pairs;
 use crate::adt::lang::ASTValue;
-use crate::core::frontend::parser::Rule;
 
 fn print_considerations() {
     println!(
@@ -112,9 +109,12 @@ pub fn catch_parse<'a, 'r>(
     result.as_ref().unwrap()
 }
 
-pub fn catch_pest<'source>(
-    result: &'source Result<Pairs<Rule>, Error<Rule>>
-) -> &'source Pairs<'source, Rule> {
+pub fn catch_pest<
+    Pairs,
+    PairsError: std::fmt::Debug + std::fmt::Display
+>(
+    result: &Result<Pairs, PairsError>
+) -> &Pairs {
     let result = result.as_ref();
 
     if result.is_err() {

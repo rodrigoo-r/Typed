@@ -12,108 +12,61 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use std::borrow::Cow;
-use pest_derive::Parser;
-use std::cell::RefCell;
-use std::collections::VecDeque;
-use std::rc::Rc;
-use pest::iterators::Pairs;
-use crate::adt::lang::{ChildAST, AST};
-use crate::support::failable::catch_parse;
-use crate::support::str_conv::escape::unescape;
+pub mod convert;
+pub mod standard;
+pub mod old;
 
-#[derive(Parser)]
-#[grammar = "grammar/grammar.pest"]
-pub struct Parser;
-
-pub fn convert<'source>(pairs: Pairs<'source, Rule>) -> AST<'source> {
-    let result = Rc::new(RefCell::new(
-        AST{
-            line: 0,
-            column: 0,
-            rule: Rule::Program,
-            value: None,
-            children: RefCell::new(Vec::new())
-        }
-    ));
-
-    let mut queue: VecDeque<(Pairs<Rule>, ChildAST<'source>)>
-        = VecDeque::new();
-
-    queue.push_back((pairs, Rc::clone(&result)));
-
-    while !queue.is_empty() {
-        let (pairs, parent) = queue.pop_front().unwrap();
-
-        for inner in pairs.into_iter() {
-            let parent = Rc::clone(&parent);
-            let rule = inner.as_rule();
-
-            // Skip if the rule is EOI
-            if rule == Rule::EOI {
-                continue;
-            } else if rule == Rule::Program {
-                queue.push_back(
-                    (
-                        inner.into_inner(),
-                        Rc::clone(&parent)
-                    )
-                );
-
-                continue;
-            }
-
-            let line_col = inner.as_span().start_pos().line_col();
-            let val = inner.as_str();
-            let child = Rc::new(
-                RefCell::new(
-                    AST{
-                        value: None,
-                        line: line_col.0,
-                        column: line_col.1,
-                        rule,
-                        children: RefCell::new(Vec::new())
-                    }
-                )
-            );
-
-            match rule {
-                Rule::Identifier |
-                Rule::Float_Literal |
-                Rule::Integer_Literal =>
-                    child.borrow_mut().value = Some(Cow::Borrowed(val)),
-
-                Rule::String_Literal => {
-                    // Remove the quotes
-                    let s = &val[1..val.len()-1];
-                    let s = unescape(&s, line_col.0, line_col.1);
-                    let s = catch_parse(&s);
-
-                    child.borrow_mut().value = Some(s.clone());
-                },
-
-                // Ignore boolean literals
-                Rule::True_Literal |
-                Rule::False_Literal => {}
-
-                // Everything else is appended to the queue
-                _ => {
-                    queue.push_back(
-                        (
-                            inner.into_inner(),
-                            Rc::clone(&child)
-                        )
-                    );
-                }
-            }
-
-            let parent = parent.borrow_mut();
-            let mut children = parent.children.borrow_mut();
-            children.push(Rc::clone(&child));
-        }
-    }
-
-    Rc::into_inner(result)
-        .unwrap()
-        .into_inner()
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum Rule {
+    EOI,
+    COMMENT,
+    WHITESPACE,
+    Program,
+    Top_Level,
+    Use,
+    Identifier,
+    Procedure,
+    Procedure_Return_Kind,
+    Procedure_Arguments,
+    Declaration_Data,
+    String,
+    Integer,
+    Float,
+    Boolean,
+    List,
+    Dictionary,
+    Kind,
+    Body,
+    Return,
+    For,
+    While,
+    Declare,
+    If,
+    Else_If,
+    Else,
+    Condition_Group,
+    Expression,
+    Greater,
+    Less,
+    Equal,
+    Greater_Equal,
+    Less_Equal,
+    And,
+    Or,
+    Not,
+    Call,
+    Call_Arguments,
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    Integer_Literal,
+    Float_Literal,
+    Boolean_Literal,
+    True_Literal,
+    False_Literal,
+    String_Literal,
+    Single_Line_String_Char,
+    Multi_Line_String_Char,
+    Escape_Sequence
 }

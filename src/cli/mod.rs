@@ -14,7 +14,7 @@
 */
 pub mod command;
 
-use clap::{Parser, Subcommand};
+use clap::{Args, Parser, Subcommand};
 
 #[derive(Parser)]
 pub struct Cli {
@@ -22,9 +22,15 @@ pub struct Cli {
     pub command: Commands,
 }
 
+#[derive(Args, Debug)]
+pub struct RunCommand {
+    file: String,
+
+    #[arg(short, long, default_value = "standard")]
+    syntax: String
+}
+
 #[derive(Subcommand)]
 pub enum Commands {
-    Run {
-        file: String
-    }
+    Run(RunCommand)
 }

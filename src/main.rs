@@ -27,8 +27,8 @@ fn main() {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Run { file } => {
-            run::handle(&file);
+        Commands::Run(cmd) => {
+            run::handle(&cmd);
         }
     }
 }
