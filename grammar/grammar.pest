@@ -44,6 +44,7 @@ Integer = { "int" }
 Float = { "real" }
 Boolean = { "bool" }
 List = { "arr" }
+Set = { "set" }
 Dictionary = { "dict" }
 
 Procedure_Return_Kind = {
@@ -69,6 +70,7 @@ Kind = {
     Float |
     Boolean |
     List |
+    Set |
     Dictionary
 }
 

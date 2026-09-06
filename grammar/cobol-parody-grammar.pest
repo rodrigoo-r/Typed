@@ -41,6 +41,7 @@ Kind = {
     Float |
     Boolean |
     List |
+    Set |
     Dictionary
 }
 
@@ -269,6 +270,7 @@ Integer = { "INTEGER" }
 Float = { "REAL" }
 Boolean = { "BOOLEAN" }
 List = { "UNBOUNDED-ARRAY" }
+Set = { "UNBOUNDED-SET" }
 Dictionary = { "UNBOUNDED-DICTIONARY" }
 
 Integer_Literal = @{

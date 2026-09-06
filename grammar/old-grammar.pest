@@ -57,6 +57,7 @@ String = { "String" }
 Integer = { "Integer" }
 Float = { "Float" }
 Boolean = { "Boolean" }
+Set = { "Set" }
 List = { "List" }
 Dictionary = { "Dictionary" }
 
@@ -66,6 +67,7 @@ Kind = {
     Float |
     Boolean |
     List |
+    Set |
     Dictionary
 }
 
