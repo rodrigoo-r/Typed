@@ -53,6 +53,13 @@ impl RuntimeError {
             "Mismatched types"
         )
     }
+
+    pub fn unparsable_file(trace: &AST) -> Self {
+        RuntimeError::create(
+            trace,
+            "Unparsable file"
+        )
+    }
     
     pub fn incomparable_types(trace: &AST) -> Self {
         RuntimeError::create(
