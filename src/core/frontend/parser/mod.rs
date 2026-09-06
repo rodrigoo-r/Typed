@@ -36,6 +36,7 @@ pub enum Rule {
     Float,
     Boolean,
     List,
+    Set,
     Dictionary,
     Kind,
     Body,

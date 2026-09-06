@@ -13,14 +13,18 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefCell;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::rc::Rc;
 use ordered_float::OrderedFloat;
 use crate::adt::lang::{ASTValue, Procedure};
 
 pub type List<'a> = Vec<Object<'a>>;
+pub type Set<'a> = HashSet<Object<'a>>;
 pub type Dictionary<'a> =
     HashMap<HashableObject<'a>, Object<'a>>;
+
+pub type RuntimeSet<'a> =
+    Rc<RefCell<Set<'a>>>;
 
 pub type RuntimeList<'a> =
     Rc<RefCell<List<'a>>>;
@@ -47,6 +51,7 @@ pub enum HashableObject<'a> {
 #[derive(Debug, Clone)]
 pub enum NonHashableObject<'a> {
     Dictionary(RuntimeDictionary<'a>),
+    Set(RuntimeSet<'a>),
     List(RuntimeList<'a>)
 }
 

@@ -63,6 +63,10 @@ pub fn check_kind<'a>(
             check_kinds(expected, Kind::Dictionary, trace)
         }
 
+        Object::NonHashable(NonHashableObject::Set(_)) => {
+            check_kinds(expected, Kind::Set, trace)
+        }
+
         Object::Void => {
             Err(RuntimeError::mismatched_types(trace))
         }
@@ -97,6 +101,10 @@ pub fn check_obj_kind<'a>(
 
         Object::NonHashable(NonHashableObject::Dictionary(_)) => {
             check_kind(Kind::Dictionary, actual, trace)
+        }
+
+        Object::NonHashable(NonHashableObject::Set(_)) => {
+            check_kind(Kind::Set, actual, trace)
         }
 
         Object::Void => {

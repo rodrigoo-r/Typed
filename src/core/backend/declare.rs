@@ -87,6 +87,14 @@ pub fn evaluate<'a>(
                     )
                 );
             }
+
+            Kind::Set => {
+                initial = NonHashable(
+                    NonHashableObject::Set(
+                        RuntimeSet::new(RefCell::new(Set::new()))
+                    )
+                );
+            }
             
             _ => unreachable!()
         }

@@ -46,6 +46,7 @@ pub enum Kind {
     Boolean,
     Float,
     Dictionary,
+    Set,
     List,
 
     // Only allowed for internal use
