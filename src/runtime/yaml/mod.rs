@@ -12,25 +12,33 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::runtime::GlobalPackageDictionary;
+pub mod parse;
 
-pub mod io;
-pub mod strings;
-pub mod dictionaries;
-pub mod lists;
-pub mod file_system;
-pub mod process;
-pub mod yaml;
+use crate::adt::lang::{ASTValue, Argument, Kind, Procedure};
+use crate::adt::runtime::PackageDictionary;
 
-pub fn get_global_package<'a>() -> GlobalPackageDictionary<'a> {
-    let mut result = GlobalPackageDictionary::new();
-    result.insert("IO", io::get_package());
-    result.insert("Strings", strings::get_package());
-    result.insert("Dictionaries", dictionaries::get_package());
-    result.insert("Lists", lists::get_package());
-    result.insert("File_System", file_system::get_package());
-    result.insert("Process", process::get_package());
-    result.insert("YAML", yaml::get_package());
+pub fn get_package<'a>() -> PackageDictionary<'a> {
+    let mut dict = PackageDictionary::new();
+    dict.insert(
+        "YAML_Parse",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut args = vec![];
+                args.push(
+                    Argument{
+                        name: ASTValue::Borrowed("source"),
+                        kind: Kind::String
+                    }
+                );
 
-    result
+                args
+            },
+            ret: Some(Kind::String),
+            native: Some(parse::parse)
+        }
+    );
+
+    dict
 }
