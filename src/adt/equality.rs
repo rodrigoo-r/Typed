@@ -12,11 +12,19 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
+use crate::adt::lang::ASTValue;
 use crate::adt::runtime::{HashableObject, NonHashableObject, Object};
 
 fn compare_hashable_obj(lhs: &HashableObject, rhs: &HashableObject) -> bool {
     match (lhs, rhs) {
-        (HashableObject::String(a), HashableObject::String(b)) => a == b,
+        (HashableObject::String(a), HashableObject::String(b)) => {
+            match (a, b) {
+                (ASTValue::Borrowed(a), ASTValue::Borrowed(b)) => a == b,
+                (ASTValue::Owned(a), ASTValue::Owned(b)) => a == b,
+                (ASTValue::Borrowed(a), ASTValue::Owned(b)) => a == b,
+                (ASTValue::Owned(a), ASTValue::Borrowed(b)) => a == b,
+            }
+        },
         (HashableObject::Integer(a), HashableObject::Integer(b)) => a == b,
         (HashableObject::Boolean(a), HashableObject::Boolean(b)) => a == b,
         (HashableObject::Float(a), HashableObject::Float(b)) => a == b,
@@ -41,10 +49,6 @@ fn compare_obj(lhs: &Object, rhs: &Object) -> bool {
 
 impl<'a> PartialEq for HashableObject<'a> {
     fn eq(&self, other: &Self) -> bool {
-        if self.variant_id() == other.variant_id() {
-            return false;
-        }
-
         compare_hashable_obj(self, other)
     }
 }
