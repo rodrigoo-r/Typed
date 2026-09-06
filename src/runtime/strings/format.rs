@@ -83,6 +83,23 @@ pub fn format_obj<'a>(
         }
 
         Object::NonHashable(
+            NonHashableObject::Set(set)
+        ) => {
+            result.push_str("Set(");
+
+            let set = set.borrow();
+            for (idx, item) in set.iter().enumerate() {
+                if idx != 0 {
+                    result.push_str(", ");
+                }
+
+                format_obj(item, Kind::Any, trace, result)?;
+            }
+
+            result.push_str(")");
+        }
+
+        Object::NonHashable(
             NonHashableObject::List(list)
         ) => {
             result.push_str("List(");
