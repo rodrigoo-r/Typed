@@ -12,27 +12,27 @@
  * #                                                     # *
  * #-----------------------------------------------------# *
 */
-use crate::adt::runtime::GlobalPackageDictionary;
+use crate::adt::lang::{RuntimeArguments, AST};
+use crate::adt::result::ExecutionTupleResult;
+use crate::adt::runtime::{HashableObject, Object};
+use crate::support::runtime::execution::continue_execution;
+use crate::support::runtime::object::{get_set};
 
-pub mod io;
-pub mod strings;
-pub mod dictionaries;
-pub mod lists;
-pub mod file_system;
-pub mod process;
-pub mod yaml;
-pub mod sets;
-
-pub fn get_global_package<'a>() -> GlobalPackageDictionary<'a> {
-    let mut result = GlobalPackageDictionary::new();
-    result.insert("IO", io::get_package());
-    result.insert("Strings", strings::get_package());
-    result.insert("Dictionaries", dictionaries::get_package());
-    result.insert("Lists", lists::get_package());
-    result.insert("File_System", file_system::get_package());
-    result.insert("Process", process::get_package());
-    result.insert("YAML", yaml::get_package());
-    result.insert("Sets", sets::get_package());
-
-    result
+pub fn size<'a>(
+    args: RuntimeArguments<'a>,
+    trace: &AST<'a>
+)
+    -> ExecutionTupleResult<'a>
+{
+    let set_obj = args.get(0).unwrap();
+    let set = get_set(set_obj, trace)?;
+    let set = set.borrow();
+    
+    continue_execution(
+        Object::Hashable(
+            HashableObject::Integer(
+                set.len() as isize
+            )
+        )
+    )
 }
