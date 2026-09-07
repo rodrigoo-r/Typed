@@ -14,10 +14,11 @@
 */
 use std::cell::RefCell;
 use std::collections::HashMap;
+use crate::adt::dictionary::Dictionary;
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{RuntimeArguments, AST, ASTValue};
 use crate::adt::result::ExecutionTupleResult;
-use crate::adt::runtime::{Dictionary, Float, HashableObject, List, NonHashableObject, Object, RuntimeDictionary, RuntimeList};
+use crate::adt::runtime::{Float, HashableObject, List, NonHashableObject, Object, RuntimeDictionary, RuntimeList};
 use crate::support::runtime::execution::{continue_execution};
 use crate::support::runtime::object::{get_string};
 

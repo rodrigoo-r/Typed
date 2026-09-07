@@ -31,7 +31,7 @@ pub fn size<'a>(
     continue_execution(
         Object::Hashable(
             HashableObject::Integer(
-                dict.len() as isize
+                dict.size() as isize
             )
         )
     )

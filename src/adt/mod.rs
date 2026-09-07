@@ -20,3 +20,5 @@ pub mod equality;
 pub mod error;
 pub mod result;
 pub mod variant_id;
+pub mod dictionary;
+pub mod set;

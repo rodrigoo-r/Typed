@@ -44,7 +44,7 @@ pub fn contains<'a>(
     continue_execution(
         Object::Hashable(
             HashableObject::Boolean(
-                dict.contains_key(&key)
+                dict.contains(&key)
             )
         )
     )

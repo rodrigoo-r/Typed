@@ -122,7 +122,7 @@ pub fn format_obj<'a>(
             result.push_str("Dictionary(");
             let mut idx: usize = 1;
             let dict = dict.borrow();
-            let size = dict.len();
+            let size = dict.size();
 
             for (key, value) in dict.iter() {
                 if idx != size {

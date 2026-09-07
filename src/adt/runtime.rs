@@ -13,15 +13,14 @@
  * #-----------------------------------------------------# *
 */
 use std::cell::RefCell;
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap};
 use std::rc::Rc;
 use ordered_float::OrderedFloat;
+use crate::adt::dictionary::Dictionary;
 use crate::adt::lang::{ASTValue, Procedure};
+use crate::adt::set::Set;
 
 pub type List<'a> = Vec<Object<'a>>;
-pub type Set<'a> = HashSet<HashableObject<'a>>;
-pub type Dictionary<'a> =
-    HashMap<HashableObject<'a>, Object<'a>>;
 
 pub type RuntimeSet<'a> =
     Rc<RefCell<Set<'a>>>;
