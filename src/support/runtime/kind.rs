@@ -139,6 +139,8 @@ pub fn convert_kind<'a>(decl: &AST<'a>)
                 Kind::Dictionary,
             crate::core::frontend::parser::Rule::List =>
                 Kind::List,
+            crate::core::frontend::parser::Rule::Set =>
+                Kind::Set,
 
             _ => unreachable!(),
         }
