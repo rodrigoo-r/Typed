@@ -226,6 +226,10 @@ impl From<Rule> for SharedRule {
             Rule::Escape_Sequence => {
                 SharedRule::Escape_Sequence
             },
+
+            Rule::Set => {
+                SharedRule::Set
+            },
             
             _ => SharedRule::Program
         }
