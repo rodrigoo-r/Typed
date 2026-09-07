@@ -63,6 +63,10 @@ fn fmt_kind(
             res.push_str("arr");
         }
 
+        Rule::Set => {
+            res.push_str("set");
+        }
+
         _ => {}
     }
 }

@@ -53,6 +53,10 @@ fn fmt_kind(
             res.push_str("UNBOUNDED-ARRAY");
         }
 
+        Rule::Set => {
+            res.push_str("UNBOUNDED-SET");
+        }
+
         _ => {}
     }
 }
