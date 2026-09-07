@@ -19,7 +19,7 @@ use ordered_float::OrderedFloat;
 use crate::adt::lang::{ASTValue, Procedure};
 
 pub type List<'a> = Vec<Object<'a>>;
-pub type Set<'a> = HashSet<Object<'a>>;
+pub type Set<'a> = HashSet<HashableObject<'a>>;
 pub type Dictionary<'a> =
     HashMap<HashableObject<'a>, Object<'a>>;
 
