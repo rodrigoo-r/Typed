@@ -93,7 +93,7 @@ pub fn format_obj<'a>(
                     result.push_str(", ");
                 }
 
-                format_obj(item, Kind::Any, trace, result)?;
+                format_hashable_object(item, Kind::Any, trace, result)?;
             }
 
             result.push_str(")");
