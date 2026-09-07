@@ -17,6 +17,7 @@ pub mod set;
 pub mod remove;
 pub mod size;
 pub mod keys;
+pub mod contains;
 
 use crate::adt::lang::{ASTValue, Argument, Kind, Procedure};
 use crate::adt::runtime::PackageDictionary;
@@ -67,7 +68,7 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
                         kind: Kind::Dictionary,
                     }
                 );
-                
+
                 vec
             },
             native: Some(keys::keys),
@@ -141,6 +142,35 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
     );
 
     dict.insert(
+        "Dictionary_Contains",
+        Procedure{
+            variadic: false,
+            body: None,
+            arguments: {
+                let mut vec = vec![];
+
+                vec.push(
+                    Argument{
+                        name: ASTValue::Borrowed("dict"),
+                        kind: Kind::Dictionary,
+                    }
+                );
+
+                vec.push(
+                    Argument{
+                        name: ASTValue::Borrowed("key"),
+                        kind: Kind::Any,
+                    }
+                );
+
+                vec
+            },
+            native: Some(contains::contains),
+            ret: None
+        }
+    );
+
+    dict.insert(
         "Dictionary_Size",
         Procedure{
             variadic: false,
@@ -161,6 +191,6 @@ pub fn get_package<'a>() -> PackageDictionary<'a> {
             ret: None
         }
     );
-    
+
     dict
 }
