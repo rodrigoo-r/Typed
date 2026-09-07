@@ -16,7 +16,7 @@
 use crate::adt::error::RuntimeError;
 use crate::adt::lang::{ASTValue, AST};
 use crate::adt::result::RuntimeResult;
-use crate::adt::runtime::{Float, HashableObject, NonHashableObject, Object, RuntimeDictionary, RuntimeList};
+use crate::adt::runtime::{Float, HashableObject, NonHashableObject, Object, RuntimeDictionary, RuntimeList, RuntimeSet};
 use crate::adt::runtime::Object::NonHashable;
 
 macro_rules! unwrap_obj {
@@ -102,6 +102,18 @@ pub fn get_dictionary<'source>(
     unwrap_obj!(
         obj,
         NonHashable(NonHashableObject::Dictionary(s)) => s.clone(),
+        trace
+    )
+}
+
+pub fn get_set<'source>(
+    obj: &Object<'source>,
+    trace: &AST<'source>
+) -> RuntimeResult<RuntimeSet<'source>>
+{
+    unwrap_obj!(
+        obj,
+        NonHashable(NonHashableObject::Set(s)) => s.clone(),
         trace
     )
 }
