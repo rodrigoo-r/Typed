@@ -36,7 +36,7 @@ Procedure = {
     Procedure_Arguments? ~
     Procedure_Return_Kind? ~
     Body ~
-    "<=proc"
+    "}"
 }
 
 String = { "str" }
@@ -110,14 +110,14 @@ Expression = {
 And = {
 	"&&" ~
     Expression ~
-    "->" ~
+    ":" ~
     Identifier
 }
 
 Or = {
 	"||" ~
     Expression ~
-    "->" ~
+    ":" ~
     Expression
 }
 
@@ -129,101 +129,104 @@ Not = {
 Greater = {
 	">" ~
     Expression ~
-    "->" ~
+    ":" ~
     Expression
 }
 
 Less = {
 	"<" ~
     Expression ~
-    "->" ~
+    ":" ~
     Expression
 }
 
 Greater_Equal = {
 	">=" ~
     Expression ~
-    "->" ~
+    ":" ~
     Expression
 }
 
 Less_Equal = {
 	"<=" ~
     Expression ~
-    "->" ~
+    ":" ~
     Expression
 }
 
 Equal = {
 	"==" ~
     Expression ~
-    "->" ~
+    ":" ~
     Expression
 }
 
 Add = {
 	"+" ~
     Expression ~
-    "->" ~
+    ":" ~
     Identifier
 }
 
 Subtract = {
 	"-" ~
     Expression ~
-    "->" ~
+    ":" ~
     Identifier
 }
 
 Multiply = {
 	"*" ~
     Expression ~
-    "->" ~
+    ":" ~
     Identifier
 }
 
 Divide = {
 	"/" ~
     Expression ~
-    "->" ~
+    ":" ~
     Identifier
 }
 
 Return = {
-	">" ~ Expression
+	"ret" ~ Expression
 }
 
 For = {
 	"loop" ~
     Declaration_Data ~
-    "->" ~
+    ":" ~
+    "|" ~
     Expression ~
     ".." ~
     Expression ~
+    "|" ~
+    ":" ~
     "+" ~
     Expression ~
     Body ~
-    "<=loop"
+    "}"
 }
 
 If = {
 	"if" ~
     Expression ~
     Body ~
-    "<=if"
+    "}"
 }
 
 Else_If = {
 	"elseif" ~
     Expression ~
     Body ~
-    "<=elseif"
+    "}"
 }
 
 Else = {
 	"else" ~
     Body ~
-    "<=else"
+    "}"
 }
 
 Condition_Group = {
@@ -236,19 +239,19 @@ While = {
 	"while" ~
     Expression ~
     Body ~
-    "<=while"
+    "}"
 }
 
 Declare = {
 	"let" ~ Declaration_Data ~
     (
-    	"->" ~
+    	"=" ~
         Expression
     )?
 }
 
 Body = {
-	"=>" ~
+	"{" ~
 	(
     	Return |
         For |
